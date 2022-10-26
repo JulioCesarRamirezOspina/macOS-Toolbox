@@ -21,7 +21,8 @@ public class SystemStatus: xCore {
             let model = d.model
             let screenSize = d.screenSize
             let year = macOS_Subsystem.getModelYear().localizedString
-            return (model, screenSize + ", \(year)")
+            let yearString = year == "" ? "" : ", \(year)"
+            return (model, screenSize + yearString)
         }
     }
     private static var processor: stringData {

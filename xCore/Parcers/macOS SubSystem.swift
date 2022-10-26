@@ -342,6 +342,32 @@ public struct macOS_Subsystem {
                 year = word.description
             }
         }
+        if Int(year) == nil {
+            let reservedProcess = Process()
+            let reservedPipe = Pipe()
+            reservedProcess.executableURL = URL(filePath: "/bin/bash")
+            reservedProcess.arguments = ["-c", "defaults read ~/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]
+            reservedProcess.standardOutput = reservedPipe
+            reservedProcess.standardError = reservedPipe
+            do {
+                try process.run()
+                if let line = String(data: reservedPipe.fileHandleForReading.availableData, encoding: .utf8) {
+                    NSLog(line)
+                    year += line
+                }
+            } catch let error {
+                NSLog(error.localizedDescription)
+                return (localizedString: "", serviceData: "")
+            }
+            let words = year.byWords
+            for word in words {
+                print(word)
+                if Int(word) ?? 0 > 2000 {
+                    year = word.description
+                }
+            }
+        }
+        
         if year != "" {
             return (localizedString: year + " " + StringLocalizer("year.string"), serviceData: year)
         } else {
@@ -536,9 +562,14 @@ public struct macOS_Subsystem {
                 if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
                     out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
                 }
-                for index in 0..<out.count {
-                    if out[index] == ", " {
-                        out[index] = ""
+//                for index in 0..<out.count {
+//                    if out[index] == ", " {
+//                        out[index] = ""
+//                    }
+//                }
+                for each in out {
+                    if each == ", " {
+                        out.remove(at: out.firstIndex(of: each)!)
                     }
                 }
                 return out
