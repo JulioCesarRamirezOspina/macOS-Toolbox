@@ -8,5 +8,7 @@
 	</array>
 	<key>com.apple.security.scripting-targets</key>
 	<true/>
+	<key>com.apple.security.process</key>
+	<true/>
 </dict>
 </plist>
