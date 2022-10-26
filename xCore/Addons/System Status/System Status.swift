@@ -106,6 +106,15 @@ public class SystemStatus: xCore {
                     }
                 }
             }
+            for each in iconCache! {
+                if each.absoluteString.contains(deviceString){
+                    if each.absoluteString.contains(screenSize) {
+                        image = Image(nsImage: NSImage(contentsOf: each)!)
+                        SettingsMonitor.deviceImage = each
+                    }
+                }
+            }
+            
             return image
         } else {
             return Image(nsImage: NSImage(contentsOf: SettingsMonitor.deviceImage!)!)
@@ -140,14 +149,18 @@ public class SystemStatus: xCore {
         public init() {}
         @State var hovered = false
         public var body: some View {
-            VStack{
-                Spacer().frame(height: 50)
-                deviceImage().shadow(radius: 15).padding(.all)
-                Text(modelName.label).font(.largeTitle)
-                Text(modelName.value).font(.title3).foregroundColor(.secondary)
-                Spacer()
-                SystemDataView(stringDataArray: [processor, graphics, memory, bootDrive, macOSVer, serial!], hovered: hovered)
-                Spacer()
+            GeometryReader { g in 
+                SwiftUI.ScrollView(.vertical, showsIndicators: true) {
+                    VStack{
+                        Spacer().frame(height: 50)
+                        deviceImage().shadow(radius: 15).padding(.all)
+                        Text(modelName.label).font(.largeTitle)
+                        Text(modelName.value).font(.title3).foregroundColor(.secondary)
+                        Spacer()
+                        SystemDataView(stringDataArray: [processor, graphics, memory, bootDrive, macOSVer, serial!], hovered: hovered)
+                        Spacer()
+                    }
+                }
             }
         }
     }

@@ -350,7 +350,7 @@ public struct macOS_Subsystem {
             return (localizedString: "", serviceData: "")
         }
     }
-
+    
     public static func MacPlatform() -> (model: String ,screenSize: String, modelType: deviceType, screenSizeInt: Int) {
         
         func getVersionCode() -> String {
@@ -462,6 +462,26 @@ public struct macOS_Subsystem {
             default:
                 size = 0
             }
+            
+            func isArm() -> Bool {
+                var sMachine: String {
+                    var utsname = utsname()
+                    uname(&utsname)
+                    return withUnsafePointer(to: &utsname.machine) {
+                        $0.withMemoryRebound(to: CChar.self, capacity: Int(_SYS_NAMELEN)) {
+                            String(cString: $0)
+                        }
+                    }
+                }
+                var retval: Bool {
+                    sMachine == "arm64"
+                }
+                return retval
+            }
+            
+            if Int(getModelYear().serviceData) != nil && Int(getModelYear().serviceData)! >= 2018 && !isArm() {
+                size += 1
+            }
             return (mo, "\(Int(size))\(StringLocalizer("inch.string"))", getType(code: getVersionCode()), size)
         }
         
@@ -493,69 +513,68 @@ public struct macOS_Subsystem {
     
     public func gpuName() -> [String] {
         var out = Array<String>()
-//        if macOS_Subsystem().cpuName().contains("Apple") {
-//            out.append(macOS_Subsystem().cpuName())
-//        } else {
-            var process: Process?
-            var pipe: Pipe?
-            do {
-                process = Process()
-                pipe = Pipe()
-                process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Apple"]
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
-                    out.append(", ")
-                }
-                process?.waitUntilExit()
-                process?.terminate()
-                process = nil
-                pipe = nil
-                
-                process = Process()
-                pipe = Pipe()
-                process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Intel"]
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
-                    out.append(", ")
-                }
-                process?.waitUntilExit()
-                process?.terminate()
-                process = nil
-                pipe = nil
-
-                process = Process()
-                pipe = Pipe()
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                process?.arguments = ["-c", "system_profiler SPDisplaysDataType | grep AMD"]
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
-                }
-//                for index in 0..<out.count {
-//                    if out[index] == ", " {
-//                        out[index] = ""
-//                    }
-//                }
+        var process: Process?
+        var pipe: Pipe?
+        do {
+            process = Process()
+            pipe = Pipe()
+            process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Apple"]
+            process?.standardOutput = pipe
+            process?.executableURL = URL(filePath: "/bin/bash")
+            try process?.run()
+            if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
+                out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+                out.append(", ")
+            }
+            process?.waitUntilExit()
+            process?.terminate()
+            process = nil
+            pipe = nil
+            
+            process = Process()
+            pipe = Pipe()
+            process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Intel"]
+            process?.standardOutput = pipe
+            process?.executableURL = URL(filePath: "/bin/bash")
+            try process?.run()
+            if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
+                out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+                out.append(", ")
+            }
+            process?.waitUntilExit()
+            process?.terminate()
+            process = nil
+            pipe = nil
+            
+            process = Process()
+            pipe = Pipe()
+            process?.standardOutput = pipe
+            process?.executableURL = URL(filePath: "/bin/bash")
+            process?.arguments = ["-c", "system_profiler SPDisplaysDataType | grep AMD"]
+            try process?.run()
+            if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
+                out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+            }
+            if out.count > 1 {
                 for each in out {
                     if each == ", " {
                         out.remove(at: out.firstIndex(of: each)!)
                     }
+                    if each == " " {
+                        out.remove(at: out.firstIndex(of: each)!)
+                    }
+                    if each == "" {
+                        out.remove(at: out.firstIndex(of: each)!)
+                    }
                 }
-                return out
-            } catch let error {
-                out = ["\(error.localizedDescription)"]
-                NSLog(error.localizedDescription)
-                return out
+                out.insert(", ", at: 1)
             }
-//        }
-//        return out
+            return out
+        } catch let error {
+            out = ["\(error.localizedDescription)"]
+            NSLog(error.localizedDescription)
+            return out
+        }
     }
     
     /// Number of physical cores on this machine.
