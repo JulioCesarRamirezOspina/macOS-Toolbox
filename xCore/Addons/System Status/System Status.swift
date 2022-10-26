@@ -127,17 +127,26 @@ public class SystemStatus: xCore {
             return Image(nsImage: NSImage(contentsOf: SettingsMonitor.deviceImage!)!)
         }
     }
-
-    private static func DataView(_ str: [stringData]) -> some View {
-        ForEach(0..<str.count, id: \.self) { index in
-            HStack{
+    
+    private struct SystemDataView: View {
+        @State var stringDataArray: [stringData]
+        @State var hovered = false
+        var body: some View {
+            ForEach(0..<stringDataArray.count, id: \.self) { index in
                 HStack{
-                    Spacer()
-                    Text(str[index].label).shadow(radius: 5)
-                }
-                HStack{
-                    Text(str[index].value).foregroundColor(.secondary).shadow(radius: 5)
-                    Spacer()
+                    HStack{
+                        Spacer()
+                        Text(stringDataArray[index].label).shadow(radius: 5)
+                    }
+                    HStack{
+                        Text(stringDataArray[index].value).foregroundColor(.secondary).shadow(radius: 5).blur(radius: !hovered && index == stringDataArray.count - 1 ? 5 : 0).animation(SettingsMonitor.secondaryAnimation, value: hovered)
+                        Spacer()
+                    }
+                    .onHover { b in
+                        if index == stringDataArray.count - 1 {
+                            hovered = b
+                        }
+                    }
                 }
             }
         }
@@ -145,6 +154,7 @@ public class SystemStatus: xCore {
     // MARK: - Info View
     public struct InfoView: View {
         public init() {}
+        @State var hovered = false
         public var body: some View {
             VStack{
                 Spacer().frame(height: 50)
@@ -152,7 +162,7 @@ public class SystemStatus: xCore {
                 Text(modelName.label).font(.largeTitle)
                 Text(modelName.value).font(.title3).foregroundColor(.secondary)
                 Spacer()
-                DataView([processor, graphics, memory, bootDrive, macOSVer, serial!])
+                SystemDataView(stringDataArray: [processor, graphics, memory, bootDrive, macOSVer, serial!], hovered: hovered)
                 Spacer()
             }
         }
