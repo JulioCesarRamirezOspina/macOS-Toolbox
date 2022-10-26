@@ -322,11 +322,11 @@ public struct macOS_Subsystem {
             let reservedProcess = Process()
             let reservedPipe = Pipe()
             reservedProcess.executableURL = URL(filePath: "/bin/bash")
-            reservedProcess.arguments = ["-c", "defaults read ~/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]
+            reservedProcess.arguments = ["-c", "defaults read /Users/\(FileManager.default.homeDirectoryForCurrentUser.lastPathComponent)/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]
             reservedProcess.standardOutput = reservedPipe
             reservedProcess.standardError = reservedPipe
             do {
-                try process.run()
+                try reservedProcess.run()
                 if let line = String(data: reservedPipe.fileHandleForReading.availableData, encoding: .utf8) {
                     NSLog(line)
                     year += line
