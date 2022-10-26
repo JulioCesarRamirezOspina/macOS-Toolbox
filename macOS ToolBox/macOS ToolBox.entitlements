@@ -6,8 +6,6 @@
 	<array>
 		<string>$(TeamIdentifierPrefix)</string>
 	</array>
-	<key>com.apple.security.process</key>
-	<true/>
 	<key>com.apple.security.scripting-targets</key>
 	<true/>
 </dict>
