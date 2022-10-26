@@ -555,6 +555,17 @@ public struct macOS_Subsystem {
             if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
                 out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
             }
+            for each in out {
+                if each == ", " {
+                    out.remove(at: out.firstIndex(of: each)!)
+                }
+                if each == " " {
+                    out.remove(at: out.firstIndex(of: each)!)
+                }
+                if each == "" {
+                    out.remove(at: out.firstIndex(of: each)!)
+                }
+            }
             if out.count > 1 {
                 for each in out {
                     if each == ", " {
