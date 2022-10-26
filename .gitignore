@@ -1,0 +1,4 @@
+*.xcodeproj/xcuserdata
+*.xcodeproj/*/xcuserdata
+xcuserdata
+*/*/*/xcuserdata
