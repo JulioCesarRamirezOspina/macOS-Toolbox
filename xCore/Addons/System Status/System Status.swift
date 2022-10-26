@@ -72,23 +72,6 @@ public class SystemStatus: xCore {
         }
     }
     // MARK: - functions
-    private static func deviceLogo() -> some View {
-        let device = macOS_Subsystem.MacPlatform().modelType
-        var imageName = "person.and.background.dotted"
-        let desktop = "desktopcomputer"
-        let book = "laptopcomputer"
-        let mini = "macmini"
-        let pro = "macpro.gen3"
-        switch device {
-        case .iMac: imageName = desktop
-        case .macBook, .macBookAir, .macBookPro: imageName = book
-        case .macMini: imageName = mini
-        case .macPro: imageName = pro
-        default: imageName = "questionmark"
-        }
-        return CustomViews.ImageView(imageName: imageName, opacity: 1, blurRadius: 0)
-    }
-    
     private static func deviceImage() -> Image {
         if SettingsMonitor.deviceImage == nil {
             let platform = macOS_Subsystem.MacPlatform()

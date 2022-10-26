@@ -71,6 +71,8 @@
 		9ABFD15C2908BC67003D7575 /* Notifications Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1392908BC67003D7575 /* Notifications Manager.swift */; };
 		9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */; };
 		9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13C2908BC67003D7575 /* Tor Networking.swift */; };
+		9AE89258290991F000D5208C /* macOS_ToolBoxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE89257290991F000D5208C /* macOS_ToolBoxUITests.swift */; };
+		9AE8925A290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE89259290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +96,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 9ABFD0942908BBA4003D7575;
 			remoteInfo = xCore;
+		};
+		9AE8925B290991F000D5208C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 9ABFD0102908BA02003D7575 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 9ABFD0172908BA02003D7575;
+			remoteInfo = "macOS ToolBox";
 		};
 /* End PBXContainerItemProxy section */
 
@@ -178,6 +187,9 @@
 		9ABFD1392908BC67003D7575 /* Notifications Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.swift"; sourceTree = "<group>"; };
 		9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift"; sourceTree = "<group>"; };
 		9ABFD13C2908BC67003D7575 /* Tor Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift"; sourceTree = "<group>"; };
+		9AE89255290991F000D5208C /* macOS ToolBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "macOS ToolBoxUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9AE89257290991F000D5208C /* macOS_ToolBoxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOS_ToolBoxUITests.swift; sourceTree = "<group>"; };
+		9AE89259290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOS_ToolBoxUITestsLaunchTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +216,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AE89252290991F000D5208C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -213,6 +232,7 @@
 				9ABFD1122908BC5A003D7575 /* xCore */,
 				9ABFD01A2908BA02003D7575 /* macOS ToolBox */,
 				9ABFD0A42908BBA5003D7575 /* xCoreTests */,
+				9AE89256290991F000D5208C /* macOS ToolBoxUITests */,
 				9ABFD0192908BA02003D7575 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -223,6 +243,7 @@
 				9ABFD0182908BA02003D7575 /* macOS ToolBox.app */,
 				9ABFD0952908BBA4003D7575 /* xCore.framework */,
 				9ABFD09E2908BBA5003D7575 /* xCoreTests.xctest */,
+				9AE89255290991F000D5208C /* macOS ToolBoxUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -406,6 +427,15 @@
 			path = Networking;
 			sourceTree = "<group>";
 		};
+		9AE89256290991F000D5208C /* macOS ToolBoxUITests */ = {
+			isa = PBXGroup;
+			children = (
+				9AE89257290991F000D5208C /* macOS_ToolBoxUITests.swift */,
+				9AE89259290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift */,
+			);
+			path = "macOS ToolBoxUITests";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -476,6 +506,24 @@
 			productReference = 9ABFD09E2908BBA5003D7575 /* xCoreTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		9AE89254290991F000D5208C /* macOS ToolBoxUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9AE8925D290991F000D5208C /* Build configuration list for PBXNativeTarget "macOS ToolBoxUITests" */;
+			buildPhases = (
+				9AE89251290991F000D5208C /* Sources */,
+				9AE89252290991F000D5208C /* Frameworks */,
+				9AE89253290991F000D5208C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				9AE8925C290991F000D5208C /* PBXTargetDependency */,
+			);
+			name = "macOS ToolBoxUITests";
+			productName = "macOS ToolBoxUITests";
+			productReference = 9AE89255290991F000D5208C /* macOS ToolBoxUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -494,6 +542,10 @@
 						LastSwiftMigration = 1410;
 					};
 					9ABFD09D2908BBA5003D7575 = {
+						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 9ABFD0172908BA02003D7575;
+					};
+					9AE89254290991F000D5208C = {
 						CreatedOnToolsVersion = 14.1;
 						TestTargetID = 9ABFD0172908BA02003D7575;
 					};
@@ -516,6 +568,7 @@
 				9ABFD0172908BA02003D7575 /* macOS ToolBox */,
 				9ABFD0942908BBA4003D7575 /* xCore */,
 				9ABFD09D2908BBA5003D7575 /* xCoreTests */,
+				9AE89254290991F000D5208C /* macOS ToolBoxUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -540,6 +593,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		9ABFD09C2908BBA5003D7575 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9AE89253290991F000D5208C /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -626,6 +686,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		9AE89251290991F000D5208C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9AE8925A290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift in Sources */,
+				9AE89258290991F000D5208C /* macOS_ToolBoxUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -643,6 +712,11 @@
 			isa = PBXTargetDependency;
 			target = 9ABFD0942908BBA4003D7575 /* xCore */;
 			targetProxy = 9ABFD0A82908BBA5003D7575 /* PBXContainerItemProxy */;
+		};
+		9AE8925C290991F000D5208C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 9ABFD0172908BA02003D7575 /* macOS ToolBox */;
+			targetProxy = 9AE8925B290991F000D5208C /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -959,6 +1033,42 @@
 			};
 			name = Release;
 		};
+		9AE8925E290991F000D5208C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XE9Q47HH3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xlab.macOS-ToolBoxUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "macOS ToolBox";
+			};
+			name = Debug;
+		};
+		9AE8925F290991F000D5208C /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5XE9Q47HH3;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 13.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.xlab.macOS-ToolBoxUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_TARGET_NAME = "macOS ToolBox";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -994,6 +1104,15 @@
 			buildConfigurations = (
 				9ABFD0B12908BBA5003D7575 /* Debug */,
 				9ABFD0B22908BBA5003D7575 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9AE8925D290991F000D5208C /* Build configuration list for PBXNativeTarget "macOS ToolBoxUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9AE8925E290991F000D5208C /* Debug */,
+				9AE8925F290991F000D5208C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

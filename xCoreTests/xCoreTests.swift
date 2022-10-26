@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import xCore
 
 final class xCoreTests: XCTestCase {
@@ -26,10 +27,35 @@ final class xCoreTests: XCTestCase {
         // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
 
-    func testPerformanceExample() throws {
+    func testPerformance_getModelYear() throws {
         // This is an example of a performance test case.
         self.measure {
-            // Put the code you want to measure the time of here.
+            print(macOS_Subsystem.getModelYear())
+        }
+    }
+    func testPerformance_MacPlatform() throws {
+        self.measure {
+            print(macOS_Subsystem.MacPlatform())
+        }
+    }
+    func testPerformance_getBatteryState() throws {
+        self.measure {
+            print(macOS_Subsystem.getBatteryState())
+        }
+    }
+    func testPerformance_osVersion() throws {
+        self.measure {
+            print(macOS_Subsystem.osVersion())
+        }
+    }
+    func testPerformance_memoryUsage() throws {
+        self.measure {
+            print(macOS_Subsystem.memoryUsage(.gigabyte))
+        }
+    }
+    func testPerformance_thermalLevel() throws {
+        self.measure {
+            print(macOS_Subsystem.thermalLevel())
         }
     }
 
