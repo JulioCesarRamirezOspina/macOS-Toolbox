@@ -67,10 +67,10 @@ public class BatteryDisplay: xCore {
         
         public var body: some View {
             VStack{
-                HStack{
-                    Text("battery.string")
-                    Spacer()
-                }
+//                HStack{
+//                    Text("battery.string")
+//                    Spacer()
+//                }
                 VStack{
                     HStack{
                         Text("powerSource.string")

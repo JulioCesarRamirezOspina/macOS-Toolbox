@@ -75,11 +75,11 @@ public class macOSUpdate: xCore {
         
         public var body: some View {
             VStack(alignment: alignment){
-                if showTitle {
-                    VStack{
-                        Text("macOSUpdate.string")
-                    }
-                }
+//                if showTitle {
+//                    VStack{
+//                        Text("macOSUpdate.string")
+//                    }
+//                }
                 ZStack{
                     RoundedRectangle(cornerRadius: 15)
                         .foregroundStyle(hovered && sysUpdateAvailable != .searching ? .blue : .clear)

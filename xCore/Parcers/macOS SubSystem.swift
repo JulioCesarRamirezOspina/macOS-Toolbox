@@ -295,30 +295,6 @@ public struct macOS_Subsystem {
     //
     //        return tuple
     //    }
-    public enum deviceType {
-        case iMac
-        case macMini
-        case macPro
-        case macBook
-        case macBookAir
-        case macBookPro
-        case xserve
-        case unknown
-    }
-    
-    public enum Size {
-        case screen11Inch
-        case screen12Inch
-        case screen13Inch
-        case screen15Inch
-        case screen16Inch
-        case screen17Inch
-        case screen20Inch
-        case screen21_5Inch
-        case screen24Inch
-        case screen27Inch
-        case unknownSize
-    }
     
     public static func getModelYear() -> (localizedString: String, serviceData: String) {
         let process = Process()

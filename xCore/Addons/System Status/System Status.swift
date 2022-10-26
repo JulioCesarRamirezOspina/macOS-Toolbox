@@ -177,6 +177,7 @@ public class SystemStatus: xCore {
         @State var emergencyPopover = false
         
         public var body: some View {
+            Spacer().frame(height: 50)
             GeometryReader { g in
                 VStack{
                     SwiftUI.ScrollView(.vertical, showsIndicators: true) {
@@ -278,16 +279,11 @@ public class SystemStatus: xCore {
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 5)
                         .transition(.asymmetric(insertion: .push(from: .top), removal: .push(from: .bottom)))
+                        .padding(.all)
                 }
             })
             .animation(SettingsMonitor.secondaryAnimation, value: toggle)
         }
     }
 
-}
-
-struct SystemStatusPreview: PreviewProvider {
-    static var previews: some View {
-        SystemStatus.StatusView()
-    }
 }
