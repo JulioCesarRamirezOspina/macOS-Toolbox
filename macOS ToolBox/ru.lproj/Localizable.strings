@@ -1,0 +1,336 @@
+/*
+  Localizable.strings
+ MultiTool
+
+  Created by Олег Сазонов on 06.06.2022.
+  
+*/
+"ok.button" = "OK";
+"cancel.button" = "Отмена";
+"quit.button" = "Выход";
+"passwordprompt.text" = "Введите пароль:";
+"wrongAtempts.text" = "Ошибок входа:";
+"password.placeholder" = "Пароль";
+"save.button" = "Сохранить";
+"settings.tab" = "Настройки";
+"password.settings" = "Пароль";
+"password.info" = "Сохранить для автоматического входа";
+"password.text" = "Пароль";
+"password.save" = "Сохранить пароль";
+"password.remove" = "Удалить пароль";
+"password.exists" = "Пароль сохранён";
+"password.wait" = "Подождите...";
+"connected.string" = "Подключено";
+"disconnected.string" = "Отключено";
+"connect.string" = "Подключить";
+"disconnect.string" = "Отключить";
+"removePassword.button" = "Удалить пароль";
+"connectedAsService.string" = "Подключено в фоне";
+"connectAsService.string" = "Подключиться в фоне";
+"debug.toggle" = "Показать консоль";
+"pending.string" = "Ожидание...";
+"sucDis.string" = "Разрыв соединения успешен. ";
+"unSucDis.string" = "Во время разъединения произошла ошибка. ";
+"bootcamp.title1" = "Я запущу";
+"bootcamp.title2" = "с выбранного раздела";
+"ok.button" = "OK";
+"cancel.button" = "Отмена";
+"rebootnow.button" = "Перезапустить";
+"parallels.title" = "Я могу запустить выбранную виртуальную машину";
+"parallels.picker" = "Виртуальные машины:";
+"launch.button" = "Запустить";
+"quit.button" = "Выход";
+"passwordprompt.text" = "Введите пароль:";
+"wrongAtempts.text" = "Неправильных попыток ввода:";
+"password.placeholder" = "Пароль";
+"bootcamp.button" = "BootCamp";
+"parallels.button" = "Parallels Desktop";
+"noDisk.button" = "Невозможно найти раздел BootCamp";
+"novm.text" = "Виртуальные машины не найдены";
+"setDevice1.button" = "Назначить";
+"setDevice2.button" = "диском для запуска";
+"nextOnly.toggle" = "Только следующий запуск";
+"empty.warning" = "Не было обнаружено виртуальных машин и разделов Windows BootCamp";
+"refresh.button" = "Обновить";
+"finder.text" = "Показать в Finder";
+"bootcamp.picker" = "Раздел BootCamp:";
+"save.button" = "Сохранить";
+"select.parallelsDir" = "Изменить";
+"settings.tab" = "Настройки";
+"curr.dir:" = "Текущее расположение:";
+"goBack.button" = "Назад";
+"vms_and_bc.tab" = "BootCamp и VM";
+"bootcamp.settings" = "BootCamp";
+"parallels.settings" = "Parallels";
+"password.settings" = "Пароль";
+"password.info" = "Сохраните для автовхода";
+"password.text" = "Пароль";
+"password.save" = "Сохранить";
+"password.remove" = "Удалить";
+"password.exists" = "Ваш пароль сохранён";
+"password.wait" = "Подождите...";
+"utm.title" = "Я могу запустить выбранную виртуальную машину";
+"utm.picker" = "Виртуальные машины:";
+"utm.button" = "UTM";
+"utm.settings" = "UTM";
+"select.utmDir" = "Изменить";
+"vm.key" = "Виртуальные машины";
+"welcome.string" = "Привет и добро пожаловать в этот мультитул! Выбирите инструмент из списка слева";
+"developerTeam" = "~X~ Lab";
+"passwordprompt.text" = "Введите пароль";
+"password.placeholder" = "Пароль";
+"ok.button" = "ОК";
+"cancel.button" = "Отмена";
+"enroll.button" = "Начать";
+
+"unenroll.button" = "Выйти из тестирования";
+"main.title" = "Я помогу вашему Mac получить macOS Beta";
+"change.title" = "Хотите выйти или сменить программу тестирования?";
+"selectprogram.text" = "Выберите канал:";
+"seed.public" = "Публичная бета";
+"seed.dev" = "Бета для разработчиков";
+"seed.none" = "Не тестируется";
+"seed.current" = "Текущий канал:";
+"channel.dev" = "Канал обновлений для разработчиков";
+"channel.public" = "Публичный канал обновлений";
+"channel.none" = "Не участвует в тестировании";
+"osIsBeta.string" = "Установлена macOS Beta";
+
+"checkupdates.toggle" = "Проверить обновления ПО";
+"exit.toggle" = "Выйти по завершению";
+"app.name" = "macOS Beta Testing";
+"pb.not" = "Развернут в Public Beta";
+"db.not" = "Развернут в Developer Beta";
+"un.not" = "Выведен из Beta";
+"wrongAtempts.text" = "Неверных попыток ввода:";
+"save.password" = "Сохранить пароль";
+"remove.password" = "Удалить пароль";
+"noPassword.string" = "Пароль не введён. Зайдите в настройки и сохраните пароль.";
+"settings.string" = "Настройки";
+"camperView.string" = "BootCamp, вирты, Dual Boot";
+"torView.string" = "TOR VPN SOCKS ПРОКСИ";
+"settingsView.string" = "Тут есть пара-тройка настроек приложения. Со временем их будет больше, как и функционала у приложения...";
+"alreadyConnected.string" = "Соединение уже было установлено.";
+
+"tid.title" = "TouchID по всей macOS";
+"done.title" = "TouchID активирован.";
+"done.disabled.title" = "TouchID деактивирован.";
+"status.title" = "Статус:";
+"switch.button" = "Переключить";
+"cancel.button" = "Отмена";
+"enabled.string" = "Включено";
+"disabled.string" = "Выключено";
+"exit.button" = "Готово";
+"done.string" = "Готово";
+"return.button" = "Назад";
+"password.prompt" = "Введите пароль:";
+"password.text" = "Пароль";
+
+"settingsOverview.string" = "Обзор настроек";
+"parallelsDir.string" = "Путь Parallels: ";
+"utmDir.string" = "Путь UTM: ";
+"passwordSavedTrue.string" = "Пароль сохранён";
+"passwordSavedFalse.string" = "Пароль не сохранён";
+"passwordState.string" = "Статус пароля:";
+"undefined.string" = "НЕ НАСТРОЕНО";
+"backToOverview.settings" = "Назад к обзору";
+"mainAnimationDuration.string" = "Длительность анимации на главном экране";
+"secondaryAnimationDuration.string" = "Длительность анимации на остальных экранах";
+"navigationAnimationDuration.string" = "Длительность анимации панелей навигации";
+"anim.settings" = "Настройки анимаций";
+"batteryAnimation.string" = "Анимации батареи на главном экрне";
+
+"ultrafast.string" = "Очень быстро";
+"fast.string"= "Быстро";
+"norm.string"= "Нормально";
+"slow.string"= "Медленно";
+"off.string" = "Выключено";
+
+"defaults.string" = "По умолчанию";
+"WARNING.STRING" = "ВНИМАНИЕ";
+"warning.details.string" = "Эти три кнопки СБРОСЯТ ВАШИ настройки к \"заводским\". Чтобы изменения вступили в силу мультитул перезапустится.";
+"parallels.default" = "Эта кнопка вернёт значение настройки к папке Parllels, расположенной в домашней директории";
+"all.default" = "СТРЕТЕТЬ ВСЁ\nИДЕНТИФИКАТОР ДЛЯ ПОДПИСИ ПАКЕТОВ\nПАРОЛЬ ПОЛЬЗОВАТЕЛЯ\nРАБОЧИЕ ПАПКИ PARALLELS И UTM";
+"UTM.default" = "Эта кнопка вернёт значение настройки к папке UTM, расположенной в папке контейнеров в библиотеке ";
+
+"enable.string" = "Включить";
+"disable.string" = "Выключить";
+
+"clear.button" = "Очистить";
+"userCaches.string" = "Пользовательский кеш";
+
+"packer.title" = "Я упакую выбранное приложение в пакет";
+"pwdTitle.text" = "Введите пароль:";
+"pwd.text" = "Пароль";
+"default.text" = "Приложение для упаковки";
+"future.text" = "Путь будущей установки";
+"save.text" = "Путь к .pkg";
+"att.text" = "Внимание!";
+"attDescr.text" = "Приложение может показаться зависшим, но это не так";
+"jobDone" = "Упаковка завершена";
+"first.not" = "Приложение";
+"second.not" = "успешно упаковано";
+"select.button" = "Выбрать";
+"default.button" = "По умолчанию";
+"start.button" = "Начать";
+"cancel.button" = "Отмена";
+"packer.name" = "Упаковщик";
+"refresh.string" = "Обновить";
+"columns.string" = "Столбцы";
+"rows.string" = "Строки";
+"reset.string" = "Сбросить";
+
+"powermode.string" = "Режим сна";
+"sleepManager.string" = "Сон";
+"hibernationDisabled.string" = "Сон выключен";
+"hibernationWithoutPoweroff.string" = "Обычный сон";
+"hibernationWithPoweroff.string" = "Сон с выключением питания";
+"undefined.string" = "Неопределено";
+"clicktoquit.string" = "Нажмите, чтобы выйти или нажмите \"esc\"";
+"ramStatus.string" = "Статус RAM";
+"diskLabel.string" = "Имя диска";
+"createDisk.string" = "Создать диск";
+"gig.string" = "ГБ";
+"tib.string" = "ТБ";
+"mib.string" = "МБ";
+"ramDiskVolume.string" = "Объём диска";
+"clearRAM.string" = "Очистить RAM";
+"noRAM.string" = "Слишком мало памяти для создания диска.\nПопробуйте закрыть лишние приложения\nи/или очистить память с помощью кнопки\nсправа-снизу.";
+"sign.string" = "Подписать";
+"startover.string" = "Начать заново";
+"clearRAMPages.string" = "Очистить неиспользуемые страницы RAM";
+"ramSubview.string" = "Два варианта: тот, что слева, быстрый, но не особо эффективный.\nТот, что справа медленный, но более эффективный.\nВыбирай с умом.";
+"drivePlaceholder.string" = "RAM — диск";
+"eject.button" = "Извлечь все";
+"ejectSingle.button" = "Извлечь диск";
+"eject.reason" = "извлечь диск";
+"incorrectPassword.string" = "Введён неверный пароль";
+"autofill.string" = "Автозаполнить";
+"currentDeveloperIDInstaller.string" = "Developer ID Installer";
+"newDevID.string" = "Developer ID Installer";
+"noDevID.string" = "Developer ID Installer не существует";
+"bootcamp.fail" = "Выбранный раздел не подлежит запуску\nПерейдите в настройки и выберите другой раздел";
+"volumeToBoot.string" = "Раздел для запуска";
+"empty.bcSettings.warning" = "Не найдено загружаемых разделов / дисков";
+"preventSleep.string" = "Запретить сон";
+"screenAllowedToSleep.string" = "Разрешить экрану спать";
+"sleepNow.string" = "Спать";
+"cantSLeep.string" = "Некоторые приложения тоже умеют перехватывать управление сном и могут не позволять спать Mac'y";
+
+"singleAppMode.string" = "Режим одного приложения";
+"dockAutohide.string" = "Автоскрытие Dock";
+"animDelay.string" = "Задержка анимации";
+"animSpeed.string" = "Скорость анимации";
+"animType.string" = "Тип анимации";
+"suckAnim.string" = "Всасывание";
+"genieAnim.string" = "Джин";
+"scaleAnim.string" = "Маштабирование";
+
+"right.string" = "Справа";
+"left.string" = "Слева";
+"bottom.string" = "Снизу";
+"dockOrientation.string" = "Положение на экране";
+"dockMagnification.string" = "Увеличение";
+"dockKey.string" = "Основные настройки";
+"enableAutohide.reason" = "Сначала включите автоскрытие";
+"disableSA.reason" = "Сначала выключите режим одного приложения";
+"addons.string" = "Дополнительные возможности";
+
+"switchToSun.string" = "Назад";
+"switchToChart.string" = "График";
+"reboot.reason" = "Чтобы изменения вступили в силу вам необходимо перезапустить Mac";
+"rebootNow.string" = "Перезапустить сейчас";
+"singleAppEnabled.reason" = "Сначала выключите режим одного приложения";
+"narrowSpacer.string" = "Добавить маленький разделитель";
+"diskNotification.string" = "Позволить macOS извлекать диски без \"безопасного извлечения\"";
+"wideSpacer.string" = "Добавить обычный разделитель";
+"additions.string" = "Дополнительные возможности";
+"recentApps.string" = "Недавние приложения";
+"hiddenGrayedOut.string" = "Скрытые приложения становятся серыми";
+"maintenance.string" = "Запустить сценарии обслуживания macOS";
+"run.string" = "Выполнить";
+"maintenanceLast.string" = "Последний запуск";
+
+"calculating.string" = "Подсчёт...";
+"battery.string" = "Аккумулятор";
+"timeRemaining.string" = "Времени осталось";
+"battstate.onInternal" = "Аккумулятор";
+"battstate.onAC" = "Зарядное устройство";
+"battstate.notCharging" = "Не заряжается";
+
+"batt.dis" = "Разрядка";
+"batt.on" = "Заряжается";
+"batt.comp" = "Заряжена";
+"batt.onAC" = "Подключен внешний блок питания";
+"batt.fin" = "Завершение зарядки";
+"batt.lowPowerMode" = "Режим энергосбережения";
+"batt.enableLowPowerMode" = "Включить режим энергосбережения";
+"batt.disableLowPowerMode" = "Выключить режим энергосбережения";
+"clensing.string" = "Очистка в процессе";
+"powerSource.string" = "Источник питания:";
+"chargingState.string" = "Статус зарядки:";
+
+"used.string" = "Используется";
+"active.string" = "Активно";
+"wired.string" = "Память системы";
+"compressed.string" = "Сжато";
+"inactive.string" = "Неактивно";
+"totalRAM.string" = "Всего памяти";
+"cachedFiles.string" = "Кэшировано";
+"ramStatus.string" = "Состояние RAM";
+"clear_RAM.string" = "Очистка памяти";
+
+"memPressure" = "Давление в памяти:";
+"memPressure.nominal" = "номинальное";
+"memPressure.warning" = "высокое";
+"memPressure.critical" = "критическое";
+"memPressure.undefined" = "неопределено";
+
+"colorSchemeSwitch.string" = "Переключить";
+"colorSchemeDefault.string" = "Оформление macOS";
+"applicationTheme.string" = "Оформление приложения";
+"lightMode.String" = "Светлая тема";
+"auto.string" = "Автоматически";
+"darkMode.string" = "Тёмная тема";
+
+"systemDisk.string" = "Системный диск";
+"space.string" = "Использованное пространство";
+"diskData.string" = "Подключенные разделы";
+"volumesSearch.string" = "Поиск разделов...";
+
+"choose.string" = "Выберите действие:";
+"clearCaches.string" = "Очистить кеш";
+
+"overview.string" = "Обзор";
+
+"sysUpdateAvailable.string" = "Доступно обновление macOS";
+"currentOS.string" = "Текущая сборка";
+"bn.string" = "Сборка";
+"sysUpdateInProgress.string" = "Поиск обновлений macOS";
+"sysUpdateNotAvailable.string" = "Нет доступных обновлений macOS";
+"macOSUpdate.string" = "Обновления macOS";
+"sysUpdateNoInternet.string" = "Нет соединения c сервером обновлений. Проверьте соединение и повторите попытку";
+"sysUpdateCheck.string" = "Проверить наличие обновлений macOS";
+
+"cachesClear.reason" = "очистить пользовательский кеш";
+"NODISKACCESS" = "Для очистки кешей приложению необходим полный доступ к диску.";
+"openDiskAccessPrefPane.string" = "Открыть настройки доступа";
+"justForCaches.string" = "Разрешение нужно только для очистки кешей. Никакие другие данные не будут затронуты.";
+
+"cpuLoad.string" = "Нагрузка на процессор";
+"coresCount.string" = "Ядер";
+"user.string" = "Пользователь";
+"system.string" = "Система";
+"load.string" = "Нагрузка";
+
+"chip.string" = "Процессор";
+"memory.string" = "Память";
+"macOS.string" = "macOS";
+"graphics.string" = "Графика";
+"bootDrive.string" = "Загрузочный диск";
+"serial.string" = "Серийный номер";
+"inch.string" = "-дюймовый";
+"year.string" = "г.";
+
+"more.string" = "Подробнее";
+

@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A2F4EC92908BE5600084B2B /* Localizable.strings */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
 		9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0482908BA2E003D7575 /* Assets.xcassets */; };
-		9ABFD0642908BA2E003D7575 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0492908BA2E003D7575 /* Localizable.strings */; };
 		9ABFD09F2908BBA5003D7575 /* xCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; };
 		9ABFD0A62908BBA5003D7575 /* xCoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0A52908BBA5003D7575 /* xCoreTests.swift */; };
 		9ABFD0AA2908BBA5003D7575 /* xCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; };
@@ -34,7 +34,6 @@
 		9ABFD10B2908BC02003D7575 /* TouchID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F32908BC02003D7575 /* TouchID.swift */; };
 		9ABFD10C2908BC02003D7575 /* TimeButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F42908BC02003D7575 /* TimeButton.swift */; };
 		9ABFD10D2908BC02003D7575 /* Sleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F52908BC02003D7575 /* Sleep.swift */; };
-		9ABFD10E2908BC02003D7575 /* AnimText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F62908BC02003D7575 /* AnimText.swift */; };
 		9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F72908BC02003D7575 /* Packer.swift */; };
 		9ABFD1102908BC02003D7575 /* Main View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F82908BC02003D7575 /* Main View.swift */; };
 		9ABFD1112908BC02003D7575 /* Main Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F92908BC02003D7575 /* Main Scene.swift */; };
@@ -113,11 +112,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A2F4EC82908BE5600084B2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A2F4ECA2908BE8B00084B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "macOS ToolBox.entitlements"; sourceTree = "<group>"; };
 		9ABFD0482908BA2E003D7575 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9ABFD0492908BA2E003D7575 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		9ABFD0952908BBA4003D7575 /* xCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD09E2908BBA5003D7575 /* xCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = xCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD0A52908BBA5003D7575 /* xCoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = xCoreTests.swift; sourceTree = "<group>"; };
@@ -141,7 +141,6 @@
 		9ABFD0F32908BC02003D7575 /* TouchID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TouchID.swift; sourceTree = "<group>"; };
 		9ABFD0F42908BC02003D7575 /* TimeButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeButton.swift; sourceTree = "<group>"; };
 		9ABFD0F52908BC02003D7575 /* Sleep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Sleep.swift; sourceTree = "<group>"; };
-		9ABFD0F62908BC02003D7575 /* AnimText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnimText.swift; sourceTree = "<group>"; };
 		9ABFD0F72908BC02003D7575 /* Packer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift; sourceTree = "<group>"; };
 		9ABFD0F82908BC02003D7575 /* Main View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main View.swift"; sourceTree = "<group>"; };
 		9ABFD0F92908BC02003D7575 /* Main Scene.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main Scene.swift"; sourceTree = "<group>"; };
@@ -233,7 +232,7 @@
 			children = (
 				9ABFD0DF2908BC02003D7575 /* Views */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
-				9ABFD0492908BA2E003D7575 /* Localizable.strings */,
+				9A2F4EC92908BE5600084B2B /* Localizable.strings */,
 				9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */,
 				9ABFD02A2908BA2D003D7575 /* Preview Content */,
 			);
@@ -297,7 +296,6 @@
 				9ABFD0F32908BC02003D7575 /* TouchID.swift */,
 				9ABFD0F42908BC02003D7575 /* TimeButton.swift */,
 				9ABFD0F52908BC02003D7575 /* Sleep.swift */,
-				9ABFD0F62908BC02003D7575 /* AnimText.swift */,
 				9ABFD0F72908BC02003D7575 /* Packer.swift */,
 			);
 			path = "Functional Views";
@@ -508,6 +506,7 @@
 			knownRegions = (
 				en,
 				Base,
+				ru,
 			);
 			mainGroup = 9ABFD00F2908BA02003D7575;
 			productRefGroup = 9ABFD0192908BA02003D7575 /* Products */;
@@ -527,7 +526,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */,
-				9ABFD0642908BA2E003D7575 /* Localizable.strings in Resources */,
+				9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */,
 				9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -564,7 +563,6 @@
 				9ABFD1092908BC02003D7575 /* Dock.swift in Sources */,
 				9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */,
 				9ABFD1002908BC02003D7575 /* DevID.swift in Sources */,
-				9ABFD10E2908BC02003D7575 /* AnimText.swift in Sources */,
 				9ABFD0FA2908BC02003D7575 /* SettingsView.swift in Sources */,
 				9ABFD1072908BC02003D7575 /* Launchpad.swift in Sources */,
 				9ABFD10D2908BC02003D7575 /* Sleep.swift in Sources */,
@@ -648,11 +646,24 @@
 		};
 /* End PBXTargetDependency section */
 
+/* Begin PBXVariantGroup section */
+		9A2F4EC92908BE5600084B2B /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A2F4EC82908BE5600084B2B /* en */,
+				9A2F4ECA2908BE8B00084B2B /* ru */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
 		9ABFD0252908BA03003D7575 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -711,6 +722,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
