@@ -264,9 +264,9 @@ public class SystemStatus: xCore {
         public var body: some View {
             VStack{
                 if toggle {
-                    StatusView().transition(.asymmetric(insertion: .push(from: .top), removal: .push(from: .bottom)))
+                    StatusView().transition(.push(from: toggle ? .top : .bottom))
                 } else {
-                    InfoView().transition(.asymmetric(insertion: .push(from: .top), removal: .push(from: .bottom)))
+                    InfoView().transition(.push(from: toggle ? .top : .bottom))
                 }
             }
             .background(content: {
@@ -274,7 +274,7 @@ public class SystemStatus: xCore {
                     RoundedRectangle(cornerRadius: 15)
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 5)
-                        .transition(.asymmetric(insertion: .push(from: .top), removal: .push(from: .bottom)))
+                        .transition(.push(from: toggle ? .top : .bottom))
                         .padding(.all)
                 }
             })

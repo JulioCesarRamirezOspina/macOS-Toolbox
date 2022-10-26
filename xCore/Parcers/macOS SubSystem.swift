@@ -526,7 +526,6 @@ public struct macOS_Subsystem {
                 out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
                 out.append(", ")
             }
-            process?.waitUntilExit()
             process?.terminate()
             process = nil
             pipe = nil
@@ -541,7 +540,6 @@ public struct macOS_Subsystem {
                 out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
                 out.append(", ")
             }
-            process?.waitUntilExit()
             process?.terminate()
             process = nil
             pipe = nil
