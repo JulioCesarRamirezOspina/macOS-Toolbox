@@ -333,3 +333,7 @@
 "year.string" = " year";
 
 "more.string" = "More";
+
+"arm.string" = "Apple Silicon";
+"intel.string" = "Intel";
+"rosetta.string" = "Apple Silicon (Rosetta 2)";

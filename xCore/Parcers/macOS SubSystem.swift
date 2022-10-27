@@ -351,8 +351,8 @@ public struct macOS_Subsystem {
         }
     }
     
-    public static func MacPlatform() -> (model: String ,screenSize: String, modelType: deviceType, screenSizeInt: Int) {
-        
+    public static func MacPlatform() -> (model: String, screenSize: String, modelType: deviceType, screenSizeInt: Int, platform: String, platformServiceData: platform) {
+
         func getVersionCode() -> String {
             var size : Int = 0
             sysctlbyname("hw.model", nil, &size, nil, 0)
@@ -416,7 +416,7 @@ public struct macOS_Subsystem {
                 return Size.unknownSize
             }
         }
-        func comparator() -> (model: String, screenSize: String, modelType: deviceType, screenSizeInt: Int) {
+        func comparator() -> (model: String, screenSize: String, modelType: deviceType, screenSizeInt: Int, platform: String, platformServiceData: platform) {
             var mo = ""
             var size = 0
             let versionCode = getVersionCode()
@@ -485,9 +485,8 @@ public struct macOS_Subsystem {
                     size -= 1
                 }
             }
-            return (mo, "\(Int(size))\(StringLocalizer("inch.string"))", getType(code: getVersionCode()), size)
+            return (mo, "\(Int(size))\(StringLocalizer("inch.string"))", getType(code: getVersionCode()), size, isArm() ? StringLocalizer("arm.string") : Int(getModelYear().serviceData)! >= 2020 ? StringLocalizer("rosetta.string") : StringLocalizer("intel.string"), isArm() ? .AppleSilicon : Int(getModelYear().serviceData)! >= 2020 ? .AppleSiliconRosetta : .Intel)
         }
-        
         return comparator()
     }
     

@@ -186,3 +186,9 @@ public enum Size {
     case screen27Inch
     case unknownSize
 }
+
+public enum platform {
+    case AppleSilicon
+    case AppleSiliconRosetta
+    case Intel
+}
