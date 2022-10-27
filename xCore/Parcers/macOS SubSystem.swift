@@ -576,7 +576,7 @@ public struct macOS_Subsystem {
                         out.remove(at: out.firstIndex(of: each)!)
                     }
                 }
-                out.insert(", ", at: 1)
+                out[0] = out[0] + ", "
             }
             return out
         } catch let error {
