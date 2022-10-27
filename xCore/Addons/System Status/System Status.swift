@@ -48,7 +48,7 @@ public class SystemStatus: xCore {
     }
     private static var graphics: stringData {
         get {
-            let GPUs = macOS_Subsystem().gpuName()
+            let GPUs = macOS_Subsystem.gpuName()
             var gpuLabels = ""
             
             for gpu in GPUs {
