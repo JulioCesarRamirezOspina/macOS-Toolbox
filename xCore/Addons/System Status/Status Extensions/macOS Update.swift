@@ -82,7 +82,7 @@ public class macOSUpdate: xCore {
 //                }
                 ZStack{
                     RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle(hovered && sysUpdateAvailable != .searching ? .blue : .clear)
+                        .foregroundStyle(hovered && !hovered2 && sysUpdateAvailable != .searching ? .blue : .clear)
                     switch sysUpdateAvailable {
                     case .available:
                         RoundedRectangle(cornerRadius: 15)
@@ -150,7 +150,7 @@ public class macOSUpdate: xCore {
                         }
                     }.padding(.all)
                 }
-                .glow(color: (hovered || hovered2) && sysUpdateAvailable != .searching ? dynamicColor : .clear, anim: hovered)
+                .glow(color: hovered && !hovered2 && sysUpdateAvailable != .searching ? dynamicColor : .clear, anim: hovered)
                 .frame(height: halfScreen ? geometry.height / 2 : geometry.height)
                 .onHover(perform: { Bool in
                     if sysUpdateAvailable != .noConnection {
@@ -197,6 +197,7 @@ public class macOSUpdate: xCore {
                                 }
                             })
                     }
+                    .glow(color: (hovered2) && sysUpdateAvailable != .searching ? .yellow : .clear, anim: hovered)
                     .padding(.all)
                 }
             }
