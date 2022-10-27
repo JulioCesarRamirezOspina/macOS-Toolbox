@@ -213,7 +213,7 @@ public class DisksDisplay: xCore {
                         }
                     }
                 }
-                .glow(color: selfHovered[index] ? disksData[index].tintColor : .clear, anim: selfHovered[index])
+                .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
             })
         }
         
