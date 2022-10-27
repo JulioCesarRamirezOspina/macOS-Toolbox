@@ -479,8 +479,11 @@ public struct macOS_Subsystem {
                 return retval
             }
             
-            if Int(getModelYear().serviceData) != nil && Int(getModelYear().serviceData)! >= 2018 && !isArm() {
+            if Int(getModelYear().serviceData) != nil || Int(getModelYear().serviceData)! >= 2018 && !isArm() {
                 size += 1
+                if Int(getModelYear().serviceData)! >= 2020 {
+                    size -= 1
+                }
             }
             return (mo, "\(Int(size))\(StringLocalizer("inch.string"))", getType(code: getVersionCode()), size)
         }
