@@ -15,5 +15,3 @@ FOUNDATION_EXPORT double xCoreVersionNumber;
 FOUNDATION_EXPORT const unsigned char xCoreVersionString[];
 
 // In this header, you should import all the public headers of your framework using statements like #import <SUDO_STUFF/PublicHeader.h>
-
-
