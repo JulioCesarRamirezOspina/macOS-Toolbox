@@ -123,6 +123,7 @@
 /* Begin PBXFileReference section */
 		9A2F4EC82908BE5600084B2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A2F4ECA2908BE8B00084B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A5E706B290C1887000F479A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "macOS-ToolBox-Info.plist"; sourceTree = SOURCE_ROOT; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -327,6 +328,7 @@
 		9ABFD1122908BC5A003D7575 /* xCore */ = {
 			isa = PBXGroup;
 			children = (
+				9A5E706B290C1887000F479A /* Info.plist */,
 				9ABFD1132908BC66003D7575 /* Addons */,
 				9ABFD1352908BC67003D7575 /* App Settings */,
 				9ABFD12B2908BC67003D7575 /* Camper */,
@@ -945,6 +947,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = xCore/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -979,6 +982,7 @@
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = xCore/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
