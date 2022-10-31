@@ -114,7 +114,7 @@ public class SystemStatus: xCore {
                     }
                 }
             }
-            
+            NSLog("Image saved")
             return image
         } else {
             return Image(nsImage: NSImage(contentsOf: SettingsMonitor.deviceImage!)!)
@@ -146,14 +146,49 @@ public class SystemStatus: xCore {
     }
     // MARK: - Info View
     public struct InfoView: View {
-        public init() {}
+        public init(toggle: Binding<Bool>, withButton: Bool = false) {
+            _isMore = toggle
+            self.showButton = withButton
+        }
         @State var hovered = false
+        @Binding var isMore: Bool
+        @State var hovered2 = false
+        var showButton: Bool
         public var body: some View {
-            GeometryReader { g in 
+            GeometryReader { g in
                 SwiftUI.ScrollView(.vertical, showsIndicators: true) {
                     VStack{
                         Spacer().frame(height: 50)
-                        deviceImage().shadow(radius: 15).padding(.all)
+                        if showButton {
+                            ZStack{
+                                deviceImage().shadow(radius: 15)
+                                    .padding(.all)
+                                    .onHover { t in
+                                        hovered2 = t
+                                    }
+                                    .onTapGesture {
+                                        isMore.toggle()
+                                    }
+                                VStack{
+                                    if hovered2 {
+                                        //CustomViews.AppLogo(width: 100, height: 100)
+                                        Text("\(StringLocalizer("more.string").uppercased())")
+                                            .font(.title2)
+                                            .bold()
+                                            .shadow(radius: 5)
+                                            .foregroundColor(.secondary)
+                                            .padding(.all)
+                                    } else {
+                                        EmptyView()
+                                    }
+                                }
+                                .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
+                            }
+                        } else {
+                            deviceImage()
+                                .shadow(radius: 15)
+                                .padding(.all)
+                        }
                         Text(modelName.label).font(.largeTitle)
                         Text(modelName.value).font(.title3).foregroundColor(.secondary)
                         Spacer()
@@ -257,16 +292,18 @@ public class SystemStatus: xCore {
     }
     // MARK: - Switcher View
     public struct Switcher: View {
-        public init(toggleViews: Binding<Bool>) {
+        public init(toggleViews: Binding<Bool>, withButton: Bool) {
             _toggle = toggleViews
+            self.withButton = withButton
         }
         @Binding var toggle: Bool
+        var withButton: Bool
         public var body: some View {
             VStack{
                 if toggle {
                     StatusView().transition(.push(from: toggle ? .top : .bottom))
                 } else {
-                    InfoView().transition(.push(from: toggle ? .top : .bottom))
+                    InfoView(toggle: $toggle, withButton: withButton).transition(.push(from: toggle ? .top : .bottom))
                 }
             }
             .background(content: {

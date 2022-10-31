@@ -72,12 +72,17 @@ struct MainView: View {
 					}
 				}
 			Spacer()
-			SystemStatus.Switcher(toggleViews: $isMore)
-			Button(isMore ? "goBack.button" : "more.string") {
-				isMore.toggle()
-			}
-			.buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: 150, height: 50, color: .blue))
-			.padding(.all)
+			SystemStatus.Switcher(toggleViews: $isMore, withButton: true)
+//			Button(isMore ? "goBack.button" : "more.string") {
+//				isMore.toggle()
+//			}
+            if isMore {
+                Button("goBack.button") {
+                    isMore.toggle()
+                }
+                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: 150, height: 50, color: .blue))
+                .padding(.all)
+            }
 		}
 	}
 	

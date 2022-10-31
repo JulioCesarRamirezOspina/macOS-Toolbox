@@ -95,34 +95,54 @@ public class CustomViews: xCore {
     
     /// Displays App Icon in App
     public struct AppLogo: View{
-        public init(){}
+        public init(width: CGFloat = 180, height: CGFloat = 180){
+            self.width = width
+            self.height = height
+        }
         @Environment(\.colorScheme) var cs
         let symbolColor: Color = Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.6093161702, blue: 0.8442775607, alpha: 1)))
         let backgroundColor: Color = Color(nsColor: NSColor(#colorLiteral(red: 0.09230715781, green: 0.1385565102, blue: 0.3585530519, alpha: 1)))
         let shadowColor = Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.5297808051, blue: 0.7691841125, alpha: 1)))
+        var width: CGFloat
+        var height: CGFloat
+        
+        private func proportion(_ x: CGFloat, _ p: CGFloat) -> CGFloat {
+            return x / 100 * p
+        }
+        
+        private func textProp(_ s: CGSize) -> CGFloat {
+            let x = s.width
+            let y = s.height
+            if x > y {
+                return x
+            } else {
+                return y
+            }
+        }
+        
         public var body: some View {
             VStack(alignment: .center) {
                 HStack(alignment: .center) {
                     ZStack{
                         if cs != .light {
                             RoundedRectangle(cornerRadius: 30)
-                                .frame(width: 150, height: 150, alignment: .center)
+                                .frame(width: proportion(width, 85), height: proportion(height, 85), alignment: .center) //85
                                 .foregroundColor(backgroundColor)
                                 .blur(radius: 0)
                             RoundedRectangle(cornerRadius: 30)
-                                .frame(width: 160, height: 160, alignment: .center)
+                                .frame(width: proportion(width, 89), height: proportion(height, 89), alignment: .center) //85
                                 .foregroundStyle(.ultraThinMaterial)
                                 .blur(radius: 2)
                                 .shadow(color: shadowColor, radius: 15)
                         }
                         Image(systemName: "command")
-                            .font(.custom("San Francisco", size: 140))
+                            .font(.custom("San Francisco", size: proportion(textProp(CGSize(width: width, height: height)), 78))) //78
                             .fontWeight(.light)
-                            .foregroundStyle(RadialGradient(colors: [symbolColor], center: .center, startRadius: 0, endRadius: 140))
+                            .foregroundStyle(RadialGradient(colors: [symbolColor], center: .center, startRadius: 0, endRadius: proportion(textProp(CGSize(width: width, height: height)), 78))) //78
                             .shadow(radius: 15)
                             .shadow(color: shadowColor, radius: -1)
-                            .frame(width: 150, height: 150, alignment: .center)
-                    }.frame(width: 180, height: 180, alignment: .center)
+                            .frame(width: width / 100 * 85, height: height / 100 * 85, alignment: .center)
+                    }.frame(width: width, height: height, alignment: .center)
                 }
             }
         }
