@@ -67,10 +67,6 @@ public class BatteryDisplay: xCore {
         
         public var body: some View {
             VStack{
-//                HStack{
-//                    Text("battery.string")
-//                    Spacer()
-//                }
                 VStack{
                     HStack{
                         Text("powerSource.string")
@@ -144,7 +140,6 @@ public class BatteryDisplay: xCore {
                     .frame(height: 10)
                     .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
                     ProgressView(value: Percentage, total: 100)
-//                        .tint(isInLowPower && Int(Percentage) > 20 ? .mint : Int(Percentage) <= 20 ? .red : Int(Percentage) <= 50 ? .blue : Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.9767891765, blue: 0, alpha: 1))))
                         .tint(dynamicColor)
                         .shadow(radius: 2)
                         .animation(SettingsMonitor.secondaryAnimation, value: Percentage)

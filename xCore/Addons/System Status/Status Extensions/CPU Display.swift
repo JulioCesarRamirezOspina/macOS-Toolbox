@@ -23,10 +23,6 @@ public class CPUDisplay: xCore {
         
         public var body: some View {
             VStack{
-//                HStack {
-//                    Text("CPU")
-//                    Spacer()
-//                }
                 ZStack{
                     VStack{
                         HStack{

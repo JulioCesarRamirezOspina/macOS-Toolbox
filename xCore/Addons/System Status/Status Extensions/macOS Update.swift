@@ -71,15 +71,13 @@ public class macOSUpdate: xCore {
             default:
                 LocalNotificationManager().clear()
             }
+            delay(after: 2) {
+                hovered2 = false
+            }
         }
         
         public var body: some View {
             VStack(alignment: alignment){
-//                if showTitle {
-//                    VStack{
-//                        Text("macOSUpdate.string")
-//                    }
-//                }
                 ZStack{
                     RoundedRectangle(cornerRadius: 15)
                         .foregroundStyle(hovered && !hovered2 && sysUpdateAvailable != .searching ? .blue : .clear)

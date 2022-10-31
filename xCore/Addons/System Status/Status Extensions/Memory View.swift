@@ -72,10 +72,6 @@ public class MemoryDisplay: xCore {
         }
         public var body: some View {
             VStack{
-//                HStack{
-//                    Text("RAM")
-//                    Spacer()
-//                }
                 VStack{
                     HStack{
                         Text("ramStatus.string")

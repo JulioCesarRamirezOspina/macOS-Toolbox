@@ -290,10 +290,6 @@ public class DisksDisplay: xCore {
                         VStack{Divider()}
                     }
                 } else {
-//                    HStack {
-//                        Text("diskData.string")
-//                        Spacer()
-//                    }
                     HStack{
                         SwiftUI.ScrollView(.horizontal, showsIndicators: true) {
                             HStack{
