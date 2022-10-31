@@ -140,6 +140,7 @@
 "navigationAnimationDuration.string" = "Navigation panels animation duration";
 "anim.settings" = "Animation Settings";
 "batteryAnimation.string" = "Animate battery on main screen";
+"showSerialNumber.string" = "Don't blur Mac's Serial Number";
 
 "ultrafast.string" = "Ultra fast";
 "fast.string"= "Fast";

@@ -79,6 +79,19 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var showSerialNumber: Bool {
+        get {
+            if AppSettings.keyExists(key: "showSerialNumber") {
+                return AppSettings.load(key: "showSerialNumber") ?? false
+            } else {
+                return false
+            }
+        }
+        set {
+            AppSettings.set(key: "showSerialNumber", value: newValue)
+        }
+    }
+    
     public static var batteryAnimation: Bool {
         get {
             AppSettings.load(key: "batteryAnimation") ?? true

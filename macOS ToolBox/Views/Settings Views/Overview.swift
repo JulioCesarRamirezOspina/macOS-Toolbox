@@ -19,8 +19,25 @@ struct SettingsOverview: View {
     @State private var width: CGFloat = 600
     @State private var animateBatteryOverview = SettingsMonitor.batteryAnimation
     @State private var isRun = false
+    @State private var showSerialNumber = SettingsMonitor.showSerialNumber
     @Binding var pcs: ColorScheme?
 
+    private func ShowSerialNumber() -> some View {
+        Button {
+            SettingsMonitor.showSerialNumber = !showSerialNumber
+            showSerialNumber = SettingsMonitor.showSerialNumber
+        } label: {
+            Text("showSerialNumber.string")
+        }
+        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "barcode",
+                                                enabled: showSerialNumber,
+                                                alwaysShowTitle: true,
+                                                width: width,
+                                                color: .blue,
+                                                hideBackground: false,
+                                                backgroundShadow: true))
+    }
+    
     private func BatteryButton() -> some View {
         Button {
             switch animateBatteryOverview {
@@ -175,6 +192,7 @@ struct SettingsOverview: View {
                                     MaintenanceButton()
                                     PasswordStateButton()
                                     BatteryButton()
+                                    ShowSerialNumber()
                                     AppTheme()
                                 }.padding(.all)
                                 Spacer()

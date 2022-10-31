@@ -43,7 +43,7 @@
 		9ABFD1402908BC67003D7575 /* macOS Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1192908BC66003D7575 /* macOS Update.swift */; };
 		9ABFD1412908BC67003D7575 /* Memory View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11A2908BC66003D7575 /* Memory View.swift */; };
 		9ABFD1422908BC67003D7575 /* System Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11B2908BC66003D7575 /* System Status.swift */; };
-		9ABFD1432908BC67003D7575 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11C2908BC66003D7575 /* Enums.swift */; };
+		9ABFD1432908BC67003D7575 /* Enums & Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */; };
 		9ABFD1442908BC67003D7575 /* Extensions & Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */; };
 		9ABFD1452908BC67003D7575 /* Biometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11E2908BC66003D7575 /* Biometrics.swift */; };
 		9ABFD1462908BC67003D7575 /* Custom Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11F2908BC66003D7575 /* Custom Views.swift */; };
@@ -161,7 +161,7 @@
 		9ABFD1192908BC66003D7575 /* macOS Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS Update.swift"; sourceTree = "<group>"; };
 		9ABFD11A2908BC66003D7575 /* Memory View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Memory View.swift"; sourceTree = "<group>"; };
 		9ABFD11B2908BC66003D7575 /* System Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System Status.swift"; sourceTree = "<group>"; };
-		9ABFD11C2908BC66003D7575 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums & Aliases.swift"; sourceTree = "<group>"; };
 		9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions & Funcs.swift"; sourceTree = "<group>"; };
 		9ABFD11E2908BC66003D7575 /* Biometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biometrics.swift; sourceTree = "<group>"; };
 		9ABFD11F2908BC66003D7575 /* Custom Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Views.swift"; sourceTree = "<group>"; };
@@ -329,6 +329,7 @@
 			isa = PBXGroup;
 			children = (
 				9A5E706B290C1887000F479A /* Info.plist */,
+				9ABFD1142908BC66003D7575 /* System Status */,
 				9ABFD1132908BC66003D7575 /* Addons */,
 				9ABFD1352908BC67003D7575 /* App Settings */,
 				9ABFD12B2908BC67003D7575 /* Camper */,
@@ -346,8 +347,7 @@
 		9ABFD1132908BC66003D7575 /* Addons */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1142908BC66003D7575 /* System Status */,
-				9ABFD11C2908BC66003D7575 /* Enums.swift */,
+				9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */,
 				9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */,
 				9ABFD11E2908BC66003D7575 /* Biometrics.swift */,
 				9ABFD11F2908BC66003D7575 /* Custom Views.swift */,
@@ -669,7 +669,7 @@
 				9ABFD1542908BC67003D7575 /* SeedUtil.swift in Sources */,
 				9ABFD1492908BC67003D7575 /* Documentation.docc in Sources */,
 				9ABFD1572908BC67003D7575 /* Sleep Manager.swift in Sources */,
-				9ABFD1432908BC67003D7575 /* Enums.swift in Sources */,
+				9ABFD1432908BC67003D7575 /* Enums & Aliases.swift in Sources */,
 				9ABFD1412908BC67003D7575 /* Memory View.swift in Sources */,
 				9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */,
 				9ABFD14B2908BC67003D7575 /* Memory.swift in Sources */,
@@ -856,7 +856,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1030;
+				CURRENT_PROJECT_VERSION = 1032;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -899,7 +899,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1030;
+				CURRENT_PROJECT_VERSION = 1032;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;

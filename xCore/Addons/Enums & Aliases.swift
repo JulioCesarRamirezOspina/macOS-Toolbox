@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Types of view used on NvigationLinkGenerator
+// MARK: - Enums
 public enum ViewType{
     case spacer
     case divider
@@ -192,3 +192,6 @@ public enum platform {
     case AppleSiliconRosetta
     case Intel
 }
+
+// MARK: - Type Aliases
+public typealias StringData = (label: String, value: String)

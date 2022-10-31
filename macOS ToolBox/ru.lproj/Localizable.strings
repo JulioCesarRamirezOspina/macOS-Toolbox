@@ -139,6 +139,7 @@
 "navigationAnimationDuration.string" = "Длительность анимации панелей навигации";
 "anim.settings" = "Настройки анимаций";
 "batteryAnimation.string" = "Анимации батареи на главном экрне";
+"showSerialNumber.string" = "Не размывать серийный номер";
 
 "ultrafast.string" = "Очень быстро";
 "fast.string"= "Быстро";
