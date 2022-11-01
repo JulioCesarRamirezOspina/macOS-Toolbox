@@ -127,9 +127,11 @@ public class macOSUpdate: xCore {
                                 switch sysUpdateAvailable {
                                 case .available:
                                     HStack{
-                                        Text(OSUpdateAvailable)
-                                        Divider().frame(height: 10)
-                                        Text(updateData.label + " " + StringLocalizer("bn.string") + " " + updateData.buildNumber)
+                                        if updateData.buildNumber != "" {
+                                            Text(OSUpdateAvailable)
+                                            Divider().frame(height: 10)
+                                        }
+                                        Text(updateData.label + " " + (updateData.buildNumber == "" ? "" : StringLocalizer("bn.string")) + " " + updateData.buildNumber)
                                     }
                                 case .notAvailable:
                                     Text(OSUpdateNotAvailable)

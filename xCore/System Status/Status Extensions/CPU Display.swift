@@ -13,6 +13,23 @@ public class CPUDisplay: xCore {
     public struct view: View {
         @State private var cpuValue: (user: Double, system: Double, idle: Double, total: Double) = (0,0,0,0)
         @Binding var isRun: Bool
+        @State private var thermalPressure = macOS_Subsystem.thermalPressure().label
+        @State private var thermalValue = macOS_Subsystem.thermalPressure().value
+        
+        private var dynamicColor: Color {
+            switch macOS_Subsystem.thermalPressure().value {
+            case .nominal:
+                return .clear
+            case .fair:
+                return .yellow
+            case .serious:
+                return .orange
+            case .critical:
+                return .red
+            case .undefined:
+                return .clear
+            }
+        }
         
         private func loadData() async -> Task<(user: Double, system: Double, idle: Double, total: Double), Never> {
             Task{
@@ -20,7 +37,7 @@ public class CPUDisplay: xCore {
                 return (user: data.user, system: data.system, idle: data.idle, total: data.total)
             }
         }
-        
+
         public var body: some View {
             VStack{
                 ZStack{
@@ -42,6 +59,17 @@ public class CPUDisplay: xCore {
                             }.frame(height: 10)
                             Text("\(StringLocalizer("coresCount.string")): \(macOS_Subsystem.logicalCores())")
                                 .font(.footnote)
+                                .foregroundColor(.secondary)
+                                .monospacedDigit()
+                            HStack{
+                                Divider()
+                                    .font(.footnote)
+                                    .foregroundColor(.secondary)
+                                    .monospacedDigit()
+                            }.frame(height: 10)
+                            Text(thermalPressure)
+                                .font(.footnote)
+                                .bold(thermalValue == .fair || thermalValue == .critical || thermalValue == .serious)
                                 .foregroundColor(.secondary)
                                 .monospacedDigit()
                             Spacer()
@@ -113,18 +141,24 @@ public class CPUDisplay: xCore {
                 }
                 .background {
                     RoundedRectangle(cornerRadius: 15)
+                        .foregroundColor(dynamicColor)
+                    RoundedRectangle(cornerRadius: 15)
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 5)
                 }
+                .glow(color: dynamicColor, anim: true, glowIntensity: thermalValue == .nominal ? .normal : .hdr)
                 .task {
                     repeat {
                         cpuValue = await loadData().value
+                        thermalValue = macOS_Subsystem.thermalPressure().value
+                        thermalPressure = macOS_Subsystem.thermalPressure().label
                         do {
                             try await Task.sleep(seconds: 1)
                         } catch _ {}
                         if !isRun {break}
                     }while(isRun)
                 }
+                .animation(SettingsMonitor.secondaryAnimation, value: thermalValue)
             }
         }
     }

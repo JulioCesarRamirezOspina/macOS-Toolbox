@@ -79,6 +79,7 @@ public struct macOS_Subsystem {
             retval += symbols[index] + each
             index += 1
         }
+        retval = String(retval.replacingOccurrences(of: "Выпуск", with: "Сборка"))
         return retval + ")"
     }
     
@@ -93,6 +94,22 @@ public struct macOS_Subsystem {
             return false
         } else {
             return true
+        }
+    }
+    
+    public static func thermalPressure() -> (label: String, value: ThermalPressure) {
+        let t = ProcessInfo().thermalState
+        switch t {
+        case .nominal:
+            return (label: StringLocalizer("therm.nominal"), value: .nominal)
+        case .fair:
+            return (label: StringLocalizer("therm.fair"), value: .fair)
+        case .serious:
+            return (label: StringLocalizer("therm.serious"), value: .serious)
+        case .critical:
+            return (label: StringLocalizer("therm.critical"), value: .critical)
+        @unknown default:
+            return (label: StringLocalizer("therm.unknown"), value: .undefined)
         }
     }
     
@@ -924,7 +941,7 @@ public struct macOS_Subsystem {
     
     
     //--------------------------------------------------------------------------
-    // MARK: PRIVATE METHODS
+    // MARK: - PRIVATE METHODS
     //--------------------------------------------------------------------------
     
     

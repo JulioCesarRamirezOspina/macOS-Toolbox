@@ -312,6 +312,7 @@
 "macOSUpdate.string" = "macOS Update";
 "sysUpdateNoInternet.string" = "Unable to connect to Apple Update Server. Check your connecttion and try again.";
 "sysUpdateCheck.string" = "Check for macOS update";
+"otherUpdate.string" = "Additional software update available";
 
 "cachesClear.reason" = "clear user caches";
 "NODISKACCESS" = "To clear caches app needs to have Full Disk Access.";
@@ -338,3 +339,9 @@
 "arm.string" = "Apple Silicon";
 "intel.string" = "Intel";
 "rosetta.string" = "Apple Silicon (Rosetta 2)";
+
+"therm.nominal" = "Thermal Pressure: nominal";
+"therm.fair" = "Thermal Pressure: fair";
+"therm.serious" = "Thermal Pressure: serious";
+"therm.critical" = "Thermal Pressure: overheating";
+"therm.unknown" = "Thermal Pressure: unknown";

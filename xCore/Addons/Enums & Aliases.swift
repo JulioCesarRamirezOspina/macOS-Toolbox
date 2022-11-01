@@ -121,6 +121,14 @@ public enum ThermalLevel: String {
     case Unknown = "Unknown"
 }
 
+public enum ThermalPressure {
+    case nominal
+    case fair
+    case serious
+    case critical
+    case undefined
+}
+
 public enum MemoryPressure {
     case normal
     case warning
