@@ -282,11 +282,10 @@
 "ramStatus.string" = "Состояние RAM";
 "clear_RAM.string" = "Очистка памяти";
 
-"memPressure" = "Давление в памяти:";
-"memPressure.nominal" = "номинальное";
-"memPressure.warning" = "высокое";
-"memPressure.critical" = "критическое";
-"memPressure.undefined" = "неопределено";
+"memPressure.nominal" = "Нагрузка на память: номинальная";
+"memPressure.warning" = "Нагрузка на память: серьёзная";
+"memPressure.critical" = "Нагрузка на память: перегрузка";
+"memPressure.undefined" = "Нагрузка на память: неопределена";
 
 "colorSchemeSwitch.string" = "Переключить";
 "colorSchemeDefault.string" = "Оформление macOS";

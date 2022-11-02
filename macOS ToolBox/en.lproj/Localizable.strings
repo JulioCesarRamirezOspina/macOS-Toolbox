@@ -282,11 +282,10 @@
 "ramStatus.string" = "RAM Status";
 "clear_RAM.string" = "Memory clensing process";
 
-"memPressure" = "Memory pressure:";
-"memPressure.nominal" = "nominal";
-"memPressure.warning" = "high";
-"memPressure.critical" = "critical";
-"memPressure.undefined" = "undefined";
+"memPressure.nominal" = "Memory pressure: nominal";
+"memPressure.warning" = "Memory pressure: high";
+"memPressure.critical" = "Memory pressure: critical";
+"memPressure.undefined" = "Memory pressure: undefined";
 
 "colorSchemeSwitch.string" = "Switch";
 "colorSchemeDefault.string" = "macOS color scheme";

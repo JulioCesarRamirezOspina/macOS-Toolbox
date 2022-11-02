@@ -130,7 +130,7 @@ public enum ThermalPressure {
 }
 
 public enum MemoryPressure {
-    case normal
+    case nominal
     case warning
     case critical
     case undefined

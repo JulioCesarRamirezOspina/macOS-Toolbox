@@ -180,7 +180,7 @@ public class Memory: xCore {
                 let resultArray = processResult.byWords.last ?? ""
                 num = Int(resultArray) ?? 3
                 switch num {
-                case 1: output = .normal
+                case 1: output = .nominal
                 case 2: output = .warning
                 case 4: output = .critical
                 default: output = .undefined

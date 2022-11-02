@@ -80,24 +80,12 @@ public class MemoryDisplay: xCore {
                     }
                     HStack{
                         Group{
-                            switch memoryPressure {
-                            case .normal:
-                                HStack{
-                                    Text("memPressure")
-                                    Text("memPressure.nominal")
-                                }
-                            case .warning:
-                                HStack{
-                                    Text("memPressure").fontWeight(.bold)
-                                    Text("memPressure.warning").fontWeight(.bold)
-                                }
-                            case .critical:
-                                HStack{
-                                    Text("memPressure").fontWeight(.heavy)
-                                    Text("memPressure.critical").fontWeight(.heavy)
-                                }
-                            case .undefined:
-                                Text("memPressure.undefined")
+                            HStack {
+                                Text(memoryPressure == .nominal ? StringLocalizer("memPressure.nominal") :
+                                        memoryPressure == .warning ? StringLocalizer("memPressure.warning") :
+                                        memoryPressure == .critical ? StringLocalizer("memPressure.critical") :
+                                StringLocalizer("memPressure.undefined"))
+                                .fontWeight(memoryPressure == .warning ? .heavy : memoryPressure == .critical ? .black : .regular)
                             }
                             switch clensingInProgress {
                             case true:
