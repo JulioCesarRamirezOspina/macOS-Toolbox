@@ -88,20 +88,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func popoverLaunch() {
         hideDock()
+        let screenSize = NSScreen.main!.frame.size
         let contentView = MainView()
             .ignoresSafeArea()
-            .frame(minWidth: 1090,
-                   idealWidth: 1280,
-                   maxWidth: .greatestFiniteMagnitude,
-                   minHeight: 700,
-                   idealHeight: 720,
-                   maxHeight: .greatestFiniteMagnitude,
-                   alignment: .center)
+//            .frame(minWidth: screenSize.width / 1.8,
+//                   idealWidth: 1280,
+//                   maxWidth: .greatestFiniteMagnitude,
+//                   minHeight: screenSize.height / 1.8,
+//                   idealHeight: 720,
+//                   maxHeight: .greatestFiniteMagnitude,
+//                   alignment: .center)
 //            .background(Stylers.VisualEffectView()).ignoresSafeArea()
             .backgroundStyle(.bar)
 
         let popover = NSPopover()
-        popover.contentSize = NSSize(width: 1440, height: 900)
+        popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: contentView)
         self.popover = popover

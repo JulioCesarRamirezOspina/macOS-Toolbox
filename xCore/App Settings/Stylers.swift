@@ -193,6 +193,7 @@ public class Stylers: xCore {
             disabled: Bool = false,
             enabled: Bool = false,
             alwaysShowTitle: Bool = false,
+            hideTitle: Bool = false,
             width: CGFloat = 200,
             height: CGFloat = 100,
             color: Color = .clear,
@@ -220,6 +221,7 @@ public class Stylers: xCore {
             self.swapItems = swapItems
             self.render = render
             self.glow = glow
+            self.hideTitle = hideTitle
         }
         var swapItems: Bool
         var image: String
@@ -227,6 +229,7 @@ public class Stylers: xCore {
         var height: CGFloat
         var alwaysShowTitle: Bool
         var imageArray: [String]
+        var hideTitle: Bool
         var disabled: Bool
         var enabled: Bool
         var width: CGFloat
@@ -320,7 +323,9 @@ public class Stylers: xCore {
         public func makeBody(configuration: Configuration) -> some View {
             HStack{
                 addImage()
-                addLabel(configuration)
+                if !hideTitle {
+                    addLabel(configuration)
+                }
             }
             .background(content: {
                 if !hideBackground {

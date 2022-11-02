@@ -33,19 +33,19 @@ struct DockManagerView: View {
                 } label: {
                     Text("suckAnim.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "chevron.down", enabled: animType == .suck, width: g.size.width / 3 - 10, color: .green))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "chevron.down", enabled: animType == .suck, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
                 Button {
                     animType = .genie
                 } label: {
                     Text("genieAnim.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "water.waves.and.arrow.down", enabled: animType == .genie, width: g.size.width / 3 - 10 ,color: .green))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "water.waves.and.arrow.down", enabled: animType == .genie, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .green))
                 Button {
                     animType = .scale
                 } label: {
                     Text("scaleAnim.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.right.and.arrow.up.left", enabled: animType == .scale, width: g.size.width / 3 - 10, color: .green))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.right.and.arrow.up.left", enabled: animType == .scale, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
             }
             
         }.frame(height: 100, alignment: .center).padding(.all)
@@ -59,19 +59,19 @@ struct DockManagerView: View {
                 } label: {
                     Text("off.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "stop.circle.fill", enabled: animSpeed == 0, width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "stop.circle.fill", enabled: animSpeed == 0, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
                 Button {
                     animSpeed = 50
                 } label: {
                     Text("norm.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "play.circle.fill", enabled: animSpeed == 50, width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "play.circle.fill", enabled: animSpeed == 50, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
                 Button {
                     animSpeed = 100
                 } label: {
                     Text("slow.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "infinity.circle.fill", enabled: animSpeed == 100, width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "infinity.circle.fill", enabled: animSpeed == 100, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
             }
         }.frame(height: 100, alignment: .center).padding(.all)
     }
@@ -84,19 +84,19 @@ struct DockManagerView: View {
                 } label: {
                     Text("off.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.slash"], enabled: animDelay == 0, width: g.size.width / 3 - 10, color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.slash"], enabled: animDelay == 0, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
                 Button {
                     animDelay = 50
                 } label: {
                     Text("norm.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.dotted"], enabled: animDelay == 50, width: g.size.width / 3 - 10, color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.dotted"], enabled: animDelay == 50, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
                 Button {
                     animDelay = 100
                 } label: {
                     Text("slow.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.walk.circle", "circle.dashed"], enabled: animDelay == 100, width: g.size.width / 3 - 10, color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.walk.circle", "circle.dashed"], enabled: animDelay == 100, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
             }
         }.frame(height: 100, alignment: .center).padding(.all)    }
     
@@ -132,7 +132,7 @@ struct DockManagerView: View {
                 animSettings.toggle()
             } label: {
                 Text(!autohide ? "enableAutohide.reason" : animSettings ? "goBack.button" : "anim.settings")
-            }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "livephoto.play", disabled: !autohide, enabled: animSettings, width: g.size.width - 10, color: animSettings ? .cyan : .blue))
+            }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "livephoto.play", disabled: !autohide, enabled: animSettings, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width - 10, color: animSettings ? .cyan : .blue))
                 .disabled(!autohide)
         }.frame(height: 100).padding(.all)
     }
@@ -145,27 +145,27 @@ struct DockManagerView: View {
                 } label: {
                     Text("singleAppMode.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "1.square", enabled: singleApp, width: g.size.width / 5 - 10, color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "1.square", enabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .blue))
                 Button {
                     autohide.toggle()
                 } label: {
                     Text("dockAutohide.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "dock.arrow.down.rectangle", enabled: autohide, width: g.size.width / 5 - 10, color: .green))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "dock.arrow.down.rectangle", enabled: autohide, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .green))
                 
                 Button {
                     magnification.toggle()
                 } label: {
                     Text("dockMagnification.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "rectangle.expand.vertical", enabled: magnification, width: g.size.width / 5 - 10, color: .purple))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "rectangle.expand.vertical", enabled: magnification, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .purple))
                 
                 Button {
                     hiddenAppsMode.toggle()
                 } label: {
                     Text("hiddenGrayedOut.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "app.dashed", enabled: hiddenAppsMode, width: g.size.width / 5 - 10, color: Color(nsColor: NSColor(#colorLiteral(red: 0.3179988265, green: 0.3179988265, blue: 0.3179988265, alpha: 1)))))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "app.dashed", enabled: hiddenAppsMode, hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 5 - 10, color: Color(nsColor: NSColor(#colorLiteral(red: 0.3179988265, green: 0.3179988265, blue: 0.3179988265, alpha: 1)))))
                 
                 Button {
                     DockManager().dockDefaults()
@@ -181,7 +181,7 @@ struct DockManagerView: View {
                 } label: {
                     Text("defaults.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "menubar.dock.rectangle.badge.record", width: g.size.width / 5 - 10, color: .red))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "menubar.dock.rectangle.badge.record", hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 5 - 10, color: .red))
             }
         }.frame(height: 100).padding(.all)
     }
@@ -194,19 +194,19 @@ struct DockManagerView: View {
                 } label: {
                     Text("left.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.left.to.line",enabled: DockOrientation == .left ,width: g.size.width / 3 - 10 ,color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.left.to.line",enabled: DockOrientation == .left, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
                 Button {
                     DockOrientation = .bottom
                 } label: {
                     Text("bottom.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.to.line",enabled: DockOrientation == .bottom ,width: g.size.width / 3 - 10 ,color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.to.line",enabled: DockOrientation == .bottom, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
                 Button {
                     DockOrientation = .right
                 } label: {
                     Text("right.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.right.to.line",enabled: DockOrientation == .right ,width: g.size.width / 3 - 10 ,color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.right.to.line",enabled: DockOrientation == .right, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
             }
         }.frame(height: 100).padding(.all)
     }
@@ -219,7 +219,7 @@ struct DockManagerView: View {
                     DockManager().restartDock()
                 } label: {
                     Text(singleApp ? "disableSA.reason" : "wideSpacer.string")
-                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right", disabled: singleApp, width: g.size.width / 3 - 10, color: .green))
+                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right", disabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
                     .disabled(singleApp)
                 Button {
                     if SettingsMonitor.passwordSaved {
@@ -231,7 +231,7 @@ struct DockManagerView: View {
                 } label: {
                     Text("diskNotification.string")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "externaldrive.badge.checkmark", disabled: !SettingsMonitor.passwordSaved, enabled: DA, width: g.size.width / 3 - 10, color: .blue))
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "externaldrive.badge.checkmark", disabled: !SettingsMonitor.passwordSaved, enabled: DA,hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 3 - 10, color: .blue))
                 .disabled(!SettingsMonitor.passwordSaved)
                 .onTapGesture {
                     if !SettingsMonitor.passwordSaved {
@@ -266,7 +266,7 @@ struct DockManagerView: View {
                     DockManager().restartDock()
                 } label: {
                     Text(singleApp ? "disableSA.reason" : "narrowSpacer.string")
-                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.right.and.line.vertical.and.arrowtriangle.left", disabled: singleApp, width: g.size.width / 3 - 10, color: .green))
+                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.right.and.line.vertical.and.arrowtriangle.left", disabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
                     .disabled(singleApp)
             }
         }.frame(height: 100).padding(.all)

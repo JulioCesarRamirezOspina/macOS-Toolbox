@@ -257,6 +257,7 @@
 			isa = PBXGroup;
 			children = (
 				9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */,
+				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9ABFD0DF2908BC02003D7575 /* Views */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
 				9A2F4EC92908BE5600084B2B /* Localizable.strings */,
@@ -287,7 +288,6 @@
 			isa = PBXGroup;
 			children = (
 				9ABFD0E02908BC02003D7575 /* Settings Views */,
-				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9ABFD0EA2908BC02003D7575 /* Functional Views */,
 				9ABFD0F82908BC02003D7575 /* Main View.swift */,
 				9AE1B85A2912CE5200444E6A /* InMenuBar.storyboard */,

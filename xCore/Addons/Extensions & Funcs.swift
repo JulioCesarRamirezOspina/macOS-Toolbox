@@ -386,6 +386,12 @@ public struct DiskData: Identifiable, Equatable {
     public let id = UUID()
 }
 
+extension BinaryInteger {
+    public var isPowerOfTwo: Bool {
+        return (self > 0) && (self & (self - 1) == 0)
+    }
+}
+
 extension View {
     func glow(color c: Color = .clear, anim: Bool = false, glowIntensity: GlowIntensity = .normal) -> some View {
         switch glowIntensity {

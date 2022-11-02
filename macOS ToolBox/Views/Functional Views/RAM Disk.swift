@@ -8,7 +8,6 @@
 import Foundation
 import SwiftUI
 import xCore
-//import Charts
 
 struct RAMDiskView: View {
     @State private var volume = 0
@@ -29,7 +28,15 @@ struct RAMDiskView: View {
     @State private var c = ""
     @State private var clensingInProgress = false
     @State private var allRAMData = Memory.RAMData()
-
+    private var textFont: Font {
+        get {
+            if SettingsMonitor.isInMenuBar {
+                return Font.custom("San Francisco", size: NSScreen.main!.frame.size.width / 175)
+            } else {
+                return Font.body
+            }
+        }
+    }
     private func getLabel(_ value: Int) -> some View {
         Text(value.description + " " + StringLocalizer("gig.string"))
     }
@@ -55,30 +62,38 @@ struct RAMDiskView: View {
         return retval
     }
     
+    private struct powerOfTwo: Identifiable {
+        let id = UUID()
+        var value: Int
+    }
     
-    private func Selectable() -> some View {
-        ScrollView(.vertical, showsIndicators: true) {
-            Grid(alignment: .center, horizontalSpacing: 10, verticalSpacing: 10) {
-                GridRow {
-                    createButton(1)
-                    createButton(2)
-                    createButton(4)
-                    createButton(8)
+    private func SelectableInMenuBar() -> some View {
+        var powers: [powerOfTwo] = []
+        for each in 1...2045 {
+            if each.isPowerOfTwo {
+                powers.append(.init(value: each))
+            }
+        }
+        return ScrollView(.horizontal, showsIndicators: true) {
+            HStack{
+                ForEach(powers) { i in
+                    createButton(i.value)
                 }
-                GridRow {
-                    createButton(16)
-                    createButton(32)
-                    createButton(64)
-                    createButton(128)
+            }
+        }
+    }
+    
+    private func SelectableInDock() -> some View {
+        var powers: [powerOfTwo] = []
+        for each in 1...2045 {
+            if each.isPowerOfTwo {
+                powers.append(.init(value: each))
+            }
+        }
 
-                }
-                GridRow {
-                    createButton(256)
-                    createButton(512)
-                    createButton(1024)
-                    createButton(2048)
-
-                }
+        return LazyHGrid(rows: [GridItem(.adaptive(minimum:100))]) {
+            ForEach(powers) { i in
+                createButton(i.value)
             }
         }
     }
@@ -192,6 +207,7 @@ struct RAMDiskView: View {
                 }
                 .padding(.all)
             }
+            .animation(SettingsMonitor.secondaryAnimation, value: allRAMData.used)
             .background {
                 ZStack{
 //                    Circle()
@@ -210,30 +226,37 @@ struct RAMDiskView: View {
                     HStack{
                         Text("\(StringLocalizer("totalRAM.string")): \(Int(allRAMData.total)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.5113993287, blue: 0.6703954339, alpha: 1))))
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("used.string")): \(Int(allRAMData.used)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(Color(nsColor: NSColor(#colorLiteral(red: 0.850695312, green: 0.7329488397, blue: 0.9988698363, alpha: 1))))
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("active.string")): \(Int(allRAMData.active)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(.blue)
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("inactive.string")): \(Int(allRAMData.inactive)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(.gray)
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("wired.string")): \(Int(allRAMData.wired)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(.green)
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("compressed.string")): \(Int(allRAMData.compressed)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))
+                            .font(textFont)
                     }
                     HStack{
                         Text("\(StringLocalizer("cachedFiles.string")): \(Int(allRAMData.cachedFiles)) \(StringLocalizer("mib.string"))").monospacedDigit()
                             .foregroundColor(Color(.brown))
+                            .font(textFont)
                     }
                 }
             }
@@ -390,7 +413,11 @@ struct RAMDiskView: View {
                                 .padding(.all)
                             }
                             Group {
-                                Selectable()
+                                if SettingsMonitor.isInMenuBar {
+                                    SelectableInMenuBar()
+                                } else {
+                                    SelectableInDock()
+                                }
                             }
                             Spacer()
                             Group{
@@ -464,7 +491,6 @@ struct RAMDiskView: View {
             password = ""
             isRun = false
         }
-        .animation(SettingsMonitor.secondaryAnimation, value: allRAMData.used)
         .animation(SettingsMonitor.secondaryAnimation, value: drivesCreated)
         .animation(SettingsMonitor.secondaryAnimation, value: clensingInProgress)
         .animation(SettingsMonitor.secondaryAnimation, value: selection)
