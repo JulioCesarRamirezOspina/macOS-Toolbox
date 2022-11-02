@@ -14,7 +14,7 @@ struct CamperView: View {
     @Environment(\.locale) var locale
     @State private var password = SettingsMonitor.password
     @State private var MainView = false
-    @State private var isQuit = true
+    @State private var isQuit = SettingsMonitor.isInMenuBar ? false : true
     @State private var passwordSaved = SettingsMonitor.passwordSaved
     @State private var isReboot = true
     @State private var wrongPasswordCount = 0
