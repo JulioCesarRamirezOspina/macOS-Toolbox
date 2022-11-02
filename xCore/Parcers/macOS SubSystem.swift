@@ -130,7 +130,7 @@ public struct macOS_Subsystem {
             }
         }
         
-        @objc func obs(_ not: Notification) -> ProcessInfo.ThermalState {
+        @objc private func obs(_ not: Notification) -> ProcessInfo.ThermalState {
             let p = ProcessInfo.processInfo.thermalState
             state = localizeS(p)
             return p
