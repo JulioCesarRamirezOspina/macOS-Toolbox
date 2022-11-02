@@ -97,22 +97,45 @@ public struct macOS_Subsystem {
         }
     }
     
-    public static func thermalPressure() -> (label: String, value: ThermalPressure) {
-        let t = ProcessInfo().thermalState
-        switch t {
-        case .nominal:
-            return (label: StringLocalizer("therm.nominal"), value: .nominal)
-        case .fair:
-            return (label: StringLocalizer("therm.fair"), value: .fair)
-        case .serious:
-            return (label: StringLocalizer("therm.serious"), value: .serious)
-        case .critical:
-            return (label: StringLocalizer("therm.critical"), value: .critical)
-        @unknown default:
-            return (label: StringLocalizer("therm.unknown"), value: .undefined)
+    public class ThermalPressureObserver {
+        public var label: String = StringLocalizer("therm.unknown")
+        public var state: ThermalPressure = .critical
+        public init(){
+            state = localizeS(ProcessInfo.processInfo.thermalState)
+            NotificationCenter.default.addObserver(self, selector: #selector(self.obs(_:)), name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+        }
+        
+        private func localizeS(_ s: ProcessInfo.ThermalState) -> ThermalPressure {
+            switch s{
+            case .nominal:
+                label = StringLocalizer("therm.nominal")
+                state = .nominal
+                return .nominal
+            case .fair:
+                label = StringLocalizer("therm.fair")
+                state = .fair
+                return .fair
+            case .serious:
+                label = StringLocalizer("therm.serious")
+                state = .serious
+                return .serious
+            case .critical:
+                label = StringLocalizer("therm.critical")
+                state = .critical
+                return .critical
+            @unknown default:
+                label = StringLocalizer("therm.unknown")
+                state = .undefined
+                return .undefined
+            }
+        }
+        
+        @objc func obs(_ not: Notification) -> ProcessInfo.ThermalState {
+            let p = ProcessInfo.processInfo.thermalState
+            state = localizeS(p)
+            return p
         }
     }
-    
     public func macOSDriveName() -> String? {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {

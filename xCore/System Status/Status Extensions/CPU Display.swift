@@ -13,11 +13,11 @@ public class CPUDisplay: xCore {
     public struct view: View {
         @State private var cpuValue: (user: Double, system: Double, idle: Double, total: Double) = (0,0,0,0)
         @Binding var isRun: Bool
-        @State private var thermalPressure = macOS_Subsystem.thermalPressure().label
-        @State private var thermalValue = macOS_Subsystem.thermalPressure().value
-        
+//        @State private var thermalPressure = macOS_Subsystem.thermalPressure().label
+//        @State private var thermalValue = macOS_Subsystem.thermalPressure().value
+        @State private var thermals = macOS_Subsystem.ThermalPressureObserver()
         private var dynamicColor: Color {
-            switch macOS_Subsystem.thermalPressure().value {
+            switch thermals.state {
             case .nominal:
                 return .clear
             case .fair:
@@ -67,9 +67,9 @@ public class CPUDisplay: xCore {
                                     .foregroundColor(.secondary)
                                     .monospacedDigit()
                             }.frame(height: 10)
-                            Text(thermalPressure)
+                            Text(thermals.label)
                                 .font(.footnote)
-                                .bold(thermalValue == .fair || thermalValue == .critical || thermalValue == .serious)
+                                .bold(thermals.state == .fair || thermals.state == .critical || thermals.state == .serious)
                                 .foregroundColor(.secondary)
                                 .monospacedDigit()
                             Spacer()
@@ -146,19 +146,20 @@ public class CPUDisplay: xCore {
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 5)
                 }
-                .glow(color: dynamicColor, anim: true, glowIntensity: thermalValue == .nominal ? .normal : .hdr)
+                .glow(color: dynamicColor, anim: true, glowIntensity:
+                        thermals.state == .nominal ? .normal :
+                        thermals.state == .fair ? .normal :
+                        thermals.state == .serious ? .moderate : .extreme)
                 .task {
                     repeat {
                         cpuValue = await loadData().value
-                        thermalValue = macOS_Subsystem.thermalPressure().value
-                        thermalPressure = macOS_Subsystem.thermalPressure().label
                         do {
                             try await Task.sleep(seconds: 1)
                         } catch _ {}
                         if !isRun {break}
                     }while(isRun)
                 }
-                .animation(SettingsMonitor.secondaryAnimation, value: thermalValue)
+                .animation(SettingsMonitor.secondaryAnimation, value: thermals.state)
             }
         }
     }
