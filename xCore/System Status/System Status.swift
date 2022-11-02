@@ -11,7 +11,6 @@ import SwiftUI
 public class SystemStatus: xCore {
     
     public override init() { }
-        
     //MARK: - Read-only calculated variables
     private static var modelName: StringData {
         get {
@@ -135,12 +134,15 @@ public class SystemStatus: xCore {
         @State var hovered = false
         @State var showSerial = SettingsMonitor.showSerialNumber
         @Binding var isMore: Bool
+        @Environment(\.colorScheme) var cs
         var showButton: Bool
         public var body: some View {
             GeometryReader { g in
                 SwiftUI.ScrollView(.vertical, showsIndicators: true) {
                     VStack{
-                        Spacer().frame(height: 50)
+                        if !SettingsMonitor.isInMenuBar {
+                            Spacer().frame(height: 50)
+                        }
                         ZStack{
                             deviceImage().image.shadow(radius: 15)
                             if showButton {
@@ -151,7 +153,7 @@ public class SystemStatus: xCore {
                                         .font(.title2)
                                         .bold()
                                         .shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .padding(.all)
                                 }
                                 .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: false,
@@ -161,7 +163,7 @@ public class SystemStatus: xCore {
                             }
                         }.padding(.all)
                         Text(modelName.label).font(.largeTitle)
-                        Text(modelName.value).font(.title3).foregroundColor(.secondary)
+                        Text(modelName.value).font(.title3).foregroundColor(SettingsMonitor.textColor(cs))
                         Spacer()
                         VStack{
                             HStack{
@@ -171,7 +173,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(processor.value).shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                     Spacer()
                                 }
@@ -183,7 +185,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(graphics.value).shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                     Spacer()
                                 }
@@ -195,7 +197,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(memory.value).shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                     Spacer()
                                 }
@@ -207,7 +209,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(bootDrive.value).shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                     Spacer()
                                 }
@@ -219,7 +221,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(macOSVer.value).shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                     Spacer()
                                 }
@@ -231,7 +233,7 @@ public class SystemStatus: xCore {
                                 }
                                 HStack{
                                     Text(serial?.value ?? "NaN").shadow(radius: 5)
-                                        .foregroundColor(.secondary)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
                                         .shadow(radius: 5)
                                         .blur(radius: showSerial || hovered ? 0 : 5)
                                         .animation(SettingsMonitor.secondaryAnimation, value: hovered)
@@ -258,7 +260,8 @@ public class SystemStatus: xCore {
         @State var width: CGFloat = 1
         @State var height: CGFloat = 50
         @State var emergencyPopover = false
-        
+        @Environment(\.colorScheme) var cs
+
         public var body: some View {
             Spacer().frame(height: 50)
             GeometryReader { g in
@@ -310,7 +313,7 @@ public class SystemStatus: xCore {
                         .padding(.all)
                     Text("justForCaches.string")
                         .font(.title3)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(SettingsMonitor.textColor(cs))
                         .padding(.all)
                     HStack{
                         Button {

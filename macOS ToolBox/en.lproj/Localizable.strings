@@ -141,6 +141,7 @@
 "anim.settings" = "Animation Settings";
 "batteryAnimation.string" = "Animate battery on main screen";
 "showSerialNumber.string" = "Don't blur Mac's Serial Number";
+"isInMenuBar.string" = "Launch in Menu Bar";
 
 "ultrafast.string" = "Ultra fast";
 "fast.string"= "Fast";

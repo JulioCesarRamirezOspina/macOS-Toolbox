@@ -20,6 +20,7 @@ struct SettingsOverview: View {
     @State private var animateBatteryOverview = SettingsMonitor.batteryAnimation
     @State private var isRun = false
     @State private var showSerialNumber = SettingsMonitor.showSerialNumber
+    @State private var isInMenuBar = SettingsMonitor.isInMenuBar
     @Binding var pcs: ColorScheme?
 
     private func ShowSerialNumber() -> some View {
@@ -38,6 +39,22 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
+    private func IsInMenuBar() -> some View {
+        Button {
+            SettingsMonitor.isInMenuBar = !isInMenuBar
+            isInMenuBar = SettingsMonitor.isInMenuBar
+        } label: {
+            Text("isInMenuBar.string")
+        }
+        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "menubar.arrow.up.rectangle",
+                                                enabled: isInMenuBar,
+                                                alwaysShowTitle: true,
+                                                width: width,
+                                                color: Color(nsColor: .findHighlightColor),
+                                                hideBackground: false,
+                                                backgroundShadow: true))
+    }
+
     private func BatteryButton() -> some View {
         Button {
             switch animateBatteryOverview {
@@ -193,6 +210,7 @@ struct SettingsOverview: View {
                                     PasswordStateButton()
                                     BatteryButton()
                                     ShowSerialNumber()
+                                    IsInMenuBar()
                                     AppTheme()
                                 }.padding(.all)
                                 Spacer()

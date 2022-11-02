@@ -11,7 +11,7 @@ import SwiftUI
 import xCore
 
 //MARK: - Main App Structure
-@main
+//@main
 struct macOS_ToolBoxApp: App {
     @State var subs = Set<AnyCancellable>() // Cancel onDisappear
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate

@@ -20,6 +20,7 @@ public class MemoryDisplay: xCore {
         @State private var width: CGFloat = 10
         @State private var height: CGFloat = 10
         @Binding var isRun: Bool
+        @Environment(\.colorScheme) var cs
         var dynamicColor: Color {
             get {
                 if memory.free > memory.total / 2 {
@@ -123,7 +124,7 @@ public class MemoryDisplay: xCore {
                             }
                         }
                         .font(.footnote)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(SettingsMonitor.textColor(cs))
                         Spacer()
                     }
                     .frame(height: 10)
@@ -190,7 +191,7 @@ public class MemoryDisplay: xCore {
                         .monospacedDigit()
                         .font(.footnote)
                         .fontWeight(.light)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(SettingsMonitor.textColor(cs))
                     }
                     HStack{
                         HStack{
@@ -200,7 +201,7 @@ public class MemoryDisplay: xCore {
                             Text("\(StringLocalizer("active.string")): \(Int(memory.active).description) \(StringLocalizer("mib.string"))")
                                 .monospacedDigit()
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         HStack{
                             Rectangle()
@@ -209,7 +210,7 @@ public class MemoryDisplay: xCore {
                             Text("\(StringLocalizer("inactive.string")): \(Int(memory.inactive).description) \(StringLocalizer("mib.string"))")
                                 .monospacedDigit()
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         HStack{
                             Rectangle()
@@ -218,7 +219,7 @@ public class MemoryDisplay: xCore {
                             Text("\(StringLocalizer("wired.string")): \(Int(memory.wired).description) \(StringLocalizer("mib.string"))")
                                 .monospacedDigit()
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         HStack{
                             Rectangle()
@@ -229,7 +230,7 @@ public class MemoryDisplay: xCore {
                             Text("\(StringLocalizer("compressed.string")): \(Int(memory.compressed).description) \(StringLocalizer("mib.string"))")
                                 .monospacedDigit()
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         HStack{
                             Rectangle()
@@ -238,7 +239,7 @@ public class MemoryDisplay: xCore {
                             Text("\(StringLocalizer("cachedFiles.string")): \(Int(memory.cachedFiles).description) \(StringLocalizer("mib.string"))")
                                 .monospacedDigit()
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         Spacer()
                     }

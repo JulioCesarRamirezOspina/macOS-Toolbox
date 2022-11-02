@@ -29,6 +29,32 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var isInMenuBar: Bool {
+        get {
+            AppSettings.load(key: "isInMenuBar") ?? false
+        }
+        set {
+            AppSettings.set(key: "isInMenuBar", value: newValue)
+            let task = Process()
+            task.launchPath = "/bin/sh"
+            task.arguments = ["-c", "sleep \(2); open \"\(Bundle.main.bundlePath)\""]
+            task.launch()
+            
+            NSApp.terminate(self)
+            exit(EXIT_SUCCESS)
+        }
+    }
+    
+    public class func textColor(_ c: ColorScheme) -> Color {
+        if isInMenuBar && c == .dark {
+            return .white
+        } else if isInMenuBar && c == .light {
+            return .black
+        } else {
+            return .secondary
+        }
+    }
+    
     public func delete(key: String) {
         AppSettings.defaults.removeObject(forKey: key)
     }

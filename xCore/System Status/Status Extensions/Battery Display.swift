@@ -10,7 +10,7 @@ import SwiftUI
 
 public class BatteryDisplay: xCore {
     public struct view: View {
-        
+        @Environment(\.colorScheme) var cs
         @State private var PowerSource: PowerSource = .unknown
         @State private var ChargingState: ChargingState = .unknown
         @State private var Percentage: Float = 100
@@ -116,14 +116,14 @@ public class BatteryDisplay: xCore {
                             }
                         }
                         .font(.footnote)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(SettingsMonitor.textColor(cs))
                         if isInLowPower {
                             HStack{
                                 Divider()
                             }.frame(height: 10)
                             Text("batt.lowPowerMode")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
                         }
                         if hovered2 && SettingsMonitor.passwordSaved {
@@ -132,7 +132,7 @@ public class BatteryDisplay: xCore {
                             }.frame(height: 10)
                             Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
                         }
                         Spacer()
@@ -153,7 +153,7 @@ public class BatteryDisplay: xCore {
                             Text(String(Int(Percentage)) + "%")
                         }
                         .font(.footnote)
-                        .foregroundColor(.secondary)
+                        .foregroundColor(SettingsMonitor.textColor(cs))
                     }
                 }
                 .onTapGesture(perform: {

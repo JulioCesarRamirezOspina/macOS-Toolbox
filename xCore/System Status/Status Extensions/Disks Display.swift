@@ -24,7 +24,8 @@ public class DisksDisplay: xCore {
                                          FreeSpace: (0, .byte),
                                          UsedSpace: (0, .byte),
                                          TotalSpace: (0, .byte))]
-        
+        @Environment(\.colorScheme) var cs
+
         private func CancelButton(index: Int) -> some View {
             Button {
                 selfTapped[index] = false
@@ -146,7 +147,7 @@ public class DisksDisplay: xCore {
                     }
                     .frame(height: 10)
                     .font(.footnote)
-                    .foregroundColor(.secondary)
+                    .foregroundColor(SettingsMonitor.textColor(cs))
                     .monospacedDigit()
                 }
             }

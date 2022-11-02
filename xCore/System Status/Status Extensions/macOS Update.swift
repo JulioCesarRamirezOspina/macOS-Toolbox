@@ -29,7 +29,8 @@ public class macOSUpdate: xCore {
         @State private var animate = false
         
         @State private var updateData: (label: String, buildNumber: String) = ("", "")
-        
+        @Environment(\.colorScheme) var cs
+
         private var dynamicColor: Color {
             get {
                 switch sysUpdateAvailable {
@@ -103,7 +104,7 @@ public class macOSUpdate: xCore {
                                     if macOS_Subsystem.osIsBeta() {
                                         Text("osIsBeta.string")
                                             .font(.footnote)
-                                            .foregroundColor(.secondary)
+                                            .foregroundColor(SettingsMonitor.textColor(cs))
                                     }
                                     if macOS_Subsystem.osIsBeta() && SettingsMonitor.passwordSaved {
                                         if SeedUtil.getSeedBool(SettingsMonitor.password) {
@@ -114,7 +115,7 @@ public class macOSUpdate: xCore {
                                         if SeedUtil.getSeedBool(SettingsMonitor.password) {
                                             Text(SeedUtil.getSeedString(SettingsMonitor.password))
                                                 .font(.footnote)
-                                                .foregroundColor(.secondary)
+                                                .foregroundColor(SettingsMonitor.textColor(cs))
                                         }
                                     }
                                     Spacer()

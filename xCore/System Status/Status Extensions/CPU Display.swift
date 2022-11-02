@@ -11,6 +11,7 @@ import Charts
 
 public class CPUDisplay: xCore {
     public struct view: View {
+        @Environment(\.colorScheme) var cs
         @State private var cpuValue: (user: Double, system: Double, idle: Double, total: Double) = (0,0,0,0)
         @Binding var isRun: Bool
 //        @State private var thermalPressure = macOS_Subsystem.thermalPressure().label
@@ -49,28 +50,28 @@ public class CPUDisplay: xCore {
                         HStack{
                             Text(macOS_Subsystem().cpuName())
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             HStack{
                                 Divider()
                                     .font(.footnote)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
                                     .monospacedDigit()
                             }.frame(height: 10)
                             Text("\(StringLocalizer("coresCount.string")): \(macOS_Subsystem.logicalCores())")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             HStack{
                                 Divider()
                                     .font(.footnote)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
                                     .monospacedDigit()
                             }.frame(height: 10)
                             Text(thermals.label)
                                 .font(.footnote)
                                 .bold(thermals.state == .fair || thermals.state == .critical || thermals.state == .serious)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             Spacer()
                         }
@@ -108,32 +109,32 @@ public class CPUDisplay: xCore {
                         HStack{
                             Text(StringLocalizer("load.string") + ": " + (Double(cpuValue.user * 100 + cpuValue.system * 100) / 100).description + "%" )
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             HStack{
                                 Divider()
                                     .font(.footnote)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
                                     .monospacedDigit()
                             }.frame(height: 10)
                             Text(StringLocalizer("user.string") + ": \(cpuValue.user)%")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             HStack{
                                 Divider()
                                     .font(.footnote)
-                                    .foregroundColor(.secondary)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
                                     .monospacedDigit()
                             }.frame(height: 10)
                             Text(StringLocalizer("system.string") + ": \(cpuValue.system)%")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             Spacer()
                             Text("100%")
                                 .font(.footnote)
-                                .foregroundColor(.secondary)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                         }
                     }
