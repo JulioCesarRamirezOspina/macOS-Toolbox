@@ -345,3 +345,5 @@
 "therm.serious" = "Thermal Pressure: serious";
 "therm.critical" = "Thermal Pressure: overheating";
 "therm.unknown" = "Thermal Pressure: unknown";
+
+"autoLaunch.string" = "Запускать при входе";

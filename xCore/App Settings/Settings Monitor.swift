@@ -45,6 +45,15 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var autoLaunch: Bool {
+        get {
+            AppSettings.load(key: "autoLaunch") ?? false
+        }
+        set {
+            AppSettings.set(key: "autoLaunch", value: newValue)
+        }
+    }
+    
     public class func textColor(_ c: ColorScheme) -> Color {
         if isInMenuBar && c == .dark {
             return .white

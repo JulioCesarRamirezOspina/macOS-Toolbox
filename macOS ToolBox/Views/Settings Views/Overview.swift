@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 import xCore
-//import Charts
+import ServiceManagement
 
 struct SettingsOverview: View {
     @State private var ParallelsDir = SettingsMonitor.parallelsDir.relativePath
@@ -22,7 +22,34 @@ struct SettingsOverview: View {
     @State private var showSerialNumber = SettingsMonitor.showSerialNumber
     @State private var isInMenuBar = SettingsMonitor.isInMenuBar
     @Binding var pcs: ColorScheme?
+    
+    @State private var launchAtLogin = SettingsMonitor.autoLaunch {
+        didSet {
+            if !launchAtLogin {
+                try? SMAppService.mainApp.unregister()
+            } else {
+                try? SMAppService.mainApp.register()
+                SMAppService.loginItem(identifier: Bundle.main.bundleIdentifier!)
+            }
+        }
+    }
 
+    private func AutoLaunch() -> some View {
+        Button {
+            SettingsMonitor.autoLaunch = !launchAtLogin
+            launchAtLogin = SettingsMonitor.autoLaunch
+        } label: {
+            Text("autoLaunch.string")
+        }
+        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "hourglass.bottomhalf.filled",
+                                                enabled: launchAtLogin,
+                                                alwaysShowTitle: true,
+                                                width: width,
+                                                color: .cyan,
+                                                hideBackground: false,
+                                                backgroundShadow: true))
+    }
+    
     private func ShowSerialNumber() -> some View {
         Button {
             SettingsMonitor.showSerialNumber = !showSerialNumber
@@ -211,6 +238,7 @@ struct SettingsOverview: View {
                                     BatteryButton()
                                     ShowSerialNumber()
                                     IsInMenuBar()
+                                    AutoLaunch()
                                     AppTheme()
                                 }.padding(.all)
                                 Spacer()

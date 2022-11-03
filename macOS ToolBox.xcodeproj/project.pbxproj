@@ -71,6 +71,7 @@
 		9ABFD15C2908BC67003D7575 /* Notifications Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1392908BC67003D7575 /* Notifications Manager.swift */; };
 		9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */; };
 		9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13C2908BC67003D7575 /* Tor Networking.swift */; };
+		9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */; };
 		9AE1B85B2912CE5200444E6A /* InMenuBar.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9AE1B85A2912CE5200444E6A /* InMenuBar.storyboard */; };
 		9AE89258290991F000D5208C /* macOS_ToolBoxUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE89257290991F000D5208C /* macOS_ToolBoxUITests.swift */; };
 		9AE8925A290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE89259290991F000D5208C /* macOS_ToolBoxUITestsLaunchTests.swift */; };
@@ -191,6 +192,7 @@
 		9ABFD1392908BC67003D7575 /* Notifications Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.swift"; sourceTree = "<group>"; };
 		9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift"; sourceTree = "<group>"; };
 		9ABFD13C2908BC67003D7575 /* Tor Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift"; sourceTree = "<group>"; };
+		9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 		9AE1B85A2912CE5200444E6A /* InMenuBar.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = InMenuBar.storyboard; sourceTree = "<group>"; };
 		9AE89255290991F000D5208C /* macOS ToolBoxUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "macOS ToolBoxUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AE89257290991F000D5208C /* macOS_ToolBoxUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = macOS_ToolBoxUITests.swift; sourceTree = "<group>"; };
@@ -203,6 +205,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ABFD0AA2908BBA5003D7575 /* xCore.framework in Frameworks */,
+				9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,6 +242,7 @@
 				9ABFD0A42908BBA5003D7575 /* xCoreTests */,
 				9AE89256290991F000D5208C /* macOS ToolBoxUITests */,
 				9ABFD0192908BA02003D7575 /* Products */,
+				9AD98C3D29133F6C00618E0D /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -434,6 +438,14 @@
 				9ABFD13C2908BC67003D7575 /* Tor Networking.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		9AD98C3D29133F6C00618E0D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		9AE89256290991F000D5208C /* macOS ToolBoxUITests */ = {
