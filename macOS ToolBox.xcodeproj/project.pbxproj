@@ -261,13 +261,13 @@
 			isa = PBXGroup;
 			children = (
 				9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */,
+				9A462A162912EA8F00D1723D /* main.swift */,
 				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9ABFD0DF2908BC02003D7575 /* Views */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
 				9A2F4EC92908BE5600084B2B /* Localizable.strings */,
 				9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */,
 				9ABFD02A2908BA2D003D7575 /* Preview Content */,
-				9A462A162912EA8F00D1723D /* main.swift */,
 			);
 			path = "macOS ToolBox";
 			sourceTree = "<group>";
@@ -874,7 +874,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1038;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -897,7 +897,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -917,7 +917,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1035;
+				CURRENT_PROJECT_VERSION = 1038;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -940,7 +940,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.2.1;
+				MARKETING_VERSION = 4.3.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
