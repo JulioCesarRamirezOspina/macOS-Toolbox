@@ -130,15 +130,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         SettingsMonitor.memoryClensingInProgress = false
         Memory().ejectAll([StringLocalizer("clear_RAM.string")])
         
-        AppDelegate.window = NSWindow(
+        window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 1440, height: 900),
             styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView],
             backing: .buffered, defer: false)
-        AppDelegate.window.center()
+        window.center()
         let screenSize = NSScreen.main!.frame.size
-        AppDelegate.window.contentMinSize = NSSize(width: screenSize.width - (screenSize.width / 4), height: screenSize.height)
-        AppDelegate.window.contentMaxSize = NSSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
-        AppDelegate.window.contentViewController = NSHostingController(rootView: MainView(initCS: _cs)
+        window.contentMinSize = NSSize(width: screenSize.width - (screenSize.width / 4), height: screenSize.height)
+        window.contentMaxSize = NSSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
+        window.contentViewController = NSHostingController(rootView: MainView(initCS: _cs)
             .ignoresSafeArea()
             .frame(minWidth: 1090,
                    idealWidth: 1280,
@@ -151,12 +151,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { not in
                     self.setup()
                 }))
-        AppDelegate.window.tabbingMode = .disallowed
-        AppDelegate.window.titlebarAppearsTransparent = true
-        AppDelegate.window.titlebarSeparatorStyle = .shadow
-        AppDelegate.window.standardWindowButton(.zoomButton)?.isEnabled = false
-        AppDelegate.window.title = "macOS ToolBox"
-        AppDelegate.window.makeKeyAndOrderFront(nil)
+        window.tabbingMode = .disallowed
+        window.titlebarAppearsTransparent = true
+        window.titlebarSeparatorStyle = .shadow
+        window.standardWindowButton(.zoomButton)?.isEnabled = false
+        window.title = "macOS ToolBox"
+        window.makeKeyAndOrderFront(nil)
         showDock()
     }
 
@@ -175,7 +175,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     static var popover: NSPopover!
     static var statusBarItem: NSStatusItem!
-    static var window: NSWindow!
+    var window: NSWindow!
     @Environment(\.colorScheme) var cs
     
     public static func tog() {
