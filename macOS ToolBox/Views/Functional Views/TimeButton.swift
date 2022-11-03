@@ -34,7 +34,11 @@ struct TimeAndQuit: View {
             VStack{
                 Divider()
                 Button {
-                    Quit(AppDelegate())
+                    if SettingsMonitor.isInMenuBar {
+                        AppDelegate.tog()
+                    } else {
+                        Quit(AppDelegate())
+                    }
                 } label: {
                     TimeView(textStyle: .bold, font: .body).multilineTextAlignment(.center).lineLimit(3)
                 }

@@ -189,6 +189,7 @@
 "hibernationWithPoweroff.string" = "Hibernation enabled with power off";
 "undefined.string" = "Undefined";
 "clicktoquit.string" = "Click to quit app\n or hit \"esc\" key";
+"clicktohide.string" = "Click to hide app\n or hit \"esc\" key";
 "ramStatus.string" = "RAM Status";
 "diskLabel.string" = "Disk name";
 "createDisk.string" = "Create disk";

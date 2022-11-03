@@ -29,7 +29,11 @@ struct TimeView: View {
                     }
                 } else {
                     VStack{
-                        Text("clicktoquit.string")
+                        if SettingsMonitor.isInMenuBar {
+                            Text("clicktohide.string")
+                        } else {
+                            Text("clicktoquit.string")
+                        }
                     }
                 }
                 

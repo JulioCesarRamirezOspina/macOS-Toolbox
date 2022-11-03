@@ -105,11 +105,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
         popover.behavior = .transient
         popover.contentViewController = NSHostingController(rootView: contentView)
-        self.popover = popover
+        AppDelegate.popover = popover
         
-        self.statusBarItem = NSStatusBar.system.statusItem(withLength: CGFloat(NSStatusItem.variableLength))
+        AppDelegate.statusBarItem = NSStatusBar.system.statusItem(withLength: CGFloat(NSStatusItem.variableLength))
         
-        if let button = self.statusBarItem.button {
+        if let button = AppDelegate.statusBarItem.button {
             let cgImage = NSImage(systemSymbolName: "command.square", accessibilityDescription: "")
             button.image = cgImage
             button.action = #selector(togglePopover(_:))
@@ -130,15 +130,15 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         SettingsMonitor.memoryClensingInProgress = false
         Memory().ejectAll([StringLocalizer("clear_RAM.string")])
         
-        window = NSWindow(
+        AppDelegate.window = NSWindow(
             contentRect: NSRect(x: 0, y: 0, width: 1440, height: 900),
             styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView],
             backing: .buffered, defer: false)
-        window.center()
+        AppDelegate.window.center()
         let screenSize = NSScreen.main!.frame.size
-        window.contentMinSize = NSSize(width: screenSize.width - (screenSize.width / 4), height: screenSize.height)
-        window.contentMaxSize = NSSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
-        window.contentViewController = NSHostingController(rootView: MainView(initCS: _cs)
+        AppDelegate.window.contentMinSize = NSSize(width: screenSize.width - (screenSize.width / 4), height: screenSize.height)
+        AppDelegate.window.contentMaxSize = NSSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
+        AppDelegate.window.contentViewController = NSHostingController(rootView: MainView(initCS: _cs)
             .ignoresSafeArea()
             .frame(minWidth: 1090,
                    idealWidth: 1280,
@@ -151,12 +151,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 .onReceive(NotificationCenter.default.publisher(for: NSApplication.willUpdateNotification), perform: { not in
                     self.setup()
                 }))
-        window.tabbingMode = .disallowed
-        window.titlebarAppearsTransparent = true
-        window.titlebarSeparatorStyle = .shadow
-        window.standardWindowButton(.zoomButton)?.isEnabled = false
-        window.title = "macOS ToolBox"
-        window.makeKeyAndOrderFront(nil)
+        AppDelegate.window.tabbingMode = .disallowed
+        AppDelegate.window.titlebarAppearsTransparent = true
+        AppDelegate.window.titlebarSeparatorStyle = .shadow
+        AppDelegate.window.standardWindowButton(.zoomButton)?.isEnabled = false
+        AppDelegate.window.title = "macOS ToolBox"
+        AppDelegate.window.makeKeyAndOrderFront(nil)
         showDock()
     }
 
@@ -173,20 +173,24 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
-    var popover: NSPopover!
-    var statusBarItem: NSStatusItem!
-    var window: NSWindow!
+    static var popover: NSPopover!
+    static var statusBarItem: NSStatusItem!
+    static var window: NSWindow!
     @Environment(\.colorScheme) var cs
+    
+    public static func tog() {
+        self.popover.performClose(nil)
+    }
 
     @objc func togglePopover(_ sender: AnyObject?) {
-        if let button = self.statusBarItem.button {
-            if self.popover.isShown {
-                self.popover.performClose(sender)
+        if let button = AppDelegate.statusBarItem.button {
+            if AppDelegate.popover.isShown {
+                AppDelegate.popover.performClose(sender)
             } else {
-                self.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+                AppDelegate.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
-        self.popover.contentViewController?.view.window?.becomeKey()
+        AppDelegate.popover.contentViewController?.view.window?.becomeKey()
     }
 }
 
