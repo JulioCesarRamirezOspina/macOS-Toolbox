@@ -154,6 +154,7 @@ public class SystemStatus: xCore {
             let iconCache = try? FileManager().contentsOfDirectory(at: filesDirecory, includingPropertiesForKeys: [])
             var height: CGFloat = 0
             var width: CGFloat = 0
+            var imageSet = false
             var image = Image(systemName: "questionmark")
             var nsImage = NSImage(systemSymbolName: "quistionmark", variableValue: 1, accessibilityDescription: nil)
             for each in iconCache! {
@@ -165,18 +166,21 @@ public class SystemStatus: xCore {
                             height = NSImage(contentsOf: each)!.size.height
                             width = NSImage(contentsOf: each)!.size.width
                             SettingsMonitor.deviceImage = each
+                            imageSet = true
                         }
                     }
                 }
             }
-            for each in iconCache! {
-                if each.absoluteString.contains(deviceString){
-                    if each.absoluteString.contains(screenSize) {
-                        image = Image(nsImage: NSImage(contentsOf: each)!)
-                        nsImage = NSImage(contentsOf: each)!
-                        height = NSImage(contentsOf: each)!.size.height
-                        width = NSImage(contentsOf: each)!.size.width
-                        SettingsMonitor.deviceImage = each
+            if !imageSet {
+                for each in iconCache! {
+                    if each.absoluteString.contains(deviceString){
+                        if each.absoluteString.contains(screenSize) {
+                            image = Image(nsImage: NSImage(contentsOf: each)!)
+                            nsImage = NSImage(contentsOf: each)!
+                            height = NSImage(contentsOf: each)!.size.height
+                            width = NSImage(contentsOf: each)!.size.width
+                            SettingsMonitor.deviceImage = each
+                        }
                     }
                 }
             }
