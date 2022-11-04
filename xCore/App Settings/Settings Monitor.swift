@@ -9,6 +9,7 @@ import Foundation
 import Combine
 import CommonCrypto
 import SwiftUI
+import ServiceManagement
 
 /// Handles Application settings
 public class SettingsMonitor: xCore {
@@ -69,6 +70,7 @@ public class SettingsMonitor: xCore {
     }
     
     public func defaults(_ key: DefaultKey = .All) {
+        try? SMAppService.mainApp.unregister()
         AppSettings.defaultSettings(key)
     }
     

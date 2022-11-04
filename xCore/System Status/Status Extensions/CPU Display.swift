@@ -16,7 +16,8 @@ public class CPUDisplay: xCore {
         @Binding var isRun: Bool
 //        @State private var thermalPressure = macOS_Subsystem.thermalPressure().label
 //        @State private var thermalValue = macOS_Subsystem.thermalPressure().value
-        @State private var thermals = macOS_Subsystem.ThermalPressureObserver()
+        @State private var thermals: (label: String, state: ThermalPressure) =
+        (label: macOS_Subsystem.ThermalMonitor().label, state: macOS_Subsystem.ThermalMonitor().state)
         private var dynamicColor: Color {
             switch thermals.state {
             case .nominal:
@@ -28,6 +29,8 @@ public class CPUDisplay: xCore {
             case .critical:
                 return .red
             case .undefined:
+                return .clear
+            case .noPassword:
                 return .clear
             }
         }
@@ -62,17 +65,19 @@ public class CPUDisplay: xCore {
                                 .font(.footnote)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
-                            HStack{
-                                Divider()
+                            if SettingsMonitor.passwordSaved {
+                                HStack{
+                                    Divider()
+                                        .font(.footnote)
+                                        .foregroundColor(SettingsMonitor.textColor(cs))
+                                        .monospacedDigit()
+                                }.frame(height: 10)
+                                Text(thermals.label)
                                     .font(.footnote)
+                                    .bold(thermals.state == .fair || thermals.state == .critical || thermals.state == .serious)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
                                     .monospacedDigit()
-                            }.frame(height: 10)
-                            Text(thermals.label)
-                                .font(.footnote)
-                                .bold(thermals.state == .fair || thermals.state == .critical || thermals.state == .serious)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                                .monospacedDigit()
+                            }
                             Spacer()
                         }
                         Chart {
@@ -159,6 +164,13 @@ public class CPUDisplay: xCore {
                         } catch _ {}
                         if !isRun {break}
                     }while(isRun)
+                }
+                .task {
+                    repeat {
+                        thermals = await macOS_Subsystem.ThermalMonitor().asyncRun().value
+                        try? await Task.sleep(seconds: 5)
+                        if !isRun {break}
+                    } while(isRun)
                 }
                 .animation(SettingsMonitor.secondaryAnimation, value: thermals.state)
             }

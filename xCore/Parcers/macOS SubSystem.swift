@@ -97,45 +97,89 @@ public struct macOS_Subsystem {
         }
     }
     
-    public class ThermalPressureObserver {
-        public var label: String = StringLocalizer("therm.unknown")
-        public var state: ThermalPressure = .critical
-        public init(){
-            state = localizeS(ProcessInfo.processInfo.thermalState)
-            NotificationCenter.default.addObserver(self, selector: #selector(self.obs(_:)), name: ProcessInfo.thermalStateDidChangeNotification, object: nil)
+    public class ThermalMonitor {
+        public init(){}
+        
+        deinit {
+            thermalProcess = nil
+            pipe1 = nil
         }
         
-        private func localizeS(_ s: ProcessInfo.ThermalState) -> ThermalPressure {
+        public var label: String = StringLocalizer("therm.unknown")
+        public var state: ThermalPressure = .undefined
+        
+        private var thermalProcess: Process?
+        
+        private var pipe1: Pipe?
+                
+        private func parce(_ s: ProcessInfo.ThermalState) {
             switch s{
             case .nominal:
                 label = StringLocalizer("therm.nominal")
                 state = .nominal
-                return .nominal
             case .fair:
                 label = StringLocalizer("therm.fair")
                 state = .fair
-                return .fair
             case .serious:
                 label = StringLocalizer("therm.serious")
                 state = .serious
-                return .serious
             case .critical:
                 label = StringLocalizer("therm.critical")
                 state = .critical
-                return .critical
             @unknown default:
                 label = StringLocalizer("therm.unknown")
                 state = .undefined
-                return .undefined
             }
         }
         
-        @objc private func obs(_ not: Notification) -> ProcessInfo.ThermalState {
-            let p = ProcessInfo.processInfo.thermalState
-            state = localizeS(p)
-            return p
+        public func asyncRun() async -> Task<(label: String, state: ThermalPressure), Never> {
+            Task{
+                run()
+                return (label: label, state: state)
+            }
+        }
+        
+        private func run() {
+            thermalProcess = Process()
+            pipe1 = Pipe()
+            let bash = URL(filePath: "/bin/bash")
+            thermalProcess?.executableURL = bash
+            thermalProcess?.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S thermal watch"]
+            thermalProcess?.standardOutput = pipe1
+            thermalProcess?.standardError = pipe1
+            if SettingsMonitor.passwordSaved {
+                do {
+                    try thermalProcess?.run()
+                    if let out = String(data: try pipe1?.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
+                        let p = String(out.byLines[0])
+                        if p.contains("therm_level=0"){
+                            parce(.nominal)
+                        } else if p.contains("therm_level=1") {
+                            parce(.fair)
+                        } else if p.contains("therm_level=2") {
+                            parce(.fair)
+                        } else if p.contains("therm_level=3") {
+                            parce(.serious)
+                        } else if p.contains("therm_level=3") {
+                            parce(.critical)
+                        } else {
+                            parce(.init(rawValue: 99)!)
+                        }
+                    }
+                    if thermalProcess!.isRunning {
+                        thermalProcess?.terminate()
+                    }
+                } catch let error {
+                    NSLog(error.localizedDescription)
+                    thermalProcess?.terminate()
+                }
+            } else {
+                label = ""
+                state = .noPassword
+            }
         }
     }
+    
     public func macOSDriveName() -> String? {
         let url = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         do {

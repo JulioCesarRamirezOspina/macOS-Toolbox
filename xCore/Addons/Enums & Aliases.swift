@@ -127,6 +127,7 @@ public enum ThermalPressure {
     case serious
     case critical
     case undefined
+    case noPassword
 }
 
 public enum MemoryPressure {
