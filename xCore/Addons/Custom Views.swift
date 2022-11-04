@@ -426,6 +426,8 @@ public class CustomViews: xCore {
                             .trim(from: (timeLeft / 10 ) / (inititalTimeLeft / 10 ), to: isLongPressing ? inititalTimeLeft / 10 : 0.01)
                             .stroke(style: .init(lineWidth: 5, lineCap: .round, lineJoin: .round))
                             .foregroundColor(color)
+                            .rotationEffect(Angle(degrees: 175))
+                            .rotation3DEffect(Angle(degrees: 180), axis: (x: 180, y: 180, z: 0),anchor: .center)
                             .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
                             .glow(color: color, anim: isLongPressing, glowIntensity: .slight)
                         Text(((timeLeft) / 10) >= 2 ? Int((timeLeft) / 10).description : ((timeLeft) / 10).description)
