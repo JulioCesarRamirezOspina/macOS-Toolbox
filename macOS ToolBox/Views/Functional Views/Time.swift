@@ -30,9 +30,9 @@ struct TimeView: View {
                 } else {
                     VStack{
                         if SettingsMonitor.isInMenuBar {
-                            Text("clicktohide.string")
+                            Text(StringLocalizer("clicktohide.string").uppercased())
                         } else {
-                            Text("clicktoquit.string")
+                            Text(StringLocalizer("clicktoquit.string").uppercased())
                         }
                     }
                 }

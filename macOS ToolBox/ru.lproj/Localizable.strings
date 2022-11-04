@@ -189,7 +189,7 @@
 "hibernationWithPoweroff.string" = "Сон с выключением питания";
 "undefined.string" = "Неопределено";
 "clicktoquit.string" = "Нажмите, чтобы выйти или нажмите \"esc\"";
-"clicktohide.string" = "Нажмите, чтобы скрыть или нажмите \"esc\"";
+"clicktohide.string" = "⎋ / ⬉ для скрытия\nудежрание для выхода";
 "ramStatus.string" = "Статус RAM";
 "diskLabel.string" = "Имя диска";
 "createDisk.string" = "Создать диск";

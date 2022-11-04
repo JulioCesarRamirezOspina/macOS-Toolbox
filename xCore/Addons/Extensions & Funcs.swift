@@ -393,7 +393,7 @@ extension BinaryInteger {
 }
 
 extension View {
-    func glow(color c: Color = .clear, anim: Bool = false, glowIntensity: GlowIntensity = .normal) -> some View {
+   public func glow(color c: Color = .clear, anim: Bool = false, glowIntensity: GlowIntensity = .normal) -> some View {
         switch glowIntensity {
         case .normal:
             return self
@@ -430,3 +430,15 @@ extension View {
         }
     }
 }
+
+extension View {
+   public func onReceiveNotification(_ name: Notification.Name,
+                   center: NotificationCenter = .default,
+                   object: AnyObject? = nil,
+                   perform action: @escaping (Notification) -> Void) -> some View {
+        self.onReceive(
+            center.publisher(for: name, object: object), perform: action
+        )
+    }
+}
+
