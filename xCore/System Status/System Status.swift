@@ -10,6 +10,7 @@ import SwiftUI
 
 public class SystemStatus: xCore {
     
+    // MARK: - Power Buttons
     private struct Power {
         private enum activities {
             case shutDown
@@ -40,24 +41,41 @@ public class SystemStatus: xCore {
             var activity: activities
             var glyph: String
             var color: Color
+            var description: String
+            var actionDealy: Double
             let id = UUID()
         }
         
         public func buttons() -> some View {
             let buttons: [actionsStruct] = [
-                .init(activity: .shutDown, glyph: "power", color: .red),
-                .init(activity: .reboot, glyph: "restart", color: .yellow),
-                .init(activity: .sleep, glyph: "sleep", color: .cyan),
-                .init(activity: .displayOff, glyph: "lock.display", color: .gray)
+                .init(activity: .shutDown, glyph: "power", color: .red, description: "", actionDealy: 5),
+                .init(activity: .reboot, glyph: "restart", color: .yellow, description: "", actionDealy: 5),
+                .init(activity: .sleep, glyph: "sleep", color: .cyan, description: "", actionDealy: 1),
+                .init(activity: .displayOff, glyph: "lock.display", color: .gray, description: "", actionDealy: 0)
             ]
-
+            
             return ForEach(buttons) { button in
-                Button {
-                    actions(button.activity)
-                } label: {
-                    EmptyView()
+                if button.activity != .displayOff {
+                    Button {} label: {}
+                        .modifier(CustomViews.DualActionMod(tapAction: { Void() }, longPressAction: {
+                            actions(button.activity)
+                        },
+                                                            frameSize: CGSize(width: 50, height: 50),
+                                                            ltActionDelay: button.actionDealy))
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
+                                                                alwaysShowTitle: false,
+                                                                width: 50, height: 50,
+                                                                color: button.color,
+                                                                hideBackground: true))
+                } else {
+                    Button { actions(button.activity) } label: { }
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
+                                                                alwaysShowTitle: false,
+                                                                width: 50,
+                                                                height: 50,
+                                                                color: button.color,
+                                                                hideBackground: true))
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph, alwaysShowTitle: false, width: 50, height: 50, color: button.color, hideBackground: true))
             }
         }
     }
@@ -365,7 +383,7 @@ public class SystemStatus: xCore {
         @State var height: CGFloat = 50
         @State var emergencyPopover = false
         @Environment(\.colorScheme) var cs
-
+        
         public var body: some View {
             Spacer().frame(height: 50)
             GeometryReader { g in
@@ -477,5 +495,4 @@ public class SystemStatus: xCore {
             .animation(SettingsMonitor.secondaryAnimation, value: toggle)
         }
     }
-
 }

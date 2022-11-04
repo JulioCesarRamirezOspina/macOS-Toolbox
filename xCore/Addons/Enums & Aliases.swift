@@ -164,6 +164,7 @@ public enum SeedReadableString {
 }
 
 public enum GlowIntensity {
+    case slight
     case normal
     case moderate
     case hdr

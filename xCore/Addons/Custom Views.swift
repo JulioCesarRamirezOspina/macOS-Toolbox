@@ -40,7 +40,7 @@ public class CustomViews: xCore {
             .padding(.all)
         }
     }
-
+    
     /// Universal image view by it's system name
     public struct ImageView: View {
         public init(
@@ -147,7 +147,7 @@ public class CustomViews: xCore {
             }
         }
     }
-
+    
     /// Same as ImageView, but for symbols
     public struct SymbolView: View {
         public init(
@@ -292,12 +292,12 @@ public class CustomViews: xCore {
         var size: CGFloat
         public var body: some View {
             ZStack{
-                    Circle().frame(width: size - 1, height: size - 1, alignment: .center).foregroundColor(cs == .dark ? .black : .white)
-                    Image(systemName: imageName)
-                        .font(.custom("San Francisco", size: size))
-                    Circle().frame(width: size / 2 - 1, height: size / 2 - 1, alignment: .center).foregroundColor(cs == .dark ? .black : .white)
-                    Image(systemName: imageName)
-                        .font(.custom("San Francisco", size: size / 2)).rotationEffect(Angle(degrees: 180))
+                Circle().frame(width: size - 1, height: size - 1, alignment: .center).foregroundColor(cs == .dark ? .black : .white)
+                Image(systemName: imageName)
+                    .font(.custom("San Francisco", size: size))
+                Circle().frame(width: size / 2 - 1, height: size / 2 - 1, alignment: .center).foregroundColor(cs == .dark ? .black : .white)
+                Image(systemName: imageName)
+                    .font(.custom("San Francisco", size: size / 2)).rotationEffect(Angle(degrees: 180))
             }
             .shadow(radius: 5)
             .animation(SettingsMonitor.secondaryAnimation, value: size)
@@ -369,6 +369,97 @@ public class CustomViews: xCore {
             })
             .frame(width: size.width - 30, height: size.height - 30, alignment: .center)
             .clipped(antialiased: true)
+        }
+    }
+    public struct DualActionMod: ViewModifier {
+        public init(tapAction: @escaping (()->()), longPressAction: @escaping (()->()), frameSize: CGSize, ltActionDelay: Double = 4) {
+            self.frameSize = frameSize
+            self.tapAction = tapAction
+            self.longPressAction = longPressAction
+            self._timeLeft = State(initialValue: ltActionDelay * 10)
+            self.inititalTimeLeft = ltActionDelay * 10
+        }
+        @State var w: CGFloat = 1
+        @State var h: CGFloat = 1
+        @Environment(\.colorScheme) var colorScheme
+        var color: Color {
+            get {
+                switch timeLeft {
+                case 40...Double.greatestFiniteMagnitude:
+                    if SettingsMonitor.isInMenuBar {
+                        if colorScheme == .dark {
+                            return .white
+                        } else {
+                            return .gray
+                        }
+                    } else {
+                        if colorScheme == .dark {
+                            return .white
+                        } else {
+                            return .secondary
+                        }
+                    }
+                case 30...40:
+                    return .green
+                case 20...30: return .yellow
+                case 10...20: return .red
+                default: return .clear
+                }
+            }
+        }
+        @State private var timer: Timer?
+        @State private var timeLeft: Double
+        let inititalTimeLeft: Double
+        @State private var isLongPressing = false
+        private var tapAction: (()->())
+        private var longPressAction: (()->())
+        private var frameSize: CGSize
+        public func body(content: Content) -> some View {
+            
+            ZStack{
+                if !isLongPressing {
+                    content
+                        .transition(.scale)
+                } else {
+                    ZStack{
+                        Circle()
+                            .trim(from: (timeLeft / 10 ) / (inititalTimeLeft / 10 ), to: isLongPressing ? inititalTimeLeft / 10 : 0.01)
+                            .stroke(style: .init(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                            .foregroundColor(color)
+                            .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
+                            .glow(color: color, anim: isLongPressing, glowIntensity: .slight)
+                        Text(((timeLeft) / 10) >= 2 ? Int((timeLeft) / 10).description : ((timeLeft) / 10).description)
+                            .font(.title)
+                            .fontWeight(.black)
+                            .glow(color: color, glowIntensity: .slight)
+                    }
+                    .animation(SettingsMonitor.secondaryAnimation, value: timeLeft)
+                    .transition(.scale)
+                }
+            }
+            .transition(.scale)
+            .animation(SettingsMonitor.secondaryAnimation, value: isLongPressing)
+            .simultaneousGesture(
+              TapGesture()
+                .onEnded { _ in
+                  tapAction()
+                }
+            )
+            .onLongPressGesture(minimumDuration: inititalTimeLeft / 10, maximumDistance: 200) {
+                longPressAction()
+            } onPressingChanged: { h in
+                isLongPressing = h
+                switch isLongPressing {
+                case true:
+                    timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { t in
+                        timeLeft -= 1
+                    })
+                case false:
+                    timer?.invalidate()
+                    timer = nil
+                    timeLeft = inititalTimeLeft
+                }
+            }
         }
     }
 }

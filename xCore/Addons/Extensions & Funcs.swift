@@ -427,6 +427,14 @@ extension View {
                 .animation(SettingsMonitor.secondaryAnimation, value: anim)
                 .animation(SettingsMonitor.secondaryAnimation, value: c)
 
+        case .slight:
+            return self
+                .shadow(color: ProcessInfo.processInfo.isLowPowerModeEnabled ? .clear : c, radius: ProcessInfo.processInfo.isLowPowerModeEnabled ? 0 : .pi / 2)
+                .shadow(color: ProcessInfo.processInfo.isLowPowerModeEnabled ? .clear : c, radius: ProcessInfo.processInfo.isLowPowerModeEnabled ? 0 : .pi / 2)
+                .shadow(color: ProcessInfo.processInfo.isLowPowerModeEnabled ? .clear : c, radius: ProcessInfo.processInfo.isLowPowerModeEnabled ? 0 : .pi / 2)
+                .animation(SettingsMonitor.secondaryAnimation, value: anim)
+                .animation(SettingsMonitor.secondaryAnimation, value: c)
+
         }
     }
 }
