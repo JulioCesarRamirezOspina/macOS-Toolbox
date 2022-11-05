@@ -442,10 +442,10 @@ public class CustomViews: xCore {
             .transition(.scale)
             .animation(SettingsMonitor.secondaryAnimation, value: isLongPressing)
             .simultaneousGesture(
-              TapGesture()
-                .onEnded { _ in
-                  tapAction()
-                }
+                TapGesture()
+                    .onEnded { _ in
+                        tapAction()
+                    }
             )
             .onLongPressGesture(minimumDuration: inititalTimeLeft / 10, maximumDistance: 200) {
                 longPressAction()
@@ -462,6 +462,121 @@ public class CustomViews: xCore {
                     timeLeft = inititalTimeLeft
                 }
             }
+        }
+    }
+    
+    public struct MultiProgressBar: View {
+        @Environment(\.colorScheme) var cs
+        var total: (label: String, value: Double)
+        var values: [(label: String, value: Double, color: Color)] = []
+        var intValues: [(label: String, value: Int, color: Color)] = []
+        var widthFrame: Double
+        var showDots: Bool = true
+        var textColor: Color = !SettingsMonitor.isInMenuBar ? .secondary : NSApplication.shared.effectiveAppearance.name == .aqua ? .black : .white
+        var geometry: CGSize
+        let rectHeight: CGFloat = 7
+        private func summaryload(_ s: [(label: String, value: Double, color: Color)]) -> Double {
+            var sum: Double = 0
+            for each in s {
+                sum += each.value
+            }
+            return sum
+        }
+        private func summaryIntload(_ s: [(label: String, value: Int, color: Color)]) -> Int {
+            var sum: Int = 0
+            for each in s {
+                sum += each.value
+            }
+            return sum
+        }
+        
+        private func calculateWidth(fraction: Double, total: Double, width: Double) -> Double {
+            
+            return (width / 100 * (fraction))
+        }
+        
+        private func calculateIntWidth(fraction: Int, total: Double, width: Double) -> Double {
+            return width / total * Double(fraction)
+        }
+        
+        public var body: some View {
+            VStack{
+                VStack{
+                    ZStack{
+                        RoundedRectangle(cornerRadius: 5).frame(width: geometry.width, height: rectHeight, alignment: .center).foregroundColor(Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.1)))
+                        HStack(spacing: 0){
+                            if !values.isEmpty {
+                                ForEach(0..<values.count, id: \.self) { index in
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .frame(
+                                            //                                        width: geometry.width - (geometry.width / 100 * ((total.value / 100) - values[index].value)),
+                                            width: calculateWidth(fraction: values[index].value, total: total.value, width: geometry.width),
+                                            height: rectHeight, alignment: .center)
+                                        .foregroundColor(values[index].color)
+                                        .animation(SettingsMonitor.secondaryAnimation, value: values[index].value)
+                                        .shadow(radius: 5)
+                                }
+                                Spacer()
+                            } else {
+                                ForEach(0..<intValues.count, id: \.self) { index in
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .frame(
+                                            //                                        width: geometry.width - (geometry.width / 100 * ((total.value / 100) - values[index].value)),
+                                            width: calculateIntWidth(fraction: intValues[index].value, total: total.value, width: geometry.width),
+                                            height: rectHeight, alignment: .center)
+                                        .foregroundColor(intValues[index].color)
+                                        .animation(SettingsMonitor.secondaryAnimation, value: intValues[index].value)
+                                        .shadow(radius: 5)
+                                }
+                                Spacer()
+                            }
+                        }
+                    }
+                }
+                VStack{
+                    if !showDots {
+                        HStack{
+                            Text(StringLocalizer(total.label) + ": " + Int(total.value).description + "%")
+                                .font(.footnote)
+                                .foregroundColor(textColor)
+                                .monospacedDigit()
+                            HStack{
+                                Divider()
+                            }.frame(width: 10, height: 10, alignment: .center)
+                            if !values.isEmpty {
+                                ForEach(0..<values.count, id: \.self) {index in
+                                    HStack{
+                                        Text(StringLocalizer(values[index].label) + ": " + Int(values[index].value).description + "%")
+                                            .font(.footnote)
+                                            .foregroundColor(textColor)
+                                            .monospacedDigit()
+                                    }
+                                    if index != values.count - 1 {
+                                        HStack{
+                                            Divider()
+                                        }.frame(width: 10, height: 10, alignment: .center)
+                                    }
+                                }
+                            } else {
+                                ForEach(0..<intValues.count, id: \.self) {index in
+                                    HStack{
+                                        Text(StringLocalizer(intValues[index].label) + ": " + Int(intValues[index].value).description + "%")
+                                            .font(.footnote)
+                                            .foregroundColor(textColor)
+                                            .monospacedDigit()
+                                    }
+                                    if index != values.count - 1 {
+                                        HStack{
+                                            Divider()
+                                        }.frame(width: 10, height: 10, alignment: .center)
+                                    }
+                                }
+                            }
+                            Spacer()
+                        }
+                    }
+                }
+            }.frame(width: geometry.width)
         }
     }
 }

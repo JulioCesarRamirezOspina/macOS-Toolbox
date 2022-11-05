@@ -205,3 +205,4 @@ public enum platform {
 
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
+public typealias ThermalData = (label: String, state: ThermalPressure)

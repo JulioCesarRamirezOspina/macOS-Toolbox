@@ -100,19 +100,9 @@ public struct macOS_Subsystem {
     public class ThermalMonitor {
         public init(){}
         
-        deinit {
-            thermalProcess = nil
-            pipe1 = nil
-        }
-        
-        public var label: String = StringLocalizer("therm.unknown")
-        public var state: ThermalPressure = .undefined
-        
-        private var thermalProcess: Process?
-        
-        private var pipe1: Pipe?
-                
-        private func parce(_ s: ProcessInfo.ThermalState) {
+        private func parce(_ s: ThermalPressure) -> ThermalData {
+            var label: String = ""
+            var state: ThermalPressure = .undefined
             switch s{
             case .nominal:
                 label = StringLocalizer("therm.nominal")
@@ -126,56 +116,67 @@ public struct macOS_Subsystem {
             case .critical:
                 label = StringLocalizer("therm.critical")
                 state = .critical
-            @unknown default:
+            case .undefined:
                 label = StringLocalizer("therm.unknown")
                 state = .undefined
-            }
-        }
-        
-        public func asyncRun() async -> Task<(label: String, state: ThermalPressure), Never> {
-            Task{
-                run()
-                return (label: label, state: state)
-            }
-        }
-        
-        private func run() {
-            thermalProcess = Process()
-            pipe1 = Pipe()
-            let bash = URL(filePath: "/bin/bash")
-            thermalProcess?.executableURL = bash
-            thermalProcess?.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S thermal watch"]
-            thermalProcess?.standardOutput = pipe1
-            thermalProcess?.standardError = pipe1
-            if SettingsMonitor.passwordSaved {
-                do {
-                    try thermalProcess?.run()
-                    if let out = String(data: try pipe1?.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                        let p = String(out.byLines[0])
-                        if p.contains("therm_level=0"){
-                            parce(.nominal)
-                        } else if p.contains("therm_level=1") {
-                            parce(.fair)
-                        } else if p.contains("therm_level=2") {
-                            parce(.fair)
-                        } else if p.contains("therm_level=3") {
-                            parce(.serious)
-                        } else if p.contains("therm_level=3") {
-                            parce(.critical)
-                        } else {
-                            parce(.init(rawValue: 99)!)
-                        }
-                    }
-                    if thermalProcess!.isRunning {
-                        thermalProcess?.terminate()
-                    }
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                    thermalProcess?.terminate()
-                }
-            } else {
+            case .noPassword:
                 label = ""
                 state = .noPassword
+            }
+            return (label, state)
+        }
+        
+        public func asyncRun() async -> Task<(ThermalData), Never> {
+            Task{
+                let data = run()
+                return data
+            }
+        }
+        
+        public func run() -> ThermalData{
+            let process = Process()
+            let killer = Process()
+            let pipe = Pipe()
+            let bash = URL(filePath: "/bin/bash")
+            process.executableURL = bash
+            process.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S thermal watch"]
+            process.standardOutput = pipe
+            process.standardError = pipe
+            killer.executableURL = bash
+            killer.arguments = ["-c", "sleep 0.1 && echo \(SettingsMonitor.password) | sudo -S killall thermal"]
+            var data: ThermalData = ("",.undefined)
+
+            if SettingsMonitor.passwordSaved {
+                do {
+                    try killer.run()
+                    try process.run()
+                    if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data() , encoding: .utf8) {
+                        let p = String(out.byLines[0])
+                        if p.contains("therm_level=0"){
+                            data = parce(.nominal)
+                        } else if p.contains("therm_level=1") {
+                            data = parce(.fair)
+                        } else if p.contains("therm_level=2") {
+                            data = parce(.fair)
+                        } else if p.contains("therm_level=3") {
+                            data = parce(.serious)
+                        } else if p.contains("therm_level=4") {
+                            data = parce(.critical)
+                        } else {
+                            data = parce(.undefined)
+                        }
+                    }
+                    if process.isRunning {
+                        process.terminate()
+                    }
+                    return data
+                } catch let error {
+                    NSLog(error.localizedDescription)
+                    process.terminate()
+                    return parce(.undefined)
+                }
+            } else {
+                return parce(.noPassword)
             }
         }
     }

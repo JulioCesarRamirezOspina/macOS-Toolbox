@@ -7,7 +7,6 @@
 
 import Foundation
 import SwiftUI
-import Charts
 
 public class MemoryDisplay: xCore {
     public struct view: View {
@@ -117,69 +116,17 @@ public class MemoryDisplay: xCore {
                     }
                     .frame(height: 10)
                     .animation(SettingsMonitor.secondaryAnimation, value: clensingInProgress)
-                    Chart {
-                        Plot{
-                            BarMark(
-                                xStart: .value("Active", 0),
-                                xEnd: .value("Active", Int(memory.total)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.1)))
-                            BarMark(
-                                xStart: .value("Active", 0),
-                                xEnd: .value("Active", Int(memory.active)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(.blue)
-                            BarMark(
-                                xStart: .value("Inactive", Int(memory.active)),
-                                xEnd: .value("Inactive", Int(memory.inactive) + Int(memory.active)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(.gray)
-                            BarMark(
-                                xStart: .value("Wired", Int(memory.inactive) + Int(memory.active)),
-                                xEnd: .value("Wired", Int(memory.inactive) + Int(memory.active) + Int(memory.wired)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(.green)
-                            BarMark(
-                                xStart: .value("Compressed", Int(memory.inactive) + Int(memory.active) + Int(memory.wired)),
-                                xEnd: .value("Compressed", Int(memory.inactive) + Int(memory.active) + Int(memory.wired) + Int(memory.compressed)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(Color(nsColor: NSColor(
-                                #colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1)
-                            )))
-                            BarMark(
-                                xStart: .value("Cached", Int(memory.inactive) + Int(memory.active) + Int(memory.wired) + Int(memory.compressed)),
-                                xEnd: .value("Cached", Int(memory.inactive) + Int(memory.active) + Int(memory.wired) + Int(memory.compressed) + Int(memory.cachedFiles)),
-                                y: .value("", 0),
-                                height: 6
-                            )
-                            .foregroundStyle(.brown)
+                    VStack{
+                        GeometryReader { g in
+                            CustomViews.MultiProgressBar(total: (label: String(Int(memory.used).description + " MB / " + Int(memory.total).description + " MB"), value: memory.total), intValues: [
+                                (label: "active.string", value: Int(memory.active), color: .blue),
+                                (label: "inactive.string", value: Int(memory.inactive), color: .gray),
+                                (label: "wired.string", value: Int(memory.wired), color: .green),
+                                (label: "compressed.string", value: Int(memory.compressed), color: (Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))),
+                                (label: "cachedFiles.string", value: Int(memory.cachedFiles), color: .brown)
+                            ], widthFrame: g.size.width, geometry: g.size)
                         }
-                    }
-                    .chartXAxis(.hidden)
-                    .chartYAxis(.hidden)
-                    .shadow(radius: 2)
-                    .frame(height: 10)
-                    .animation(SettingsMonitor.secondaryAnimation, value: memory.used)
-                    HStack{
-                        Group{
-                            Text(Int(memory.used).description + " MB / " + Int(memory.total).description + " MB")
-                            Spacer()
-                            Text("\(Int(Double().toPercent(fraction: memory.free, total: memory.total) * 100))%")
-                        }
-                        .monospacedDigit()
-                        .font(.footnote)
-                        .fontWeight(.light)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
+                        Spacer()
                     }
                     HStack{
                         HStack{
