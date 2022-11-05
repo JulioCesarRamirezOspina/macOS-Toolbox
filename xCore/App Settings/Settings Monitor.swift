@@ -30,6 +30,12 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var temperatureUnit: UnitTemperature {
+        get {
+            return AppSettings.load(key: "tempUnit") 
+        }
+    }
+    
     public static var isInMenuBar: Bool {
         get {
             AppSettings.load(key: "isInMenuBar") ?? false
@@ -349,6 +355,11 @@ fileprivate class AppSettings: xCore {
         defaults.synchronize()
     }
 
+    public class func set(key: String, value: UnitTemperature){
+        defaults.set(value, forKey: key)
+        defaults.synchronize()
+    }
+
     /// Sets URL values
     /// - Parameters:
     ///   - key: key to set
@@ -401,6 +412,10 @@ fileprivate class AppSettings: xCore {
         case ".light": return .light
         default: return cs
         }
+    }
+    
+    public class func load(key: String) -> UnitTemperature {
+        return defaults.value(forKey: key) as? UnitTemperature ?? UnitTemperature.init(forLocale: .autoupdatingCurrent)
     }
 
     /// Loads string value for key

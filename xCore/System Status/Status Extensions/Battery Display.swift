@@ -20,6 +20,8 @@ public class BatteryDisplay: xCore {
         @State private var width: CGFloat = 10
         @State private var height: CGFloat = 10
         @State private var flash = false
+        @State private var tempUnit: UnitTemperature = SettingsMonitor.temperatureUnit
+        @State private var temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: SettingsMonitor.temperatureUnit)
         @State private var isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
         @Binding var isRun: Bool
         var dynamicColor: Color {
@@ -136,6 +138,17 @@ public class BatteryDisplay: xCore {
                                 .fontWeight(.heavy)
                         }
                         Spacer()
+                        Text(macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit).valueString)
+                            .font(.footnote)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
+                            .bold(macOS_Subsystem.BatteryTemperature(TermperatureUnit: .celsius).value > 36)
+                            .onTapGesture {
+                                switch tempUnit {
+                                case .celsius: tempUnit = .fahrenheit
+                                case .fahrenheit: tempUnit = .kelvin
+                                default: tempUnit = .celsius
+                                }
+                            }
                     }
                     .frame(height: 10)
                     .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
@@ -246,6 +259,7 @@ public class BatteryDisplay: xCore {
                             TimeRemaining = data.TimeRemaining
                             isInLowPower = await isInLowPowerUpdate().value
                             flash.toggle()
+                            temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit)
                             try await Task.sleep(seconds: 5)
                         } catch _ {}
                         if !isRun {break}

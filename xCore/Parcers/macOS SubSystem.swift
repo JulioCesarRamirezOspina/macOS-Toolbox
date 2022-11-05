@@ -97,6 +97,41 @@ public struct macOS_Subsystem {
         }
     }
     
+    public static func BatteryTemperature(TermperatureUnit t: UnitTemperature = .celsius) -> (value: Double, unit: UnitTemperature, valueString: String) {
+        let process = Process()
+        let pipe = Pipe()
+        process.executableURL = URL(filePath: "/bin/bash")
+        process.arguments = ["-c", "ioreg -r -n AppleSmartBattery | grep Temperature"]
+        process.standardOutput = pipe
+        do {
+            try process.run()
+            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
+                let s = out.byLines.last ?? "0"
+                let w = s.byWords.last ?? "0"
+                let cRetval = (Double(String(w)) ?? 0) / 100
+                let fRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .fahrenheit).value.rounded(.toNearestOrEven)
+                let kRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .kelvin).value.rounded(.toNearestOrEven)
+                let cRetvalString = "\(cRetval) ºC"
+                let fRetvalString = "\(fRetval) ºF"
+                let kRetvalString = "\(kRetval) K"
+                switch t {
+                case .celsius:
+                    return (value: cRetval, unit: .celsius, valueString: cRetvalString)
+                case .fahrenheit:
+                    return (value: fRetval, unit: .fahrenheit, valueString: fRetvalString)
+                case .kelvin:
+                    return (value: kRetval, unit: .kelvin, valueString: kRetvalString)
+                default: return (cRetval, .celsius, cRetvalString)
+                }
+            } else {
+                return (value: 0, unit: .kelvin, valueString: "0 K")
+            }
+        } catch let error {
+            NSLog(error.localizedDescription)
+            return (value: 0, unit: .kelvin, valueString: "0 K")
+        }
+    }
+    
     public class ThermalMonitor {
         public init(){}
         
