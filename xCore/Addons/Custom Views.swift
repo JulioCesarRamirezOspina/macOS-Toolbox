@@ -474,7 +474,7 @@ public class CustomViews: xCore {
         var showDots: Bool = true
         var textColor: Color = !SettingsMonitor.isInMenuBar ? .secondary : NSApplication.shared.effectiveAppearance.name == .aqua ? .black : .white
         var geometry: CGSize
-        let rectHeight: CGFloat = 7
+        let rectHeight: CGFloat = .pi * 2
         private func summaryload(_ s: [(label: String, value: Double, color: Color)]) -> Double {
             var sum: Double = 0
             for each in s {
