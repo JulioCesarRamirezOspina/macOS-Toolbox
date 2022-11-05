@@ -83,7 +83,7 @@ public class MemoryDisplay: xCore {
                                 Text(memoryPressure == .nominal ? StringLocalizer("memPressure.nominal") :
                                         memoryPressure == .warning ? StringLocalizer("memPressure.warning") :
                                         memoryPressure == .critical ? StringLocalizer("memPressure.critical") :
-                                StringLocalizer("memPressure.undefined"))
+                                        StringLocalizer("memPressure.undefined"))
                                 .fontWeight(memoryPressure == .warning ? .heavy : memoryPressure == .critical ? .black : .regular)
                             }
                             switch clensingInProgress {
@@ -113,70 +113,85 @@ public class MemoryDisplay: xCore {
                         .font(.footnote)
                         .foregroundColor(SettingsMonitor.textColor(cs))
                         Spacer()
+                        HStack{
+                            Spacer()
+                            Text(Int(memory.used / memory.total * 100).description + "%")
+                                .font(.footnote)
+                                .bold((Int(memory.used / memory.total * 100)) > 60)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
+                        }
                     }
                     .frame(height: 10)
                     .animation(SettingsMonitor.secondaryAnimation, value: clensingInProgress)
                     VStack{
                         GeometryReader { g in
-                            CustomViews.MultiProgressBar(total: (label: String(Int(memory.used).description + " MB / " + Int(memory.total).description + " MB"), value: memory.total), intValues: [
-                                (label: "active.string", value: Int(memory.active), color: .blue),
-                                (label: "inactive.string", value: Int(memory.inactive), color: .gray),
-                                (label: "wired.string", value: Int(memory.wired), color: .green),
-                                (label: "compressed.string", value: Int(memory.compressed), color: (Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))),
-                                (label: "cachedFiles.string", value: Int(memory.cachedFiles), color: .brown)
-                            ], widthFrame: g.size.width, geometry: g.size)
+                            CustomViews.MultiProgressBar(total: (label: !clensingInProgress ? String(Int(memory.used).description + " MB / " + Int(memory.total).description + " MB") : String(Int(memory.used / memory.total * 100).description + "%"), value: !clensingInProgress ? memory.total : 100),
+                                                         values: clensingInProgress ? [
+                                                            (label: "", value: Double(memory.used / memory.total * 100), color: (Int(memory.used / memory.total * 100)) < 50 ? .blue : .green)
+                                                         ] : [],
+                                                         intValues: !clensingInProgress ? [
+                                                            (label: "active.string", value: Int(memory.active), color: .blue),
+                                                            (label: "inactive.string", value: Int(memory.inactive), color: .gray),
+                                                            (label: "wired.string", value: Int(memory.wired), color: .green),
+                                                            (label: "compressed.string", value: Int(memory.compressed), color: (Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))),
+                                                            (label: "cachedFiles.string", value: Int(memory.cachedFiles), color: .brown)
+                                                         ] : [],
+                                                         widthFrame: g.size.width,
+                                                         geometry: g.size)
                         }
                         Spacer()
                     }
                     HStack{
-                        HStack{
-                            Rectangle()
-                                .frame(width: 10, height: 10, alignment: .center)
-                                .foregroundColor(.blue).shadow(radius: 2)
-                            Text("\(StringLocalizer("active.string")): \(Int(memory.active).description) \(StringLocalizer("mib.string"))")
-                                .monospacedDigit()
-                                .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
+                        if !clensingInProgress {
+                            HStack{
+                                Rectangle()
+                                    .frame(width: 10, height: 10, alignment: .center)
+                                    .foregroundColor(.blue).shadow(radius: 2)
+                                Text("\(StringLocalizer("active.string")): \(Int(memory.active).description) \(StringLocalizer("mib.string"))")
+                                    .monospacedDigit()
+                                    .font(.footnote)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            }
+                            HStack{
+                                Rectangle()
+                                    .frame(width: 10, height: 10, alignment: .center)
+                                    .foregroundColor(.gray).shadow(radius: 2)
+                                Text("\(StringLocalizer("inactive.string")): \(Int(memory.inactive).description) \(StringLocalizer("mib.string"))")
+                                    .monospacedDigit()
+                                    .font(.footnote)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            }
+                            HStack{
+                                Rectangle()
+                                    .frame(width: 10, height: 10, alignment: .center)
+                                    .foregroundColor(.green).shadow(radius: 2)
+                                Text("\(StringLocalizer("wired.string")): \(Int(memory.wired).description) \(StringLocalizer("mib.string"))")
+                                    .monospacedDigit()
+                                    .font(.footnote)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            }
+                            HStack{
+                                Rectangle()
+                                    .frame(width: 10, height: 10, alignment: .center)
+                                    .foregroundColor(Color(nsColor: NSColor(
+                                        #colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1)
+                                    ))).shadow(radius: 2)
+                                Text("\(StringLocalizer("compressed.string")): \(Int(memory.compressed).description) \(StringLocalizer("mib.string"))")
+                                    .monospacedDigit()
+                                    .font(.footnote)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            }
+                            HStack{
+                                Rectangle()
+                                    .frame(width: 10, height: 10, alignment: .center)
+                                    .foregroundColor(.brown).shadow(radius: 2)
+                                Text("\(StringLocalizer("cachedFiles.string")): \(Int(memory.cachedFiles).description) \(StringLocalizer("mib.string"))")
+                                    .monospacedDigit()
+                                    .font(.footnote)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            }
+                            Spacer()
                         }
-                        HStack{
-                            Rectangle()
-                                .frame(width: 10, height: 10, alignment: .center)
-                                .foregroundColor(.gray).shadow(radius: 2)
-                            Text("\(StringLocalizer("inactive.string")): \(Int(memory.inactive).description) \(StringLocalizer("mib.string"))")
-                                .monospacedDigit()
-                                .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                        }
-                        HStack{
-                            Rectangle()
-                                .frame(width: 10, height: 10, alignment: .center)
-                                .foregroundColor(.green).shadow(radius: 2)
-                            Text("\(StringLocalizer("wired.string")): \(Int(memory.wired).description) \(StringLocalizer("mib.string"))")
-                                .monospacedDigit()
-                                .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                        }
-                        HStack{
-                            Rectangle()
-                                .frame(width: 10, height: 10, alignment: .center)
-                                .foregroundColor(Color(nsColor: NSColor(
-                                    #colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1)
-                                ))).shadow(radius: 2)
-                            Text("\(StringLocalizer("compressed.string")): \(Int(memory.compressed).description) \(StringLocalizer("mib.string"))")
-                                .monospacedDigit()
-                                .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                        }
-                        HStack{
-                            Rectangle()
-                                .frame(width: 10, height: 10, alignment: .center)
-                                .foregroundColor(.brown).shadow(radius: 2)
-                            Text("\(StringLocalizer("cachedFiles.string")): \(Int(memory.cachedFiles).description) \(StringLocalizer("mib.string"))")
-                                .monospacedDigit()
-                                .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                        }
-                        Spacer()
                     }
                 }
                 .padding(.all)

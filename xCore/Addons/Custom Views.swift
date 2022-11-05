@@ -504,12 +504,12 @@ public class CustomViews: xCore {
                 VStack{
                     ZStack{
                         RoundedRectangle(cornerRadius: 5).frame(width: geometry.width, height: rectHeight, alignment: .center).foregroundColor(Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.1)))
+                            .shadow(radius: 5)
                         HStack(spacing: 0){
                             if !values.isEmpty {
                                 ForEach(0..<values.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
-                                            //                                        width: geometry.width - (geometry.width / 100 * ((total.value / 100) - values[index].value)),
                                             width: calculateWidth(fraction: values[index].value, total: total.value, width: geometry.width),
                                             height: rectHeight, alignment: .center)
                                         .foregroundColor(values[index].color)
@@ -521,7 +521,6 @@ public class CustomViews: xCore {
                                 ForEach(0..<intValues.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
-                                            //                                        width: geometry.width - (geometry.width / 100 * ((total.value / 100) - values[index].value)),
                                             width: calculateIntWidth(fraction: intValues[index].value, total: total.value, width: geometry.width),
                                             height: rectHeight, alignment: .center)
                                         .foregroundColor(intValues[index].color)

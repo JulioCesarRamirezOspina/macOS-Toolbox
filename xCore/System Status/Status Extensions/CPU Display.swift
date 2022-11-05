@@ -76,74 +76,12 @@ public class CPUDisplay: xCore {
                             }
                             Spacer()
                         }
-//                        Chart {
-//                            Plot {
-//                                BarMark(
-//                                    xStart: .value("total", 0),
-//                                    xEnd: .value("total", 100),
-//                                    y: .value("", 0),
-//                                    height: 6
-//                                )
-//                                .foregroundStyle(Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.1)))
-//                                BarMark(
-//                                    xStart: .value("user", 0),
-//                                    xEnd: .value("user", Int(cpuValue.user)),
-//                                    y: .value("", 0),
-//                                    height: 6
-//                                )
-//                                .foregroundStyle(.blue)
-//                                BarMark(
-//                                    xStart: .value("system", Int(cpuValue.user)),
-//                                    xEnd: .value("system", Int(cpuValue.user) + Int(cpuValue.system)),
-//                                    y: .value("", 0),
-//                                    height: 6
-//                                )
-//                                .foregroundStyle(.red)
-//
-//                            }
-//                        }
-//                        .chartXAxis(.hidden)
-//                        .chartYAxis(.hidden)
-//                        .shadow(radius: 2)
-//                        .frame(height: 10)
-//                        .animation(SettingsMonitor.secondaryAnimation, value: cpuValue.user)
                         VStack{
                             GeometryReader { g in
                                 CustomViews.MultiProgressBar(total: (label: "load.string", value: cpuValue.user + cpuValue.system), values: [("user.string", cpuValue.user, .blue), ("system.string", cpuValue.system, .red)], widthFrame: g.size.width, showDots: false, geometry: g.size)
                             }
                             Spacer()
                         }
-//                        HStack{
-//                            Text(StringLocalizer("load.string") + ": " + (Double(cpuValue.user * 100 + cpuValue.system * 100) / 100).description + "%" )
-//                                .font(.footnote)
-//                                .foregroundColor(SettingsMonitor.textColor(cs))
-//                                .monospacedDigit()
-//                            HStack{
-//                                Divider()
-//                                    .font(.footnote)
-//                                    .foregroundColor(SettingsMonitor.textColor(cs))
-//                                    .monospacedDigit()
-//                            }.frame(height: 10)
-//                            Text(StringLocalizer("user.string") + ": \(cpuValue.user)%")
-//                                .font(.footnote)
-//                                .foregroundColor(SettingsMonitor.textColor(cs))
-//                                .monospacedDigit()
-//                            HStack{
-//                                Divider()
-//                                    .font(.footnote)
-//                                    .foregroundColor(SettingsMonitor.textColor(cs))
-//                                    .monospacedDigit()
-//                            }.frame(height: 10)
-//                            Text(StringLocalizer("system.string") + ": \(cpuValue.system)%")
-//                                .font(.footnote)
-//                                .foregroundColor(SettingsMonitor.textColor(cs))
-//                                .monospacedDigit()
-//                            Spacer()
-//                            Text("100%")
-//                                .font(.footnote)
-//                                .foregroundColor(SettingsMonitor.textColor(cs))
-//                                .monospacedDigit()
-//                        }
                     }
                     .padding(.all)
                 }
