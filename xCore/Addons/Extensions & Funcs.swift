@@ -59,8 +59,10 @@ func convertValue(_ v: Double) -> (Double, Unit) {
         return (kilobytes, Unit.kilobyte)
     case 1_024..<(1_024 * 1_024 * 1_024):
         return (megabytes, Unit.megabyte)
-    case (1_024 * 1_024 * 1_024)...(Double.greatestFiniteMagnitude):
+    case 1_024..<(1_024 * 1_024 * 1_024 * 1_024):
         return (gigabytes, Unit.gigabyte)
+    case (1_024 * 1_024 * 1_024 * 1_024)...(Double.greatestFiniteMagnitude):
+        return (terabyte, Unit.terabyte)
     default:
         return (bytes, Unit.byte)
     }

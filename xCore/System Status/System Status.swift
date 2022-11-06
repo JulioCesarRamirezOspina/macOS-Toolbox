@@ -108,6 +108,35 @@ public class SystemStatus: xCore {
             return (StringLocalizer("bootDrive.string"), macOS_Subsystem().macOSDriveName()!)
         }
     }
+    
+    private static var bootDriveCapacity: StringData {
+        get {
+            var t: Int = 0
+            let u = FileManager.default.homeDirectoryForCurrentUser
+            let label = StringLocalizer("capacity.string")
+            do {
+                let values = try u.resourceValues(forKeys: [.volumeTotalCapacityKey])
+                if let capacity = values.volumeTotalCapacity {
+                    t = capacity
+                    let retval = convertValue(Double(t))
+                    var type = ""
+                    switch retval.1 {
+                    case .gigabyte:
+                        type = StringLocalizer("gig.string")
+                    case .terabyte:
+                        type = StringLocalizer("tib.string")
+                    default: type = ""
+                    }
+                    return (label: label, value: "\(Int(retval.0.rounded())) \(type)")
+                } else {
+                    return (label: label, value: "0")
+                }
+            } catch {
+                return (label: label, value: "0")
+            }
+        }
+    }
+
     private static var macOSVer: StringData {
         get {
             return (StringLocalizer("macOS.string"), macOS_Subsystem.osVersion())
@@ -266,72 +295,73 @@ public class SystemStatus: xCore {
                     HStack{
                         HStack{
                             Spacer()
-                            Text(processor.label).shadow(radius: 5)
+                            Text(processor.label)
                         }
                         HStack{
-                            Text(processor.value).shadow(radius: 5)
+                            Text(processor.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                                
                             Spacer()
                         }
                     }
                     HStack{
                         HStack{
                             Spacer()
-                            Text(graphics.label).shadow(radius: 5)
+                            Text(graphics.label)
                         }
                         HStack{
-                            Text(graphics.value).shadow(radius: 5)
+                            Text(graphics.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                                
                             Spacer()
                         }
                     }
                     HStack{
                         HStack{
                             Spacer()
-                            Text(memory.label).shadow(radius: 5)
+                            Text(memory.label)
                         }
                         HStack{
-                            Text(memory.value).shadow(radius: 5)
+                            Text(memory.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                                
                             Spacer()
                         }
                     }
                     HStack{
                         HStack{
                             Spacer()
-                            Text(bootDrive.label).shadow(radius: 5)
+                            Text(bootDrive.label)
                         }
                         HStack{
-                            Text(bootDrive.value).shadow(radius: 5)
+                            Text(bootDrive.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                            Text("(\(bootDriveCapacity.value))")
+                                .foregroundColor(SettingsMonitor.textColor(cs))
                             Spacer()
                         }
                     }
                     HStack{
                         HStack{
                             Spacer()
-                            Text(macOSVer.label).shadow(radius: 5)
+                            Text(macOSVer.label)
                         }
                         HStack{
-                            Text(macOSVer.value).shadow(radius: 5)
+                            Text(macOSVer.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                                
                             Spacer()
                         }
                     }
                     HStack{
                         HStack{
                             Spacer()
-                            Text(serial!.label).shadow(radius: 5)
+                            Text(serial!.label)
                         }
                         HStack{
-                            Text(serial?.value ?? "NaN").shadow(radius: 5)
+                            Text(serial?.value ?? "NaN")
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                .shadow(radius: 5)
+                                
                                 .blur(radius: showSerial || hovered ? 0 : 5)
                                 .animation(SettingsMonitor.secondaryAnimation, value: hovered)
                                 .onAppear(perform: {

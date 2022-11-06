@@ -196,6 +196,7 @@
 "gig.string" = "GB";
 "tib.string" = "TB";
 "mib.string" = "MB";
+"capacity.string" = "capacity";
 "ramDiskVolume.string" = "RAM drive volume";
 "clearRAM.string" = "Clear RAM";
 "noRAM.string" = "No free RAM to create RAM drive is available.\nTry closing apps and freeing RAM\nwith button in the right-bottom corner.";
