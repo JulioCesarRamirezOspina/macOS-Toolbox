@@ -203,7 +203,8 @@ public class Stylers: xCore {
             backgroundShadow: Bool = true,
             swapItems: Bool = false,
             render: SymbolRenderingMode = .multicolor,
-            glow: Bool = true
+            glow: Bool = true,
+            alwaysGlow: Bool = false
         )
         {
             image = glyph
@@ -222,6 +223,7 @@ public class Stylers: xCore {
             self.render = render
             self.glow = glow
             self.hideTitle = hideTitle
+            self.alwaysGlow = alwaysGlow
         }
         var swapItems: Bool
         var image: String
@@ -239,6 +241,7 @@ public class Stylers: xCore {
         var blurBackgound: Bool
         var render: SymbolRenderingMode
         var glow: Bool
+        var alwaysGlow: Bool
         @Environment(\.isEnabled) var isEnabled
         @State private var hovered: Bool = false
         
@@ -339,7 +342,7 @@ public class Stylers: xCore {
                 self.hovered = t
             })
             .disabled(disabled)
-            .glow(color: glow && hovered && !disabled ? onHoverColor : .clear, anim: hovered)
+            .glow(color: alwaysGlow ? onHoverColor : glow && hovered && !disabled ? onHoverColor : .clear, anim: hovered)
         }
     }
 }

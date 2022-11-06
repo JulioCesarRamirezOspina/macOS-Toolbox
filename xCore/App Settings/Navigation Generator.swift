@@ -14,19 +14,22 @@ public struct ViewForGenerator: Identifiable {
         label: String = "",
         font: Font = .body,
         fontWeight: Font.Weight = .regular,
-        typeOf: ViewType = .spacer
+        typeOf: ViewType = .spacer,
+        enabled: Bool = false
     ) {
         self.view = view
         self.label = label
         self.font = font
         self.fontWeight = fontWeight
         self.typeOf = typeOf
+        self.enabled = enabled
     }
     public var view: AnyView = AnyView(EmptyView())
     public var label: String = ""
     public var font: Font = .body
     public var fontWeight: Font.Weight = .regular
     public var typeOf: ViewType = .link
+    public var enabled: Bool = false
     public var id = UUID()
 }
 
@@ -73,16 +76,31 @@ public struct NavigationLinkGenerator: View {
                 .buttonStyle(Stylers.ColoredButtonStyle(
                     glyph: LinkGlyph(views[index].label),
                     disabled: false,
-                    enabled: false,
-                    alwaysShowTitle: inLowPower ? true : false,
-                    color: .blue,
+                    enabled: views[index].enabled,
+                    alwaysShowTitle: inLowPower ? true : views[index].enabled ? true : false,
+                    color: views[index].enabled ? .green : .blue,
                     hideBackground: true,
                     backgroundIsNotFill: true,
                     blurBackground: true,
                     backgroundShadow: true,
                     render: .monochrome,
-                    glow: false)
+                    alwaysGlow: views[index].enabled)
                 )
+                .simultaneousGesture(TapGesture().onEnded({ _ in
+                    for ind in 0..<views.count {
+                        if ind == index {
+                            views[ind].enabled = true
+                        } else {
+                            views[ind].enabled = false
+                        }
+                    }
+                    delay(after: 2) {
+                        for i in 0..<views.count {
+                            views[i].enabled = false
+                        }
+                    }
+                }))
+                .animation(SettingsMonitor.secondaryAnimation, value: views[index].enabled)
                 .font(views[index].font)
                 .fontWeight(views[index].fontWeight)
                 .id(index)
