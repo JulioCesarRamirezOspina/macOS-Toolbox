@@ -77,6 +77,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         hideButtons(3)
     }
     
+    private func isInDarkMode() {
+        let process = Process()
+        let pipe = Pipe()
+        process.arguments = ["-c", "defaults read -g AppleInterfaceStyle"]
+        process.executableURL = URL(filePath: "/bin/bash")
+        process.standardOutput = pipe
+    }
+    
     private func hideDock() {
        NSApplication.Dock.refreshMenuBarVisibiity(method: .viaMenuVisibilityToggle)
         NSApplication.shared.setActivationPolicy(.accessory)
@@ -138,7 +146,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let screenSize = NSScreen.main!.frame.size
         window.contentMinSize = NSSize(width: screenSize.width - (screenSize.width / 4), height: screenSize.height)
         window.contentMaxSize = NSSize(width: Double.greatestFiniteMagnitude, height: Double.greatestFiniteMagnitude)
-        window.contentViewController = NSHostingController(rootView: MainView(initCS: _cs)
+        window.contentViewController = NSHostingController(rootView: MainView(colorScheme: AppDelegate.cs)
             .ignoresSafeArea()
             .frame(minWidth: 1090,
                    idealWidth: 1280,
@@ -173,10 +181,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
+    func applicationDidResignActive(_ notification: Notification) {
+        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
+    }
+    
+    func applicationDidBecomeActive(_ notification: Notification) {
+        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
+    }
+    
     static var popover: NSPopover!
     static var statusBarItem: NSStatusItem!
     var window: NSWindow!
-    @Environment(\.colorScheme) var cs
+    static var cs: ColorScheme = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
     
     public static func tog() {
         self.popover.performClose(nil)

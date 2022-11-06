@@ -197,6 +197,11 @@ public enum Size {
     case unknownSize
 }
 
+public enum macOSMode {
+    case light
+    case dark
+}
+
 public enum platform {
     case AppleSilicon
     case AppleSiliconRosetta

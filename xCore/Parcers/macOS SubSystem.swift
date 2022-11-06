@@ -97,6 +97,35 @@ public struct macOS_Subsystem {
         }
     }
     
+    public static func isInDarkMode() -> macOSMode {
+        let process = Process()
+        let pipe = Pipe()
+        process.arguments = ["-c", "defaults read -g AppleInterfaceStyle"]
+        process.executableURL = URL(filePath: "/bin/bash")
+        process.standardOutput = pipe
+        let savedColorScheme = Theme.colorScheme
+        if savedColorScheme == .none {
+            do {
+                try process.run()
+                if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
+                    if out == "Dark" {
+                        return .dark
+                    } else {
+                        return .light
+                    }
+                } else {
+                    return .light
+                }
+            } catch let error {
+                NSLog(error.localizedDescription)
+                return .light
+            }
+        } else {
+            return savedColorScheme == .light ? .light : .dark
+        }
+    }
+
+    
     public static func BatteryTemperature(TermperatureUnit t: UnitTemperature = .celsius) -> (value: Double, unit: UnitTemperature, valueString: String) {
         let process = Process()
         let pipe = Pipe()

@@ -14,7 +14,6 @@ struct MainView: View {
 	private func toggleSidebar() {
 		NSApp.keyWindow?.firstResponder?.tryToPerform(#selector(NSSplitViewController.toggleSidebar(_:)), with: nil)
 	}
-	@Environment(\.colorScheme) var initCS
 	@State var loadingViewIsHidden = false
 	@State var width: CGFloat?
 	@State var height: CGFloat?
@@ -213,7 +212,7 @@ struct MainView: View {
 				}
 			}
 		}
-		.preferredColorScheme(colorScheme ?? initCS)
+		.preferredColorScheme(colorScheme)
 		.animation(SettingsMonitor.secondaryAnimation, value: colorScheme)
 		.animation(SettingsMonitor.secondaryAnimation, value: collapsed)
 		.animation(SettingsMonitor.secondaryAnimation, value: mainTitle)
