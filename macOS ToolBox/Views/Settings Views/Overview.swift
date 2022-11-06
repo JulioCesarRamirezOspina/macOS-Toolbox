@@ -16,7 +16,7 @@ struct SettingsOverview: View {
     @State private var maintenanceLastRun = SettingsMonitor.maintenanceLastRun
     @State private var parallelsLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.parallelsDir.relativePath)"
     @State private var utmLabel = "\(StringLocalizer("utmDir.string"))\(SettingsMonitor.utmDir.relativePath)"
-    @State private var width: CGFloat = 600
+    @State private var width: CGFloat = (NSApplication.shared.keyWindow?.frame.width)! / 2
     @State private var animateBatteryOverview = SettingsMonitor.batteryAnimation
     @State private var isRun = false
     @State private var showSerialNumber = SettingsMonitor.showSerialNumber
@@ -221,53 +221,42 @@ struct SettingsOverview: View {
         }
     }
     
-    private func OverView() -> some View {
-        HStack{
-            GeometryReader { geoProxy in
-                GroupBox {
-                    Spacer()
-//                    GeometryReader { g in
-                        SwiftUI.ScrollView(.vertical, showsIndicators: true) {
-                            VStack{
-                                Spacer()
-                                Group{
-                                    ParallelsButton()
-                                    UTMButton()
-                                    MaintenanceButton()
-                                    PasswordStateButton()
-                                    BatteryButton()
-                                    ShowSerialNumber()
-                                    IsInMenuBar()
-                                    AutoLaunch()
-                                    AppTheme()
-                                }.padding(.all)
-                                Spacer()
-                            }.padding(.all)
-                        }.edgesIgnoringSafeArea(.all)
-//                    }
-                    Spacer()
-                } label: {
-                    HStack{
-                        CustomViews.AnimatedTextView(Input: "settingsOverview.string", TimeToStopAnimation: SettingsMonitor.secAnimDur)
-                    }
-                }
-                .groupBoxStyle(Stylers.CustomGBStyle())
-                .background {
-                    CustomViews.ImageView(imageName: "gear.circle.fill")
-                }
-                .onChange(of: geoProxy.size.width) { newValue in
-                    if newValue > 10 {
-                        width = newValue - 50
-                    }
-                }
-            }
-        }
-    }
-    
     var body: some View {
         VStack{
             if isRun {
-                OverView()
+                HStack{
+                    GroupBox {
+                        Spacer()
+                        GeometryReader { _ in
+                            SwiftUI.ScrollView(.vertical, showsIndicators: true) {
+                                VStack{
+                                    Spacer()
+                                    Group{
+                                        ParallelsButton()
+                                        UTMButton()
+                                        MaintenanceButton()
+                                        PasswordStateButton()
+                                        BatteryButton()
+                                        ShowSerialNumber()
+                                        IsInMenuBar()
+                                        AutoLaunch()
+                                        AppTheme()
+                                    }.padding(.all)
+                                    Spacer()
+                                }.padding(.all)
+                            }
+                        }
+                        Spacer()
+                    } label: {
+                        HStack{
+                            CustomViews.AnimatedTextView(Input: "settingsOverview.string", TimeToStopAnimation: SettingsMonitor.secAnimDur)
+                        }
+                    }
+                    .groupBoxStyle(Stylers.CustomGBStyle())
+                    .background {
+                        CustomViews.ImageView(imageName: "gear.circle.fill")
+                    }
+                }
             }
         }
         .preferredColorScheme(pcs)

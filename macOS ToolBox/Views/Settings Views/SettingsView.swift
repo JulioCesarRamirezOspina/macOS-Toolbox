@@ -20,6 +20,7 @@ struct SettingsView: View {
 //                withAnimation(.easeInOut(duration: Observer().secAnimDur)) {
                 NavigationSplitView {
                     Text("settings.string").font(.largeTitle).padding(.all)
+                        .frame(minWidth: 200)
                     Divider()
                     GeometryReader { g in
                         VStack{
@@ -60,7 +61,6 @@ struct SettingsView: View {
                             SettingsOverview(pcs: $colorScheme)
                         })
                         .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, hideBackground: true, render: .monochrome))
-                        .frame(width: g.size.width / 5)
                     }
                     .background(.ultraThickMaterial)
                 } detail: {

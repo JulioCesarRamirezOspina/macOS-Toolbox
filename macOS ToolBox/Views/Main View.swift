@@ -141,36 +141,39 @@ struct MainView: View {
 	
 	private func NV() -> some View {
 		NavigationSplitView(sidebar: {
-			NavigationLink {
-				welcomeScreen(SettingsMonitor.mainAnimDur)
-			} label: {
-				VStack{
-					HStack{
-						Spacer()
-						Text(mainTitle)
-							.font(.largeTitle)
-							.foregroundColor(.primary)
-							.monospacedDigit()
-						Spacer()
-					}
-				}
-			}
-			.padding(.all)
-			.onHover(perform: { t in
-				switch t {
-				case true: mainTitle = StringLocalizer("overview.string")
-				case false: mainTitle = StringLocalizer("developerTeam")
-				}
-			})
-			.buttonStyle(.borderless)
-			Divider()
-			ScrollView(.vertical, showsIndicators: true) {
-				NavigationLinkGenerator(Views: Views)
-			}
-			TimeAndQuit(colorScheme: $colorScheme)
-				.background(SplitViewAccessor(isCollapsed: $collapsed))
-				.frame(width: width, alignment: .center)
-				.listStyle(.sidebar)
+            VStack{
+                NavigationLink {
+                    welcomeScreen(SettingsMonitor.mainAnimDur)
+                } label: {
+                    VStack{
+                        HStack{
+                            Spacer()
+                            Text(mainTitle)
+                                .font(.largeTitle)
+                                .foregroundColor(.primary)
+                                .monospacedDigit()
+                            Spacer()
+                        }
+                    }
+                }
+                .padding(.all)
+                .onHover(perform: { t in
+                    switch t {
+                    case true: mainTitle = StringLocalizer("overview.string")
+                    case false: mainTitle = StringLocalizer("developerTeam")
+                    }
+                })
+                .buttonStyle(.borderless)
+                Divider()
+                ScrollView(.vertical, showsIndicators: true) {
+                    NavigationLinkGenerator(Views: Views)
+                }
+                TimeAndQuit(colorScheme: $colorScheme)
+                    .background(SplitViewAccessor(isCollapsed: $collapsed))
+                    .frame(width: width, alignment: .center)
+                    .listStyle(.sidebar)
+            }
+            .border(.separator)
 		}, detail: {
 			welcomeScreen(SettingsMonitor.mainAnimDur)
 				.onHover { t in

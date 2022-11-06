@@ -15,7 +15,8 @@ struct TimeAndQuit: View {
     @State var w: CGFloat = 1
     @State var h: CGFloat = 1
     @State var hovered = false
-    var body: some View {
+    
+    private func makeBody() -> some View {
         VStack{
             VStack(){
                 Divider()
@@ -62,11 +63,15 @@ struct TimeAndQuit: View {
                         }
                     }, longPressAction: {
                         Quit(AppDelegate())
-                    }, frameSize: CGSize(width: 90, height: 90)))
+                    }, frameSize: CGSize(width: 68, height: 68), padding: true))
                 }
             }
             .background(.ultraThickMaterial)
         }
+    }
+    
+    var body: some View {
+        makeBody()
         .onAppear {
             lowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
         }

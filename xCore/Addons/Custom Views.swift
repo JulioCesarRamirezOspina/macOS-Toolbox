@@ -372,15 +372,17 @@ public class CustomViews: xCore {
         }
     }
     public struct DualActionMod: ViewModifier {
-        public init(tapAction: @escaping (()->()), longPressAction: @escaping (()->()), frameSize: CGSize, ltActionDelay: Double = 4) {
+        public init(tapAction: @escaping (()->()), longPressAction: @escaping (()->()), frameSize: CGSize, ltActionDelay: Double = 4, padding: Bool = false) {
             self.frameSize = frameSize
             self.tapAction = tapAction
             self.longPressAction = longPressAction
             self._timeLeft = State(initialValue: ltActionDelay * 10)
             self.inititalTimeLeft = ltActionDelay * 10
+            self.padding = padding
         }
         @State var w: CGFloat = 1
         @State var h: CGFloat = 1
+        var padding: Bool
         @Environment(\.colorScheme) var colorScheme
         var color: Color {
             get {
@@ -403,7 +405,7 @@ public class CustomViews: xCore {
                     return .green
                 case 20...30: return .yellow
                 case 10...20: return .red
-                default: return .clear
+                default: return .brown
                 }
             }
         }
@@ -421,22 +423,42 @@ public class CustomViews: xCore {
                     content
                         .transition(.scale)
                 } else {
-                    ZStack{
-                        Circle()
-                            .trim(from: (timeLeft / 10 ) / (inititalTimeLeft / 10 ), to: isLongPressing ? inititalTimeLeft / 10 : 0.01)
-                            .stroke(style: .init(lineWidth: 5, lineCap: .round, lineJoin: .round))
-                            .foregroundColor(color)
-                            .rotationEffect(Angle(degrees: 175))
-                            .rotation3DEffect(Angle(degrees: 180), axis: (x: 180, y: 180, z: 0),anchor: .center)
-                            .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
-                            .glow(color: color, anim: isLongPressing, glowIntensity: .slight)
-                        Text(((timeLeft) / 10) >= 2 ? Int((timeLeft) / 10).description : ((timeLeft) / 10).description)
-                            .font(.title)
-                            .fontWeight(.black)
-                            .glow(color: color, glowIntensity: .slight)
+                    if padding {
+                        ZStack{
+                            Circle()
+                                .trim(from: (timeLeft / 10 ) / (inititalTimeLeft / 10 ), to: isLongPressing ? inititalTimeLeft / 10 : 0.01)
+                                .stroke(style: .init(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                                .foregroundColor(color)
+                                .rotationEffect(Angle(degrees: 175))
+                                .rotation3DEffect(Angle(degrees: 180), axis: (x: 180, y: 180, z: 0),anchor: .center)
+                                .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
+                                .glow(color: color, anim: isLongPressing, glowIntensity: .slight)
+                            Text(((timeLeft) / 10) >= 2 ? Int((timeLeft) / 10).description : ((timeLeft) / 10).description)
+                                .font(.title)
+                                .fontWeight(.black)
+                                .glow(color: color, glowIntensity: .slight)
+                        }
+                        .animation(SettingsMonitor.secondaryAnimation, value: timeLeft)
+                        .transition(.scale)
+                        .padding(.all)
+                    } else {
+                        ZStack{
+                            Circle()
+                                .trim(from: (timeLeft / 10 ) / (inititalTimeLeft / 10 ), to: isLongPressing ? inititalTimeLeft / 10 : 0.01)
+                                .stroke(style: .init(lineWidth: 5, lineCap: .round, lineJoin: .round))
+                                .foregroundColor(color)
+                                .rotationEffect(Angle(degrees: 175))
+                                .rotation3DEffect(Angle(degrees: 180), axis: (x: 180, y: 180, z: 0),anchor: .center)
+                                .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
+                                .glow(color: color, anim: isLongPressing, glowIntensity: .slight)
+                            Text(((timeLeft) / 10) >= 2 ? Int((timeLeft) / 10).description : ((timeLeft) / 10).description)
+                                .font(.title)
+                                .fontWeight(.black)
+                                .glow(color: color, glowIntensity: .slight)
+                        }
+                        .animation(SettingsMonitor.secondaryAnimation, value: timeLeft)
+                        .transition(.scale)
                     }
-                    .animation(SettingsMonitor.secondaryAnimation, value: timeLeft)
-                    .transition(.scale)
                 }
             }
             .transition(.scale)
