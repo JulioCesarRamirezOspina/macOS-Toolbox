@@ -152,10 +152,9 @@ public class BatteryDisplay: xCore {
                     }
                     .frame(height: 10)
                     .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
-                    ProgressView(value: Percentage, total: 100)
-                        .tint(dynamicColor)
-                        .shadow(radius: 2)
-                        .animation(SettingsMonitor.secondaryAnimation, value: Percentage)
+                    GeometryReader { g in
+                        CustomViews.MultiProgressBar(total: (label: "", value: 100), values: [("", Double(Percentage), dynamicColor)], widthFrame: g.size.width, showDots: false, geometry: g.size, fixTo100: true, dontShowLabels: true)
+                    }
                     HStack{
                         Group {
                             switch ChargingState {

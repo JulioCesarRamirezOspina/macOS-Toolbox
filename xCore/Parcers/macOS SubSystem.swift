@@ -104,11 +104,11 @@ public struct macOS_Subsystem {
         process.executableURL = URL(filePath: "/bin/bash")
         process.standardOutput = pipe
         let savedColorScheme = Theme.colorScheme
-        if savedColorScheme == .none {
+        if savedColorScheme == nil {
             do {
                 try process.run()
                 if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                    if out == "Dark" {
+                    if out.byWords.first == "Dark" {
                         return .dark
                     } else {
                         return .light
@@ -121,7 +121,7 @@ public struct macOS_Subsystem {
                 return .light
             }
         } else {
-            return savedColorScheme == .light ? .light : .dark
+            return savedColorScheme == .light ? .light : savedColorScheme == .dark ? .dark : .light
         }
     }
 

@@ -78,7 +78,7 @@ public class CPUDisplay: xCore {
                         }
                         VStack{
                             GeometryReader { g in
-                                CustomViews.MultiProgressBar(total: (label: "load.string", value: cpuValue.user + cpuValue.system), values: [("user.string", cpuValue.user, .blue), ("system.string", cpuValue.system, .red)], widthFrame: g.size.width, showDots: false, geometry: g.size)
+                                CustomViews.MultiProgressBar(total: (label: "load.string", value: cpuValue.user + cpuValue.system), values: [("user.string", cpuValue.user, .blue), ("system.string", cpuValue.system, .red)], widthFrame: g.size.width, showDots: false, geometry: g.size, fixTo100: true)
                             }
                             Spacer()
                         }

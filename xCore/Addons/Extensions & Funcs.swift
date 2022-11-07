@@ -360,11 +360,25 @@ public struct DiskData: Identifiable, Equatable {
         UsedSpace: (Double, Unit),
         TotalSpace: (Double, Unit)
     ) {
+        func convertToG(_ x: (Double, Unit)) -> Double {
+            switch x.1 {
+            case .byte:
+                return x.0 / 1024 / 1024 / 1024
+            case .kilobyte:
+                return x.0 / 1024 / 1024
+            case .megabyte:
+                return x.0 / 1024
+            case .gigabyte:
+                return x.0
+            case .terabyte:
+                return x.0 * 1024
+            }
+        }
         self.DiskLabel = DiskLabel
         self.FreeSpace = FreeSpace
         self.UsedSpace = UsedSpace
         self.TotalSpace = TotalSpace
-        let percentage = Double().toPercent(fraction: UsedSpace.0.round(to: 2), total: (TotalSpace.1 == .terabyte ? (TotalSpace.0 * 1024).round(to: 2) : TotalSpace.0.round(to: 2)))
+        let percentage = Double().toPercent(fraction: convertToG(UsedSpace), total: convertToG(TotalSpace))
         if percentage < (1 - 0.8) {
             self.tintColor = .red
             self.backgroundColor = .brown

@@ -40,6 +40,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         SettingsMonitor.memoryClensingInProgress = false
         Memory().ejectAll([StringLocalizer("clear_RAM.string")])
+        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
     }
     
     func hideButtons(_ C: Int = 0) {
@@ -169,7 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
 
     func applicationDidFinishLaunching(_ notification: Notification) {
-        
+        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
         if SettingsMonitor.isInMenuBar {
             popoverLaunch()
         } else {

@@ -133,10 +133,9 @@ public class DisksDisplay: xCore {
                     Text(title)
                     Spacer()
                 }
-                ProgressView(value: toSingleFracture(usedSpace), total: toSingleFracture(totalSpace))
-                    .tint(tintColor)
-                    .shadow(radius: 2)
-                    .animation(SettingsMonitor.secondaryAnimation, value: usedSpace.0)
+                GeometryReader { g in
+                    CustomViews.MultiProgressBar(total: (label: "", value: toSingleFracture(totalSpace)), values: [(label: "", value: toSingleFracture(usedSpace), color: tintColor)], widthFrame: g.size.width, geometry: g.size)
+                }
                 HStack (spacing: 2) {
                     Group {
                         Text(singleToReadable(usedSpace))

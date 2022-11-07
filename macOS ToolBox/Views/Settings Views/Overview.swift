@@ -226,10 +226,9 @@ struct SettingsOverview: View {
             if isRun {
                 HStack{
                     GroupBox {
-                        Spacer()
                         GeometryReader { _ in
                             SwiftUI.ScrollView(.vertical, showsIndicators: true) {
-                                VStack{
+                                LazyVStack{
                                     Spacer()
                                     Group{
                                         ParallelsButton()
@@ -245,8 +244,8 @@ struct SettingsOverview: View {
                                     Spacer()
                                 }.padding(.all)
                             }
+                            .ignoresSafeArea(edges: .all)
                         }
-                        Spacer()
                     } label: {
                         HStack{
                             CustomViews.AnimatedTextView(Input: "settingsOverview.string", TimeToStopAnimation: SettingsMonitor.secAnimDur)

@@ -173,7 +173,7 @@ struct MainView: View {
                     .frame(width: width, alignment: .center)
                     .listStyle(.sidebar)
             }
-            .border(.separator)
+            .border(.separator.opacity(SettingsMonitor.isInMenuBar ? 1 : 0))
 		}, detail: {
 			welcomeScreen(SettingsMonitor.mainAnimDur)
 				.onHover { t in

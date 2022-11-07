@@ -496,7 +496,9 @@ public class CustomViews: xCore {
         var showDots: Bool = true
         var textColor: Color = !SettingsMonitor.isInMenuBar ? .secondary : NSApplication.shared.effectiveAppearance.name == .aqua ? .black : .white
         var geometry: CGSize
-        let rectHeight: CGFloat = .pi * 2
+        let rectHeight: CGFloat = .pi * 1.5
+        var fixTo100: Bool = false
+        var dontShowLabels = false
         private func summaryload(_ s: [(label: String, value: Double, color: Color)]) -> Double {
             var sum: Double = 0
             for each in s {
@@ -513,8 +515,7 @@ public class CustomViews: xCore {
         }
         
         private func calculateWidth(fraction: Double, total: Double, width: Double) -> Double {
-            
-            return (width / 100 * (fraction))
+            return (width / total * (fraction))
         }
         
         private func calculateIntWidth(fraction: Int, total: Double, width: Double) -> Double {
@@ -525,14 +526,16 @@ public class CustomViews: xCore {
             VStack{
                 VStack{
                     ZStack{
-                        RoundedRectangle(cornerRadius: 5).frame(width: geometry.width, height: rectHeight, alignment: .center).foregroundColor(Color(nsColor: NSColor(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.1)))
-                            .shadow(radius: 5)
+                        RoundedRectangle(cornerRadius: 5)
+                            .frame(width: geometry.width, height: rectHeight, alignment: .center)
+                            .foregroundStyle(.separator)
+                            .shadow(radius: 1)
                         HStack(spacing: 0){
                             if !values.isEmpty {
                                 ForEach(0..<values.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
-                                            width: calculateWidth(fraction: values[index].value, total: total.value, width: geometry.width),
+                                            width: calculateWidth(fraction: values[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width),
                                             height: rectHeight, alignment: .center)
                                         .foregroundColor(values[index].color)
                                         .animation(SettingsMonitor.secondaryAnimation, value: values[index].value)
@@ -543,7 +546,7 @@ public class CustomViews: xCore {
                                 ForEach(0..<intValues.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
-                                            width: calculateIntWidth(fraction: intValues[index].value, total: total.value, width: geometry.width),
+                                            width: calculateIntWidth(fraction: intValues[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width),
                                             height: rectHeight, alignment: .center)
                                         .foregroundColor(intValues[index].color)
                                         .animation(SettingsMonitor.secondaryAnimation, value: intValues[index].value)
@@ -554,46 +557,48 @@ public class CustomViews: xCore {
                         }
                     }
                 }
-                VStack{
-                    if !showDots {
-                        HStack{
-                            Text(StringLocalizer(total.label) + ": " + Int(total.value).description + "%")
-                                .font(.footnote)
-                                .foregroundColor(textColor)
-                                .monospacedDigit()
+                if !dontShowLabels {
+                    VStack{
+                        if !showDots {
                             HStack{
-                                Divider()
-                            }.frame(width: 10, height: 10, alignment: .center)
-                            if !values.isEmpty {
-                                ForEach(0..<values.count, id: \.self) {index in
-                                    HStack{
-                                        Text(StringLocalizer(values[index].label) + ": " + Int(values[index].value).description + "%")
-                                            .font(.footnote)
-                                            .foregroundColor(textColor)
-                                            .monospacedDigit()
-                                    }
-                                    if index != values.count - 1 {
+                                Text(StringLocalizer(total.label) + ": " + Int(total.value).description + "%")
+                                    .font(.footnote)
+                                    .foregroundColor(textColor)
+                                    .monospacedDigit()
+                                HStack{
+                                    Divider()
+                                }.frame(width: 10, height: 10, alignment: .center)
+                                if !values.isEmpty {
+                                    ForEach(0..<values.count, id: \.self) {index in
                                         HStack{
-                                            Divider()
-                                        }.frame(width: 10, height: 10, alignment: .center)
+                                            Text(StringLocalizer(values[index].label) + ": " + Int(values[index].value).description + "%")
+                                                .font(.footnote)
+                                                .foregroundColor(textColor)
+                                                .monospacedDigit()
+                                        }
+                                        if index != values.count - 1 {
+                                            HStack{
+                                                Divider()
+                                            }.frame(width: 10, height: 10, alignment: .center)
+                                        }
+                                    }
+                                } else {
+                                    ForEach(0..<intValues.count, id: \.self) {index in
+                                        HStack{
+                                            Text(StringLocalizer(intValues[index].label) + ": " + Int(intValues[index].value).description + "%")
+                                                .font(.footnote)
+                                                .foregroundColor(textColor)
+                                                .monospacedDigit()
+                                        }
+                                        if index != values.count - 1 {
+                                            HStack{
+                                                Divider()
+                                            }.frame(width: 10, height: 10, alignment: .center)
+                                        }
                                     }
                                 }
-                            } else {
-                                ForEach(0..<intValues.count, id: \.self) {index in
-                                    HStack{
-                                        Text(StringLocalizer(intValues[index].label) + ": " + Int(intValues[index].value).description + "%")
-                                            .font(.footnote)
-                                            .foregroundColor(textColor)
-                                            .monospacedDigit()
-                                    }
-                                    if index != values.count - 1 {
-                                        HStack{
-                                            Divider()
-                                        }.frame(width: 10, height: 10, alignment: .center)
-                                    }
-                                }
+                                Spacer()
                             }
-                            Spacer()
                         }
                     }
                 }
