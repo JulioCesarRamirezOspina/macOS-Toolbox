@@ -159,7 +159,7 @@
 "disable.string" = "Выключить";
 
 "clear.button" = "Очистить";
-"userCaches.string" = "Пользовательский кеш";
+"userCaches.string" = "Кеш";
 
 "packer.title" = "Я упакую выбранное приложение в пакет";
 "pwdTitle.text" = "Введите пароль:";

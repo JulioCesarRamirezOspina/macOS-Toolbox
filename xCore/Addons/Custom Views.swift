@@ -541,7 +541,8 @@ public class CustomViews: xCore {
                                         .animation(SettingsMonitor.secondaryAnimation, value: values[index].value)
                                         .shadow(radius: 5)
                                 }
-                                Spacer()
+                                RoundedRectangle(cornerRadius: 0.01)
+                                .foregroundColor(.clear)
                             } else {
                                 ForEach(0..<intValues.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
@@ -552,7 +553,8 @@ public class CustomViews: xCore {
                                         .animation(SettingsMonitor.secondaryAnimation, value: intValues[index].value)
                                         .shadow(radius: 5)
                                 }
-                                Spacer()
+                                RoundedRectangle(cornerRadius: 0.01)
+                                .foregroundColor(.clear)
                             }
                         }
                     }

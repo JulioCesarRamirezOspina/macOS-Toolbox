@@ -159,7 +159,7 @@
 "disable.string" = "Disable";
 
 "clear.button" = "Clear";
-"userCaches.string" = "User cache";
+"userCaches.string" = "Cached";
 
 "packer.title" = "I'll pack selected application to .pkg installer for you";
 "pwdTitle.text" = "Enter password:";

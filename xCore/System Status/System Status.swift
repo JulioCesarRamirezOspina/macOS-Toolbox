@@ -415,7 +415,9 @@ public class SystemStatus: xCore {
         @Environment(\.colorScheme) var cs
         
         public var body: some View {
-            Spacer().frame(height: 50)
+            if !SettingsMonitor.isInMenuBar {
+                Spacer().frame(height: 50)
+            }
             GeometryReader { g in
                 VStack{
                     ScrollView(.vertical, showsIndicators: true) {

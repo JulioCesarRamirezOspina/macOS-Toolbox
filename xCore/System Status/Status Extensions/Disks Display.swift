@@ -152,6 +152,7 @@ public class DisksDisplay: xCore {
             }
         }
         
+        
         private func DiskForEach() -> some View {
             @State var h: CGFloat = 10
             @State var w: CGFloat = 10
@@ -163,7 +164,7 @@ public class DisksDisplay: xCore {
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
                                  tintColor: disksData[index].tintColor)
-                        .frame(width: 300)
+                        .frame(minWidth: 250, idealWidth: 300, maxWidth: .greatestFiniteMagnitude, alignment: .center)
                         .padding(.all)
                         .onHover(perform: { t in
                             selfHovered[index] = t
@@ -190,7 +191,7 @@ public class DisksDisplay: xCore {
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
                                  tintColor: disksData[index].tintColor)
-                        .frame(width: 300)
+                        .frame(minWidth: 250, idealWidth: 300, maxWidth: .greatestFiniteMagnitude, alignment: .center)
                         .padding(.all)
                         .onHover(perform: { t in
                             selfHovered[index] = t
@@ -281,6 +282,11 @@ public class DisksDisplay: xCore {
             }
         }
         
+        let columns = Array.init(repeating: GridItem.init(.adaptive(minimum: 300, maximum: .greatestFiniteMagnitude),
+                                                                 spacing: 0,
+                                                                 alignment: .center),
+                                        count: 2)
+        
         public var body: some View {
             VStack{
                 if disksData == DiskData.isEmpty {
@@ -290,14 +296,12 @@ public class DisksDisplay: xCore {
                         VStack{Divider()}
                     }
                 } else {
-                    HStack{
-                        ScrollView(.horizontal, showsIndicators: true) {
-                            HStack{
-                                DiskForEach().padding(.all)
-                            }
-                        }
-                        .animation(SettingsMonitor.secondaryAnimation, value: disksData)
+                    LazyVGrid(columns: columns, spacing: 20) {
+                        DiskForEach().padding(.all)
                     }
+                    .gridCellColumns(2)
+                    .gridCellUnsizedAxes(.horizontal)
+                    .animation(SettingsMonitor.secondaryAnimation, value: disksData)
                 }
             }
             .onAppear(perform: {
