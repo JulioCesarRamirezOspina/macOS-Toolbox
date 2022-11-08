@@ -159,12 +159,12 @@ public class DisksDisplay: xCore {
             return ForEach(disksData.indices, id: \.self, content: { index in
                 VStack{
                     if disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() {
-                        diskTile(caches == "" ? "\(disksData[index].DiskLabel) | \(StringLocalizer("calculating.string"))" : "\(disksData[index].DiskLabel) | \(caches)",
+                        diskTile(caches == "" || caches == "\(StringLocalizer("userCaches.string")): 0 MB" ? "\(disksData[index].DiskLabel)" : "\(disksData[index].DiskLabel) | \(caches)",
                                  usedSpace: disksData[index].UsedSpace,
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
                                  tintColor: disksData[index].tintColor)
-                        .frame(minWidth: 250, idealWidth: 300, maxWidth: .greatestFiniteMagnitude, alignment: .center)
+                        .frame(minWidth: 250, maxWidth: .greatestFiniteMagnitude, alignment: .center)
                         .padding(.all)
                         .onHover(perform: { t in
                             selfHovered[index] = t
@@ -178,6 +178,7 @@ public class DisksDisplay: xCore {
                                     .shadow(radius: 5)
                             }
                         }
+                        .animation(SettingsMonitor.secondaryAnimation, value: caches)
                         .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
                         .popover(isPresented: $selfTapped[index]) {
                             DiskSheet(disksData: disksData, index: index)
@@ -191,7 +192,7 @@ public class DisksDisplay: xCore {
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
                                  tintColor: disksData[index].tintColor)
-                        .frame(minWidth: 250, idealWidth: 300, maxWidth: .greatestFiniteMagnitude, alignment: .center)
+                        .frame(minWidth: 250, maxWidth: .greatestFiniteMagnitude, alignment: .center)
                         .padding(.all)
                         .onHover(perform: { t in
                             selfHovered[index] = t
@@ -282,11 +283,14 @@ public class DisksDisplay: xCore {
             }
         }
         
-        let columns = Array.init(repeating: GridItem.init(.adaptive(minimum: 300, maximum: .greatestFiniteMagnitude),
+        @State var twoColumns = Array.init(repeating: GridItem.init(.adaptive(minimum: 300, maximum: .greatestFiniteMagnitude),
                                                                  spacing: 0,
                                                                  alignment: .center),
                                         count: 2)
-        
+        @State var oneColumn = [GridItem.init(.adaptive(minimum: .greatestFiniteMagnitude, maximum: .greatestFiniteMagnitude),
+                                              spacing: 0,
+                                              alignment: .center)]
+
         public var body: some View {
             VStack{
                 if disksData == DiskData.isEmpty {
@@ -296,11 +300,9 @@ public class DisksDisplay: xCore {
                         VStack{Divider()}
                     }
                 } else {
-                    LazyVGrid(columns: columns, spacing: 20) {
+                    LazyVGrid(columns: disksData.count == 1 ? oneColumn : twoColumns, spacing: 20) {
                         DiskForEach().padding(.all)
                     }
-                    .gridCellColumns(2)
-                    .gridCellUnsizedAxes(.horizontal)
                     .animation(SettingsMonitor.secondaryAnimation, value: disksData)
                 }
             }
