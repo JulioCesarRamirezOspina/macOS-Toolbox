@@ -392,7 +392,7 @@ public class SystemStatus: xCore {
         
         private func inDock() -> some View {
             GeometryReader { g in
-                SwiftUI.ScrollView(.vertical, showsIndicators: true) {
+                ScrollView(.vertical, showsIndicators: true) {
                     viewGenerator()
                 }
             }
@@ -418,7 +418,7 @@ public class SystemStatus: xCore {
             Spacer().frame(height: 50)
             GeometryReader { g in
                 VStack{
-                    SwiftUI.ScrollView(.vertical, showsIndicators: true) {
+                    ScrollView(.vertical, showsIndicators: true) {
                         DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
                             .padding(.all)
                         Divider()

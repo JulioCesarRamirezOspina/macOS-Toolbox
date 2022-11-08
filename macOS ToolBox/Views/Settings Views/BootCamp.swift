@@ -15,7 +15,7 @@ struct BootcampSettings: View {
     @State private var dissapear = false
     private func labeledView() -> some View {
         GeometryReader { g in
-            SwiftUI.ScrollView([.vertical, .horizontal], showsIndicators: true) {
+            ScrollView([.vertical, .horizontal], showsIndicators: true) {
                 HStack{
                     ForEach(BootCampStart.getMountedDisks().sorted(by: >), id: \.key) {key, value in
                         if BootCampStart.getOSType(diskLabel: value).canBoot {

@@ -209,7 +209,7 @@ struct LaunchpadManagerView: View {
                     RoundedRectangle(cornerRadius: 15)
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 10)
-                    SwiftUI.ScrollView([.vertical, .horizontal], showsIndicators: true) {
+                    ScrollView([.vertical, .horizontal], showsIndicators: true) {
                         TableView()
                     }
                 }

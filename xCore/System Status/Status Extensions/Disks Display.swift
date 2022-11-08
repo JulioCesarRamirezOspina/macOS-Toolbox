@@ -291,7 +291,7 @@ public class DisksDisplay: xCore {
                     }
                 } else {
                     HStack{
-                        SwiftUI.ScrollView(.horizontal, showsIndicators: true) {
+                        ScrollView(.horizontal, showsIndicators: true) {
                             HStack{
                                 DiskForEach().padding(.all)
                             }

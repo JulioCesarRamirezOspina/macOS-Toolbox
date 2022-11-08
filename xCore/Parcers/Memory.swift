@@ -47,13 +47,13 @@ public class Memory: xCore {
 //    public struct RAMData {
         public init() {
             total = 1
-            free = 1
-            wired = 1
-            used = 1
-            compressed = 1
-            active = 1
-            inactive = 1
-            cachedFiles = 1
+            free = 0.01
+            wired = 0.01
+            used = 0.01
+            compressed = 0.01
+            active = 0.01
+            inactive = 0.01
+            cachedFiles = 0.01
         }
         public init() async {
             total = await Memory().RAMData().value.total
@@ -204,10 +204,11 @@ public class Memory: xCore {
             var CSC: Int = 0
             let fm = FileManager.default
             let cachesDir = URL.cachesDirectory
-            let derivedDir = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "DerivedData")
-            let iOSDL = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "iOS Device Logs")
-            let iOSDS = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "iOS DeviceSupport")
-            let macOSDS = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "macOS DeviceSupport")
+            let xcodeDir = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode")
+            let derivedDir = xcodeDir.appending(path: "DerivedData")
+            let iOSDL = xcodeDir.appending(path: "iOS Device Logs")
+            let iOSDS = xcodeDir.appending(path: "iOS DeviceSupport")
+            let macOSDS = xcodeDir.appending(path: "macOS DeviceSupport")
             let CoreSimulatorCaches = URL.homeDirectory.appending(path: "Library").appending(path: "Developer").appending(path: "CoreSimulator").appending(path: "Caches")
             retvalCache = fm.directorySize(cachesDir) ?? 0
             retvalDerived = fm.directorySize(derivedDir) ?? 0
@@ -223,10 +224,11 @@ public class Memory: xCore {
     
     private func clensing(fm: FileManager) {
         var foldersToRemove = [URL]()
-        let iOSDL = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "iOS Device Logs")
-        let iOSDS = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "iOS DeviceSupport")
-        let macOSDS = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "macOS DeviceSupport")
-        let derivedDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode").appending(path: "DerivedData")
+        let xcodeDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode")
+        let iOSDL = xcodeDir.appending(path: "iOS Device Logs")
+        let iOSDS = xcodeDir.appending(path: "iOS DeviceSupport")
+        let macOSDS = xcodeDir.appending(path: "macOS DeviceSupport")
+        let derivedDir = xcodeDir.appending(path: "DerivedData")
         let cachesDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Caches")
         let CoreSimulatorCaches = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "CoreSimulator").appending(path: "Caches")
 

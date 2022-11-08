@@ -123,7 +123,7 @@ struct TorView: View {
             
             if isConnected && lines != [String()] {
                 ScrollViewReader { scrollView in
-                    SwiftUI.ScrollView(.vertical) {
+                    ScrollView(.vertical) {
                         VStack(alignment: .leading){
                             Spacer()
                             ForEach(lines, id: \.self) { l in

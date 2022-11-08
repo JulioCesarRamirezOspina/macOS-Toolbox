@@ -174,15 +174,15 @@ public class macOSUpdate: xCore {
                             .symbolRenderingMode(.palette)
                             .font(.custom("San Francisco", size: 20))
                             .foregroundStyle(.white, .blue)
-                            .rotationEffect(Angle(degrees: animate ? 360 : 0))
+                            .rotationEffect(Angle(radians: animate ? .pi * 2 : 0.01))
                             .animation(animation, value: animate)
-                            .scaleEffect(sysUpdateAvailable != .searching ? 0 : 1)
+                            .scaleEffect(sysUpdateAvailable != .searching ? 0.001 : 1)
                             .shadow(radius: 2)
                         Image(systemName: sysUpdateAvailable == .available ? "info.circle.fill" : sysUpdateAvailable == .notAvailable ? "checkmark.circle.fill" : sysUpdateAvailable == .noConnection ? "exclamationmark.circle.fill" : "arrow.clockwise.circle.fill")
                             .symbolRenderingMode(.palette)
                             .font(.custom("San Francisco", size: 20))
                             .foregroundStyle(.white, sysUpdateAvailable == .available || sysUpdateAvailable == .noConnection ? .red : .green)
-                            .scaleEffect(sysUpdateAvailable != .searching ? 1 : 0)
+                            .scaleEffect(sysUpdateAvailable == .searching ? 0.001 : 1)
                             .shadow(radius: 2)
                             .onHover(perform: { Bool in
                                 if sysUpdateAvailable != .searching {

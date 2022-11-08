@@ -329,7 +329,7 @@ public class CustomViews: xCore {
                         Circle()
                             .stroke(style: .init(lineWidth: 10, lineCap: .round))
                             .foregroundColor(color)
-                            .scaleEffect(!animate ? 0 : maxScale(size.height))
+                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
                             .animation(animation, value: animate)
                         Spacer()
                     }
@@ -339,7 +339,7 @@ public class CustomViews: xCore {
                         Circle()
                             .stroke(style: .init(lineWidth: 10, lineCap: .round))
                             .foregroundColor(color)
-                            .scaleEffect(!animate ? 0 : maxScale(size.height))
+                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
                             .animation(animation, value: animate)
                     }
                 case .inOut:
@@ -348,7 +348,7 @@ public class CustomViews: xCore {
                         Circle()
                             .stroke(style: .init(lineWidth: 10, lineCap: .round))
                             .foregroundColor(color)
-                            .scaleEffect(!animate ? 0 : maxScale(size.height))
+                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
                             .animation(animation, value: animate)
                         Spacer()
                     }
@@ -358,7 +358,7 @@ public class CustomViews: xCore {
                         Circle()
                             .stroke(style: .init(lineWidth: 10, lineCap: .round))
                             .foregroundColor(color)
-                            .scaleEffect(!animate ? maxScale(size.height) : 0)
+                            .scaleEffect(!animate ? maxScale(size.height) : 0.01)
                             .animation(animation, value: animate)
                         Spacer()
                     }

@@ -128,14 +128,20 @@ public class MemoryDisplay: xCore {
                             CustomViews.MultiProgressBar(total: (label: !clensingInProgress ? String(Int(memory.used).description + " MB / " + Int(memory.total).description + " MB") : String(Int(memory.used / memory.total * 100).description + "%"), value: !clensingInProgress ? memory.total : 100),
                                                          values: clensingInProgress ? [
                                                             (label: "", value: Double(memory.used / memory.total * 100), color: (Int(memory.used / memory.total * 100)) < 50 ? .blue : .green)
-                                                         ] : [],
-                                                         intValues: !clensingInProgress ? [
-                                                            (label: "active.string", value: Int(memory.active), color: .blue),
-                                                            (label: "inactive.string", value: Int(memory.inactive), color: .gray),
-                                                            (label: "wired.string", value: Int(memory.wired), color: .green),
-                                                            (label: "compressed.string", value: Int(memory.compressed), color: (Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))),
-                                                            (label: "cachedFiles.string", value: Int(memory.cachedFiles), color: .brown)
-                                                         ] : [],
+                                                         ] : [
+                                                            (label: "active.string", value: Double(memory.active), color: .blue),
+                                                            (label: "inactive.string", value: Double(memory.inactive), color: .gray),
+                                                            (label: "wired.string", value: Double(memory.wired), color: .green),
+                                                            (label: "compressed.string", value: Double(memory.compressed), color: (Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))),
+                                                            (label: "cachedFiles.string", value: memory.cachedFiles < (memory.total - (memory.active +
+                                                                                                                        memory.inactive +
+                                                                                                                        memory.wired +
+                                                                                                                        memory.compressed)) ? Double(memory.cachedFiles) :
+                                                             Double(memory.total - (memory.active +
+                                                                                    memory.inactive +
+                                                                                    memory.wired +
+                                                                                    memory.compressed)), color: .brown)
+                                                         ],
                                                          widthFrame: g.size.width,
                                                          geometry: g.size)
                         }

@@ -155,7 +155,7 @@ protocol ScrollViewDelegateProtocol {
 }
 
 /// The AppKit view that captures scroll wheel events
-class ScrollView: NSView {
+class AppKitScrollView: NSView {
     /// Connection to the SwiftUI view that serves as the interface to our AppKit view.
     var delegate: ScrollViewDelegateProtocol!
     /// Let the responder chain know we will respond to events.
@@ -465,4 +465,3 @@ extension View {
         )
     }
 }
-

@@ -227,7 +227,7 @@ struct SettingsOverview: View {
                 HStack{
                     GroupBox {
                         GeometryReader { _ in
-                            SwiftUI.ScrollView(.vertical, showsIndicators: true) {
+                            ScrollView(.vertical, showsIndicators: true) {
                                 LazyVStack{
                                     Spacer()
                                     Group{
