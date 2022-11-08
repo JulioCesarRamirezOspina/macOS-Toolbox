@@ -99,6 +99,7 @@ public class macOSUpdate: xCore {
                     HStack{
                         VStack(alignment: alignment){
                             Text(currentOSVerbatium)
+                                .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                             if !halfScreen {
                                 HStack{
                                     if macOS_Subsystem.osIsBeta() {
