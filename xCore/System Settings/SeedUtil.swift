@@ -104,21 +104,11 @@ public class SeedUtil: xCore {
     private class func getUpdateInfo(input s: String) -> (label: String, buildNumber: String) {
         let mPart = String(s.split(separator: "*")[1].dropFirst(8).split(separator: "T")[0].dropLast(2))
         let s = mPart.split(separator: "-")
-        var label = String()
-        var bN = String()
-        if s .contains("macOS") {
-            if s.count >= 2 {
-                label = String(s[0])
-                bN = String(s[1])
-            } else {
-                label = ""
-                bN = ""
-            }
+        if s.first?.byWords.first == "macOS" {
+            return (label: String(s[0]), buildNumber: String(s[1]))
         } else {
-            label = StringLocalizer("otherUpdate.string")
-            bN = ""
+            return (label: StringLocalizer("otherUpdate.string"), buildNumber: "")
         }
-        return (label: label, buildNumber: bN)
     }
     
     public class func sysupdateAvailable() async -> (OSUpdateStatus, (label: String, buildNumber: String)) {

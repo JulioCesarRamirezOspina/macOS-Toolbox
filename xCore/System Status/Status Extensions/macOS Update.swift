@@ -104,7 +104,7 @@ public class macOSUpdate: xCore {
                                     if macOS_Subsystem.osIsBeta() {
                                         Text("osIsBeta.string")
                                             .font(.footnote)
-                                            .foregroundColor(SettingsMonitor.textColor(cs))
+                                            .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                     }
                                     if macOS_Subsystem.osIsBeta() && SettingsMonitor.passwordSaved {
                                         if SeedUtil.getSeedBool(SettingsMonitor.password) {
@@ -115,7 +115,7 @@ public class macOSUpdate: xCore {
                                         if SeedUtil.getSeedBool(SettingsMonitor.password) {
                                             Text(SeedUtil.getSeedString(SettingsMonitor.password))
                                                 .font(.footnote)
-                                                .foregroundColor(SettingsMonitor.textColor(cs))
+                                                .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                         }
                                     }
                                     Spacer()
@@ -130,9 +130,11 @@ public class macOSUpdate: xCore {
                                     HStack{
                                         if updateData.buildNumber != "" {
                                             Text(OSUpdateAvailable)
+                                                .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                             Divider().frame(height: 10)
                                         }
                                         Text(updateData.label + " " + (updateData.buildNumber == "" ? "" : StringLocalizer("bn.string")) + " " + updateData.buildNumber)
+                                            .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                     }
                                 case .notAvailable:
                                     Text(OSUpdateNotAvailable)
