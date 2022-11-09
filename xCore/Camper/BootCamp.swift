@@ -104,7 +104,7 @@ public class BootCampStart: xCore {
     /// - Returns: Just a button
     public class func setBootDevice(diskLabel: String, password: String, nextOnly: Bool, isReboot: Bool) -> some View {
         let exe = "/usr/sbin/bless"
-        var args: [String]
+        var args: String
         var retval : AnyView
         if !tryToMount(diskLabel: diskLabel, password: password) {
             let node = getBootCampVolume(diskLabel: diskLabel)
@@ -116,16 +116,25 @@ public class BootCampStart: xCore {
             } else {
                 trueNode = String(tempNode) + String(lastFromNode!)
             }
+            if getOSType(diskLabel: diskLabel).OSType == "Windows" {
+                trueNode = "disk0s1"
+            }
             switch nextOnly {
             case true:
-                args = ["--device", "/dev/\(trueNode)", "--mount", "/Volumes/EFI", "--setBoot", "--nextonly"]
+                args = "-device /dev/\(trueNode) -mount /Volumes/EFI -setBoot -nextonly"
             case false:
-                args = ["--device", "/dev/\(trueNode)", "--mount", "/Volumes/EFI", "--setBoot"]
+                args = "-device /dev/\(trueNode) -mount /Volumes/EFI -setBoot"
             }
             let label = StringLocalizer("setDevice1.button") + "\n" + diskLabel + "\n" + StringLocalizer("setDevice2.button")
             retval = AnyView(Button(action: {
-                let _: String = Shell.Parcer.sudo(exe, args, password: password)
-//                print(deb)
+                let process = Process()
+                process.executableURL = URL(filePath: "/bin/bash")
+                process.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"]
+                do {
+                    try process.run()
+                } catch let error {
+                    NSLog(error.localizedDescription)
+                }
                 if isReboot {
                     DispatchQueue.main.async {
                         exit(0)
@@ -133,7 +142,6 @@ public class BootCampStart: xCore {
                     reboot()
                 }
             }, label: {
-//                Text("setDevice1.button"); Text(diskLabel); Text("setDevice2.button")
                 Text(label).lineLimit(Int(4), reservesSpace: true)
             }))
         } else {
