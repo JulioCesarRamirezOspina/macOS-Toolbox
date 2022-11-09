@@ -44,7 +44,7 @@ public class SettingsMonitor: xCore {
             AppSettings.set(key: "isInMenuBar", value: newValue)
             let task = Process()
             task.launchPath = "/bin/sh"
-            task.arguments = ["-c", "sleep \(2); open \"\(Bundle.main.bundlePath)\""]
+            task.arguments = ["-c", "sleep \(0.5); open \"\(Bundle.main.bundlePath)\""]
             task.launch()
             
             NSApp.terminate(self)

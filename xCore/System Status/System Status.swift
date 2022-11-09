@@ -473,7 +473,6 @@ public class SystemStatus: xCore {
                         Button {
                             Memory().openSecurityPrefPane()
                             emergencyPopover = false
-                            exit(0)
                         } label: {
                             Text("openDiskAccessPrefPane.string")
                         }

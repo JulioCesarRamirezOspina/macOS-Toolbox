@@ -111,7 +111,7 @@ public class SeedUtil: xCore {
         }
     }
     
-    public class func sysupdateAvailable() async -> (OSUpdateStatus, (label: String, buildNumber: String)) {
+    public class func sysupdateAvailable(_ ad: NSApplicationDelegate? = nil) async -> (OSUpdateStatus, (label: String, buildNumber: String)) {
         let process = Process()
         let mainPipe = Pipe()
         let errorPipe = Pipe()

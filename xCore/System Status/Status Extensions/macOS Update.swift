@@ -115,7 +115,7 @@ public class macOSUpdate: xCore {
                                     }
                                     if macOS_Subsystem.osIsBeta() && SettingsMonitor.passwordSaved {
                                         if SeedUtil.getSeedBool(SettingsMonitor.password) {
-                                            Divider()
+                                            Divider().foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                         }
                                     }
                                     if SettingsMonitor.passwordSaved {
@@ -128,7 +128,7 @@ public class macOSUpdate: xCore {
                                     Spacer()
                                 }
                             }
-                            Divider()
+                            Divider().foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                             if (hovered && sysUpdateAvailable != .searching && sysUpdateAvailable != .available) || (hovered2 && sysUpdateAvailable != .searching) {
                                 Text(OSReCheck)
                             } else {
@@ -138,7 +138,7 @@ public class macOSUpdate: xCore {
                                         if updateData.buildNumber != "" {
                                             Text(OSUpdateAvailable)
                                                 .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
-                                            Divider().frame(height: 10)
+                                            Divider().frame(height: 10).foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                         }
                                         Text(updateData.label + " " + (updateData.buildNumber == "" ? "" : StringLocalizer("bn.string")) + " " + updateData.buildNumber)
                                             .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
