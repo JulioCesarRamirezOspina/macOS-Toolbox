@@ -131,6 +131,7 @@ public class macOSUpdate: xCore {
                             Divider().foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                             if (hovered && sysUpdateAvailable != .searching && sysUpdateAvailable != .available) || (hovered2 && sysUpdateAvailable != .searching) {
                                 Text(OSReCheck)
+                                    .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                             } else {
                                 switch sysUpdateAvailable {
                                 case .available:
@@ -224,10 +225,4 @@ public class macOSUpdate: xCore {
         }
     }
     deinit{}
-}
-
-struct SysUpPreview: PreviewProvider {
-    static var previews: some View {
-        macOSUpdate.view(Geometry: CGSize(width: 800, height: 200))
-    }
 }

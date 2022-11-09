@@ -102,7 +102,7 @@ struct BetaSeedView: View {
             Spacer()
             Spacer()
             macOSUpdate.view(Geometry: CGSize(width: width, height: 200), HalfScreen: true, ShowTitle: false)
-                .frame(width: width / 2)
+                .frame(width: width - width / 10)
             Spacer()
         }
     }
