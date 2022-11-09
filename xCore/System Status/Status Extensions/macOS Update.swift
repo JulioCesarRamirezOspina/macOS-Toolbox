@@ -27,7 +27,7 @@ public class macOSUpdate: xCore {
         @State private var hovered = false
         @State private var hovered2 = false
         @State private var animate = false
-        
+        @State private var isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
         @State private var updateData: (label: String, buildNumber: String) = ("", "")
         @Environment(\.colorScheme) var cs
 
@@ -84,10 +84,15 @@ public class macOSUpdate: xCore {
                         .foregroundStyle(hovered && !hovered2 && sysUpdateAvailable != .searching ? .blue : .clear)
                     switch sysUpdateAvailable {
                     case .available:
-                        RoundedRectangle(cornerRadius: 15)
-//                            .foregroundStyle(.green)
-                            .rainbowAnimation()
-                            .shadow(radius: 5)
+                        if !isInLowPower {
+                            RoundedRectangle(cornerRadius: 15)
+                                .rainbowAnimation()
+                                .shadow(radius: 5)
+                        } else {
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.green)
+                                .shadow(radius: 5)
+                        }
                     case .noConnection:
                         RoundedRectangle(cornerRadius: 15)
                             .foregroundStyle(.red)
@@ -208,6 +213,7 @@ public class macOSUpdate: xCore {
             }
             .task {
                 await update()
+                isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
             }
             .onAppear(perform: {
                 animate = true
