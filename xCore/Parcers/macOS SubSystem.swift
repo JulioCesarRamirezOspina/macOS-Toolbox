@@ -321,7 +321,7 @@ public struct macOS_Subsystem {
         }
     }
     
-    public func getCPURealUsage() -> (user: Double, system: Double, idle: Double, total: Double) {
+    public func getCPURealUsage() -> cpuValues {
         func convertToDouble(_ s: String) -> Double {
             let r = s.replacingOccurrences(of: " ", with: "")
             let a = r.split(separator: "%")
@@ -331,7 +331,7 @@ public struct macOS_Subsystem {
         let process = Process()
         let pipe = Pipe()
         process.standardOutput = pipe
-        var retval: (user: Double, system: Double, idle: Double, total: Double) = (0, 0, 0, 0)
+        var retval: cpuValues = (0, 0, 0, 0)
         var cpuusagestring = ""
         process.executableURL = URL(filePath: "/bin/bash")
         process.arguments = ["-c", "top -l 1"]
@@ -352,11 +352,11 @@ public struct macOS_Subsystem {
             let sys = convertToDouble(String(splitData[1]))
             let idle = convertToDouble(String(splitData[2]))
             let total = user + sys + idle
-            retval = (user: user, system: sys, idle: idle, total: total)
+            retval = (sys, user, idle, total)
             return retval
         } catch let error {
             NSLog(error.localizedDescription)
-            return (user: 0, system: 0, idle: 0, total: 0)
+            return (0,0,0,0)
         }
     }
     
@@ -516,12 +516,7 @@ public struct macOS_Subsystem {
         return retval
     }
 
-    public static func MacPlatform() -> (model: String,
-                                         screenSize: String,
-                                         modelType: deviceType,
-                                         screenSizeInt: Int,
-                                         platform: String,
-                                         platformServiceData: platform) {
+    public static func MacPlatform() -> platformData {
         
         func getVersionCode() -> String {
             var size : Int = 0

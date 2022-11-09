@@ -34,6 +34,40 @@ extension Double {
 }
 
 //extension Double {
+func convertValueRounded(_ v: Double) -> (Double, Unit) {
+    let bytes = v
+    var kilobytes: Double {
+        return Double(bytes) / 1000
+    }
+    
+    var megabytes: Double {
+        return kilobytes / 1000
+    }
+    
+    var gigabytes: Double {
+        return megabytes / 1000
+    }
+    
+    var terabyte: Double {
+        return gigabytes / 1000
+    }
+
+    switch bytes {
+    case 0..<1000:
+        return (bytes.rounded(), Unit.byte)
+    case 1000..<(1000 * 1000):
+        return (kilobytes.rounded(), Unit.kilobyte)
+    case 1000..<(1000 * 1000 * 1000):
+        return (megabytes.rounded(), Unit.megabyte)
+    case 1000..<(1000 * 1000 * 1000 * 1000):
+        return (gigabytes.rounded(), Unit.gigabyte)
+    case (1000 * 1000 * 1000 * 1000)...(Double.greatestFiniteMagnitude):
+        return (terabyte.rounded(), Unit.terabyte)
+    default:
+        return (bytes.rounded(), Unit.byte)
+    }
+}
+
 func convertValue(_ v: Double) -> (Double, Unit) {
     let bytes = v
     var kilobytes: Double {

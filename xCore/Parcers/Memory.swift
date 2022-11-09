@@ -12,16 +12,7 @@ import AppKit
 public class Memory: xCore {
     
     /// All RAM Data
-    private var allRAMData: (
-        free        : Double,
-        active      : Double,
-        inactive    : Double,
-        wired       : Double,
-        compressed  : Double,
-        total       : Double,
-        used        : Double,
-        cachedFiles : Double
-    ) {
+    private var allRAMData: memoryValues {
         get {
             return (
                 free        : macOS_Subsystem.memoryUsage(.megabyte).free,
@@ -78,16 +69,7 @@ public class Memory: xCore {
         public nonisolated let cachedFiles: Double
     }
 
-    private func RAMData() async -> Task<(
-        free        : Double,
-        active      : Double,
-        inactive    : Double,
-        wired       : Double,
-        compressed  : Double,
-        total       : Double,
-        used        : Double,
-        cachedFiles : Double
-    ), Never> {
+    private func RAMData() async -> Task<memoryValues, Never> {
         Task {
             return allRAMData
         }

@@ -211,3 +211,22 @@ public enum platform {
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
 public typealias ThermalData = (label: String, state: ThermalPressure)
+public typealias volumeData = (volumeURL: String, bsdString: String, capacity: (Double, Unit))
+public typealias memoryValues = (
+    free        : Double,
+    active      : Double,
+    inactive    : Double,
+    wired       : Double,
+    compressed  : Double,
+    total       : Double,
+    used        : Double,
+    cachedFiles : Double
+)
+
+public typealias cpuValues = (system: Double, user: Double, idle: Double, total: Double)
+public typealias platformData = (model: String,
+                                 screenSize: String,
+                                 modelType: deviceType,
+                                 screenSizeInt: Int,
+                                 platform: String,
+                                 platformServiceData: platform)

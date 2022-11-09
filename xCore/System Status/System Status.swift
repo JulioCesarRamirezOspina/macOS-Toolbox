@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import DiskArbitration
 
 public class SystemStatus: xCore {
     
@@ -109,32 +110,32 @@ public class SystemStatus: xCore {
         }
     }
     
-    private static var bootDriveCapacity: StringData {
-        get {
-            var t: Int = 0
-            let u = FileManager.default.homeDirectoryForCurrentUser
-            let label = StringLocalizer("capacity.string")
-            do {
-                let values = try u.resourceValues(forKeys: [.volumeTotalCapacityKey])
-                if let capacity = values.volumeTotalCapacity {
-                    t = capacity
-                    let retval = convertValue(Double(t))
-                    var type = ""
-                    switch retval.1 {
-                    case .gigabyte:
-                        type = StringLocalizer("gig.string")
-                    case .terabyte:
-                        type = StringLocalizer("tib.string")
-                    default: type = ""
-                    }
-                    return (label: label, value: "\(Int(retval.0.rounded())) \(type)")
-                } else {
-                    return (label: label, value: "0")
+    private static func driveInfo() -> volumeData {
+        var info: [volumeData] = []
+        if let session = DASessionCreate(kCFAllocatorDefault) {
+            let mountedVolumeURLs = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeTotalCapacityKey])!
+            for volumeURL in mountedVolumeURLs {
+                if let disk = DADiskCreateFromVolumePath(kCFAllocatorDefault, session, volumeURL as CFURL),
+                   let bsdName = DADiskGetBSDName(disk),
+                   let resourseInfo = try? volumeURL.resourceValues(forKeys: [.volumeTotalCapacityKey]) {
+                    let bsdString = String(cString : bsdName)
+                    let v = resourseInfo.volumeTotalCapacity!
+                    info.append((volumeURL: volumeURL.path, bsdString: bsdString, capacity: convertValueRounded(Double(v))))
                 }
-            } catch {
-                return (label: label, value: "0")
             }
         }
+        return info.first!
+    }
+
+    private static var bootDriveCapacity: StringData {
+        let label = StringLocalizer("capacity.string")
+        let volumeData = driveInfo().capacity
+        var type: String = ""
+        switch volumeData.1 {
+        case .terabyte: type = StringLocalizer("tib.string")
+        default: type = StringLocalizer("gig.string")
+        }
+        return (label: label, value: volumeData.0.description + " " + type)
     }
 
     private static var macOSVer: StringData {
@@ -334,9 +335,7 @@ public class SystemStatus: xCore {
                             Text(bootDrive.label)
                         }
                         HStack{
-                            Text(bootDrive.value)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                            Text("(\(bootDriveCapacity.value))")
+                            Text(bootDrive.value + " (\(bootDriveCapacity.label) \(bootDriveCapacity.value))")
                                 .foregroundColor(SettingsMonitor.textColor(cs))
                             Spacer()
                         }
