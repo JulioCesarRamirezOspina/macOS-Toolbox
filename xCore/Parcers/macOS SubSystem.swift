@@ -486,7 +486,6 @@ public struct macOS_Subsystem {
             }
             let words = year.byWords
             for word in words {
-                print(word)
                 if Int(word) ?? 0 > 2000 {
                     year = word.description
                 }

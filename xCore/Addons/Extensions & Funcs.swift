@@ -34,8 +34,20 @@ extension Double {
 }
 
 //extension Double {
-func convertValueRounded(_ v: Double) -> (Double, Unit) {
-    let bytes = v
+func convertValueRounded(_ v: Double, _ u: Unit = .byte) -> (Double, Unit) {
+    var bytes = v
+    switch u {
+    case .byte:
+        break
+    case .kilobyte:
+        bytes = bytes * 1000
+    case .megabyte:
+        bytes = bytes * 1000 * 1000
+    case .gigabyte:
+        bytes = bytes * 1000 * 1000 * 1000
+    case .terabyte:
+        bytes = bytes * 1000 * 1000 * 1000 * 1000
+    }
     var kilobytes: Double {
         return Double(bytes) / 1000
     }
@@ -370,12 +382,8 @@ func showInFinder(url: URL?) {
     
     if url.isDirectory {
         NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: url.path(percentEncoded: false))
-        print(1)
-        print(url)
     } else {
         NSWorkspace.shared.activateFileViewerSelecting([url])
-        print(2)
-        print(url)
     }
 }
 

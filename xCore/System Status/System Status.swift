@@ -110,32 +110,42 @@ public class SystemStatus: xCore {
         }
     }
     
-    private static func driveInfo() -> volumeData {
+    private static func driveInfo() -> [volumeData] {
         var info: [volumeData] = []
         if let session = DASessionCreate(kCFAllocatorDefault) {
-            let mountedVolumeURLs = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeTotalCapacityKey])!
+            let mountedVolumeURLs = FileManager.default.mountedVolumeURLs(includingResourceValuesForKeys: [.volumeTotalCapacityKey, .volumeIsInternalKey])!
             for volumeURL in mountedVolumeURLs {
                 if let disk = DADiskCreateFromVolumePath(kCFAllocatorDefault, session, volumeURL as CFURL),
                    let bsdName = DADiskGetBSDName(disk),
-                   let resourseInfo = try? volumeURL.resourceValues(forKeys: [.volumeTotalCapacityKey]) {
+                   let resourseInfo = try? volumeURL.resourceValues(forKeys: [.volumeTotalCapacityKey, .volumeIsInternalKey]) {
                     let bsdString = String(cString : bsdName)
                     let v = resourseInfo.volumeTotalCapacity!
-                    info.append((volumeURL: volumeURL.path, bsdString: bsdString, capacity: convertValueRounded(Double(v))))
+                    let isInternal = (resourseInfo.volumeIsInternal ?? false) && !volumeURL.absoluteString.contains("/System/Volumes")
+                    if isInternal {
+                        info.append((volumeURL: volumeURL.path, bsdString: bsdString, capacity: convertValueRounded(Double(v))))
+                    }
                 }
             }
         }
-        return info.first!
+        return info
     }
 
     private static var bootDriveCapacity: StringData {
         let label = StringLocalizer("capacity.string")
-        let volumeData = driveInfo().capacity
-        var type: String = ""
-        switch volumeData.1 {
+        let volumeData = driveInfo()
+        var capacity: Double = 0
+        for each in volumeData {
+            capacity += each.capacity.0
+        }
+        let converted = convertValueRounded(capacity , volumeData.first!.capacity.1)
+        var type = ""
+        capacity = converted.0
+        let typePrep = converted.1
+        switch typePrep {
         case .terabyte: type = StringLocalizer("tib.string")
         default: type = StringLocalizer("gig.string")
         }
-        return (label: label, value: volumeData.0.description + " " + type)
+        return (label: label, value: capacity.description + " " + type)
     }
 
     private static var macOSVer: StringData {

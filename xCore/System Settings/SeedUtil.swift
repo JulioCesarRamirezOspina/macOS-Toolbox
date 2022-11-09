@@ -138,7 +138,7 @@ public class SeedUtil: xCore {
                 return (.noConnection, ("", ""))
             }
         } catch let error {
-            print(error)
+            NSLog(error.localizedDescription)
             return (.noConnection, ("", ""))
         }
     }

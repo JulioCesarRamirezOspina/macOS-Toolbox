@@ -24,7 +24,7 @@ public class SleepManager: xCore {
             try process.run()
             shellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? ""
         } catch let error {
-            print(error.localizedDescription)
+            NSLog(error.localizedDescription)
         }
         var hibernationValue = ""
         var resultingValue = 0
@@ -69,7 +69,7 @@ public class SleepManager: xCore {
                 }
             }
         } catch let error {
-            print(error.localizedDescription)
+            NSLog(error.localizedDescription)
             retval = false
         }
         return retval
@@ -88,7 +88,7 @@ public class SleepManager: xCore {
             try process.run()
             shellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? ""
         } catch let error {
-            print(error.localizedDescription)
+            NSLog(error.localizedDescription)
         }
         var hibernationValue = ""
         var resultingValue = 0

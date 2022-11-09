@@ -168,7 +168,7 @@ public class Memory: xCore {
                 default: output = .undefined
                 }
             } catch let error {
-                print(error.localizedDescription)
+                NSLog(error.localizedDescription)
                 output = .undefined
             }
             return output
