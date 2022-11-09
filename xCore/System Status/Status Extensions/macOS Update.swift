@@ -85,7 +85,8 @@ public class macOSUpdate: xCore {
                     switch sysUpdateAvailable {
                     case .available:
                         RoundedRectangle(cornerRadius: 15)
-                            .foregroundStyle(.green)
+//                            .foregroundStyle(.green)
+                            .rainbowAnimation()
                             .shadow(radius: 5)
                     case .noConnection:
                         RoundedRectangle(cornerRadius: 15)
@@ -99,7 +100,7 @@ public class macOSUpdate: xCore {
                     HStack{
                         VStack(alignment: alignment){
                             Text(currentOSVerbatium)
-                                .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                .foregroundColor(sysUpdateAvailable == .available ? .black : .primary)
                             if !halfScreen {
                                 HStack{
                                     if macOS_Subsystem.osIsBeta() {

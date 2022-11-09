@@ -111,7 +111,7 @@ public class MemoryDisplay: xCore {
                             }
                         }
                         .font(.footnote)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
+                        .foregroundColor(hovered ? .primary : SettingsMonitor.textColor(cs))
                         Spacer()
                         HStack{
                             Spacer()

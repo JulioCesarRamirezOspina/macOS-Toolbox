@@ -125,7 +125,7 @@ public class BatteryDisplay: xCore {
                             }.frame(height: 10)
                             Text("batt.lowPowerMode")
                                 .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
+                                .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
                         }
                         if hovered2 && SettingsMonitor.passwordSaved {
@@ -134,7 +134,7 @@ public class BatteryDisplay: xCore {
                             }.frame(height: 10)
                             Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
                                 .font(.footnote)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
+                                .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
                         }
                         Spacer()
@@ -168,14 +168,6 @@ public class BatteryDisplay: xCore {
                         .foregroundColor(SettingsMonitor.textColor(cs))
                     }
                 }
-                .onTapGesture(perform: {
-                    Task{
-                        if SettingsMonitor.passwordSaved {
-                            isInLowPower = await toggleLowPowerMode().value
-                            ChargingState = await batteryData().value.ChargingState
-                        }
-                    }
-                })
                 .onHover { t in
                     hovered2 = t
                 }
@@ -199,40 +191,13 @@ public class BatteryDisplay: xCore {
                                     ZStack{
                                         RoundedRectangle(cornerRadius: 15)
                                             .foregroundColor(hovered2 ? dynamicColor : .clear)
-                                        switch ChargingState {
-                                        case .charging:
-                                            CustomViews.AnimatedBackground(direction: .leftToRight,
-                                                                       color:
-                                                                        dynamicColor,
-                                                                       size: bg.size)
-                                        case .discharging:
-                                            CustomViews.AnimatedBackground(direction: .rightToLeft,
-                                                                       color:
-                                                                        dynamicColor,
-                                                                       size: bg.size)
-                                        case .charged:
-                                            CustomViews.AnimatedBackground(direction: isInLowPower ? .outIn : .inOut,
-                                                                       color: isInLowPower ? .mint : .blue,
-                                                                       size: bg.size)
-                                        case .acAttached:
-                                            CustomViews.AnimatedBackground(direction: isInLowPower ? .outIn : .inOut,
-                                                                       color:
-                                                                        dynamicColor,
-                                                                       size: bg.size)
-                                        default:
-                                            if Percentage < 20 && ChargingState != .charging {
-                                                RoundedRectangle(cornerRadius: 15)
-                                                    .foregroundColor(flash ? .clear : .red)
-                                            } else {
-                                                CustomViews.AnimatedBackground(direction: .outIn, color:
-                                                                            dynamicColor,
-                                                                           size: bg.size)
-                                            }
-                                        }
                                         RoundedRectangle(cornerRadius: 15)
                                             .foregroundStyle(.ultraThinMaterial)
-                                            .shadow(radius: 5)
+                                            .pulsingAnimation(Direction: ChargingState == .charging ? .leftToRight :
+                                                                ChargingState == .discharging ? .rightToLeft :
+                                                    .outIn, Color: isInLowPower ? .mint : dynamicColor)
                                     }
+                                    .shadow(radius: 5)
                                     .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
                                 }
                             }
@@ -273,6 +238,14 @@ public class BatteryDisplay: xCore {
                     }
                 }
             }
+            .onTapGesture(perform: {
+                Task{
+                    if SettingsMonitor.passwordSaved {
+                        isInLowPower = await toggleLowPowerMode().value
+                        ChargingState = await batteryData().value.ChargingState
+                    }
+                }
+            })
         }
     }
 }

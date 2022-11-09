@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A2F4EC92908BE5600084B2B /* Localizable.strings */; };
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
+		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
 		9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0482908BA2E003D7575 /* Assets.xcassets */; };
 		9ABFD09F2908BBA5003D7575 /* xCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; };
@@ -127,6 +128,7 @@
 		9A2F4ECA2908BE8B00084B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A462A162912EA8F00D1723D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A5E706B290C1887000F479A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift"; sourceTree = "<group>"; };
 		9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "macOS-ToolBox-Info.plist"; sourceTree = SOURCE_ROOT; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -358,6 +360,7 @@
 			children = (
 				9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */,
 				9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */,
+				9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */,
 				9ABFD11E2908BC66003D7575 /* Biometrics.swift */,
 				9ABFD11F2908BC66003D7575 /* Custom Views.swift */,
 				9ABFD1202908BC66003D7575 /* Cool Circles.swift */,
@@ -676,6 +679,7 @@
 				9ABFD14D2908BC67003D7575 /* macOS SubSystem.swift in Sources */,
 				9ABFD15C2908BC67003D7575 /* Notifications Manager.swift in Sources */,
 				9ABFD15B2908BC67003D7575 /* App Theme.swift in Sources */,
+				9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */,
 				9ABFD1422908BC67003D7575 /* System Status.swift in Sources */,
 				9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */,
 				9ABFD15A2908BC67003D7575 /* Settings Monitor.swift in Sources */,
