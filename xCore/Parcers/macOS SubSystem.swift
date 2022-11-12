@@ -197,7 +197,7 @@ public struct macOS_Subsystem {
             }
         }
         
-        public func run() -> ThermalData{
+        public func run() -> ThermalData {
             let process = Process()
             let killer = Process()
             let pipe = Pipe()
@@ -236,7 +236,9 @@ public struct macOS_Subsystem {
                     return data
                 } catch let error {
                     NSLog(error.localizedDescription)
-                    process.terminate()
+                    if process.isRunning {
+                        process.terminate()
+                    }
                     return parce(.undefined)
                 }
             } else {
@@ -477,7 +479,6 @@ public struct macOS_Subsystem {
             do {
                 try reservedProcess.run()
                 if let line = String(data: reservedPipe.fileHandleForReading.availableData, encoding: .utf8) {
-                    NSLog(line)
                     year += line
                 }
             } catch let error {
