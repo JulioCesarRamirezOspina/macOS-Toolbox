@@ -25,7 +25,7 @@ struct DockManagerView: View {
     @State private var showPopover4 = false
     @State private var animSettings = false
     
-    private func AnimationType() -> some View {
+    private var AnimationType: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -51,7 +51,7 @@ struct DockManagerView: View {
         }.frame(height: 100, alignment: .center).padding(.all)
     }
     
-    private func AnimationSpeed() -> some View {
+    private var AnimationSpeed: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -76,7 +76,7 @@ struct DockManagerView: View {
         }.frame(height: 100, alignment: .center).padding(.all)
     }
     
-    private func AnimationDelay() -> some View {
+    private var AnimationDelay: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -100,24 +100,22 @@ struct DockManagerView: View {
             }
         }.frame(height: 100, alignment: .center).padding(.all)    }
     
-    private func AnimSettings() -> some View {
+    private var AnimSettings: some View {
         VStack{
             ScrollView(.vertical, showsIndicators: true) {
                 Group {
                     GroupBox {
-                        AnimationDelay()
+                        AnimationDelay
                     } label: {
                         Text("animDelay.string").padding(.all)
                     }
-//                    Text("\n").font(.largeTitle).fontWeight(.bold)
                     GroupBox {
-                        AnimationSpeed()
+                        AnimationSpeed
                     } label: {
                         Text("animSpeed.string").padding(.all)
                     }
-//                    Text("\n").font(.largeTitle).fontWeight(.bold)
                     GroupBox {
-                        AnimationType()
+                        AnimationType
                     } label: {
                         Text("animType.string").padding(.all)
                     }
@@ -126,7 +124,7 @@ struct DockManagerView: View {
         }
     }
     
-    private func AnimSettingsButton() -> some View {
+    private var AnimSettingsButton: some View {
         GeometryReader { g in
             Button {
                 animSettings.toggle()
@@ -137,7 +135,7 @@ struct DockManagerView: View {
         }.frame(height: 100).padding(.all)
     }
     
-    private func MainButtons() -> some View {
+    private var MainButtons: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -169,7 +167,6 @@ struct DockManagerView: View {
                 
                 Button {
                     DockManager().dockDefaults()
-                    //                    DockManager().restartDock()
                     animSpeed = DockManager().AnimationSpeed
                     animDelay = DockManager().AnimationDelay
                     autohide = DockManager().Autohide
@@ -186,7 +183,7 @@ struct DockManagerView: View {
         }.frame(height: 100).padding(.all)
     }
     
-    private func OrientationButtons() -> some View {
+    private var OrientationButtons: some View {
         GeometryReader { g in
             HStack {
                 Button {
@@ -211,7 +208,7 @@ struct DockManagerView: View {
         }.frame(height: 100).padding(.all)
     }
     
-    private func AdditionalButtons() -> some View {
+    private var AdditionalButtons: some View {
         GeometryReader { g in
             HStack {
                 Button {
@@ -272,9 +269,8 @@ struct DockManagerView: View {
         }.frame(height: 100).padding(.all)
     }
     
-    private func BackgroundView() -> some View {
+    private var BackgroundView: some View {
         VStack(alignment: DockOrientation == .bottom ? .center : DockOrientation == .left ? .leading : .trailing){
-//            Spacer()
             HStack {
                 if DockOrientation == .right {
                     Spacer()
@@ -316,26 +312,26 @@ struct DockManagerView: View {
                     if !animSettings {
                         Group {
                             GroupBox {
-                                MainButtons()
+                                MainButtons
                             } label: {
                                 Text("dockKey.string").padding(.all)
                             }
                             GroupBox{
-                                OrientationButtons()
+                                OrientationButtons
                             } label: {
                                 Text("dockOrientation.string").padding(.all)
                             }
                             GroupBox {
-                                AdditionalButtons()
+                                AdditionalButtons
                             } label: {
                                 Text("addons.string").padding(.all)
                             }
                         }.groupBoxStyle(Stylers.CustomGBStyle())
                     } else {
-                        AnimSettings()
+                        AnimSettings
                     }
                     GroupBox {
-                        AnimSettingsButton()
+                        AnimSettingsButton
                     } label: {
                         Text("anim.settings").padding(.all)
                     }.groupBoxStyle(Stylers.CustomGBStyle())
@@ -346,7 +342,7 @@ struct DockManagerView: View {
             CustomViews.AnimatedTextView(Input: "Dock", TimeToStopAnimation: SettingsMonitor.secAnimDur)
         }
         .background(content: {
-            BackgroundView()
+            BackgroundView
         })
         .groupBoxStyle(Stylers.CustomGBStyle())
         .onChange(of: animDelay, perform: { newValue in

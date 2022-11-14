@@ -22,7 +22,7 @@ struct SleepManagerView: View {
     @State private var showPopoverDown = false
     @State private var dummy = false
     
-    func setButton() -> some View {
+    private var setButton: some View {
         Button {
             SleepManager().setHibernationMode(parameter: selection, password: password)
         } label: {
@@ -42,7 +42,7 @@ struct SleepManagerView: View {
         }
     }
     
-    private func MainButtons() -> some View {
+    private var MainButtons: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -70,7 +70,7 @@ struct SleepManagerView: View {
         }.padding(.all)
     }
     
-    private func SleepImage() -> some View {
+    private var SleepImage: some View {
         VStack{
             switch sleepInt {
             case 0:
@@ -84,7 +84,7 @@ struct SleepManagerView: View {
         }
     }
     
-    private func FuncButtons() -> some View {
+    private var FuncButtons: some View {
         GeometryReader { g in
             HStack{
                 Button {
@@ -119,10 +119,9 @@ struct SleepManagerView: View {
     
     var body: some View {
         if SettingsMonitor.passwordSaved {
-            
             GroupBox {
                 Group {
-                    MainButtons().padding(.all)
+                    MainButtons.padding(.all)
                         .onHover { t in
                             sysSleepState = SleepManager().SystemWideSleepStatus()
                             if t {
@@ -133,12 +132,10 @@ struct SleepManagerView: View {
                                 }
                             }
                         }
-//                    Spacer().padding(.all)
                 }
                 Spacer().padding(.all)
                 Group {
-//                    Spacer().padding(.all)
-                    FuncButtons().padding(.all)
+                    FuncButtons.padding(.all)
                         .onHover { t in
                             sysSleepState = SleepManager().SystemWideSleepStatus()
                             if t {
@@ -155,14 +152,14 @@ struct SleepManagerView: View {
             }
             .groupBoxStyle(Stylers.CustomGBStyle())
             .background(content: {
-                SleepImage().popover(isPresented: $showPopoverUp,arrowEdge: .bottom) {
+                SleepImage.popover(isPresented: $showPopoverUp,arrowEdge: .bottom) {
                     VStack{
                         Text("cantSLeep.string").padding(.all).fontWeight(.bold)
                         CustomViews.AppLogo().padding(.all)
                         
                     }
                 }
-                SleepImage().popover(isPresented: $showPopoverDown,arrowEdge: .top) {
+                SleepImage.popover(isPresented: $showPopoverDown,arrowEdge: .top) {
                     VStack{
                         Text("cantSLeep.string").padding(.all).fontWeight(.bold)
                         CustomViews.AppLogo().padding(.all)

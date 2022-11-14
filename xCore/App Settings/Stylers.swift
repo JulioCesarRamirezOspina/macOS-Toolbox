@@ -204,7 +204,8 @@ public class Stylers: xCore {
             swapItems: Bool = false,
             render: SymbolRenderingMode = .multicolor,
             glow: Bool = true,
-            alwaysGlow: Bool = false
+            alwaysGlow: Bool = false,
+            glyphBlured: Bool = false
         )
         {
             image = glyph
@@ -224,6 +225,7 @@ public class Stylers: xCore {
             self.glow = glow
             self.hideTitle = hideTitle
             self.alwaysGlow = alwaysGlow
+            self.glyphBlured = glyphBlured
         }
         var swapItems: Bool
         var image: String
@@ -242,10 +244,11 @@ public class Stylers: xCore {
         var render: SymbolRenderingMode
         var glow: Bool
         var alwaysGlow: Bool
+        var glyphBlured: Bool
         @Environment(\.isEnabled) var isEnabled
         @State private var hovered: Bool = false
         
-        func drawBackround() -> some View {
+        var drawBackround: some View {
             ZStack{
                 if backgroundIsNotFill {
                     Group{
@@ -270,7 +273,7 @@ public class Stylers: xCore {
             }
         }
         
-        private func addImage() -> some View {
+        private var addImage: some View {
             VStack{
                 if image == "darkModeGlyph" {
                     CustomViews.DarkModeIcon(30).padding(.all)
@@ -325,19 +328,20 @@ public class Stylers: xCore {
         
         public func makeBody(configuration: Configuration) -> some View {
             HStack{
-                addImage()
+                addImage.blur(radius: glyphBlured ? 5 : 0)
                 if !hideTitle {
                     addLabel(configuration)
                 }
             }
             .background(content: {
                 if !hideBackground {
-                    drawBackround()
+                    drawBackround
                 }
             })
             .frame(width: width, height: height, alignment: .center)
             .animation(SettingsMonitor.secondaryAnimation, value: hovered)
             .animation(SettingsMonitor.secondaryAnimation, value: !hovered)
+            .animation(SettingsMonitor.secondaryAnimation, value: glyphBlured)
             .onHover(perform: { t in
                 self.hovered = t
             })

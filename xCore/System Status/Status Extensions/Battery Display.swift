@@ -19,7 +19,6 @@ public class BatteryDisplay: xCore {
         @State private var hovered2 = false
         @State private var width: CGFloat = 10
         @State private var height: CGFloat = 10
-        @State private var flash = false
         @State private var tempUnit: UnitTemperature = SettingsMonitor.temperatureUnit
         @State private var temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: SettingsMonitor.temperatureUnit)
         @State private var isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
@@ -69,173 +68,102 @@ public class BatteryDisplay: xCore {
         
         public var body: some View {
             VStack{
-                VStack{
-                    HStack{
-                        Text("powerSource.string")
-                        switch PowerSource {
-                        case .AC:
-                            Text("battstate.onAC")
-                        case .Internal:
-                            Text("battstate.onInternal")
+                HStack{
+                    Text("powerSource.string")
+                    switch PowerSource {
+                    case .AC:
+                        Text("battstate.onAC")
+                    case .Internal:
+                        Text("battstate.onInternal")
+                    case .unknown:
+                        Text("calculating.string")
+                    }
+                    Spacer()
+                }
+                HStack{
+                    Group{
+                        switch ChargingState {
+                        case .charging:
+                            HStack{
+                                Text("chargingState.string")
+                                Text("batt.on")
+                            }
+                        case .charged:
+                            HStack{
+                                Text("chargingState.string")
+                                Text("batt.comp")
+                            }
+                        case .discharging:
+                            HStack{
+                                Text("chargingState.string")
+                                Text("batt.dis")
+                            }
+                        case .acAttached:
+                            HStack{
+                                Text("chargingState.string")
+                                Text("batt.onAC")
+                            }
+                        case .finishingCharge:
+                            HStack{
+                                Text("chargingState.string")
+                                Text("batt.fin")
+                            }
                         case .unknown:
-                            Text("calculating.string")
-                        }
-                        Spacer()
-                    }
-                    HStack{
-                        Group{
-                            switch ChargingState {
-                            case .charging:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.on")
-                                }
-                            case .charged:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.comp")
-                                }
-                            case .discharging:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.dis")
-                                }
-                            case .acAttached:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.onAC")
-                                }
-                            case .finishingCharge:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.fin")
-                                }
-                            case .unknown:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("calculating.string")
-                                }
+                            HStack{
+                                Text("chargingState.string")
+                                Text("calculating.string")
                             }
                         }
-                        .font(.footnote)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
-                        if isInLowPower {
-                            HStack{
-                                Divider()
-                            }.frame(height: 10)
-                            Text("batt.lowPowerMode")
-                                .font(.footnote)
-                                .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
-                                .fontWeight(.heavy)
-                        }
-                        if hovered2 && SettingsMonitor.passwordSaved {
-                            HStack{
-                                Divider()
-                            }.frame(height: 10)
-                            Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
-                                .font(.footnote)
-                                .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
-                                .fontWeight(.heavy)
-                        }
-                        Spacer()
-                        Text(macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit).valueString)
+                    }
+                    .font(.footnote)
+                    .foregroundColor(SettingsMonitor.textColor(cs))
+                    if isInLowPower {
+                        HStack{
+                            Divider()
+                        }.frame(height: 10)
+                        Text("batt.lowPowerMode")
                             .font(.footnote)
-                            .foregroundColor(SettingsMonitor.textColor(cs))
-                            .bold(macOS_Subsystem.BatteryTemperature(TermperatureUnit: .celsius).value > 36)
-                            .onTapGesture {
-                                switch tempUnit {
-                                case .celsius: tempUnit = .fahrenheit
-                                case .fahrenheit: tempUnit = .kelvin
-                                default: tempUnit = .celsius
-                                }
-                            }
+                            .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
+                            .fontWeight(.heavy)
                     }
-                    .frame(height: 10)
-                    .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
-                    GeometryReader { g in
-                        CustomViews.MultiProgressBar(total: (label: "", value: 100), values: [("", Double(Percentage), dynamicColor)], widthFrame: g.size.width, showDots: false, geometry: g.size, fixTo100: true, dontShowLabels: true)
+                    if hovered2 && SettingsMonitor.passwordSaved {
+                        HStack{
+                            Divider()
+                        }.frame(height: 10)
+                        Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
+                            .font(.footnote)
+                            .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
+                            .fontWeight(.heavy)
                     }
-                    HStack{
-                        Group {
-                            switch ChargingState {
-                            case .charged: Text("\(StringLocalizer("timeRemaining.string")): ∞")
-                            default: Text("\(StringLocalizer("timeRemaining.string")): \(TimeRemaining)")
-                            }
-                            Spacer()
-                            Text(String(Int(Percentage)) + "%")
-                        }
+                    Spacer()
+                    Text(macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit).valueString)
                         .font(.footnote)
                         .foregroundColor(SettingsMonitor.textColor(cs))
-                    }
-                }
-                .onHover { t in
-                    hovered2 = t
-                }
-                .animation(SettingsMonitor.secondaryAnimation, value: isInLowPower)
-                .padding(.all)
-                .background {
-                    GeometryReader { g in
-                        VStack{
-                            if SettingsMonitor.batteryAnimation == false {
-                                ZStack{
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .foregroundColor(hovered2 ? dynamicColor : .clear)
-                                        .frame(width: g.size.width, height: g.size.height, alignment: .center)
-                                    RoundedRectangle(cornerRadius: 15)
-                                        .foregroundStyle(.ultraThinMaterial)
-                                        .shadow(radius: 5)
-                                        .frame(width: g.size.width, height: g.size.height, alignment: .center)
-                                }
-                            } else {
-                                GeometryReader { bg in
-                                    ZStack{
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .foregroundColor(hovered2 ? dynamicColor : .clear)
-                                        RoundedRectangle(cornerRadius: 15)
-                                            .foregroundStyle(.ultraThinMaterial)
-                                            .pulsingAnimation(Direction: ChargingState == .charging ? .leftToRight :
-                                                                ChargingState == .discharging ? .rightToLeft :
-                                                    .outIn, Color: isInLowPower ? .mint : dynamicColor)
-                                    }
-                                    .shadow(radius: 5)
-                                    .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
-                                }
+                        .bold(macOS_Subsystem.BatteryTemperature(TermperatureUnit: .celsius).value > 36)
+                        .onTapGesture {
+                            switch tempUnit {
+                            case .celsius: tempUnit = .fahrenheit
+                            case .fahrenheit: tempUnit = .kelvin
+                            default: tempUnit = .celsius
                             }
                         }
-                        .onAppear {
-                            width = g.size.width
-                            height = g.size.height
-                        }
-                        .onChange(of: g.size) { newValue in
-                            width = newValue.width
-                            height = newValue.height
-                        }
-                    }
                 }
-                .glow(color: hovered2 ? dynamicColor : .clear, anim: hovered2)
-                .task(priority: .background, {
-                    repeat {
-                        do {
-                            let data = await batteryData().value
-                            PowerSource = data.PowerSource
-                            ChargingState = data.ChargingState
-                            Percentage = Float(data.Percentage)
-                            TimeRemaining = data.TimeRemaining
-                            isInLowPower = await isInLowPowerUpdate().value
-                            flash.toggle()
-                            temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit)
-                            try await Task.sleep(seconds: 5)
-                        } catch _ {}
-                        if !isRun {break}
-                    }while(isRun)
-                })
-                .onAppear(perform: {
-                    flash = true
-                })
-                .onChange(of: ChargingState) { n in
-                    if n == .charging && isInLowPower {
-                        _ = toggleLowPowerMode()
+                .frame(height: 10)
+                .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
+                GeometryReader { g in
+                    CustomViews.MultiProgressBar(total: (label: "", value: 100), values: [("", Double(Percentage), dynamicColor)], widthFrame: g.size.width, showDots: false, geometry: g.size, fixTo100: true, dontShowLabels: true)
+                }
+                HStack{
+                    Group {
+                        switch ChargingState {
+                        case .charged: Text("\(StringLocalizer("timeRemaining.string")): ∞")
+                        default: Text("\(StringLocalizer("timeRemaining.string")): \(TimeRemaining)")
+                        }
+                        Spacer()
+                        Text(String(Int(Percentage)) + "%")
                     }
+                    .font(.footnote)
+                    .foregroundColor(SettingsMonitor.textColor(cs))
                 }
             }
             .onTapGesture(perform: {
@@ -246,6 +174,58 @@ public class BatteryDisplay: xCore {
                     }
                 }
             })
+            .onHover { t in
+                hovered2 = t
+            }
+            .padding(.all)
+            .background {
+                VStack{
+                    if SettingsMonitor.batteryAnimation == false {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundColor(hovered2 ? dynamicColor : .clear)
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.ultraThinMaterial)
+                                .shadow(radius: 5)
+                        }
+                    } else {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundColor(hovered2 ? dynamicColor : .clear)
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.ultraThinMaterial)
+                                .pulsingAnimation(Direction: ChargingState == .charging ? .leftToRight :
+                                                    ChargingState == .discharging ? .rightToLeft :
+                                        .outIn, Color: isInLowPower ? .mint : dynamicColor)
+                        }
+                        .shadow(radius: 5)
+                        .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
+                    }
+                }
+            }
+            .glow(color: hovered2 ? dynamicColor : .clear, anim: hovered2)
+            .border(.red)
+            .onChange(of: ChargingState) { n in
+                if n == .charging && isInLowPower {
+                    _ = toggleLowPowerMode()
+                }
+            }
+            .task(priority: .background, {
+                repeat {
+                    do {
+                        let data = await batteryData().value
+                        PowerSource = data.PowerSource
+                        ChargingState = data.ChargingState
+                        Percentage = Float(data.Percentage)
+                        TimeRemaining = data.TimeRemaining
+                        isInLowPower = await isInLowPowerUpdate().value
+                        temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit)
+                        try await Task.sleep(seconds: 5)
+                    } catch _ {}
+                    if !isRun {break}
+                }while(isRun)
+            })
+            .animation(SettingsMonitor.secondaryAnimation, value: isInLowPower)
         }
     }
 }

@@ -47,7 +47,7 @@ public class SystemStatus: xCore {
             let id = UUID()
         }
         
-        public func buttons() -> some View {
+        public var buttons: some View {
             let buttons: [actionsStruct] = [
                 .init(activity: .shutDown, glyph: "power", color: .red, description: "", actionDealy: 5),
                 .init(activity: .reboot, glyph: "restart", color: .yellow, description: "", actionDealy: 5),
@@ -165,19 +165,21 @@ public class SystemStatus: xCore {
             return (StringLocalizer("graphics.string"), gpuLabels)
         }
     }
-    private static var serial: StringData? {
+    private static var serial: StringData {
         get {
             let platformExpert = IOServiceGetMatchingService(kIOMainPortDefault, IOServiceMatching("IOPlatformExpertDevice") )
             guard platformExpert > 0 else {
-                return nil
+                return (StringLocalizer("serial.string"), "undefined.string")
             }
             guard let serialNumber = (IORegistryEntryCreateCFProperty(platformExpert, kIOPlatformSerialNumberKey as CFString, kCFAllocatorDefault, 0).takeUnretainedValue() as? String)?.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines) else {
-                return nil
+                return (StringLocalizer("serial.string"), "undefined.string")
             }
             IOObjectRelease(platformExpert)
             return (StringLocalizer("serial.string"), serialNumber)
         }
     }
+    
+    
     //MARK: - Device Logo
     private static func deviceImage(scale: Double = 1) -> (image: Image, size: CGSize) {
         func resize(image: NSImage, w: Int, h: Int) -> NSImage {
@@ -266,13 +268,13 @@ public class SystemStatus: xCore {
             _isMore = toggle
             self.showButton = withButton
         }
-        @State var hovered = false
-        @State var showSerial = SettingsMonitor.showSerialNumber
+        @State var serialHovered = false
+        let showSerial = SettingsMonitor.showSerialNumber
         @Binding var isMore: Bool
         @Environment(\.colorScheme) var cs
         var showButton: Bool
         
-        private func viewGenerator() -> some View {
+        private var viewGenerator: some View {
             VStack{
                 if !SettingsMonitor.isInMenuBar {
                     Spacer().frame(height: 50)
@@ -289,7 +291,6 @@ public class SystemStatus: xCore {
                                 .bold()
                                 .shadow(radius: 5)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                            //                                        .padding(.all)
                         }
                         .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: false,
                                                                 width: deviceImage(scale: SettingsMonitor.isInMenuBar ? 2 : 1).size.width / 1.5,
@@ -365,27 +366,28 @@ public class SystemStatus: xCore {
                     HStack{
                         HStack{
                             Spacer()
-                            Text(serial!.label)
+                            Text(serial.label)
                         }
                         HStack{
-                            Text(serial?.value ?? "NaN")
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                                
-                                .blur(radius: showSerial || hovered ? 0 : 5)
-                                .animation(SettingsMonitor.secondaryAnimation, value: hovered)
-                                .onAppear(perform: {
-                                    showSerial = SettingsMonitor.showSerialNumber
-                                })
-                                .onHover { b in
-                                    hovered = b
-                                }
+                            if showSerial {
+                                Text(serial.value)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                            } else {
+                                Text(serial.value)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .blur(radius: serialHovered ? 0 : 5)
+                                    .animation(SettingsMonitor.secondaryAnimation, value: serialHovered)
+                                    .onHover { b in
+                                        serialHovered = b
+                                    }
+                            }
                             Spacer()
                         }
                     }
                     Spacer()
                     if SettingsMonitor.isInMenuBar {
                         HStack{
-                            Power().buttons().padding(.all)
+                            Power().buttons.padding(.all)
                         }
                     }
                     if !SettingsMonitor.isInMenuBar {
@@ -395,22 +397,22 @@ public class SystemStatus: xCore {
             }
         }
         
-        private func inMenuBar() -> some View {
-            viewGenerator()
+        private var inMenuBar: some View {
+            viewGenerator
         }
         
-        private func inDock() -> some View {
+        private var inDock: some View {
             GeometryReader { g in
                 ScrollView(.vertical, showsIndicators: true) {
-                    viewGenerator()
+                    viewGenerator
                 }
             }
         }
         public var body: some View {
             if SettingsMonitor.isInMenuBar {
-                inMenuBar()
+                inMenuBar
             } else {
-                inDock()
+                inDock
             }
         }
     }

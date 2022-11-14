@@ -25,8 +25,7 @@ struct PackerView: View {
     @State private var devID = SettingsMonitor.devID
     @State private var signP = SettingsMonitor.passwordSaved && SettingsMonitor.devID != "" ? true : false
     @State private var dummy = false
-    private func FutureInstallDirPicker() -> some View {
-//        return Button("select.button") {
+    private var FutureInstallDirPicker: some View {
         return Button(pathOfFInstall) {
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false
@@ -41,7 +40,7 @@ struct PackerView: View {
         }.padding().fixedSize(horizontal: true, vertical: false)
     }
     
-    private func DefaultPathPicker() -> some View {
+    private var DefaultPathPicker: some View {
         return Button("default.button") {
             self.pathOfFInstall = "/Applications"
             appPickerDisabled = false
@@ -50,8 +49,7 @@ struct PackerView: View {
             .keyboardShortcut(.defaultAction)
     }
     
-    private func AppToPackPicker() -> some View {
-//        return Button("select.button") {
+    private var AppToPackPicker: some View {
         return Button(filename) {
             let panel = NSOpenPanel()
             panel.allowsMultipleSelection = false
@@ -67,7 +65,7 @@ struct PackerView: View {
             .keyboardShortcut(!(filename != StringLocalizer("default.text")) ? .defaultAction : .cancelAction)
     }
     
-    private func SavePackDirPicker() -> some View {
+    private var SavePackDirPicker: some View {
         return Button {
             let panel = NSOpenPanel()
             let homeFolder = FileManager.default.homeDirectoryForCurrentUser
@@ -80,13 +78,12 @@ struct PackerView: View {
             }
             runDisabled = false
         } label: {
-//            Text("select.button")
             Text(savePath)
         }.disabled(savePickerDisabled).padding()
             .keyboardShortcut(!(savePath != StringLocalizer("save.text")) ? .defaultAction : .cancelAction)
     }
     
-    private func StartPacking() -> some View {
+    private var StartPacking: some View {
         return Button(action: {
             Packer.run(pathOfFInstall, pathToFile, savePath, filename, password)
             if signP && devID != "" {
@@ -115,7 +112,7 @@ struct PackerView: View {
         return Text(textToShow).fontWeight(.light).padding()
     }
     
-    private func startOver() -> some View {
+    private var startOver: some View {
         Button {
             filename =  StringLocalizer("default.text")
             pathToFile = ""
@@ -139,40 +136,10 @@ struct PackerView: View {
             GroupBox {
                 Spacer()
                 GeometryReader { g in
-                    //                    VStack{
-                    //                        Spacer()
-                    //                        Divider()
-                    //                        HStack() {
-                    //                            Texts(pathOfFInstall)
-                    //                            Spacer()
-                    //                            FutureInstallDirPicker()
-                    //                            DefaultPathPicker()
-                    //                        }
-                    //                        Divider()
-                    //                        HStack{
-                    //                            Texts(filename)
-                    //                            Spacer()
-                    //                            AppToPackPicker()
-                    //                        }
-                    //                        Divider()
-                    //                        HStack{
-                    //                            Texts(savePath)
-                    //                            Spacer()
-                    //                            SavePackDirPicker()
-                    //                        }
-                    //                        Divider()
-                    //                        HStack(alignment: .center) {
-                    //                            Spacer()
-                    //                            StartPacking()
-                    //                            Spacer()
-                    //                            startOver()
-                    //                            Spacer()
-                    //                        }
-                    //                    }
                     VStack {
                         Spacer()
                         HStack{
-                            FutureInstallDirPicker()
+                            FutureInstallDirPicker
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "square.on.square.dashed",
                                                                         enabled: true,
                                                                         alwaysShowTitle: false,
@@ -183,7 +150,7 @@ struct PackerView: View {
                                                                         blurBackground: true,
                                                                         render: .palette))
                             Spacer()
-                            DefaultPathPicker()
+                            DefaultPathPicker
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "square",
                                                                         disabled: defaultPathButtDisabled,
                                                                         enabled: !defaultPathButtDisabled,
@@ -196,7 +163,7 @@ struct PackerView: View {
                                                                         render: .palette))
                         }
                         Divider()
-                        AppToPackPicker()
+                        AppToPackPicker
                             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "square.grid.3x3.square",
                                                                     disabled: appPickerDisabled,
                                                                     enabled: !appPickerDisabled,
@@ -206,7 +173,7 @@ struct PackerView: View {
                                                                     backgroundIsNotFill: false,
                                                                     blurBackground: true,
                                                                     render: .palette))
-                        SavePackDirPicker()
+                        SavePackDirPicker
                             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "questionmark.square",
                                                                     disabled: savePickerDisabled,
                                                                     enabled: !savePickerDisabled,
@@ -218,7 +185,7 @@ struct PackerView: View {
                                                                     render: .palette))
                         Divider()
                         HStack{
-                            StartPacking()
+                            StartPacking
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "square.and.arrow.down",
                                                                         disabled: runDisabled,
                                                                         enabled: !runDisabled,
@@ -230,7 +197,7 @@ struct PackerView: View {
                                                                         blurBackground: true,
                                                                         render: .palette))
                             Spacer()
-                            startOver()
+                            startOver
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.uturn.left.square",
                                                                         disabled: appPickerDisabled,
                                                                         enabled: !appPickerDisabled,

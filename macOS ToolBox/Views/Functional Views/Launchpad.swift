@@ -64,7 +64,7 @@ struct LaunchpadManagerView: View {
         }
     }
     
-    private func TableView() -> some View {
+    private var TableView: some View {
         HStack{
             ForEach(2..<(Int(maxRows) + 1), id: \.self) {x in
                 VStack{
@@ -83,7 +83,7 @@ struct LaunchpadManagerView: View {
         }.padding(.all)
     }
     
-    private func resetLaunchpad() -> some View {
+    private var resetLaunchpad: some View {
         HStack {
             Spacer()
             Button {
@@ -100,7 +100,7 @@ struct LaunchpadManagerView: View {
         }.padding(.all)
     }
     
-    private func rows() -> some View {
+    private var rows: some View {
         Slider(value: $maxRows, in: 2...16, step: 1) {
             Text(StringLocalizer("columns.string")).fontWeight(.bold).foregroundColor(xEdit ? .white : maxRows == defaultX ? .green : .primary)
             HStack{
@@ -134,7 +134,7 @@ struct LaunchpadManagerView: View {
         .tint(maxRows == defaultX ? .green : .primary)
     }
     
-    private func columns() -> some View {
+    private var columns: some View {
         Slider(value: $maxColumns, in: 2...10, step: 1) {
             Text(StringLocalizer("rows.string")).fontWeight(.bold).foregroundColor(yEdit ? .white : maxColumns == defaultY ? .green : .primary)
             HStack{
@@ -178,7 +178,7 @@ struct LaunchpadManagerView: View {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(.ultraThinMaterial)
                 .shadow(radius: 10)
-            columns()
+            columns
                 .padding(.all)
         }
         .frame(width: width / 1.5, height: height / 20, alignment: .center)
@@ -195,14 +195,14 @@ struct LaunchpadManagerView: View {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(.ultraThinMaterial)
                 .shadow(radius: 10)
-            rows()
+            rows
                 .padding(.all)
         }
         .frame(width: width / 1.5, height: height / 20, alignment: .center)
         .padding(.all)
     }
     
-    private func MainTabView() -> some View {
+    private var MainTabView: some View {
         GeometryReader { geo2 in
             VStack{
                 ZStack{
@@ -210,7 +210,7 @@ struct LaunchpadManagerView: View {
                         .foregroundStyle(.ultraThinMaterial)
                         .shadow(radius: 10)
                     ScrollView([.vertical, .horizontal], showsIndicators: true) {
-                        TableView()
+                        TableView
                     }
                 }
             }.frame(width: geo2.size.width, height: geo2.size.height, alignment: .center)
@@ -231,7 +231,7 @@ struct LaunchpadManagerView: View {
                             VStack {
                                 RowsView(width: geometry.size.width, height: geometry.size.height).padding(.all)
                                 Divider()
-                                MainTabView()
+                                MainTabView
                             }
                         }
                         Divider()

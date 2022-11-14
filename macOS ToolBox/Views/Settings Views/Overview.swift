@@ -34,7 +34,7 @@ struct SettingsOverview: View {
         }
     }
 
-    private func AutoLaunch() -> some View {
+    private var AutoLaunch: some View {
         Button {
             SettingsMonitor.autoLaunch = !launchAtLogin
             launchAtLogin = SettingsMonitor.autoLaunch
@@ -50,7 +50,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func ShowSerialNumber() -> some View {
+    private var ShowSerialNumber: some View {
         Button {
             SettingsMonitor.showSerialNumber = !showSerialNumber
             showSerialNumber = SettingsMonitor.showSerialNumber
@@ -63,10 +63,11 @@ struct SettingsOverview: View {
                                                 width: width,
                                                 color: .blue,
                                                 hideBackground: false,
-                                                backgroundShadow: true))
+                                                backgroundShadow: true,
+                                                glyphBlured: !showSerialNumber))
     }
     
-    private func IsInMenuBar() -> some View {
+    private var IsInMenuBar: some View {
         Button {
             SettingsMonitor.isInMenuBar = !isInMenuBar
             isInMenuBar = SettingsMonitor.isInMenuBar
@@ -82,7 +83,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
 
-    private func BatteryButton() -> some View {
+    private var BatteryButton: some View {
         Button {
             switch animateBatteryOverview {
             case true:
@@ -103,7 +104,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func ParallelsButton() ->some View {
+    private var ParallelsButton: some View {
         Button {
             do {
                 try Shell.Runner(app: "/usr/bin/open", args: [SettingsMonitor.parallelsDir.absoluteString]).process.run()
@@ -132,7 +133,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func UTMButton() -> some View {
+    private var UTMButton: some View {
         Button {
             do {
                 try Shell.Runner(app: "/usr/bin/open", args: [SettingsMonitor.utmDir.absoluteString]).process.run()
@@ -161,7 +162,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func MaintenanceButton() -> some View {
+    private var MaintenanceButton: some View {
         Button {
             SettingsMonitor.Maintenance()
             SettingsMonitor.maintenanceLastRun = Date().formatted(date: .complete, time: .standard)
@@ -179,7 +180,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func PasswordStateButton() -> some View {
+    private var PasswordStateButton: some View {
         NavigationLink {
             PasswordSettings()
         } label: {
@@ -194,7 +195,7 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private func AppTheme() -> some View {
+    private var AppTheme: some View {
         VStack{
             HStack{
                 Button {
@@ -231,15 +232,15 @@ struct SettingsOverview: View {
                                 LazyVStack{
                                     Spacer()
                                     Group{
-                                        ParallelsButton()
-                                        UTMButton()
-                                        MaintenanceButton()
-                                        PasswordStateButton()
-                                        BatteryButton()
-                                        ShowSerialNumber()
-                                        IsInMenuBar()
-                                        AutoLaunch()
-                                        AppTheme()
+                                        ParallelsButton
+                                        UTMButton
+                                        MaintenanceButton
+                                        PasswordStateButton
+                                        BatteryButton
+                                        ShowSerialNumber
+                                        IsInMenuBar
+                                        AutoLaunch
+                                        AppTheme
                                     }.padding(.all)
                                     Spacer()
                                 }.padding(.all)

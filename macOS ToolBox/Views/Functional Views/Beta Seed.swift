@@ -33,7 +33,7 @@ struct BetaSeedView: View {
         selection = SeedUtil.getSeedInt(password)
     }
     
-    private func BetaImage() ->  some View {
+    private var BetaImage: some View {
         VStack{
             CustomViews.SymbolView(symbol: (imageSeed == 2) ?
                        "𝛼" : (imageSeed == 1) ?
@@ -45,7 +45,7 @@ struct BetaSeedView: View {
         }
     }
     
-    private func BetaView() -> some View {
+    private var BetaView: some View {
         VStack(alignment: .center) {
             HStack(alignment: .center){
                 Text("seed.current"); Text("\(SeedUtil.getSeed(password))")
@@ -107,7 +107,7 @@ struct BetaSeedView: View {
         }
     }
     
-    private func Title() -> some View {
+    private var Title: some View {
         VStack{
             if !enrolled! {
                 CustomViews.AnimatedTextView(Input: "main.title", FontWeight: .bold, TimeToStopAnimation: SettingsMonitor.secAnimDur)
@@ -121,13 +121,13 @@ struct BetaSeedView: View {
     var body: some View {
         if SettingsMonitor.passwordSaved {
             GroupBox {
-                BetaView()
+                BetaView
             } label: {
-                Title()
+                Title
             }
             .groupBoxStyle(Stylers.CustomGBStyle())
             .background(content: {
-                BetaImage()
+                BetaImage
             })
             .onChange(of: imageSeed, perform: { newValue in
                 password = SettingsMonitor.password

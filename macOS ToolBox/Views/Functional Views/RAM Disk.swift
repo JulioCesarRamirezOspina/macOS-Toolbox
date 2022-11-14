@@ -67,7 +67,7 @@ struct RAMDiskView: View {
         var value: Int
     }
     
-    private func SelectableInMenuBar() -> some View {
+    private var SelectableInMenuBar: some View {
         var powers: [powerOfTwo] = []
         for each in 1...2045 {
             if each.isPowerOfTwo {
@@ -83,7 +83,7 @@ struct RAMDiskView: View {
         }
     }
     
-    private func SelectableInDock() -> some View {
+    private var SelectableInDock: some View {
         var powers: [powerOfTwo] = []
         for each in 1...2045 {
             if each.isPowerOfTwo {
@@ -118,7 +118,7 @@ struct RAMDiskView: View {
         count = 0
     }
     
-    private func EjectButton() -> some View {
+    private var EjectButton: some View {
         Button {
             ejectAll(arr)
             drivesCreated = false
@@ -146,15 +146,6 @@ struct RAMDiskView: View {
                         .frame(width: width / 4 - 40, height: width / 4 - 40, alignment: .center)
                         .foregroundColor(Color(.brown))
                         .shadow(radius: 2)
-//                        .rotationEffect(.degrees(
-//                            toDegrees(fraction: allRAMData.active, total: allRAMData.total) +
-//                            toDegrees(fraction: allRAMData.inactive, total: allRAMData.total) +
-//                            toDegrees(fraction: allRAMData.wired, total: allRAMData.total) +
-//                            toDegrees(fraction: allRAMData.compressed, total: allRAMData.total)
-////
-////                            toDegrees(fraction: allRAMData.used, total: allRAMData.total)
-////                            360 - toDegrees(fraction: allRAMData.cachedFiles, total: allRAMData.total)
-//                        ))
                     Circle().trim(from: 0, to: 1 - Double().toPercent(fraction: allRAMData.used, total: allRAMData.total))
                         .stroke(style: .init(lineWidth: 10, lineCap: .round))
                         .frame(width: width / 4 - 20, height: width / 4 - 20, alignment: .center)
@@ -165,10 +156,6 @@ struct RAMDiskView: View {
                         .stroke(style: .init(lineWidth: 10, lineCap: .round))
                         .frame(width: width / 4 - 20, height: width / 4 - 20, alignment: .center)
                         .foregroundColor(.blue)
-                    //                                .rotationEffect(.degrees(
-                    //                                    (1 - (allRAMData.total - allRAMData.used) / allRAMData.total) * 360 -
-                    //                                    (1 - (allRAMData.total - allRAMData.active) / allRAMData.total) * 360
-                    //                                ))
                         .shadow(radius: 2)
 
                     Circle().trim(from: 0, to: 1 - Double().toPercent(fraction: allRAMData.inactive, total: allRAMData.total))
@@ -177,7 +164,6 @@ struct RAMDiskView: View {
                         .foregroundColor(.gray)
                         .rotationEffect(.degrees(
                             Double().toDegrees(fraction: allRAMData.active, total: allRAMData.total)
-                            //                                    ((1 - (allRAMData.total - allRAMData.used) / allRAMData.total) * 360)
                         ))
                         .shadow(radius: 2)
 
@@ -187,7 +173,6 @@ struct RAMDiskView: View {
                         .foregroundColor(.green)
                         .rotationEffect(.degrees(
                             Double().toDegrees(fraction: allRAMData.active, total: allRAMData.total) +
-                            //                                    ((1 - (allRAMData.total - allRAMData.used) / allRAMData.total) * 360) +
                             Double().toDegrees(fraction: allRAMData.inactive, total: allRAMData.total)
                         ))
                         .shadow(radius: 2)
@@ -198,7 +183,6 @@ struct RAMDiskView: View {
                         .foregroundColor(Color(nsColor: NSColor(#colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1))))
                         .rotationEffect(.degrees(
                             Double().toDegrees(fraction: allRAMData.active, total: allRAMData.total) +
-                            //                                    ((1 - (allRAMData.total - allRAMData.used) / allRAMData.total) * 360) +
                             Double().toDegrees(fraction: allRAMData.inactive, total: allRAMData.total) +
                             Double().toDegrees(fraction: allRAMData.wired, total: allRAMData.total)
                         ))
@@ -210,10 +194,6 @@ struct RAMDiskView: View {
             .animation(SettingsMonitor.secondaryAnimation, value: allRAMData.used)
             .background {
                 ZStack{
-//                    Circle()
-//                        .frame(width: width / 4 - 20, height: width / 4 - 20, alignment: .center)
-//                        .foregroundColor(Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.09670206159, blue: 0.1206974462, alpha: 1))))
-                    
                     Circle()
                         .frame(width: width / 4, height: width / 4, alignment: .center)
                         .foregroundStyle(.ultraThinMaterial)
@@ -263,7 +243,7 @@ struct RAMDiskView: View {
         }
     }
         
-    private func DiskTextField() -> some View {
+    private var DiskTextField: some View {
         TextField("diskLabel.string", text: $diskLabel, onCommit: {
             Memory().createDisk((diskLabel == "") ? "\(StringLocalizer("drivePlaceholder.string")) \(volume) GB\(count == 0 ? "" : " \(count)")" : diskLabel, volume)
             if !drivesCreated {
@@ -282,7 +262,7 @@ struct RAMDiskView: View {
             .padding(.all)
     }
     
-    private func CreateDiskButton() -> some View {
+    private var CreateDiskButton: some View {
         Button {
             Memory().createDisk((diskLabel == "") ? "\(StringLocalizer("drivePlaceholder.string")) \(volume) GB\(count == 0 ? "" : " \(count)")" : diskLabel, volume)
             if !drivesCreated {
@@ -319,7 +299,7 @@ struct RAMDiskView: View {
             }.backgroundStyle(.ultraThickMaterial)
         }
     }
-    private func ClearRAMButtonSubView() -> some View {
+    private var ClearRAMButtonSubView: some View {
         VStack{
             Text("ramSubview.string")
             Spacer()
@@ -328,9 +308,6 @@ struct RAMDiskView: View {
             HStack {
                 Button {
                     _ = Shell.Parcer.sudo("/usr/sbin/purge", [], password: password) as String
-//                    DispatchQueue.main.asyncAfter(deadline: .now() + 3) {
-//                        allRAMData.availableRAM = Memory().allRAMData.availableRAM
-//                    }
                     sheetIsPresented = false
                 } label: {
                     Text("clearRAMPages.string")
@@ -385,7 +362,7 @@ struct RAMDiskView: View {
             CustomViews.NoPasswordView(true, toggle: $popoverIsPresented)
         }
         .sheet(isPresented: $sheetIsPresented) {
-            ClearRAMButtonSubView()
+            ClearRAMButtonSubView
         }
         .disabled(clensingInProgress)
     }
@@ -414,18 +391,18 @@ struct RAMDiskView: View {
                             }
                             Group {
                                 if SettingsMonitor.isInMenuBar {
-                                    SelectableInMenuBar()
+                                    SelectableInMenuBar
                                 } else {
-                                    SelectableInDock()
+                                    SelectableInDock
                                 }
                             }
                             Spacer()
                             Group{
                                 HStack{
                                     Spacer()
-                                    CreateDiskButton()
+                                    CreateDiskButton
                                     Spacer()
-                                    EjectButton()
+                                    EjectButton
                                     Spacer()
                                 }.padding(.all)
                             }
