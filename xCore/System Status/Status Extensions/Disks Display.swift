@@ -131,6 +131,7 @@ public class DisksDisplay: xCore {
             VStack{
                 HStack{
                     Text(title)
+                        .shadow(radius: 0)
                     Spacer()
                 }
                 GeometryReader { g in

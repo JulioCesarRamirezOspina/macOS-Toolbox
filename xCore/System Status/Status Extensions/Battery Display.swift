@@ -22,6 +22,7 @@ public class BatteryDisplay: xCore {
         @State private var tempUnit: UnitTemperature = SettingsMonitor.temperatureUnit
         @State private var temp = macOS_Subsystem.BatteryTemperature(TermperatureUnit: SettingsMonitor.temperatureUnit)
         @State private var isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
+        @State private var dummy: Bool = false
         @Binding var isRun: Bool
         var dynamicColor: Color {
             get {
@@ -69,16 +70,18 @@ public class BatteryDisplay: xCore {
         public var body: some View {
             VStack{
                 HStack{
-                    Text("powerSource.string")
-                    switch PowerSource {
-                    case .AC:
-                        Text("battstate.onAC")
-                    case .Internal:
-                        Text("battstate.onInternal")
-                    case .unknown:
-                        Text("calculating.string")
-                    }
-                    Spacer()
+                    Group{
+                        Text("powerSource.string")
+                        switch PowerSource {
+                        case .AC:
+                            Text("battstate.onAC")
+                        case .Internal:
+                            Text("battstate.onInternal")
+                        case .unknown:
+                            Text("calculating.string")
+                        }
+                        Spacer()
+                    }.shadow(radius: 0)
                 }
                 HStack{
                     Group{
@@ -136,17 +139,6 @@ public class BatteryDisplay: xCore {
                             .fontWeight(.heavy)
                     }
                     Spacer()
-                    Text(macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit).valueString)
-                        .font(.footnote)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
-                        .bold(macOS_Subsystem.BatteryTemperature(TermperatureUnit: .celsius).value > 36)
-                        .onTapGesture {
-                            switch tempUnit {
-                            case .celsius: tempUnit = .fahrenheit
-                            case .fahrenheit: tempUnit = .kelvin
-                            default: tempUnit = .celsius
-                            }
-                        }
                 }
                 .frame(height: 10)
                 .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
@@ -160,22 +152,25 @@ public class BatteryDisplay: xCore {
                         default: Text("\(StringLocalizer("timeRemaining.string")): \(TimeRemaining)")
                         }
                         Spacer()
+                        Text(macOS_Subsystem.BatteryTemperature(TermperatureUnit: tempUnit).valueString)
+                            .font(.footnote)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
+                            .bold(macOS_Subsystem.BatteryTemperature(TermperatureUnit: .celsius).value > 36)
+                            .onTapGesture {
+                                switch tempUnit {
+                                case .celsius: tempUnit = .fahrenheit
+                                case .fahrenheit: tempUnit = .kelvin
+                                default: tempUnit = .celsius
+                                }
+                            }
+                        HStack {
+                            Divider()
+                        }.frame(height: 10)
                         Text(String(Int(Percentage)) + "%")
                     }
                     .font(.footnote)
                     .foregroundColor(SettingsMonitor.textColor(cs))
                 }
-            }
-            .onTapGesture(perform: {
-                Task{
-                    if SettingsMonitor.passwordSaved {
-                        isInLowPower = await toggleLowPowerMode().value
-                        ChargingState = await batteryData().value.ChargingState
-                    }
-                }
-            })
-            .onHover { t in
-                hovered2 = t
             }
             .padding(.all)
             .background {
@@ -183,15 +178,11 @@ public class BatteryDisplay: xCore {
                     if SettingsMonitor.batteryAnimation == false {
                         ZStack{
                             RoundedRectangle(cornerRadius: 15)
-                                .foregroundColor(hovered2 ? dynamicColor : .clear)
-                            RoundedRectangle(cornerRadius: 15)
                                 .foregroundStyle(.ultraThinMaterial)
                                 .shadow(radius: 5)
                         }
                     } else {
                         ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .foregroundColor(hovered2 ? dynamicColor : .clear)
                             RoundedRectangle(cornerRadius: 15)
                                 .foregroundStyle(.ultraThinMaterial)
                                 .pulsingAnimation(Direction: ChargingState == .charging ? .leftToRight :
@@ -203,7 +194,14 @@ public class BatteryDisplay: xCore {
                     }
                 }
             }
-            .glow(color: hovered2 ? dynamicColor : .clear, anim: hovered2)
+            .overlayButton(popoverIsPresented: $dummy, action: {
+                Task{
+                    if SettingsMonitor.passwordSaved {
+                        isInLowPower = await toggleLowPowerMode().value
+                        ChargingState = await batteryData().value.ChargingState
+                    }
+                }
+            }, enabledGlyph: "battery.100.circle.fill", disabledGlyph: "battery.100.circle.fill", enabledColor: .cyan, disabledColor: .green, hoveredColor: .cyan, selfHovered: $hovered2, backwardHovered: $hovered2, enabled: $isInLowPower, showPopover: false)
             .onChange(of: ChargingState) { n in
                 if n == .charging && isInLowPower {
                     _ = toggleLowPowerMode()

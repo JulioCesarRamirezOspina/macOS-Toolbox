@@ -607,4 +607,76 @@ public class CustomViews: xCore {
             }.frame(width: geometry.width)
         }
     }
+    
+    public struct OverlayButton: ViewModifier {
+        @State var popover: AnyView = AnyView(EmptyView())
+        @Binding var popoverIsPresented: Bool
+        @State var action: () -> ()
+        @State var enabledGlyph: String
+        @State var disabledGlyph: String
+        @State var enabledColor: Color
+        @State var disabledColor: Color
+        @State var hoveredColor: Color
+        @Binding var selfHovered: Bool
+        @Binding var backwardHovered: Bool
+        @Binding var enabled: Bool
+        @State var showPopover: Bool
+        public func body(content: Content) -> some View {
+            return content.overlay(alignment: .topTrailing) {
+                ZStack{
+                    HStack(spacing: 0){
+                        ZStack{
+                            Image(systemName: enabled ? enabledGlyph : disabledGlyph)
+                                .symbolRenderingMode(.palette)
+                                .font(.custom("San Francisco", size: 20))
+                                .foregroundStyle(.white, (enabled ? enabledColor : disabledColor))
+                                .shadow(radius: 2)
+                                .onHover(perform: { Bool in
+                                    selfHovered = Bool
+                                })
+                                .onTapGesture(perform: {
+                                    action()
+                                })
+                        }
+                        .padding(.all)
+                    }
+                    .onHover(perform: { Bool in
+                        backwardHovered = Bool
+                    })
+                    .background {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.ultraThickMaterial)
+                                .opacity(SettingsMonitor.isInMenuBar ? 0.5 : 0)
+                                .animation(SettingsMonitor.secondaryAnimation, value: selfHovered)
+                                .padding(.all)
+                        }
+                        .glow(color: (selfHovered) ? hoveredColor : .clear, anim: selfHovered)
+                    }
+                }
+                .popover(isPresented: $popoverIsPresented) {
+                    popover
+                }
+            }
+        }
+    }
+}
+
+public extension View {
+    func overlayButton(
+    popover: AnyView = AnyView(EmptyView()),
+    popoverIsPresented: Binding<Bool>,
+    action: @escaping () -> (),
+    enabledGlyph: String,
+    disabledGlyph: String,
+    enabledColor: Color,
+    disabledColor: Color,
+    hoveredColor: Color,
+    selfHovered: Binding<Bool>,
+    backwardHovered: Binding<Bool>,
+    enabled: Binding<Bool>,
+    showPopover: Bool
+    ) -> some View {
+        self.modifier(CustomViews.OverlayButton(popover: popover, popoverIsPresented: popoverIsPresented ,action: action, enabledGlyph: enabledGlyph, disabledGlyph: disabledGlyph, enabledColor: enabledColor, disabledColor: disabledColor, hoveredColor: hoveredColor, selfHovered: selfHovered, backwardHovered: backwardHovered, enabled: enabled, showPopover: showPopover))
+    }
 }

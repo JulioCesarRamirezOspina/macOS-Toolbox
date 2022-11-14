@@ -139,7 +139,8 @@ public class macOSUpdate: xCore {
                 } else {
                     CustomViews.NoPasswordView(false, toggle: $dummy)
                 }
-            }.frame(width: NSScreen.main!.frame.width / 2.5, height: NSScreen.main!.frame.width / 3.5, alignment: .center)
+            }
+            .frame(width: NSScreen.main!.frame.width / 2.5, height: NSScreen.main!.frame.width / 3.5, alignment: .center)
         }
     }
     
@@ -223,7 +224,7 @@ public class macOSUpdate: xCore {
             VStack(alignment: alignment){
                 ZStack{
                     RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle((hovered || hovered2 || hovered3) && sysUpdateAvailable != .searching ? .blue : .clear)
+                        .foregroundStyle(.clear)
                     switch sysUpdateAvailable {
                     case .available:
                         if !isInLowPower {
@@ -274,9 +275,11 @@ public class macOSUpdate: xCore {
                             if (hovered2 && sysUpdateAvailable != .searching) {
                                 Text(OSReCheck)
                                     .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             } else if (hovered3 && sysUpdateAvailable != .searching && sysUpdateAvailable != .available) {
                                 Text(OSShowSettings)
                                     .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             } else {
                                 switch sysUpdateAvailable {
                                 case .available:
@@ -284,7 +287,9 @@ public class macOSUpdate: xCore {
                                         if updateData.buildNumber != "" {
                                             Text(OSUpdateAvailable)
                                                 .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                                .shadow(radius: 0)
                                             Divider().frame(height: 10).foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                                .shadow(radius: 0)
                                         }
                                         Text(updateData.label + " " + (updateData.buildNumber == "" ? "" : StringLocalizer("bn.string")) + " " + updateData.buildNumber)
                                             .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
@@ -292,12 +297,16 @@ public class macOSUpdate: xCore {
                                     .animation(SettingsMonitor.secondaryAnimation, value: osIsBeta)
                                 case .notAvailable:
                                     Text(OSUpdateNotAvailable)
+                                        .shadow(radius: 0)
                                 case .searching:
                                     Text(OSUpdateCheckInProgress)
+                                        .shadow(radius: 0)
                                 case .noConnection:
                                     Text(OSUpdateNoInternet)
+                                        .shadow(radius: 0)
                                 case .standby:
                                     Text(OSUpdateNotAvailable)
+                                        .shadow(radius: 0)
                                 }
                             }
                         }
@@ -307,15 +316,8 @@ public class macOSUpdate: xCore {
                         }
                     }.padding(.all)
                 }
-                .glow(color: (hovered || hovered2 || hovered3) && sysUpdateAvailable != .searching ? dynamicColor : .clear, anim: hovered)
+//                .glow(color: (hovered || hovered2 || hovered3) && sysUpdateAvailable != .searching ? dynamicColor : .clear, anim: hovered)
                 .frame(height: halfScreen ? geometry.height / 2 : geometry.height)
-                .onHover(perform: { Bool in
-                    if !showOSSettings {
-                        if sysUpdateAvailable != .noConnection {
-                            hovered = Bool
-                        }
-                    }
-                })
                 .onChange(of: actuallyChangedSettings, perform: { nV in
                     if nV {
                         sysUpdateAvailable = .searching
@@ -326,27 +328,18 @@ public class macOSUpdate: xCore {
                         hovered3 = false
                     }
                 })
-                .onTapGesture {
-                    if sysUpdateAvailable == .available {
-                        SeedUtil.checkUpdates()
-                    } else if sysUpdateAvailable == .notAvailable || sysUpdateAvailable == .noConnection || sysUpdateAvailable == .standby {
-                        sysUpdateAvailable = .searching
-                        Task{
-                            await update()
-                        }
-                    }
-                }
                 //MARK: - Overlay
                 .overlay(alignment: .topTrailing) {
                     ZStack{
                         HStack(spacing: 0){
                             if hovered && !halfScreen && SettingsMonitor.passwordSaved && sysUpdateAvailable != .searching && SettingsMonitor.isInMenuBar {
                                 ZStack{
-                                    Image(systemName: "gear.circle.fill")
+                                    Image(systemName: !showOSSettings ? "gear.circle.fill" : "xmark.circle.fill")
                                         .symbolRenderingMode(.palette)
                                         .font(.custom("San Francisco", size: 20))
-                                        .foregroundStyle(.white, .blue)
-                                        .animation(animation, value: animate)
+                                        .foregroundStyle(.white, (showOSSettings ? .red : .blue))
+                                        .rotationEffect(Angle(radians: showOSSettings ? 0.01 : 2 * .pi))
+                                        .animation(SettingsMonitor.secondaryAnimation, value: showOSSettings)
                                         .shadow(radius: 2)
                                 }
                                 .popover(isPresented: $showOSSettings, content: {
@@ -362,8 +355,6 @@ public class macOSUpdate: xCore {
                                     hovered = true
                                 })
                                 .padding(.all)
-                                .glow(color: (hovered3) && sysUpdateAvailable != .searching ? .yellow : .clear, anim: hovered)
-                                .rotationEffect(Angle(radians: hovered ? 0.01 : .pi * 2))
                                 .transition(.move(edge: hovered ? .trailing : .leading))
                             }
                             ZStack{
@@ -384,6 +375,7 @@ public class macOSUpdate: xCore {
                                     .onHover(perform: { Bool in
                                         if sysUpdateAvailable != .searching {
                                             hovered2 = Bool
+                                            hovered = true
                                         }
                                     })
                                     .onTapGesture(perform: {
@@ -395,17 +387,32 @@ public class macOSUpdate: xCore {
                                         }
                                     })
                             }
-                            .glow(color: (hovered2) && sysUpdateAvailable != .searching ? .yellow : .clear, anim: hovered)
                             .padding(.all)
                         }
                         .background {
-                            RoundedRectangle(cornerRadius: 15)
-                                .foregroundStyle(.ultraThickMaterial)
-                                .opacity(SettingsMonitor.isInMenuBar ? 1 : 0)
-                                .animation(SettingsMonitor.secondaryAnimation, value: hovered)
-                                .padding(.all)
+                            ZStack{
+                                if SettingsMonitor.isInMenuBar {
+                                    RoundedRectangle(cornerRadius: 15)
+                                        .foregroundStyle(hovered && sysUpdateAvailable != .searching ? .blue : .clear)
+                                        .animation(SettingsMonitor.secondaryAnimation, value: hovered)
+                                        .padding(.all)
+                                }
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundStyle(.ultraThickMaterial)
+                                    .opacity(SettingsMonitor.isInMenuBar ? 0.5 : 0)
+                                    .animation(SettingsMonitor.secondaryAnimation, value: hovered)
+                                    .padding(.all)
+                            }
+                            .glow(color: (hovered) && sysUpdateAvailable != .searching ? .blue : .clear, anim: hovered)
                         }
                     }
+                    .onHover(perform: { Bool in
+                        if !showOSSettings {
+                            if sysUpdateAvailable != .noConnection {
+                                hovered = Bool
+                            }
+                        }
+                    })
                 }
             }
             .task {
@@ -418,6 +425,7 @@ public class macOSUpdate: xCore {
             })
             .onChange(of: showOSSettings, perform: { newValue in
                 if !showOSSettings {
+                    hovered = false
                     hovered2 = false
                     hovered3 = false
                 }

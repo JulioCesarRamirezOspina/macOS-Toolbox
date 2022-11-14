@@ -75,6 +75,7 @@ public class MemoryDisplay: xCore {
                 VStack{
                     HStack{
                         Text("ramStatus.string")
+                            .shadow(radius: 0)
                         Spacer()
                     }
                     HStack{
@@ -85,13 +86,16 @@ public class MemoryDisplay: xCore {
                                         memoryPressure == .critical ? StringLocalizer("memPressure.critical") :
                                         StringLocalizer("memPressure.undefined"))
                                 .fontWeight(memoryPressure == .warning ? .heavy : memoryPressure == .critical ? .black : .regular)
+                                .shadow(radius: 0)
                             }
                             switch clensingInProgress {
                             case true:
                                 HStack{
                                     Divider()
                                 }.frame(height: 10)
-                                Text("clensing.string").fontWeight(.heavy)
+                                Text("clensing.string")
+                                    .fontWeight(.heavy)
+                                    .shadow(radius: 0)
                             case false:
                                 EmptyView()
                             }
@@ -101,6 +105,7 @@ public class MemoryDisplay: xCore {
                                 }.frame(height: 10)
                                 Text("clear_RAM.string")
                                     .fontWeight(.heavy)
+                                    .shadow(radius: 0)
                             }
                             if hovered && clensingInProgress {
                                 HStack {
@@ -108,6 +113,7 @@ public class MemoryDisplay: xCore {
                                 }.frame(height: 10)
                                 Text("cancel.button")
                                     .fontWeight(.heavy)
+                                    .shadow(radius: 0)
                             }
                         }
                         .font(.footnote)
@@ -119,6 +125,7 @@ public class MemoryDisplay: xCore {
                                 .font(.footnote)
                                 .bold((Int(memory.used / memory.total * 100)) > 60)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
+                                .shadow(radius: 0)
                         }
                     }
                     .frame(height: 10)
@@ -150,67 +157,86 @@ public class MemoryDisplay: xCore {
                     HStack{
                         if !clensingInProgress {
                             HStack{
-                                Rectangle()
+                                Circle()
                                     .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.blue).shadow(radius: 2)
+                                    .foregroundColor(.blue)
+                                    .blur(radius: 1)
+                                    .shadow(radius: 2)
                                 Text("\(StringLocalizer("active.string")): \(Int(memory.active).description) \(StringLocalizer("mib.string"))")
                                     .monospacedDigit()
                                     .font(.footnote)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             }
                             HStack{
-                                Rectangle()
+                                Circle()
                                     .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.gray).shadow(radius: 2)
+                                    .foregroundColor(.gray)
+                                    .blur(radius: 1)
+                                    .shadow(radius: 2)
                                 Text("\(StringLocalizer("inactive.string")): \(Int(memory.inactive).description) \(StringLocalizer("mib.string"))")
                                     .monospacedDigit()
                                     .font(.footnote)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             }
                             HStack{
-                                Rectangle()
+                                Circle()
                                     .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.green).shadow(radius: 2)
+                                    .foregroundColor(.green)
+                                    .blur(radius: 1)
+                                    .shadow(radius: 2)
                                 Text("\(StringLocalizer("wired.string")): \(Int(memory.wired).description) \(StringLocalizer("mib.string"))")
                                     .monospacedDigit()
                                     .font(.footnote)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             }
                             HStack{
-                                Rectangle()
+                                Circle()
                                     .frame(width: 10, height: 10, alignment: .center)
                                     .foregroundColor(Color(nsColor: NSColor(
                                         #colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1)
-                                    ))).shadow(radius: 2)
+                                    )))
+                                    .blur(radius: 1)
+                                    .shadow(radius: 2)
                                 Text("\(StringLocalizer("compressed.string")): \(Int(memory.compressed).description) \(StringLocalizer("mib.string"))")
                                     .monospacedDigit()
                                     .font(.footnote)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             }
                             HStack{
-                                Rectangle()
+                                Circle()
                                     .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.brown).shadow(radius: 2)
+                                    .foregroundColor(.brown)
+                                    .blur(radius: 1)
+                                    .shadow(radius: 2)
                                 Text("\(StringLocalizer("cachedFiles.string")): \(Int(memory.cachedFiles).description) \(StringLocalizer("mib.string"))")
                                     .monospacedDigit()
                                     .font(.footnote)
                                     .foregroundColor(SettingsMonitor.textColor(cs))
+                                    .shadow(radius: 0)
                             }
                             Spacer()
                         }
                     }
                 }
                 .padding(.all)
-                .popover(isPresented: $sheetIsPresented, content: {
-                    withAnimation(SettingsMonitor.secondaryAnimation) {
-                        ClearRAMButtonSubView()
+                .overlayButton(popover: AnyView(ClearRAMButtonSubView()), popoverIsPresented: $sheetIsPresented, action: {
+                    if SettingsMonitor.passwordSaved && !clensingInProgress{
+                        sheetIsPresented = true
+                    } else if SettingsMonitor.passwordSaved && clensingInProgress {
+                        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
+                        SettingsMonitor.memoryClensingInProgress = false
+                        clensingInProgress = false
                     }
-                })
+                }, enabledGlyph: "circle.circle.fill", disabledGlyph: "circle.circle.fill", enabledColor: .yellow, disabledColor: .yellow, hoveredColor: .yellow, selfHovered: $hovered, backwardHovered: $hovered, enabled: $clensingInProgress, showPopover: false)
                 .background {
                     GeometryReader { g in
                         ZStack{
                             RoundedRectangle(cornerRadius: 15)
-                                .foregroundColor(clensingInProgress ? .green : memory.free > memory.total / 2 && !hovered ? .clear : dynamicColor)
+                                .foregroundColor(dynamicColor)
                             RoundedRectangle(cornerRadius: 15)
                                 .foregroundStyle(.ultraThinMaterial)
                                 .shadow(radius: 5)
@@ -224,23 +250,9 @@ public class MemoryDisplay: xCore {
                         }
                     }
                 }
-                .onHover { t in
-                    if SettingsMonitor.passwordSaved {
-                        hovered = t
-                    }
-                }
                 .onAppear(perform: {
                     clensingInProgress = SettingsMonitor.memoryClensingInProgress
                 })
-                .onTapGesture {
-                    if SettingsMonitor.passwordSaved && !clensingInProgress{
-                        sheetIsPresented = true
-                    } else if SettingsMonitor.passwordSaved && clensingInProgress {
-                        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
-                        SettingsMonitor.memoryClensingInProgress = false
-                        clensingInProgress = false
-                    }
-                }
                 .task(priority: .background, {
                     repeat {
                         do {
@@ -259,7 +271,6 @@ public class MemoryDisplay: xCore {
                         if !isRun {break}
                     }while(isRun)
                 })
-                .glow(color: hovered && !clensingInProgress ? dynamicColor : .clear, anim: hovered)
                 .animation(SettingsMonitor.secondaryAnimation, value: hovered)
                 .onChange(of: SettingsMonitor.memoryClensingInProgress) { V in
                     clensingInProgress = V
