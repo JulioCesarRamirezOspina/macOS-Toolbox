@@ -23,7 +23,7 @@ public class MemoryDisplay: xCore {
         var dynamicColor: Color {
             get {
                 if memory.free > memory.total / 2 {
-                    return .blue
+                    return .clear
                 } else if memory.free <= memory.total / 2 {
                     return .yellow
                 } else if memory.free <= memory.total / 4 {
