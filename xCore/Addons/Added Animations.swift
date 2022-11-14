@@ -56,7 +56,7 @@ private struct PulsingAnimation: ViewModifier {
                 self.animate = true
             }
         }
-            
+        .mask(content)
     }
 }
 
