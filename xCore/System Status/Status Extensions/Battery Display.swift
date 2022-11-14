@@ -204,7 +204,6 @@ public class BatteryDisplay: xCore {
                 }
             }
             .glow(color: hovered2 ? dynamicColor : .clear, anim: hovered2)
-            .border(.red)
             .onChange(of: ChargingState) { n in
                 if n == .charging && isInLowPower {
                     _ = toggleLowPowerMode()
