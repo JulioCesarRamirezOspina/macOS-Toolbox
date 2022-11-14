@@ -159,8 +159,10 @@ public class DisksDisplay: xCore {
             @State var w: CGFloat = 10
             return ForEach(disksData.indices, id: \.self, content: { index in
                 VStack{
-                    if disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() {
-                        diskTile(caches == "" || caches == "\(StringLocalizer("userCaches.string")): 0 MB" ? "\(disksData[index].DiskLabel)" : "\(disksData[index].DiskLabel) | \(caches)",
+                    if disksData[index].DiskLabel != StringLocalizer("clear_RAM.string") {
+                        diskTile(disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ?
+                                 (caches == "" || caches == "\(StringLocalizer("userCaches.string")): 0 MB" ? "\(disksData[index].DiskLabel)" : "\(disksData[index].DiskLabel) | \(caches)") :
+                                    disksData[index].DiskLabel,
                                  usedSpace: disksData[index].UsedSpace,
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
@@ -180,33 +182,6 @@ public class DisksDisplay: xCore {
                             }
                         }
                         .animation(SettingsMonitor.secondaryAnimation, value: caches)
-                        .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
-                        .popover(isPresented: $selfTapped[index]) {
-                            DiskSheet(disksData: disksData, index: index)
-                        }
-                        .onTapGesture {
-                            selfTapped[index] = true
-                        }
-                    } else if disksData[index].DiskLabel != StringLocalizer("clear_RAM.string") {
-                        diskTile(disksData[index].DiskLabel,
-                                 usedSpace: disksData[index].UsedSpace,
-                                 freeSpace: disksData[index].FreeSpace,
-                                 totalSpace: disksData[index].TotalSpace,
-                                 tintColor: disksData[index].tintColor)
-                        .frame(minWidth: 250, maxWidth: .greatestFiniteMagnitude, alignment: .center)
-                        .padding(.all)
-                        .onHover(perform: { t in
-                            selfHovered[index] = t
-                        })
-                        .background {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundColor(selfHovered[index] ? disksData[index].backgroundColor : disksData[index].clearedColor)
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundStyle(.ultraThinMaterial)
-                                    .shadow(radius: 5)
-                            }
-                        }
                         .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
                         .popover(isPresented: $selfTapped[index]) {
                             DiskSheet(disksData: disksData, index: index)
