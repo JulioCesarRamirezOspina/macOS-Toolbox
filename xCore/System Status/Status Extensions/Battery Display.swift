@@ -120,7 +120,7 @@ public class BatteryDisplay: xCore {
                     }
                     .font(.footnote)
                     .foregroundColor(SettingsMonitor.textColor(cs))
-                    if isInLowPower {
+                    if isInLowPower && !hovered2 {
                         HStack{
                             Divider()
                         }.frame(height: 10)

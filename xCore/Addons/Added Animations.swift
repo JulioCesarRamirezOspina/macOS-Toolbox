@@ -11,51 +11,60 @@ import SwiftUI
 // MARK: - Pulsing Animation
 
 private struct PulsingAnimation: ViewModifier {
-    @State var animate = false
-    var direction: MoveDirection
-    var color: Color = .brown
-    
-    func maxScale(_ l: Double) -> Double {
-        return l / 3
-    }
+    @State var isOn: Bool = false
+    var direction: MoveDirection = .leftToRight
+    var color: Color
     var animation: Animation {
-        .linear(duration: 1/6)
-        .speed(1 / 6)
-        .repeatForever(autoreverses: false)
+        Animation
+            .linear(duration: 3)
+            .repeatForever(autoreverses: false)
     }
-
     func body(content: Content) -> some View {
-        return content.background(GeometryReader { proxy in
-            VStack{
-                ZStack {
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle(.clear)
-                    ZStack{
-                        HStack{
-                            if direction != .leftToRight {
-                                Spacer()
-                            }
-                            Circle()
-                                .stroke(style: .init(lineWidth: 10, lineCap: .round))
-                                .foregroundColor(color)
-                                .scaleEffect(animate ? maxScale(proxy.size.height) : 0.01)
-                                .animation(animation, value: animate)
-                            if direction != .rightToLeft {
-                                Spacer()
-                            }
-                        }
-                    }
-                    .blur(radius: 15)
-                    .frame(width: proxy.size.width - 30, height: proxy.size.height - 30, alignment: .center)
-                    .clipped(antialiased: true)
+        let colorComponents = NSColor(color).cgColor.components!
+        let colors = stride(from: 0, to: 1, by: 0.01).map { value in
+            Color(.displayP3, red: colorComponents[0], green: colorComponents[1], blue: colorComponents[2], opacity: value)
+        }
+        let clearStride = stride(from: 0, to: 1, by: 0.01).map { value in
+            Color(.clear)
+        }
+        return content.overlay(GeometryReader { proxy in
+            ZStack {
+                if direction == .inOut || direction == .outIn {
+                    RadialGradient(gradient: Gradient(colors: (colors) + colors.reversed() + clearStride + clearStride),
+                                   center: .center,
+                                   startRadius: (!self.isOn ? 0 : proxy.size.width),
+                                   endRadius: 0)
+                        .frame(width: proxy.size.width)
+                        .clipped(antialiased: true)
+                } else {
+                    LinearGradient(gradient: Gradient(colors: colors + colors), startPoint: .trailing, endPoint: .leading)
+                        .frame(width: 2*proxy.size.width)
+                        .offset(x: self.isOn ? -proxy.size.width : 0)
+                        .clipped(antialiased: true)
                 }
             }
+            .transition(.scale)
+            .blur(radius: 15)
         })
+        .flipped(direction == .leftToRight ? .horizontal : .none, anchor: .center)
         .onAppear {
-            withAnimation(self.animation) {
-                self.animate = true
+            withAnimation(animation) {
+                isOn = true
             }
         }
+        .onChange(of: direction, perform: { _ in
+            isOn = false
+            withAnimation(animation) {
+                isOn = true
+            }
+        })
+        .onChange(of: color, perform: { _ in
+            isOn = false
+            withAnimation(animation) {
+                isOn = true
+            }
+        })
+        .transition(.opacity)
         .mask(content)
     }
 }
