@@ -73,7 +73,7 @@ public struct macOS_Subsystem {
         
         let prepString = ProcessInfo.processInfo.operatingSystemVersionString.byWords.dropFirst()
         var retval = "macOS"
-        let symbols = [" ", " \(osName) (" , " "]
+        let symbols = [" \(osName) ", " (" , " "]
         var index = 0
         for each in prepString {
             retval += symbols[index] + each

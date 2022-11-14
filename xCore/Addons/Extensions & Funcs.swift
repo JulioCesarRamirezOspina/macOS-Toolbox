@@ -497,13 +497,25 @@ extension View {
     }
 }
 
-extension View {
-   public func onReceiveNotification(_ name: Notification.Name,
+public extension View {
+    func onReceiveNotification(_ name: Notification.Name,
                    center: NotificationCenter = .default,
                    object: AnyObject? = nil,
                    perform action: @escaping (Notification) -> Void) -> some View {
         self.onReceive(
             center.publisher(for: name, object: object), perform: action
         )
+    }
+}
+
+public extension View {
+    func flipped(_ axis: directionalFlip = .horizontal, anchor: UnitPoint = .center) -> some View {
+        switch axis {
+        case .horizontal:
+            return self.scaleEffect(CGSize(width: -1, height: 1), anchor: anchor)
+        case .vertical:
+            return self.scaleEffect(CGSize(width: 1, height: -1), anchor: anchor)
+        case .none: return self.scaleEffect(CGSize(width: 1, height: 1), anchor: anchor)
+        }
     }
 }

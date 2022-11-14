@@ -208,6 +208,12 @@ public enum platform {
     case Intel
 }
 
+public enum directionalFlip {
+    case horizontal
+    case vertical
+    case none
+}
+
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
 public typealias ThermalData = (label: String, state: ThermalPressure)
