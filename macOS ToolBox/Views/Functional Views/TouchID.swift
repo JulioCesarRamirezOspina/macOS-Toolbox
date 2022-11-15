@@ -32,9 +32,6 @@ struct TouchIDView: View {
                     startRadius: 0,
                     endRadius: 140))
             .shadow(color: .black, radius: 7, x: 0, y: 5)
-        //            .animation(
-        //                .easeInOut(duration: timeToStop),
-        //                value: DispatchTime.now())
             .padding(.all)
     }
     
@@ -45,7 +42,10 @@ struct TouchIDView: View {
     
     var noTouchID: some View {
         GroupBox {
+            Spacer()
+            Spacer()
             CustomViews.AnimatedTextView(Input: "noTouchIDInstalled.string", Font: .largeTitle, FontWeight: .black, TimeToStopAnimation: SettingsMonitor.secAnimDur)
+            Spacer()
         } label: {
             CustomViews.AnimatedTextView(Input: "tid.title", TimeToStopAnimation: SettingsMonitor.secAnimDur)
         }

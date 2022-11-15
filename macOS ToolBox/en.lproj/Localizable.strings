@@ -115,6 +115,7 @@
 
 "tid.title" = "TouchID systemwide";
 "done.title" = "TouchID activated.";
+"noTouchIDInstalled.string" = "It appears that TouchID is not installed on your Mac.";
 "done.disabled.title" = "TouchID deactivated.";
 "status.title" = "Status:";
 "switch.button" = "Switch";
