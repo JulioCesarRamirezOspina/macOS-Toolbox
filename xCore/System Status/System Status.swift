@@ -91,7 +91,7 @@ public class SystemStatus: xCore {
             let year = macOS_Subsystem.getModelYear().localizedString
             var yearString = year == "" ? "" : ", \(year)"
             let yearCheck = Int((year.byWords.first) ?? "1") ?? 1
-            if yearCheck > 50000 {
+            if yearCheck > 2100 {
                 screenSize = ""
                 yearString = ""
             }
