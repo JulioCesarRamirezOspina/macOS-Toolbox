@@ -443,10 +443,11 @@ public class SystemStatus: xCore {
         var batteryIsPresent: Bool {
             get {
                 let platform = macOS_Subsystem.MacPlatform().modelType
-                if platform != .macBook || platform != .macBookAir || platform != .macBookPro || platform == .unknown {
-                    return false
-                } else {
+                print(platform)
+                if platform == .macBook || platform == .macBookAir || platform == .macBookPro {
                     return true
+                } else {
+                    return false
                 }
             }
         }
