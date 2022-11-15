@@ -75,7 +75,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if AppDelegate.popover.isShown {
                 AppDelegate.popover.performClose(sender)
             } else {
-                refreshPopoverViewController()
                 AppDelegate.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
