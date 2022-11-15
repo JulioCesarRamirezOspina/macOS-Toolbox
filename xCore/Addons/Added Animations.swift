@@ -12,13 +12,8 @@ import SwiftUI
 
 private struct PulsingAnimation: ViewModifier {
     @State var isOn: Bool = false
-    var direction: MoveDirection = .leftToRight
+    var direction: MoveDirection
     var color: Color
-    var animation: Animation {
-        Animation
-            .linear(duration: 3)
-            .repeatForever(autoreverses: false)
-    }
     func body(content: Content) -> some View {
         let colorComponents = NSColor(color).cgColor.components!
         let colors = stride(from: 0, to: 1, by: 0.01).map { value in
@@ -27,6 +22,7 @@ private struct PulsingAnimation: ViewModifier {
         let clearStride = stride(from: 0, to: 1, by: 0.01).map { value in
             Color(.clear)
         }
+        
         return content.overlay(GeometryReader { proxy in
             ZStack {
                 if direction == .inOut || direction == .outIn {
@@ -36,32 +32,39 @@ private struct PulsingAnimation: ViewModifier {
                                    endRadius: 0)
                         .frame(width: proxy.size.width)
                         .clipped(antialiased: true)
+                        .transition(.opacity)
                 } else {
                     LinearGradient(gradient: Gradient(colors: colors + colors), startPoint: .trailing, endPoint: .leading)
                         .frame(width: 2*proxy.size.width)
                         .offset(x: self.isOn ? -proxy.size.width : 0)
                         .clipped(antialiased: true)
+                        .transition(.opacity)
                 }
             }
-            .transition(.scale)
             .blur(radius: 15)
         })
         .flipped(direction == .leftToRight ? .horizontal : .none, anchor: .center)
         .onAppear {
-            withAnimation(animation) {
-                isOn = true
+            DispatchQueue.main.async {
+                withAnimation(Animation.linear(duration: 4).repeatForever(autoreverses: false)) {
+                    isOn = true
+                }
             }
         }
         .onChange(of: direction, perform: { _ in
             isOn = false
-            withAnimation(animation) {
-                isOn = true
+            DispatchQueue.main.async {
+                withAnimation(Animation.linear(duration: 4).repeatForever(autoreverses: false)) {
+                    isOn = true
+                }
             }
         })
         .onChange(of: color, perform: { _ in
             isOn = false
-            withAnimation(animation) {
-                isOn = true
+            DispatchQueue.main.async {
+                withAnimation(Animation.linear(duration: 4).repeatForever(autoreverses: false)) {
+                    isOn = true
+                }
             }
         })
         .transition(.opacity)
