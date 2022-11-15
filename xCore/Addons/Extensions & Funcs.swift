@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import LocalAuthentication
 
 public extension Double {
     func toDegrees(fraction: Double, total: Double) -> Double {
@@ -516,6 +517,33 @@ public extension View {
         case .vertical:
             return self.scaleEffect(CGSize(width: 1, height: -1), anchor: anchor)
         case .none: return self.scaleEffect(CGSize(width: 1, height: 1), anchor: anchor)
+        }
+    }
+}
+
+public extension LAContext {
+    enum BiometricType: String {
+        case none
+        case touchID
+        case faceID
+    }
+    
+    var biometricType: BiometricType {
+        var error: NSError?
+        
+        guard self.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, error: &error) else {
+            return .none
+        }
+        
+        switch self.biometryType {
+        case .none:
+            return .none
+        case .touchID:
+            return .touchID
+        case .faceID:
+            return .faceID
+        @unknown default:
+            return .none
         }
     }
 }
