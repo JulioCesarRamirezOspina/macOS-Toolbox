@@ -87,9 +87,14 @@ public class SystemStatus: xCore {
         get {
             let d = macOS_Subsystem.MacPlatform()
             let model = d.model
-            let screenSize = d.screenSize
+            var screenSize = d.screenSize
             let year = macOS_Subsystem.getModelYear().localizedString
-            let yearString = year == "" ? "" : ", \(year)"
+            var yearString = year == "" ? "" : ", \(year)"
+            let yearCheck = Int((year.byWords.first) ?? "1") ?? 1
+            if yearCheck > 50000 {
+                screenSize = ""
+                yearString = ""
+            }
             return (model, screenSize + yearString)
         }
     }
@@ -156,13 +161,23 @@ public class SystemStatus: xCore {
     private static var graphics: StringData {
         get {
             let GPUs = macOS_Subsystem.gpuName()
+            var GPUCheck: Bool {
+                if GPUs == [""] {
+                    return false
+                }else {
+                    return true
+                }
+            }
             var gpuLabels = ""
             
             for gpu in GPUs {
                 gpuLabels += gpu + " "
             }
-            
-            return (StringLocalizer("graphics.string"), gpuLabels)
+            if GPUCheck {
+                return (StringLocalizer("graphics.string"), gpuLabels)
+            } else {
+                return ("", "")
+            }
         }
     }
     private static var serial: StringData {
@@ -215,8 +230,8 @@ public class SystemStatus: xCore {
             var height: CGFloat = 0
             var width: CGFloat = 0
             var imageSet = false
-            var image = Image(systemName: "questionmark")
-            var nsImage = NSImage(systemSymbolName: "quistionmark", variableValue: 1, accessibilityDescription: nil)
+            var image = Image(nsImage: NSImage(contentsOfFile: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/com.apple.imac-unibody-21.icns")!)
+            var nsImage = NSImage(contentsOfFile: "/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/com.apple.imac-unibody-21.icns")!
             for each in iconCache! {
                 if each.absoluteString.contains(deviceString){
                     if each.absoluteString.contains(screenSize) {
@@ -244,9 +259,8 @@ public class SystemStatus: xCore {
                     }
                 }
             }
-            NSLog("Image saved")
             if SettingsMonitor.isInMenuBar {
-                return (image: Image(nsImage: resize(image: nsImage!, w: Int(nsImage!.size.width / scale), h: Int(nsImage!.size.height / scale))), size: CGSize(width: nsImage!.size.width, height: nsImage!.size.height))
+                return (image: Image(nsImage: resize(image: nsImage, w: Int(nsImage.size.width / scale), h: Int(nsImage.size.height / scale))), size: CGSize(width: nsImage.size.width, height: nsImage.size.height))
             } else {
                 return (image: image, size: CGSize(width: width, height: height))
             }
@@ -316,16 +330,18 @@ public class SystemStatus: xCore {
                             Spacer()
                         }
                     }
-                    HStack{
+                    if graphics.label != "" {
                         HStack{
-                            Spacer()
-                            Text(graphics.label)
-                        }
-                        HStack{
-                            Text(graphics.value)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
+                            HStack{
+                                Spacer()
+                                Text(graphics.label)
+                            }
+                            HStack{
+                                Text(graphics.value)
+                                    .foregroundColor(SettingsMonitor.textColor(cs))
                                 
-                            Spacer()
+                                Spacer()
+                            }
                         }
                     }
                     HStack{
@@ -424,7 +440,16 @@ public class SystemStatus: xCore {
         @State var height: CGFloat = 50
         @State var emergencyPopover = false
         @Environment(\.colorScheme) var cs
-        
+        var batteryIsPresent: Bool {
+            get {
+                let platform = macOS_Subsystem.MacPlatform().modelType
+                if platform != .macBook || platform != .macBookAir || platform != .macBookPro || platform == .unknown {
+                    return false
+                } else {
+                    return true
+                }
+            }
+        }
         public var body: some View {
             if !SettingsMonitor.isInMenuBar {
                 Spacer().frame(height: 50)
@@ -446,9 +471,11 @@ public class SystemStatus: xCore {
                                          Alignment: .leading,
                                          ShowTitle: true)
                         .padding(.all)
-                        Divider()
-                        BatteryDisplay.view(isRun: $isRun)
-                            .padding(.all)
+                        if batteryIsPresent {
+                            Divider()
+                            BatteryDisplay.view(isRun: $isRun)
+                                .padding(.all)
+                        }
                     }
                     .onAppear(perform: {
                         height = g.size.height / 12

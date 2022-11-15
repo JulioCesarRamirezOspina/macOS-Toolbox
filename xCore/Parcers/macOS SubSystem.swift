@@ -632,10 +632,10 @@ public struct macOS_Subsystem {
             default:
                 size = 0
             }
-                        
-            if Int(getModelYear().serviceData) != nil || Int(getModelYear().serviceData)! >= 2018 && !isArm() {
+            let year = Int(getModelYear().serviceData) ?? 9999999
+            if year >= 2018 && !isArm() {
                 size += 1
-                if Int(getModelYear().serviceData)! >= 2020 {
+                if year >= 2020 {
                     size -= 1
                 }
             }
