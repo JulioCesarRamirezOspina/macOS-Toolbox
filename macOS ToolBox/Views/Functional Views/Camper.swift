@@ -87,8 +87,10 @@ struct CamperView: View {
                             }.padding()
                         }.disabled(parallelsVMs.isEmpty)
                         Spacer()
-                        Toggle("quit.button", isOn: $isQuit)
-                        Spacer()
+                        if !SettingsMonitor.isInMenuBar {
+                            Toggle("quit.button", isOn: $isQuit)
+                            Spacer()
+                        }
                     }.padding()
                     Spacer()
                     HStack(alignment: .center){
@@ -140,13 +142,15 @@ struct CamperView: View {
                 VStack(alignment: .center){
                     HStack(alignment: .center){
                         Picker("utm.picker", selection: $UTMSelectedKey) {
-                            ForEach(utmVMs.sorted(by: >), id: \.key) {key, value in
+                            ForEach(utmVMs.sorted(by: <), id: \.key) {key, value in
                                 Text(value).tag(key)
                             }.padding()
                         }.disabled(utmVMs.isEmpty)
                         Spacer()
-                        Toggle("quit.button", isOn: $isQuit)
-                        Spacer()
+                        if !SettingsMonitor.isInMenuBar {
+                            Toggle("quit.button", isOn: $isQuit)
+                            Spacer()
+                        }
                     }.padding()
                     Spacer()
                     HStack(alignment: .center){
@@ -238,10 +242,10 @@ struct CamperView: View {
                 isBC = BootCampStart.bcExists(diskLabelSet)
                 isParallelsVM = Parallels.vmExists()
                 parallelsVMs = Parallels.returnVMHumanizedDictionary()
-                parallelsSelectedKey = Parallels.returnVMHumanizedDictionary().keys.first ?? ""
+//                parallelsSelectedKey = Parallels.returnVMHumanizedDictionary().keys.first ?? ""
                 isUTMVM = UTM.vmExists()
                 utmVMs = UTM.returnVMHumanizedDictionary()
-                UTMSelectedKey = UTM.returnVMHumanizedDictionary().keys.first ?? ""
+//                UTMSelectedKey = UTM.returnVMHumanizedDictionary().keys.first ?? ""
                 password = SettingsMonitor.password
                 passwordSaved = SettingsMonitor.passwordSaved
                 diskLabelSet = SettingsMonitor.bootCampDiskLabel

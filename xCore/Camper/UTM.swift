@@ -46,8 +46,15 @@ public class UTM: xCore {
                 folderExists = true
             }
         }
+        var index = 0
+        for each in contents {
+            if each == pFolder.appendingPathComponent("Public") {
+                contents.remove(at: index)
+            }
+            index += 1
+        }
         switch folderExists {
-        case true: return Array(contents.dropFirst())
+        case true: return Array(contents)
         case false: return contents
         }
     }
@@ -65,7 +72,7 @@ public class UTM: xCore {
                 count += 1
             }
         }
-        return dick
+        return Dictionary(uniqueKeysWithValues: dick.sorted(by: <))
     }
     
     /// Checks if VMs are exist
