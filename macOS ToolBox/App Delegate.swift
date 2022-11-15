@@ -12,37 +12,14 @@ import SensorKit
 import UserNotifications
 import Combine
 
-/// App Delegate
-//@NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
-    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
-        if SettingsMonitor.isInMenuBar {
-            return false
-        } else {
-            return true
-        }
-    }
-    
-    func applicationWillTerminate(_ notification: Notification) {
-        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
-        TorView().stop()
-    }
-    
-    func applicationWillFinishLaunching(_ notification: Notification) {
-        if SettingsMonitor().initRun == nil {
-            SettingsMonitor().defaults(.All)
-        }
-        if SettingsMonitor.utmDidNotSet {
-            SettingsMonitor().defaults(.UTM)
-        }
-        if SettingsMonitor.parallelsDidNotSet {
-            SettingsMonitor().defaults(.Parallels)
-        }
-        SettingsMonitor.memoryClensingInProgress = false
-        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
-        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
-    }
-    
+    //MARK: - Delegate vars
+    static var popover: NSPopover!
+    static var statusBarItem: NSStatusItem!
+    var window: NSWindow!
+    static var cs: ColorScheme = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
+
+    //MARK: - Additional Funcs
     func hideButtons(_ C: Int = 0) {
         for window in NSApplication.shared.windows{
             switch C {
@@ -67,17 +44,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
-    
     func setup() {
         let window = NSApplication.shared.windows.first!
         window.tabbingMode = .disallowed
         //        window.isMovableByWindowBackground = true
         window.titlebarAppearsTransparent = true
         window.titlebarSeparatorStyle = .shadow
-//        hideButtons(1);hideButtons(2);
         hideButtons(3)
     }
-    
     private func isInDarkMode() {
         let process = Process()
         let pipe = Pipe()
@@ -85,31 +59,36 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         process.executableURL = URL(filePath: "/bin/bash")
         process.standardOutput = pipe
     }
-    
-    private func hideDock() {
-       NSApplication.Dock.refreshMenuBarVisibiity(method: .viaMenuVisibilityToggle)
-        NSApplication.shared.setActivationPolicy(.accessory)
+    func refreshPopoverViewController() {
+        if SettingsMonitor.isInMenuBar {
+            let screenSize = NSScreen.main!.frame.size
+            let contentView = MainView().ignoresSafeArea().backgroundStyle(.bar)
+            let popover = NSPopover()
+            popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
+            popover.behavior = .transient
+            popover.contentViewController = NSHostingController(rootView: contentView)
+            AppDelegate.popover = popover
+        }
     }
-
-    private func showDock() {
-       NSApplication.Dock.refreshMenuBarVisibiity(method: .viaSystemAppActivation)
+    @objc func togglePopover(_ sender: AnyObject?) {
+        if let button = AppDelegate.statusBarItem.button {
+            if AppDelegate.popover.isShown {
+                AppDelegate.popover.performClose(sender)
+            } else {
+                refreshPopoverViewController()
+                AppDelegate.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
+            }
+        }
+        AppDelegate.popover.contentViewController?.view.window?.becomeKey()
     }
     
+    //MARK: - Startup funcs
     func popoverLaunch() {
         hideDock()
         let screenSize = NSScreen.main!.frame.size
         let contentView = MainView()
             .ignoresSafeArea()
-//            .frame(minWidth: screenSize.width / 1.8,
-//                   idealWidth: 1280,
-//                   maxWidth: .greatestFiniteMagnitude,
-//                   minHeight: screenSize.height / 1.8,
-//                   idealHeight: 720,
-//                   maxHeight: .greatestFiniteMagnitude,
-//                   alignment: .center)
-//            .background(Stylers.VisualEffectView()).ignoresSafeArea()
             .backgroundStyle(.bar)
-
         let popover = NSPopover()
         popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
         popover.behavior = .transient
@@ -168,7 +147,49 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.makeKeyAndOrderFront(nil)
         showDock()
     }
+    
+    public static func tog() {
+        self.popover.performClose(nil)
+    }
 
+    private func hideDock() {
+       NSApplication.Dock.refreshMenuBarVisibiity(method: .viaMenuVisibilityToggle)
+        NSApplication.shared.setActivationPolicy(.accessory)
+    }
+
+    private func showDock() {
+       NSApplication.Dock.refreshMenuBarVisibiity(method: .viaSystemAppActivation)
+    }
+    
+    //MARK: - App LifeCycle Funcs
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+        if SettingsMonitor.isInMenuBar {
+            return false
+        } else {
+            return true
+        }
+    }
+    
+    func applicationWillTerminate(_ notification: Notification) {
+        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
+        TorView().stop()
+    }
+    
+    func applicationWillFinishLaunching(_ notification: Notification) {
+        if SettingsMonitor().initRun == nil {
+            SettingsMonitor().defaults(.All)
+        }
+        if SettingsMonitor.utmDidNotSet {
+            SettingsMonitor().defaults(.UTM)
+        }
+        if SettingsMonitor.parallelsDidNotSet {
+            SettingsMonitor().defaults(.Parallels)
+        }
+        SettingsMonitor.memoryClensingInProgress = false
+        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
+        AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
+    }
+    
     func applicationDidFinishLaunching(_ notification: Notification) {
         AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
         if SettingsMonitor.isInMenuBar {
@@ -189,41 +210,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
     }
-    
-    func refreshPopoverViewController() {
-        if SettingsMonitor.isInMenuBar {
-            let screenSize = NSScreen.main!.frame.size
-            let contentView = MainView().ignoresSafeArea().backgroundStyle(.bar)
-            let popover = NSPopover()
-            popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
-            popover.behavior = .transient
-            popover.contentViewController = NSHostingController(rootView: contentView)
-            AppDelegate.popover = popover
-        }
-    }
-    
-    static var popover: NSPopover!
-    static var statusBarItem: NSStatusItem!
-    var window: NSWindow!
-    static var cs: ColorScheme = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
-    
-    public static func tog() {
-        self.popover.performClose(nil)
-    }
-
-    @objc func togglePopover(_ sender: AnyObject?) {
-        if let button = AppDelegate.statusBarItem.button {
-            if AppDelegate.popover.isShown {
-                AppDelegate.popover.performClose(sender)
-            } else {
-                refreshPopoverViewController()
-                AppDelegate.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
-            }
-        }
-        AppDelegate.popover.contentViewController?.view.window?.becomeKey()
-    }
 }
 
+//MARK: - Extensions
 extension NSApplication {
    public enum Dock {
    }
