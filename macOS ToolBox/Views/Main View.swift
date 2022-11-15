@@ -64,11 +64,6 @@ struct MainView: View {
             typeOf: ViewType.link
         ),
         ViewForGenerator(
-            view: AnyView(PackerView()),
-            label: "packer.name",
-            typeOf: ViewType.link
-        ),
-        ViewForGenerator(
             view: AnyView(LaunchpadManagerView()),
             label: "Launchpad",
             typeOf: ViewType.link

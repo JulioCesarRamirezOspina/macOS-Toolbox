@@ -190,6 +190,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         AppDelegate.cs = macOS_Subsystem.isInDarkMode() == .dark ? .dark : .light
     }
     
+    func refreshPopoverViewController() {
+        if SettingsMonitor.isInMenuBar {
+            let screenSize = NSScreen.main!.frame.size
+            let contentView = MainView().ignoresSafeArea().backgroundStyle(.bar)
+            let popover = NSPopover()
+            popover.contentSize = NSSize(width: screenSize.width / 1.8, height: screenSize.height / 1.6)
+            popover.behavior = .transient
+            popover.contentViewController = NSHostingController(rootView: contentView)
+            AppDelegate.popover = popover
+        }
+    }
+    
     static var popover: NSPopover!
     static var statusBarItem: NSStatusItem!
     var window: NSWindow!
@@ -204,6 +216,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if AppDelegate.popover.isShown {
                 AppDelegate.popover.performClose(sender)
             } else {
+                refreshPopoverViewController()
                 AppDelegate.popover.show(relativeTo: button.bounds, of: button, preferredEdge: NSRectEdge.minY)
             }
         }
