@@ -106,13 +106,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func windowLaunch() {
         if SettingsMonitor().initRun == nil {
-            SettingsMonitor().defaults(.All)
-        }
-        if SettingsMonitor.utmDidNotSet {
-            SettingsMonitor().defaults(.UTM)
-        }
-        if SettingsMonitor.parallelsDidNotSet {
-            SettingsMonitor().defaults(.Parallels)
+            SettingsMonitor().defaults()
         }
         SettingsMonitor.memoryClensingInProgress = false
         Memory().ejectAll([StringLocalizer("clear_RAM.string")])
@@ -176,13 +170,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillFinishLaunching(_ notification: Notification) {
         if SettingsMonitor().initRun == nil {
-            SettingsMonitor().defaults(.All)
-        }
-        if SettingsMonitor.utmDidNotSet {
-            SettingsMonitor().defaults(.UTM)
-        }
-        if SettingsMonitor.parallelsDidNotSet {
-            SettingsMonitor().defaults(.Parallels)
+            SettingsMonitor().defaults()
         }
         SettingsMonitor.memoryClensingInProgress = false
         Memory().ejectAll([StringLocalizer("clear_RAM.string")])

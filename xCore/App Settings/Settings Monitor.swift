@@ -75,9 +75,9 @@ public class SettingsMonitor: xCore {
         AppSettings.defaults.removeObject(forKey: key)
     }
     
-    public func defaults(_ key: DefaultKey = .All) {
+    public func defaults() {
         try? SMAppService.mainApp.unregister()
-        AppSettings.defaultSettings(key)
+        AppSettings.defaultSettings()
     }
     
     /// Initial run
@@ -219,56 +219,6 @@ public class SettingsMonitor: xCore {
         }
     }
     
-    /// initialized with existance of currently used parallels working directory
-    public static var parallelsDidNotSet: Bool {
-        get {
-            if AppSettings.load(key: "parallelsDir")?.isEmpty == nil {
-                return true
-            } else {
-                return false
-            }
-            
-        }
-    }
-    
-    /// initialized with existance of currently used UTM working directory
-    public static var utmDidNotSet: Bool {
-        get {
-            if AppSettings.load(key: "utmDir")?.isEmpty == nil {
-                return true
-            } else {
-                return false
-            }
-        }
-    }
-    
-    /// gets/sets parallels working directory
-    public static var parallelsDir: URL {
-        get {
-            AppSettings.load(key: "parallelsDir") ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Parallels")
-        }
-        set {
-            if newValue == URL(filePath: "") {
-                AppSettings.defaultSettings(.Parallels)
-            } else {
-                AppSettings.set(key: "parallelsDir", value: newValue)
-            }
-        }
-    }
-    
-    /// gets/sets utm working directory
-    public static var utmDir: URL {
-        get {
-            AppSettings.load(key: "utmDir") ?? FileManager.default.homeDirectoryForCurrentUser.appendingPathComponent("Library").appendingPathComponent("Containers").appendingPathComponent("com.utmapp.UTM").appendingPathComponent("Data").appendingPathComponent("Documents")
-        }
-        set {
-            if newValue == URL(filePath: "") {
-                AppSettings.defaultSettings(.UTM)
-            } else {
-                AppSettings.set(key: "utmDir", value: newValue)
-            }
-        }
-    }
     
     /// gets/sets developer installed id
     public static var devID: String {
@@ -437,27 +387,9 @@ fileprivate class AppSettings: xCore {
     }
     
     /// Sets default values on initial run
-    public class func defaultSettings(_ parameter: DefaultKey = .All) {
-        switch parameter {
-        case .UTM:         defaults.set((fm.homeDirectoryForCurrentUser.appendingPathComponent("Library").appendingPathComponent("Containers").appendingPathComponent("com.utmapp.UTM").appendingPathComponent("Data").appendingPathComponent("Documents")), forKey: "utmDir")
-            defaults.synchronize()
-        case .Parallels: defaults.set((fm.homeDirectoryForCurrentUser.appendingPathComponent("Parallels")), forKey: "parallelsDir")
-        case .BootCamp: defaults.set("BOOTCAMP", forKey: "diskLabel")
-            defaults.synchronize()
-        case .All:
-//            defaults.set("BOOTCAMP", forKey: "diskLabel")
-//
-//            defaults.set((fm.homeDirectoryForCurrentUser.appendingPathComponent("Parallels")), forKey: "parallelsDir")
-//
-//            defaults.set((fm.homeDirectoryForCurrentUser.appendingPathComponent("Library").appendingPathComponent("Containers").appendingPathComponent("com.utmapp.UTM").appendingPathComponent("Data").appendingPathComponent("Documents")), forKey: "utmDir")
-//            defaults.removeObject(forKey: "password")
-//            defaults.set(Int.random(in: 0...10), forKey: "initRun")
-//            defaults.removeObject(forKey: "devID")
-//            defaults.synchronize()
-            defaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
-            defaults.synchronize()
-        }
-
+    public class func defaultSettings() {
+        defaults.removePersistentDomain(forName: Bundle.main.bundleIdentifier!)
+        defaults.synchronize()
     }
     // MARK: - AES Structure
     struct AES {

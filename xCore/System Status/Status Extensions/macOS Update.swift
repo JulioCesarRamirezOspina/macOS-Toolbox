@@ -399,7 +399,7 @@ public class macOSUpdate: xCore {
                                 }
                                 RoundedRectangle(cornerRadius: 15)
                                     .foregroundStyle(.ultraThickMaterial)
-                                    .opacity(SettingsMonitor.isInMenuBar ? 0.5 : 0)
+                                    .opacity(0.5)
                                     .animation(SettingsMonitor.secondaryAnimation, value: hovered)
                                     .padding(.all)
                             }

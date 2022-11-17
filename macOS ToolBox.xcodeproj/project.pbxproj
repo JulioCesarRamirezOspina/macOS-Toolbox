@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9A06C1E82926C8760064419C /* Virtuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A06C1E72926C8760064419C /* Virtuals.swift */; };
 		9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A2F4EC92908BE5600084B2B /* Localizable.strings */; };
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
 		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
@@ -19,8 +20,6 @@
 		9ABFD0FA2908BC02003D7575 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E12908BC02003D7575 /* SettingsView.swift */; };
 		9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E22908BC02003D7575 /* Overview.swift */; };
 		9ABFD0FC2908BC02003D7575 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E32908BC02003D7575 /* Password.swift */; };
-		9ABFD0FD2908BC02003D7575 /* UTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E42908BC02003D7575 /* UTM.swift */; };
-		9ABFD0FE2908BC02003D7575 /* Parallels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E52908BC02003D7575 /* Parallels.swift */; };
 		9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E62908BC02003D7575 /* Defaults.swift */; };
 		9ABFD1002908BC02003D7575 /* DevID.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E72908BC02003D7575 /* DevID.swift */; };
 		9ABFD1012908BC02003D7575 /* BootCamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E82908BC02003D7575 /* BootCamp.swift */; };
@@ -58,8 +57,6 @@
 		9ABFD14E2908BC67003D7575 /* HomeBrew Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */; };
 		9ABFD14F2908BC67003D7575 /* Packer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1292908BC66003D7575 /* Packer.swift */; };
 		9ABFD1502908BC67003D7575 /* INIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12A2908BC66003D7575 /* INIT.swift */; };
-		9ABFD1512908BC67003D7575 /* UTM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12C2908BC67003D7575 /* UTM.swift */; };
-		9ABFD1522908BC67003D7575 /* Parallels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12D2908BC67003D7575 /* Parallels.swift */; };
 		9ABFD1532908BC67003D7575 /* BootCamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12E2908BC67003D7575 /* BootCamp.swift */; };
 		9ABFD1542908BC67003D7575 /* SeedUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1302908BC67003D7575 /* SeedUtil.swift */; };
 		9ABFD1552908BC67003D7575 /* Launchpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1312908BC67003D7575 /* Launchpad.swift */; };
@@ -124,6 +121,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9A06C1E72926C8760064419C /* Virtuals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtuals.swift; sourceTree = "<group>"; };
 		9A2F4EC82908BE5600084B2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A2F4ECA2908BE8B00084B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A462A162912EA8F00D1723D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -140,8 +138,6 @@
 		9ABFD0E12908BC02003D7575 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9ABFD0E22908BC02003D7575 /* Overview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overview.swift; sourceTree = "<group>"; };
 		9ABFD0E32908BC02003D7575 /* Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
-		9ABFD0E42908BC02003D7575 /* UTM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTM.swift; sourceTree = "<group>"; };
-		9ABFD0E52908BC02003D7575 /* Parallels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parallels.swift; sourceTree = "<group>"; };
 		9ABFD0E62908BC02003D7575 /* Defaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Defaults.swift; sourceTree = "<group>"; };
 		9ABFD0E72908BC02003D7575 /* DevID.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DevID.swift; sourceTree = "<group>"; };
 		9ABFD0E82908BC02003D7575 /* BootCamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.swift; sourceTree = "<group>"; };
@@ -180,8 +176,6 @@
 		9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HomeBrew Class.swift"; sourceTree = "<group>"; };
 		9ABFD1292908BC66003D7575 /* Packer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift; sourceTree = "<group>"; };
 		9ABFD12A2908BC66003D7575 /* INIT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIT.swift; sourceTree = "<group>"; };
-		9ABFD12C2908BC67003D7575 /* UTM.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UTM.swift; sourceTree = "<group>"; };
-		9ABFD12D2908BC67003D7575 /* Parallels.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parallels.swift; sourceTree = "<group>"; };
 		9ABFD12E2908BC67003D7575 /* BootCamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.swift; sourceTree = "<group>"; };
 		9ABFD1302908BC67003D7575 /* SeedUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedUtil.swift; sourceTree = "<group>"; };
 		9ABFD1312908BC67003D7575 /* Launchpad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.swift; sourceTree = "<group>"; };
@@ -308,8 +302,6 @@
 				9ABFD0E12908BC02003D7575 /* SettingsView.swift */,
 				9ABFD0E22908BC02003D7575 /* Overview.swift */,
 				9ABFD0E32908BC02003D7575 /* Password.swift */,
-				9ABFD0E42908BC02003D7575 /* UTM.swift */,
-				9ABFD0E52908BC02003D7575 /* Parallels.swift */,
 				9ABFD0E62908BC02003D7575 /* Defaults.swift */,
 				9ABFD0E72908BC02003D7575 /* DevID.swift */,
 				9ABFD0E82908BC02003D7575 /* BootCamp.swift */,
@@ -396,6 +388,7 @@
 				9ABFD1252908BC66003D7575 /* Memory.swift */,
 				9ABFD1262908BC66003D7575 /* Shell.swift */,
 				9ABFD1272908BC66003D7575 /* macOS SubSystem.swift */,
+				9A06C1E72926C8760064419C /* Virtuals.swift */,
 				9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */,
 				9ABFD1292908BC66003D7575 /* Packer.swift */,
 			);
@@ -405,8 +398,6 @@
 		9ABFD12B2908BC67003D7575 /* Camper */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD12C2908BC67003D7575 /* UTM.swift */,
-				9ABFD12D2908BC67003D7575 /* Parallels.swift */,
 				9ABFD12E2908BC67003D7575 /* BootCamp.swift */,
 			);
 			path = Camper;
@@ -645,7 +636,6 @@
 				9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */,
 				9ABFD1082908BC02003D7575 /* Camper.swift in Sources */,
 				9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */,
-				9ABFD0FD2908BC02003D7575 /* UTM.swift in Sources */,
 				9ABFD1092908BC02003D7575 /* Dock.swift in Sources */,
 				9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */,
 				9ABFD1002908BC02003D7575 /* DevID.swift in Sources */,
@@ -659,7 +649,6 @@
 				9ABFD1042908BC02003D7575 /* RAM Disk.swift in Sources */,
 				9ABFD1012908BC02003D7575 /* BootCamp.swift in Sources */,
 				9ABFD10A2908BC02003D7575 /* Beta Seed.swift in Sources */,
-				9ABFD0FE2908BC02003D7575 /* Parallels.swift in Sources */,
 				9ABFD10C2908BC02003D7575 /* TimeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -672,7 +661,6 @@
 				9ABFD1502908BC67003D7575 /* INIT.swift in Sources */,
 				9ABFD1592908BC67003D7575 /* Stylers.swift in Sources */,
 				9ABFD1562908BC67003D7575 /* Dock Manager.swift in Sources */,
-				9ABFD1522908BC67003D7575 /* Parallels.swift in Sources */,
 				9ABFD14E2908BC67003D7575 /* HomeBrew Class.swift in Sources */,
 				9ABFD1532908BC67003D7575 /* BootCamp.swift in Sources */,
 				9ABFD13E2908BC67003D7575 /* Disks Display.swift in Sources */,
@@ -683,11 +671,11 @@
 				9ABFD1422908BC67003D7575 /* System Status.swift in Sources */,
 				9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */,
 				9ABFD15A2908BC67003D7575 /* Settings Monitor.swift in Sources */,
+				9A06C1E82926C8760064419C /* Virtuals.swift in Sources */,
 				9ABFD1452908BC67003D7575 /* Biometrics.swift in Sources */,
 				9ABFD13F2908BC67003D7575 /* Battery Display.swift in Sources */,
 				9ABFD1472908BC67003D7575 /* Cool Circles.swift in Sources */,
 				9ABFD13D2908BC67003D7575 /* CPU Display.swift in Sources */,
-				9ABFD1512908BC67003D7575 /* UTM.swift in Sources */,
 				9ABFD1542908BC67003D7575 /* SeedUtil.swift in Sources */,
 				9ABFD1492908BC67003D7575 /* Documentation.docc in Sources */,
 				9ABFD1572908BC67003D7575 /* Sleep Manager.swift in Sources */,
@@ -878,7 +866,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1072;
+				CURRENT_PROJECT_VERSION = 1128;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -901,7 +889,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.3.5;
+				MARKETING_VERSION = 4.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -921,7 +909,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1072;
+				CURRENT_PROJECT_VERSION = 1128;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
 				ENABLE_HARDENED_RUNTIME = NO;
@@ -944,7 +932,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.3.5;
+				MARKETING_VERSION = 4.3.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

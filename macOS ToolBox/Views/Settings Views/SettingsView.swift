@@ -31,14 +31,6 @@ struct SettingsView: View {
                                         label: "bootcamp.settings",
                                         typeOf: ViewType.link),
                                     ViewForGenerator(
-                                        view: AnyView(ParallelsSettings()),
-                                        label: "parallels.settings",
-                                        typeOf: ViewType.link),
-                                    ViewForGenerator(
-                                        view: AnyView(UTMSettings()),
-                                        label: "utm.settings",
-                                        typeOf: ViewType.link),
-                                    ViewForGenerator(
                                         view: AnyView(PasswordSettings()),
                                         label: "password.settings",
                                         typeOf: ViewType.link),

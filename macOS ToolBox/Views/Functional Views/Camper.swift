@@ -19,15 +19,9 @@ struct CamperView: View {
     @State private var isReboot = true
     @State private var wrongPasswordCount = 0
     @State private var nextOnly = true
-    @State private var parallelsSelectedKey = Parallels.returnVMHumanizedDictionary().keys.first ?? ""
-    @State private var UTMSelectedKey = UTM.returnVMHumanizedDictionary().keys.first ?? ""
-    @State private var parallelsVMs = Parallels.returnVMHumanizedDictionary()
-    @State private var utmVMs = UTM.returnVMHumanizedDictionary()
     @State private var isBC = BootCampStart.bcExists(SettingsMonitor.bootCampDiskLabel)
-    @State private var isParallelsVM = Parallels.vmExists()
-    @State private var isUTMVM = UTM.vmExists()
+    @State private var virtsExist = Virtuals.anyExist
     @State private var diskLabelSet = SettingsMonitor.bootCampDiskLabel
-    @State private var parallelsDirSet = URL(fileURLWithPath: "", isDirectory: true)
     @State private var showSettings = false
     @State private var dummy = false
     @State private var isRun = false
@@ -75,111 +69,6 @@ struct CamperView: View {
         }
     }
     
-    public func ParallelsView(_ key: String) -> some View {
-        VStack(alignment: .center) {
-            Text("parallels.title").font(.largeTitle).fontWeight(.light).padding().multilineTextAlignment(.center)
-            if Parallels.vmExists() {
-                VStack(alignment: .center){
-                    HStack(alignment: .center){
-                        Picker("parallels.picker", selection: $parallelsSelectedKey) {
-                            ForEach(parallelsVMs.sorted(by: >), id: \.key) {key, value in
-                                Text(value).tag(key)
-                            }.padding()
-                        }.disabled(parallelsVMs.isEmpty)
-                        Spacer()
-                        if !SettingsMonitor.isInMenuBar {
-                            Toggle("quit.button", isOn: $isQuit)
-                            Spacer()
-                        }
-                    }.padding()
-                    Spacer()
-                    HStack(alignment: .center){
-                        Spacer()
-                        Button {
-                            Parallels.launchVM(key: key, quit: isQuit)
-                        } label: {
-                            Text("launch.button")
-                        }.keyboardShortcut(.defaultAction)
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt.square", alwaysShowTitle: false, width: 300, height: 50, color: .blue, backgroundShadow: true))
-                        Spacer()
-                        Parallels.showInFinder(parallelsSelectedKey)
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["faceid", "square"],alwaysShowTitle: false, width: 300, height: 50, color: .green, backgroundShadow: true))
-                        Spacer()
-                    }
-                }
-            } else {
-                HStack{
-                    Text("novm.text").font(.largeTitle)
-                    VStack(alignment: .center){Divider()}
-                }.padding()
-            }
-        }
-        .background(content: {
-            HStack{
-                Image(systemName: "line.diagonal")
-                    .rotationEffect(.degrees(-45), anchor: .center)
-                    .font(.custom("San Francisco", size: 140))
-                    .fontWeight(.light)
-                    .frame(width: 20, height: 140, alignment: .center)
-                Image(systemName: "line.diagonal")
-                    .rotationEffect(.degrees(-45), anchor: .center)
-                    .font(.custom("San Francisco", size: 140))
-                    .fontWeight(.light)
-                    .frame(width: 20, height: 140, alignment: .center)
-            }
-            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
-            .opacity(0.5).blur(radius: 2)
-            .shadow(radius: 15)
-            .padding(.all)
-        })
-        .padding()
-    }
-    
-    public func UTMView(_ key: String) -> some View {
-        VStack(alignment: .center) {
-            Text("utm.title").font(.largeTitle).fontWeight(.light).padding().multilineTextAlignment(.center)
-            if UTM.vmExists() {
-                VStack(alignment: .center){
-                    HStack(alignment: .center){
-                        Picker("utm.picker", selection: $UTMSelectedKey) {
-                            ForEach(utmVMs.sorted(by: <), id: \.key) {key, value in
-                                Text(value).tag(key)
-                            }.padding()
-                        }.disabled(utmVMs.isEmpty)
-                        Spacer()
-                        if !SettingsMonitor.isInMenuBar {
-                            Toggle("quit.button", isOn: $isQuit)
-                            Spacer()
-                        }
-                    }.padding()
-                    Spacer()
-                    HStack(alignment: .center){
-                        Spacer()
-                        Button {
-                            UTM.launchVM(key: key, quit: isQuit)
-                        } label: {
-                            Text("launch.button")
-                        }.keyboardShortcut(.defaultAction)
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt.square", alwaysShowTitle: false, width: 300, height: 50, color: .blue, backgroundShadow: true))
-                        Spacer()
-                        UTM.showInFinder(UTMSelectedKey)
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["faceid", "square"],alwaysShowTitle: false, width: 300, height: 50, color: .green, backgroundShadow: true))
-                        Spacer()
-                    }
-                }
-            } else {
-                HStack{
-                    Text("novm.text").font(.largeTitle)
-                    VStack(alignment: .center){Divider()}
-                }.padding()
-            }
-        }
-        .background(content: {
-            CustomViews.UTMLogo()
-        })
-        .padding()
-    }
-    
     private func nothingFound() -> some View {
         VStack{
             Spacer()
@@ -196,14 +85,9 @@ struct CamperView: View {
                         Text("bootcamp.button")
                     }
                 }
-                if isParallelsVM {
-                    ParallelsView(parallelsSelectedKey).tabItem{
-                        Text("parallels.button")
-                    }
-                }
-                if isUTMVM {
-                    UTMView(UTMSelectedKey).tabItem{
-                        Text("utm.button")
+                if virtsExist {
+                    Virtuals.FileSearch().tabItem {
+                        Text("VMs")
                     }
                 }
             }
@@ -213,7 +97,7 @@ struct CamperView: View {
     private func MainViewWithoutPassword() -> AnyView {
         return AnyView(
             VStack{
-                if isBC || isParallelsVM || isUTMVM {
+                if isBC || virtsExist {
                     mainTabView().padding(.all)
                 } else {
                     nothingFound().padding(.all)
@@ -237,21 +121,15 @@ struct CamperView: View {
         }
         .task {
             repeat {
-                _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
-                _ = Parallels.getVMList()
-                isBC = BootCampStart.bcExists(diskLabelSet)
-                isParallelsVM = Parallels.vmExists()
-                parallelsVMs = Parallels.returnVMHumanizedDictionary()
-//                parallelsSelectedKey = Parallels.returnVMHumanizedDictionary().keys.first ?? ""
-                isUTMVM = UTM.vmExists()
-                utmVMs = UTM.returnVMHumanizedDictionary()
-//                UTMSelectedKey = UTM.returnVMHumanizedDictionary().keys.first ?? ""
-                password = SettingsMonitor.password
-                passwordSaved = SettingsMonitor.passwordSaved
-                diskLabelSet = SettingsMonitor.bootCampDiskLabel
                 do {
                     try await Task.sleep(nanoseconds: 1000000000)
                 } catch _ {}
+                _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
+                isBC = BootCampStart.bcExists(diskLabelSet)
+                password = SettingsMonitor.password
+                passwordSaved = SettingsMonitor.passwordSaved
+                diskLabelSet = SettingsMonitor.bootCampDiskLabel
+                virtsExist = Virtuals.anyExist
             }while (isRun)
         }
         .onDisappear {

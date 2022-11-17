@@ -306,71 +306,6 @@ public class CustomViews: xCore {
         }
     }
     
-    public struct AnimatedBackground: View {
-        @State var animate = false
-        @State var direction: MoveDirection
-        @State var color: Color
-        @State var size: CGSize
-        
-        func maxScale(_ l: Double) -> Double {
-            return l / 3
-        }
-        var animation: Animation {
-            .linear(duration: 1/6)
-            .speed(1 / 6)
-            .repeatForever(autoreverses: false)
-        }
-        
-        public var body: some View{
-            ZStack{
-                switch direction {
-                case .leftToRight:
-                    HStack{
-                        Circle()
-                            .stroke(style: .init(lineWidth: 10, lineCap: .round))
-                            .foregroundColor(color)
-                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
-                            .animation(animation, value: animate)
-                        Spacer()
-                    }
-                case .rightToLeft:
-                    HStack{
-                        Spacer()
-                        Circle()
-                            .stroke(style: .init(lineWidth: 10, lineCap: .round))
-                            .foregroundColor(color)
-                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
-                            .animation(animation, value: animate)
-                    }
-                case .inOut:
-                    HStack{
-                        Spacer()
-                        Circle()
-                            .stroke(style: .init(lineWidth: 10, lineCap: .round))
-                            .foregroundColor(color)
-                            .scaleEffect(!animate ? 0.01 : maxScale(size.height))
-                            .animation(animation, value: animate)
-                        Spacer()
-                    }
-                case .outIn:
-                    HStack{
-                        Spacer()
-                        Circle()
-                            .stroke(style: .init(lineWidth: 10, lineCap: .round))
-                            .foregroundColor(color)
-                            .scaleEffect(!animate ? maxScale(size.height) : 0.01)
-                            .animation(animation, value: animate)
-                        Spacer()
-                    }
-                }
-            }
-            .onAppear(perform: {
-                animate = true
-            })
-            .frame(width: size.width - 30, height: size.height - 30, alignment: .center)
-            .clipped(antialiased: true)
-        }
-    }
     public struct DualActionMod: ViewModifier {
         public init(tapAction: @escaping (()->()), longPressAction: @escaping (()->()), frameSize: CGSize, ltActionDelay: Double = 4, padding: Bool = false) {
             self.frameSize = frameSize
@@ -647,7 +582,7 @@ public class CustomViews: xCore {
                         ZStack{
                             RoundedRectangle(cornerRadius: 15)
                                 .foregroundStyle(.ultraThickMaterial)
-                                .opacity(SettingsMonitor.isInMenuBar ? 0.5 : 0)
+                                .opacity(0.5)
                                 .animation(SettingsMonitor.secondaryAnimation, value: selfHovered)
                                 .padding(.all)
                         }

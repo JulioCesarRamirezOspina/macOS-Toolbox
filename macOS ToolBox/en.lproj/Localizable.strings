@@ -152,7 +152,7 @@
 
 "defaults.string" = "Defaults";
 "WARNING.STRING" = "CAUTION";
-"warning.details.string" = "These three buttons will drop YOUR settings of this app to default values. For changes to take effect MultiTool will restart";
+"warning.details.string" = "This button WILL erase all of this app's settings. Proceed with caution";
 "parallels.default" = "Reset Parallels directory to default folder in home folder";
 "all.default" = "ERASE ALL";
 "UTM.default" = "Reset UTM directory to default folder in containers directory";
@@ -349,4 +349,7 @@
 "therm.critical" = "Thermal Pressure: overheating";
 "therm.unknown" = "Thermal Pressure: unknown";
 
-"autoLaunch.string" = "Запускать при входе";
+"autoLaunch.string" = "Launch on login";
+
+"creationDate" = "Creation date";
+"lastAccessDate" = "Last access date";

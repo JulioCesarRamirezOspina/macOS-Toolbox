@@ -15,13 +15,6 @@ public enum ViewType{
     case empty
 }
 
-public enum DefaultKey {
-    case Parallels
-    case UTM
-    case BootCamp
-    case All
-}
-
 public enum spacerType {
     case wide
     case narrow
@@ -236,3 +229,25 @@ public typealias platformData = (model: String,
                                  screenSizeInt: Int,
                                  platform: String,
                                  platformServiceData: platform)
+public typealias file = (name: String, path: URL, fileExtension: String)
+
+// MARK: - Structs
+public struct FileType: Identifiable, Comparable {
+    public static func < (lhs: FileType, rhs: FileType) -> Bool {
+        lhs.name < rhs.name
+    }
+    public static func > (lhs: FileType, rhs: FileType) -> Bool {
+        lhs.name < rhs.name
+    }
+    public static func == (lhs: FileType, rhs: FileType) -> Bool {
+        lhs.name < rhs.name
+    }
+
+    public var name: String
+    public var path: URL
+    public var fileExtension: String
+    public var creationDate: String
+    public var lastAccessDate: String
+    public let id = UUID()
+    
+}

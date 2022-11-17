@@ -11,11 +11,7 @@ import xCore
 import ServiceManagement
 
 struct SettingsOverview: View {
-    @State private var ParallelsDir = SettingsMonitor.parallelsDir.relativePath
-    @State private var UTMDir = SettingsMonitor.utmDir.relativePath
     @State private var maintenanceLastRun = SettingsMonitor.maintenanceLastRun
-    @State private var parallelsLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.parallelsDir.relativePath)"
-    @State private var utmLabel = "\(StringLocalizer("utmDir.string"))\(SettingsMonitor.utmDir.relativePath)"
     @State private var width: CGFloat = (NSApplication.shared.keyWindow?.frame.width)! / 2
     @State private var animateBatteryOverview = SettingsMonitor.batteryAnimation
     @State private var isRun = false
@@ -104,64 +100,6 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
-    private var ParallelsButton: some View {
-        Button {
-            do {
-                try Shell.Runner(app: "/usr/bin/open", args: [SettingsMonitor.parallelsDir.absoluteString]).process.run()
-            } catch _{}
-        } label: {
-            Text(parallelsLabel)
-        }
-        .onHover { t in
-            if Parallels.vmExists() {
-                if t {
-                    parallelsLabel = StringLocalizer("finder.text")
-                } else {
-                    parallelsLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.parallelsDir.relativePath)"
-                }
-            } else {
-                parallelsLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.parallelsDir.relativePath)"
-            }
-        }
-        .disabled(!Parallels.vmExists())
-        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "pause",
-                                                disabled: !Parallels.vmExists(),
-                                                alwaysShowTitle: true,
-                                                width: width,
-                                                color: .cyan,
-                                                hideBackground: false,
-                                                backgroundShadow: true))
-    }
-    
-    private var UTMButton: some View {
-        Button {
-            do {
-                try Shell.Runner(app: "/usr/bin/open", args: [SettingsMonitor.utmDir.absoluteString]).process.run()
-            } catch _{}
-        } label: {
-            Text(utmLabel)
-        }
-        .onHover { t in
-            if UTM.vmExists() {
-                if t {
-                    utmLabel = StringLocalizer("finder.text")
-                } else {
-                    utmLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.utmDir.relativePath)"
-                }
-            } else {
-                utmLabel = "\(StringLocalizer("parallelsDir.string"))\(SettingsMonitor.utmDir.relativePath)"
-            }
-        }
-        .disabled(!UTM.vmExists())
-        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "dot.square",
-                                                disabled: !UTM.vmExists(),
-                                                alwaysShowTitle: true,
-                                                width: width,
-                                                color: .cyan,
-                                                hideBackground: false,
-                                                backgroundShadow: true))
-    }
-    
     private var MaintenanceButton: some View {
         Button {
             SettingsMonitor.Maintenance()
@@ -187,7 +125,7 @@ struct SettingsOverview: View {
             Text("\(StringLocalizer("passwordState.string")) \(SettingsMonitor.passwordSaved ? StringLocalizer("passwordSavedTrue.string") : StringLocalizer("passwordSavedFalse.string"))")
         }
         .buttonStyle(Stylers.ColoredButtonStyle(glyphs: SettingsMonitor.passwordSaved ? ["key"] : ["key", "line.diagonal"],
-                                                enabled: false,
+                                                enabled: true,
                                                 alwaysShowTitle: true,
                                                 width: width,
                                                 color: SettingsMonitor.passwordSaved ? .green : .red,
@@ -232,8 +170,6 @@ struct SettingsOverview: View {
                                 LazyVStack{
                                     Spacer()
                                     Group{
-                                        ParallelsButton
-                                        UTMButton
                                         MaintenanceButton
                                         PasswordStateButton
                                         BatteryButton

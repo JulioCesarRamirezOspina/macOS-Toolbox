@@ -19,35 +19,10 @@ struct Defaults: View {
                 CustomViews.AnimatedTextView(Input: StringLocalizer("warning.details.string"), Font: .title, FontWeight: .bold)
             }
             VStack{
-                Divider()
-                HStack{
-                    Group{
-                        GeometryReader { gp in
-                            Button {
-                                SettingsMonitor().defaults(.Parallels)
-                            } label: {
-                                CustomViews.AnimatedTextView(Input: "parallels.default", Font: .title2, FontWeight: .bold).padding(.all)
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: gp.size.width, height: gp.size.height, color: .green))
-                        }
-                    }.padding(.all)
-                    Divider()
-                    Group {
-                        GeometryReader { gp in
-                            Button {
-                                SettingsMonitor().defaults(.UTM)
-                            } label: {
-                                CustomViews.AnimatedTextView(Input: "UTM.default", Font: .title2, FontWeight: .bold).padding(.all)
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: gp.size.width, height: gp.size.height, color: .green))
-                        }
-                    }.padding(.all)
-                }
-                Divider()
                 Group {
                     GeometryReader { gp in
                         Button {
-                            SettingsMonitor().defaults(.All)
+                            SettingsMonitor().defaults()
                             AppDelegate().applicationWillTerminate(.init(name: NSApplication.willTerminateNotification, object: .none, userInfo: .none))
                             func relaunch(afterDelay seconds: TimeInterval = 0.5) -> Never {
                                 let task = Process()
