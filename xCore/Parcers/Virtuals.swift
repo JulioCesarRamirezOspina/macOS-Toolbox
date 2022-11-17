@@ -69,13 +69,13 @@ public class Virtuals: xCore {
             
             func getDates(url: URL) -> (creation: String, access: String) {
                 do {
-                    let access = try url.resourceValues(forKeys: [.contentAccessDateKey]).contentAccessDate ?? Date()
+                    let access = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? Date()
                     let creation = try url.resourceValues(forKeys: [.creationDateKey]).creationDate ?? Date()
                     let retval = (creation: creation.formatted(), access: access.formatted())
                     return retval
                 } catch let error {
                     NSLog(error.localizedDescription)
-                    return (Date().formatted(), Date().formatted())
+                    return ("--.--.----", "--.--.----")
                 }
             }
             
@@ -108,7 +108,7 @@ public class Virtuals: xCore {
                 return []
             }
         }
-                
+        
         private func generateForEach(filesList: [FileType], width: CGFloat) -> some View {
             return ForEach(filesList.sorted(by: <)) { file in
                 ZStack{

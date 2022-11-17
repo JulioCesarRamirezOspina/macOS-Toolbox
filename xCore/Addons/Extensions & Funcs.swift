@@ -9,32 +9,41 @@ import Foundation
 import SwiftUI
 import LocalAuthentication
 
-public extension Double {
-    func toDegrees(fraction: Double, total: Double) -> Double {
-        return (1 - toPercent(fraction: fraction, total: total)) * 360
-    }
-    func toPercent(fraction: Double, total: Double) -> Double {
-        return (total - fraction) / total
-    }
-    func inRange(start: Double, end: Double) -> Bool {
-        return (start...end).contains(self)
+//MARK: - Vars
+public var devIDInstallerSignature: String? {
+    get {
+        let process = Process()
+        let pipe = Pipe()
+        var rv: String? = nil
+        process.executableURL = URL(filePath: "/bin/bash")
+        process.arguments = ["-c", "security find-identity -p basic -v"]
+        process.standardOutput = pipe
+        do {
+            try process.run()
+            process.waitUntilExit()
+            let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
+            let parcing = shellResult.byLines
+            for line in parcing {
+                switch line.contains("Installer") {
+                case true:
+                    let exactLine = line
+                    let indexOfDot = exactLine.firstIndex(of: ":")
+                    let suffix = exactLine.suffix(from: indexOfDot!)
+                    let readySuffix = String(suffix.dropFirst(2))
+                    rv = String(readySuffix.dropLast(1))
+                case false:
+                    break
+                }
+            }
+            process.terminate()
+        } catch let error {
+            NSLog(error.localizedDescription)
+        }
+        return rv
     }
 }
 
-public extension Float {
-    func inRange(start: Float, end: Float) -> Bool {
-        return (start...end).contains(self)
-    }
-}
-
-extension Double {
-    func round(to places: Int) -> Double {
-        let divisor = pow(10.0, Double(places))
-        return (self * divisor).rounded() / divisor
-    }
-}
-
-//extension Double {
+//MARK: - Funcs
 func convertValueRounded(_ v: Double, _ u: Unit = .byte) -> (Double, Unit) {
     var bytes = v
     switch u {
@@ -114,7 +123,104 @@ func convertValue(_ v: Double) -> (Double, Unit) {
         return (bytes, Unit.byte)
     }
 }
-//}
+
+public func delay(after time: Double, execute codeBlock: @escaping () -> ()) {
+    DispatchQueue.main.asyncAfter(deadline: .now() + time) {
+        codeBlock()
+    }
+}
+
+public func tryToGetDeveloperIDInstallerSignature() -> (DevID: String, DevIDExists: Bool) {
+    let process = Process()
+    let pipe = Pipe()
+    process.executableURL = URL(filePath: "/bin/bash")
+    process.arguments = ["-c", "security find-identity -p basic -v"]
+    process.standardOutput = pipe
+    var retval = (DevID: "nil", DevIDExists: false)
+    do {
+        try process.run()
+        process.waitUntilExit()
+        let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
+        let parcing = shellResult.byLines
+        for line in parcing {
+            switch line.contains("Installer") {
+            case true:
+                let exactLine = line
+                let indexOfDot = exactLine.firstIndex(of: ":")
+                let suffix = exactLine.suffix(from: indexOfDot!)
+                let readySuffix = String(suffix.dropFirst(2))
+                retval = (DevID: String(readySuffix.dropLast(1)), DevIDExists: true)
+            case false:
+                break
+            }
+        }
+        process.terminate()
+    } catch let error {
+        NSLog(error.localizedDescription)
+    }
+    return retval
+}
+
+public func FolderPicker(_ defaultURL: URL) -> URL? {
+    let panel = NSOpenPanel()
+    let homeFolder = FileManager.default.homeDirectoryForCurrentUser
+    var retval : URL = URL(fileURLWithPath: "", isDirectory: true)
+    panel.allowsMultipleSelection = false
+    panel.canChooseDirectories = true
+    panel.canChooseFiles = false
+    panel.directoryURL = homeFolder
+    if panel.runModal() == .OK {
+        retval = panel.url!
+    } else {
+        retval = defaultURL
+    }
+    return retval
+}
+
+public func StringLocalizer(_ str: String) -> String {
+    return NSLocalizedString(str, comment: "")
+}
+
+public func Quit(_ AppDelegate: NSApplicationDelegate) {
+    AppDelegate.applicationWillTerminate!(.init(name: NSApplication.willTerminateNotification, object: .none, userInfo: .none))
+    exit(EXIT_SUCCESS)
+}
+
+func showInFinder(url: URL?) {
+    guard let url = url else { return }
+    
+    if url.isDirectory {
+        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: url.path(percentEncoded: false))
+    } else {
+        NSWorkspace.shared.activateFileViewerSelecting([url])
+    }
+}
+
+// MARK: - Extensions
+public extension Double {
+    func toDegrees(fraction: Double, total: Double) -> Double {
+        return (1 - toPercent(fraction: fraction, total: total)) * 360
+    }
+    func toPercent(fraction: Double, total: Double) -> Double {
+        return (total - fraction) / total
+    }
+    func inRange(start: Double, end: Double) -> Bool {
+        return (start...end).contains(self)
+    }
+}
+
+public extension Float {
+    func inRange(start: Float, end: Float) -> Bool {
+        return (start...end).contains(self)
+    }
+}
+
+extension Double {
+    func round(to places: Int) -> Double {
+        let divisor = pow(10.0, Double(places))
+        return (self * divisor).rounded() / divisor
+    }
+}
 
 public extension StringProtocol {
     
@@ -172,7 +278,6 @@ extension URL {
 extension FileManager {
     func directorySize(_ dir: URL) -> Int? { // in bytes
         if let enumerator = self.enumerator(at: dir, includingPropertiesForKeys: [.totalFileAllocatedSizeKey, .fileAllocatedSizeKey], options: [], errorHandler: { (_, error) -> Bool in
-//            print(error)
             return false
         }) {
             var bytes = 0
@@ -186,7 +291,43 @@ extension FileManager {
     }
 }
 
-/// needed for metronome app
+//MARK: - Structs & Classes
+public struct PullToRefresh: View {
+    
+    var coordinateSpaceName: String
+    var onRefresh: ()->Void
+    
+    @State var needRefresh: Bool = false
+    
+    public var body: some View {
+        GeometryReader { geo in
+            if (geo.frame(in: .named(coordinateSpaceName)).midY > 50) {
+                Spacer()
+                    .onAppear {
+                        needRefresh = true
+                    }
+            } else if (geo.frame(in: .named(coordinateSpaceName)).maxY < 10) {
+                Spacer()
+                    .onAppear {
+                        if needRefresh {
+                            needRefresh = false
+                            onRefresh()
+                        }
+                    }
+            }
+            HStack {
+                Spacer()
+                if needRefresh {
+                    ProgressView()
+                } else {
+                    Text("⇣")
+                }
+                Spacer()
+            }
+        }.padding(.top, -50)
+    }
+}
+
 public struct Config {
     let minimumValue: CGFloat
     let maximumValue: CGFloat
@@ -214,9 +355,6 @@ class AppKitScrollView: NSView {
     }
 }
 #endif
-
-/// Generates UTM App logo
-
 
 /// Wrapper to get other view's isCollapsed property
 public struct SplitViewAccessor: NSViewRepresentable {
@@ -262,129 +400,10 @@ public struct SplitViewAccessor: NSViewRepresentable {
     }
 }
 
-
-
-
-/// Delays execution of inserted code block
-/// - Parameters:
-///   - time: time delay
-///   - codeBlock: code block
-public func delay(after time: Double, execute codeBlock: @escaping () -> ()) {
-    DispatchQueue.main.asyncAfter(deadline: .now() + time) {
-        codeBlock()
-    }
-}
-
-/// Gets Developer Installer ID if exists
-/// - Returns: DevID and true/false value
-public func tryToGetDeveloperIDInstallerSignature() -> (DevID: String, DevIDExists: Bool) {
-    let process = Process()
-    let pipe = Pipe()
-    process.executableURL = URL(filePath: "/bin/bash")
-    process.arguments = ["-c", "security find-identity -p basic -v"]
-    process.standardOutput = pipe
-    var retval = (DevID: "nil", DevIDExists: false)
-    do {
-        try process.run()
-        process.waitUntilExit()
-        let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
-        let parcing = shellResult.byLines
-        for line in parcing {
-            switch line.contains("Installer") {
-            case true:
-                let exactLine = line
-                let indexOfDot = exactLine.firstIndex(of: ":")
-                let suffix = exactLine.suffix(from: indexOfDot!)
-                let readySuffix = String(suffix.dropFirst(2))
-                retval = (DevID: String(readySuffix.dropLast(1)), DevIDExists: true)
-            case false:
-                break
-            }
-        }
-        process.terminate()
-    } catch let error {
-        NSLog(error.localizedDescription)
-    }
-    return retval
-}
-
-public var devIDInstallerSignature: String? {
-    get {
-        let process = Process()
-        let pipe = Pipe()
-        var rv: String? = nil
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "security find-identity -p basic -v"]
-        process.standardOutput = pipe
-        do {
-            try process.run()
-            process.waitUntilExit()
-            let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            let parcing = shellResult.byLines
-            for line in parcing {
-                switch line.contains("Installer") {
-                case true:
-                    let exactLine = line
-                    let indexOfDot = exactLine.firstIndex(of: ":")
-                    let suffix = exactLine.suffix(from: indexOfDot!)
-                    let readySuffix = String(suffix.dropFirst(2))
-                    rv = String(readySuffix.dropLast(1))
-                case false:
-                    break
-                }
-            }
-            process.terminate()
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
-        return rv
-    }
-}
-
-/// Pops window with DIRECTORY ONLY selection
-/// - Returns: folder URL
-public func FolderPicker(_ defaultURL: URL) -> URL? {
-    let panel = NSOpenPanel()
-    let homeFolder = FileManager.default.homeDirectoryForCurrentUser
-    var retval : URL = URL(fileURLWithPath: "", isDirectory: true)
-    panel.allowsMultipleSelection = false
-    panel.canChooseDirectories = true
-    panel.canChooseFiles = false
-    panel.directoryURL = homeFolder
-    if panel.runModal() == .OK {
-        retval = panel.url!
-    } else {
-        retval = defaultURL
-    }
-    return retval
-}
-
-/// Localizes string key
-/// - Parameter str: string key to be localized (provide such key in Localizable.string file)
-/// - Returns: localized string
-public func StringLocalizer(_ str: String) -> String {
-    return NSLocalizedString(str, comment: "")
-}
-
-public func Quit(_ AppDelegate: NSApplicationDelegate) {
-    AppDelegate.applicationWillTerminate!(.init(name: NSApplication.willTerminateNotification, object: .none, userInfo: .none))
-    exit(EXIT_SUCCESS)
-}
-
 extension Task where Success == Never, Failure == Never {
     static func sleep(seconds: Double) async throws {
         let duration = UInt64(seconds * 1_000_000_000)
         try await Task.sleep(nanoseconds: duration)
-    }
-}
-
-func showInFinder(url: URL?) {
-    guard let url = url else { return }
-    
-    if url.isDirectory {
-        NSWorkspace.shared.selectFile(nil, inFileViewerRootedAtPath: url.path(percentEncoded: false))
-    } else {
-        NSWorkspace.shared.activateFileViewerSelecting([url])
     }
 }
 
