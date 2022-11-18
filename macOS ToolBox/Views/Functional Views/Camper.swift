@@ -16,9 +16,9 @@ struct CamperView: View {
     @State private var MainView = false
     @State private var isQuit = SettingsMonitor.isInMenuBar ? false : true
     @State private var passwordSaved = SettingsMonitor.passwordSaved
-    @State private var isReboot = true
+    @State private var isReboot = false
     @State private var wrongPasswordCount = 0
-    @State private var nextOnly = true
+    @State private var nextOnly = false
     @State private var isBC = BootCampStart.bcExists(SettingsMonitor.bootCampDiskLabel)
     @State private var virtsExist = Virtuals.anyExist
     @State private var diskLabelSet = SettingsMonitor.bootCampDiskLabel
@@ -31,41 +31,50 @@ struct CamperView: View {
         return pam.analyzePam_d()
     }
     
-    public func BootCampView() -> some View {
-        VStack{
-            GeometryReader { g in
-                if !passwordSaved {
-                    CustomViews.NoPasswordView(false, toggle: $dummy)
-                } else {
-                    VStack(alignment: .center){
-                        switch BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot {
-                        case true:
-                            HStack(alignment: .center){
-                                Text("bootcamp.title1").font(.largeTitle).fontWeight(.light).multilineTextAlignment(.center)
-                                Text(BootCampStart.getOSType(diskLabel: diskLabelSet).OSType).font(.largeTitle).fontWeight(.light).multilineTextAlignment(.center)
-                                Text("bootcamp.title2").font(.largeTitle).fontWeight(.light).multilineTextAlignment(.center)
-                            }
-                        case false:
-                            Text("WARNING.STRING").font(.largeTitle).fontWeight(.light).multilineTextAlignment(.center)
-                            Text("bootcamp.fail").font(.largeTitle).fontWeight(.light).multilineTextAlignment(.center)
+    public func BootCampView(proxy: CGSize) -> some View {
+        ZStack{
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundStyle(.ultraThinMaterial.shadow(.inner(radius: 15)))
+            CustomViews.ImageView(imageName: "window.vertical.closed")
+            HStack{
+                VStack{
+                    VStack{
+                        Text(diskLabelSet)
+                            .font(.largeTitle)
+                        Divider().padding(.all)
+                        Text(BootCampStart.getOSType(diskLabel: diskLabelSet).OSType)
+                            .font(.largeTitle)
+                            .foregroundColor(.secondary)
+                    }
+                }.frame(width: proxy.width / 2)
+                Spacer()
+                VStack{
+                    VStack{
+                        Button {
+                            isReboot.toggle()
+                        } label: {
+                            Text("rebootnow.button")
                         }
-                        HStack(alignment: .center){
-                            HStack{
-                                Spacer()
-                                Toggle("rebootnow.button", isOn: $isReboot).disabled(!BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot)
-                                Toggle("nextOnly.toggle", isOn: $nextOnly).disabled(!BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot)
-                                Spacer()
-                            }
-                        }.padding()
-                        Spacer()
-                        HStack{
-                            BootCampStart.setBootDevice(diskLabel: diskLabelSet, password: password, nextOnly: nextOnly, isReboot: isReboot).keyboardShortcut(.defaultAction)}.padding().disabled(!BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot)
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: isReboot ? "restart" : "externaldrive.badge.checkmark", alwaysShowTitle: false, width: g.size.width / 4, height: g.size.height / 10, color: .blue, backgroundShadow: true))
-                    }.padding()
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "restart.circle",
+                                                                enabled: isReboot,
+                                                                color: .red))
+                        Button {
+                            nextOnly.toggle()
+                        } label: {
+                            Text("nextOnly.toggle")
+                        }
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "repeat.1.circle",
+                                                                enabled: nextOnly,
+                                                                color: .blue))
+                    }
+                    BootCampStart.setBootDevice(diskLabel: diskLabelSet, password: password, nextOnly: nextOnly, isReboot: isReboot).keyboardShortcut(.defaultAction).padding().disabled(!BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot)
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph:
+                                                                    isReboot ? "restart" : "externaldrive.badge.checkmark",
+                                                                alwaysShowTitle: false,
+                                                                color: .blue,
+                                                                backgroundShadow: true))
                 }
             }
-        }.background {
-            CustomViews.ImageView(imageName: "window.vertical.closed")
         }
     }
     
@@ -78,29 +87,16 @@ struct CamperView: View {
     }
     
     private func mainTabView() -> some View {
-//        HStack(alignment: .center) {
-//            TabView {
-//                if isBC {
-//                    BootCampView().tabItem {
-//                        Text("bootcamp.button")
-//                    }
-//                }
-//                if virtsExist {
-//                    Virtuals.FileSearch().tabItem {
-//                        Text("VMs")
-//                    }
-//                }
-//            }.tabViewStyle(.automatic)
-//        }
-        CustomTabView(tabBarPosition: .top, content:
-            isBC && virtsExist ? [(tabText: StringLocalizer("bootcamp.button"), tabIconName: "window.ceiling", view: AnyView(BootCampView())),
-            (tabText: StringLocalizer("VMs"), tabIconName: "text.and.command.macwindow", view: AnyView(Virtuals.FileSearch()))] :
-                isBC && !virtsExist ? [(tabText: StringLocalizer("bootcamp.button"), tabIconName: "window.ceiling", view: AnyView(BootCampView()))] :
-                !isBC && virtsExist ? [(tabText: StringLocalizer("VMs"), tabIconName: "text.and.command.macwindow", view: AnyView(Virtuals.FileSearch()))] :
-                [(tabText: StringLocalizer("VMs"), tabIconName: "text.and.command.macwindow", view: AnyView(Virtuals.FileSearch()))]
-        )
+        VStack{
+            GeometryReader { proxy in
+                ScrollView(.vertical, showsIndicators: true) {
+                    Text(" ")
+                    BootCampView(proxy: proxy.size)
+                    Virtuals.FileSearch().onlyForEachView(width: proxy.size.width)
+                }
+            }
+        }
     }
-    
     private func MainViewWithoutPassword() -> some View {
         return VStack{
             if isBC || virtsExist {

@@ -48,8 +48,7 @@
 "parallels.button" = "Parallels Desktop";
 "noDisk.button" = "Can't find BootCamp volume";
 "novm.text" = "No Virtual Machine found";
-"setDevice1.button" = "Set volume";
-"setDevice2.button" = "bootable";
+"setDevice.button" = "Set volume";
 "nextOnly.toggle" = "Only next restart";
 "empty.warning" = "No Virtual Machine or Windows BootCamp volume found";
 "refresh.button" = "Refresh";

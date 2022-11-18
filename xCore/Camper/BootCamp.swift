@@ -125,7 +125,7 @@ public class BootCampStart: xCore {
             case false:
                 args = "-device /dev/\(trueNode) -mount /Volumes/EFI -setBoot"
             }
-            let label = StringLocalizer("setDevice1.button") + "\n" + diskLabel + "\n" + StringLocalizer("setDevice2.button")
+            let label = StringLocalizer("setDevice.button") + "\n" + diskLabel
             retval = AnyView(Button(action: {
                 let process = Process()
                 process.executableURL = URL(filePath: "/bin/bash")
@@ -142,7 +142,7 @@ public class BootCampStart: xCore {
                     reboot()
                 }
             }, label: {
-                Text(label).lineLimit(Int(4), reservesSpace: true)
+                Text(label).lineLimit(Int(2), reservesSpace: true)
             }))
         } else {
             retval = AnyView(Button("noDisk.button", action: {print("")}).disabled(true))

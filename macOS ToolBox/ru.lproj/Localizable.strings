@@ -35,7 +35,7 @@
 "bootcamp.title2" = "с выбранного раздела";
 "ok.button" = "OK";
 "cancel.button" = "Отмена";
-"rebootnow.button" = "Перезапустить";
+"rebootnow.button" = "Перезапуск";
 "parallels.title" = "Я могу запустить выбранную виртуальную машину";
 "parallels.picker" = "Виртуальные машины:";
 "launch.button" = "Запустить";
@@ -47,8 +47,7 @@
 "parallels.button" = "Parallels Desktop";
 "noDisk.button" = "Невозможно найти раздел BootCamp";
 "novm.text" = "Виртуальные машины не найдены";
-"setDevice1.button" = "Назначить";
-"setDevice2.button" = "диском для запуска";
+"setDevice.button" = "Запуск с";
 "nextOnly.toggle" = "Только следующий запуск";
 "empty.warning" = "Не было обнаружено виртуальных машин и разделов Windows BootCamp";
 "refresh.button" = "Обновить";

@@ -218,5 +218,9 @@ public class Virtuals: xCore {
                 }
             }
         }
+        
+        public func onlyForEachView(width: CGFloat) -> some View {
+            generateForEach(filesList: allFiles, width: width)
+        }
     }
 }
