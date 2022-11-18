@@ -8,11 +8,25 @@
 import Foundation
 import SwiftUI
 
+//MARK: - Virtuals
 public class Virtuals: xCore {
     public override init() {}
-    
+    //MARK: - Constants
+    private static let vmList = ["utm", "pvm", "vbox"]
+
+    //MARK: - Vars
     private static var alreadyCheck = false
-        
+    
+    private static var allFiles: [FileType] {
+        get {
+            var retval: [FileType] = []
+            for each in vmList {
+                retval += files(fileExtension: each)
+            }
+            return retval
+        }
+    }
+    
     public static var anyExist: Bool {
         get {
             if !alreadyCheck {
@@ -40,75 +54,74 @@ public class Virtuals: xCore {
                         return false
                     }
                 }
-                alreadyCheck = check(ext: "utm") || check(ext: "pvm") || check(ext: "vbox")
-                return alreadyCheck
+                var retval = false
+                for each in vmList {
+                    if check(ext: each) {
+                        alreadyCheck = true
+                        retval = true
+                        break
+                    } else {
+                        alreadyCheck = false
+                        retval = false
+                        break
+                    }
+                }
+                return retval
             } else {
                 return alreadyCheck
             }
         }
     }
-    
-    public struct FileSearch: View {
-        public init () {}
-        //MARK: - Vars
-        private var allFiles: [FileType] {
-            get {
-                let u = files(fileExtension: "utm")
-                let p = files(fileExtension: "pvm")
-                let v = files(fileExtension: "vbox")
-                return u + p + v
-            }
-        }
-        // MARK: - Funcs
-        private func files(fileExtension: String) -> [FileType] {
-            let process = Process()
-            let pipe = Pipe()
-            process.standardOutput = pipe
-            process.executableURL = URL(filePath: "/bin/bash")
-            process.arguments = ["-c", "mdfind .\(fileExtension) | grep .\(fileExtension)"]
-            
-            func getDates(url: URL) -> (creation: String, access: String) {
-                do {
-                    let access = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? Date()
-                    let creation = try url.resourceValues(forKeys: [.creationDateKey]).creationDate ?? Date()
-                    let retval = (creation: creation.formatted(), access: access.formatted())
-                    return retval
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                    return ("--.--.----", "--.--.----")
-                }
-            }
-            
+    //MARK: - Funcs
+    private static func files(fileExtension: String) -> [FileType] {
+        let process = Process()
+        let pipe = Pipe()
+        process.standardOutput = pipe
+        process.executableURL = URL(filePath: "/bin/bash")
+        process.arguments = ["-c", "mdfind .\(fileExtension) | grep .\(fileExtension)"]
+        
+        func getDates(url: URL) -> (creation: String, access: String) {
             do {
-                var retval: [FileType] = []
-                try process.run()
-                //                while (process.isRunning) {
-                //                    process.waitUntilExit()
-                //                }
-                if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                    for line in out.byLines {
-                        let url = URL(filePath: String(line))
-                        let components = url.pathComponents
-                        let namePrep = components.last!
-                        let name = String(namePrep.split(separator: ".")[0])
-                        let ext = String(namePrep.split(separator: ".").last ?? "")
-                        let dates = getDates(url: url)
-                        let creationDate = dates.creation
-                        let lastAccessDate = dates.access
-                        if ext == fileExtension {
-                            retval.append(.init(name: name, path: url, fileExtension: fileExtension, creationDate: creationDate, lastAccessDate: lastAccessDate))
-                        }
-                    }
-                    return retval
-                } else {
-                    return []
-                }
+                let access = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? Date()
+                let creation = try url.resourceValues(forKeys: [.creationDateKey]).creationDate ?? Date()
+                let retval = (creation: creation.formatted(), access: access.formatted())
+                return retval
             } catch let error {
                 NSLog(error.localizedDescription)
-                return []
+                return ("--.--.----", "--.--.----")
             }
         }
         
+        do {
+            var retval: [FileType] = []
+            try process.run()
+            if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
+                for line in out.byLines {
+                    let url = URL(filePath: String(line))
+                    let components = url.pathComponents
+                    let namePrep = components.last!
+                    let name = String(namePrep.split(separator: ".")[0])
+                    let ext = String(namePrep.split(separator: ".").last ?? "")
+                    let dates = getDates(url: url)
+                    let creationDate = dates.creation
+                    let lastAccessDate = dates.access
+                    if ext == fileExtension {
+                        retval.append(.init(name: name, path: url, fileExtension: fileExtension, creationDate: creationDate, lastAccessDate: lastAccessDate))
+                    }
+                }
+                return retval
+            } else {
+                return []
+            }
+        } catch let error {
+            NSLog(error.localizedDescription)
+            return []
+        }
+    }
+    //MARK: - Main Struct
+    public struct FileSearch: View {
+        public init () {}
+        // MARK: - Funcs
         private func generateForEach(filesList: [FileType], width: CGFloat) -> some View {
             return ForEach(filesList.sorted(by: <)) { file in
                 ZStack{
