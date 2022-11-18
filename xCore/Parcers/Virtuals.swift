@@ -17,9 +17,9 @@ public class Virtuals: xCore {
     //MARK: - Vars
     private static var alreadyCheck = false
     
-    private static var allFiles: [FileType] {
+    private static var allFiles: [VMPropertiesList] {
         get {
-            var retval: [FileType] = []
+            var retval: [VMPropertiesList] = []
             for each in vmList {
                 retval += files(fileExtension: each)
             }
@@ -73,7 +73,7 @@ public class Virtuals: xCore {
         }
     }
     //MARK: - Funcs
-    private static func files(fileExtension: String) -> [FileType] {
+    private static func files(fileExtension: String) -> [VMPropertiesList] {
         let process = Process()
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -93,7 +93,7 @@ public class Virtuals: xCore {
         }
         
         do {
-            var retval: [FileType] = []
+            var retval: [VMPropertiesList] = []
             try process.run()
             if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
                 for line in out.byLines {
@@ -122,7 +122,9 @@ public class Virtuals: xCore {
     public struct FileSearch: View {
         public init () {}
         // MARK: - Funcs
-        private func generateForEach(filesList: [FileType], width: CGFloat) -> some View {
+        let shadowOffset: CGFloat = 3
+        let shadowRadius: CGFloat = 5
+        private func generateForEach(filesList: [VMPropertiesList], width: CGFloat) -> some View {
             return ForEach(filesList.sorted(by: <)) { file in
                 ZStack{
                     ZStack{
@@ -155,47 +157,52 @@ public class Virtuals: xCore {
                             Text(file.name)
                                 .font(.largeTitle)
                                 .fontWeight(.black)
+                                .foregroundStyle(.primary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                 .padding(.all)
                             Spacer()
-                            Button {
-                                NSWorkspace().open(file.path)
-                            } label: {
-                                Text("launch.button").foregroundColor(.primary)
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt",
-                                                                    alwaysShowTitle: false,
-                                                                    color: file.fileExtension == "utm" ? .blue : .red,
-                                                                    glow: true))
+                                Button {
+                                    NSWorkspace().open(file.path)
+                                } label: {
+                                    Text("launch.button").foregroundColor(.primary)
+                                }
+                                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt",
+                                                                        alwaysShowTitle: false,
+                                                                        color: file.fileExtension == "utm" ? .blue : .red,
+                                                                        glow: true))
                         }
                         HStack{
                             VStack(alignment: .trailing){
                                 HStack{
                                     Text("creationDate")
+                                        .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     HStack{
                                         Divider()
                                     }.frame(height: 10)
                                     Text(file.creationDate)
+                                        .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()
                                 }
                                 HStack{
                                     Text("lastAccessDate")
+                                        .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     HStack{
                                         Divider()
                                     }.frame(height: 10)
                                     Text(file.lastAccessDate)
+                                        .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()
                                 }
                             }.padding(.all)
                             Spacer()
-                            Button {
-                                NSWorkspace.shared.activateFileViewerSelecting([file.path])
-                            } label: {
-                                Text("finder.text").foregroundColor(.primary)
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "magnifyingglass",
-                                                                    alwaysShowTitle: false,
-                                                                    color: .secondary,
-                                                                    glow: true))
+                                Button {
+                                    NSWorkspace.shared.activateFileViewerSelecting([file.path])
+                                } label: {
+                                    Text("finder.text").foregroundColor(.primary)
+                                }
+                                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "magnifyingglass",
+                                                                        alwaysShowTitle: false,
+                                                                        color: .secondary,
+                                                                        glow: true))
                         }
                     }.padding(.all)
                 }

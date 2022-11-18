@@ -232,14 +232,14 @@ public typealias platformData = (model: String,
 public typealias file = (name: String, path: URL, fileExtension: String)
 
 // MARK: - Structs
-public struct FileType: Identifiable, Comparable {
-    public static func < (lhs: FileType, rhs: FileType) -> Bool {
+public struct VMPropertiesList: Identifiable, Comparable {
+    public static func < (lhs: VMPropertiesList, rhs: VMPropertiesList) -> Bool {
         lhs.name < rhs.name
     }
-    public static func > (lhs: FileType, rhs: FileType) -> Bool {
+    public static func > (lhs: VMPropertiesList, rhs: VMPropertiesList) -> Bool {
         lhs.name < rhs.name
     }
-    public static func == (lhs: FileType, rhs: FileType) -> Bool {
+    public static func == (lhs: VMPropertiesList, rhs: VMPropertiesList) -> Bool {
         lhs.name < rhs.name
     }
 
