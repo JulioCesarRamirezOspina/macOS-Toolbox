@@ -162,7 +162,10 @@ public class Virtuals: xCore {
                             } label: {
                                 Text("launch.button").foregroundColor(.primary)
                             }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true,color: file.fileExtension == "utm" ? .blue : .red, glow: true))
+                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt",
+                                                                    alwaysShowTitle: false,
+                                                                    color: file.fileExtension == "utm" ? .blue : .red,
+                                                                    glow: true))
                         }
                         HStack{
                             VStack(alignment: .trailing){
@@ -189,7 +192,10 @@ public class Virtuals: xCore {
                             } label: {
                                 Text("finder.text").foregroundColor(.primary)
                             }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true,color: .secondary, glow: true))
+                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "magnifyingglass",
+                                                                    alwaysShowTitle: false,
+                                                                    color: .secondary,
+                                                                    glow: true))
                         }
                     }.padding(.all)
                 }

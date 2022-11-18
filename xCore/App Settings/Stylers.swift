@@ -298,6 +298,7 @@ public class Stylers: xCore {
                                 }
                                 .shadow(radius: 2)
                                 .font(.custom("San Francisco", size: 30))
+                                .fontWeight(.light)
                                 .foregroundColor(disabled ? .gray : .primary)
                                 .padding(.all)
                             }
