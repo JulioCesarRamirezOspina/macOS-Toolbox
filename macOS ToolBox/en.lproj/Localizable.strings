@@ -108,7 +108,7 @@
 "remove.password" = "Remove password";
 "noPassword.string" = "No password provided. Go to settings and save your password.";
 "settings.string" = "Settings";
-"camperView.string" = "BootCamp, VMs, Dual Boot";
+"camperView.string" = "BootCamp & VMs";
 "torView.string" = "TOR Virtual Private Network Proxy";
 "alreadyConnected.string" = "The connection has already been established.";
 "settingsView.string" = "Here's couple application settings.\nHere'll be more in time as app functions being added...";

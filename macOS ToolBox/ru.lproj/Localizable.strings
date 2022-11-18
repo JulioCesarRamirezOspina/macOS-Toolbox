@@ -107,7 +107,7 @@
 "remove.password" = "Удалить пароль";
 "noPassword.string" = "Пароль не введён. Зайдите в настройки и сохраните пароль.";
 "settings.string" = "Настройки";
-"camperView.string" = "BootCamp, вирты, Dual Boot";
+"camperView.string" = "BootCamp и виртуальные машины";
 "torView.string" = "TOR VPN SOCKS ПРОКСИ";
 "settingsView.string" = "Тут есть пара-тройка настроек приложения. Со временем их будет больше, как и функционала у приложения...";
 "alreadyConnected.string" = "Соединение уже было установлено.";
