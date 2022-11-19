@@ -335,7 +335,6 @@
 				9ABFD1142908BC66003D7575 /* System Status */,
 				9ABFD1132908BC66003D7575 /* Addons */,
 				9ABFD1352908BC67003D7575 /* App Settings */,
-				9ABFD12B2908BC67003D7575 /* Camper */,
 				9ABFD1222908BC66003D7575 /* Documentation.docc */,
 				9ABFD1212908BC66003D7575 /* Header.h */,
 				9ABFD12A2908BC66003D7575 /* INIT.swift */,
@@ -385,6 +384,7 @@
 			isa = PBXGroup;
 			children = (
 				9ABFD1242908BC66003D7575 /* Apple Script.swift */,
+				9ABFD12E2908BC67003D7575 /* BootCamp.swift */,
 				9ABFD1252908BC66003D7575 /* Memory.swift */,
 				9ABFD1262908BC66003D7575 /* Shell.swift */,
 				9ABFD1272908BC66003D7575 /* macOS SubSystem.swift */,
@@ -393,14 +393,6 @@
 				9ABFD1292908BC66003D7575 /* Packer.swift */,
 			);
 			path = Parcers;
-			sourceTree = "<group>";
-		};
-		9ABFD12B2908BC67003D7575 /* Camper */ = {
-			isa = PBXGroup;
-			children = (
-				9ABFD12E2908BC67003D7575 /* BootCamp.swift */,
-			);
-			path = Camper;
 			sourceTree = "<group>";
 		};
 		9ABFD12F2908BC67003D7575 /* System Settings */ = {

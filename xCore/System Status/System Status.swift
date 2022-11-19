@@ -140,7 +140,12 @@ public class SystemStatus: xCore {
         let volumeData = driveInfo()
         var capacity: Double = 0
         for each in volumeData {
-            capacity += each.capacity.0
+            print(each)
+            if each.capacity.1 == .gigabyte {
+                capacity += each.capacity.0 / 1000
+            } else {
+                capacity += each.capacity.0
+            }
         }
         let converted = convertValueRounded(capacity , volumeData.first!.capacity.1)
         var type = ""

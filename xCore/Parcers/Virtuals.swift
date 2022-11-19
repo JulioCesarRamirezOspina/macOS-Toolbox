@@ -31,7 +31,6 @@ public class Virtuals: xCore {
         get {
             if !alreadyCheck {
                 func check(ext: String) -> Bool {
-                    print("RAN")
                     let process = Process()
                     let pipe = Pipe()
                     let script = "mdfind .\(ext) | grep .\(ext)"
