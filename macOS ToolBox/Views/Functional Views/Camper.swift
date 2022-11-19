@@ -38,7 +38,7 @@ struct CamperView: View {
             if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .windows {
                 CustomViews.ImageView(imageName: "window.vertical.closed")
             } else if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .linux {
-                CustomViews.ImageView(imageName: "window.vertical.closed")
+                CustomViews.LinuxLogo()
             } else if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .macos ||
                         BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .macosinstaller {
                 CustomViews.ImageView(imageName: "x.circle.fill")

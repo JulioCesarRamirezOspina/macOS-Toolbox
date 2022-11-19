@@ -41,6 +41,61 @@ public class CustomViews: xCore {
         }
     }
     
+    public struct LinuxLogo: View {
+        public init(){}
+        public var body: some View {
+            ZStack{
+                GeometryReader { geometry in
+                    Path { path in
+                        let width = min(geometry.size.width, geometry.size.height)
+                        let height = width * 0.75
+                        let spacing = width * 0.030
+                        let middle = width * 0.5
+                        let topWidth = width * 0.226
+                        let topHeight = height * 0.488
+
+                        path.addLines([
+                            CGPoint(x: middle, y: spacing),
+                            CGPoint(x: middle - topWidth, y: topHeight - spacing),
+                            CGPoint(x: middle, y: topHeight / 2 + spacing),
+                            CGPoint(x: middle + topWidth, y: topHeight - spacing),
+                            CGPoint(x: middle, y: spacing)
+                        ])
+                        
+                        path.move(to: CGPoint(x: middle, y: topHeight / 2 + spacing * 3))
+                        path.addLines([
+                            CGPoint(x: middle - topWidth, y: topHeight + spacing),
+                            CGPoint(x: spacing, y: height - spacing),
+                            CGPoint(x: width - spacing, y: height - spacing),
+                            CGPoint(x: middle + topWidth, y: topHeight + spacing),
+                            CGPoint(x: middle, y: topHeight / 2 + spacing * 3)
+                        ])
+                    }.padding(.top)
+                }.frame(width: 100, height: 100, alignment: .center).foregroundStyle(.shadow(.inner(radius: 5)))
+
+
+                HStack{
+                    Ellipse()
+                        .frame(width: 10, height: 20, alignment: .center)
+                    Ellipse()
+                        .frame(width: 10, height: 20, alignment: .center)
+                }
+                .foregroundStyle(.primary.shadow(.inner(radius: 2)))
+                .padding(.top)
+            }
+            .padding(.all)
+            .background(content: {
+                RoundedRectangle(cornerRadius: 15)
+                    .inset(by: 10)
+                    .stroke(lineWidth: 5)
+            })
+            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
+            .opacity(0.5).blur(radius: 2)
+            .shadow(radius: 15)
+            .padding(.all)
+        }
+    }
+    
     /// Universal image view by it's system name
     public struct ImageView: View {
         public init(
