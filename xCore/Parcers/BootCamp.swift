@@ -174,28 +174,28 @@ public class BootCampStart: xCore {
     /// VERY experimental func, gets OS type
     /// - Parameter diskLabel: Disk name
     /// - Returns: "Windows", "Linux" or "macOS"
-    public class func getOSType(diskLabel: String) -> (OSType: String, canBoot: Bool) {
+    public class func getOSType(diskLabel: String) -> (OSType: String, OSTypeTechnical: bcType, canBoot: Bool) {
         let installerNames = ["Install macOS Monterey.app", "Install macOS Mojave.app", "Install macOS Big Sur.app","Install macOS Catalina.app","Install macOS High Sierra.app","Install OS X El Capitan.app"]
         let windows = "/Volumes/\(diskLabel)/Windows/System32"
         let macOS = "/Volumes/\(diskLabel)/System/Library/Kernels/"
         var isDirectory = ObjCBool(true)
         var isFile = ObjCBool(false)
-        var retval = ("", false)
+        var retval: (String, bcType, Bool) = ("", .otherUnbootable, false)
         for each in installerNames {
             if FileManager.default.fileExists(atPath: windows, isDirectory: &isDirectory) {
-                retval = ("Windows", true)
+                retval = ("Windows", .windows, true)
                 break
             } else if FileManager.default.fileExists(atPath: macOS, isDirectory: &isDirectory) {
-                retval = ("macOS", true)
+                retval = ("macOS", .macos, true)
                 break
             } else if FileManager.default.fileExists(atPath: "/Volumes/\(diskLabel)/\(each)", isDirectory: &isFile){
-                retval = ("macOS Installer", true)
+                retval = ("macOS Installer", .macosinstaller, true)
                 break
             } else if FileManager.default.fileExists(atPath: "/Volumes/\(diskLabel)/Finish Installation.app"){
-                retval = ("Linux", true)
+                retval = ("Linux", .linux, true)
                 break
             } else {
-                retval = ("\(localizer("undefined.string"))", false)
+                retval = ("\(localizer("undefined.string"))", .otherUnbootable, false)
                 break
             }
         }
@@ -203,4 +203,12 @@ public class BootCampStart: xCore {
     }
     //MARK: - Initizlizer
     public override init() {}
+}
+
+public enum bcType {
+    case windows
+    case linux
+    case macos
+    case macosinstaller
+    case otherUnbootable
 }

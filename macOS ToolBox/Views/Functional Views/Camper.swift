@@ -35,7 +35,14 @@ struct CamperView: View {
         ZStack{
             RoundedRectangle(cornerRadius: 15)
                 .foregroundStyle(.ultraThinMaterial.shadow(.inner(radius: 15)))
-            CustomViews.ImageView(imageName: "window.vertical.closed")
+            if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .windows {
+                CustomViews.ImageView(imageName: "window.vertical.closed")
+            } else if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .linux {
+                CustomViews.ImageView(imageName: "window.vertical.closed")
+            } else if BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .macos ||
+                        BootCampStart.getOSType(diskLabel: diskLabelSet).OSTypeTechnical == .macosinstaller {
+                CustomViews.ImageView(imageName: "x.circle.fill")
+            }
             HStack{
                 VStack{
                     VStack{
