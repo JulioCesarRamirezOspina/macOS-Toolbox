@@ -91,7 +91,9 @@ struct CamperView: View {
             GeometryReader { proxy in
                 ScrollView(.vertical, showsIndicators: true) {
                     Text(" ")
-                    BootCampView(proxy: proxy.size)
+                    if isBC {
+                        BootCampView(proxy: proxy.size)
+                    }
                     Virtuals.FileSearch().onlyForEachView(width: proxy.size.width)
                 }
             }
