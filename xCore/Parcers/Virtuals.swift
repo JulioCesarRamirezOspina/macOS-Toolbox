@@ -19,7 +19,7 @@ public class Virtuals: xCore {
     
     private static var allFiles: [VMPropertiesList] {
         get {
-            var retval: [VMPropertiesList] = []
+            var retval: [VMPropertiesList] = Array()
             for each in vmList {
                 retval += files(fileExtension: each)
             }
@@ -31,26 +31,10 @@ public class Virtuals: xCore {
         get {
             if !alreadyCheck {
                 func check(ext: String) -> Bool {
-                    let process = Process()
-                    let pipe = Pipe()
-                    let script = "mdfind .\(ext) | grep .\(ext)"
-                    process.standardOutput = pipe
-                    process.executableURL = URL(filePath: "/bin/bash")
-                    process.arguments = ["-c", script]
-                    do {
-                        try process.run()
-                        if let out = try String(data: pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                            if out.byLines.isEmpty {
-                                return false
-                            } else {
-                                return true
-                            }
-                        } else {
-                            return false
-                        }
-                    } catch let error {
-                        NSLog(error.localizedDescription)
+                    if files(fileExtension: ext).isEmpty {
                         return false
+                    } else {
+                        return true
                     }
                 }
                 var retval = false
