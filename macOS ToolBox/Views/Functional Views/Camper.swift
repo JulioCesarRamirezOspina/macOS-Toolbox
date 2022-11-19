@@ -13,12 +13,9 @@ import xCore
 struct CamperView: View {
     @Environment(\.locale) var locale
     @State private var password = SettingsMonitor.password
-    @State private var MainView = false
-    @State private var isQuit = SettingsMonitor.isInMenuBar ? false : true
     @State private var passwordSaved = SettingsMonitor.passwordSaved
-    @State private var isReboot = false
-    @State private var wrongPasswordCount = 0
-    @State private var nextOnly = false
+    @State private var isReboot = SettingsMonitor.bootCampWillRestart
+    @State private var nextOnly = SettingsMonitor.bootCampIsNextOnly
     @State private var isBC = BootCampStart.bcExists(SettingsMonitor.bootCampDiskLabel)
     @State private var virtsExist = Virtuals.anyExist
     @State private var diskLabelSet = SettingsMonitor.bootCampDiskLabel
@@ -136,11 +133,19 @@ struct CamperView: View {
                 } catch _ {}
                 _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
                 isBC = BootCampStart.bcExists(diskLabelSet)
+                isReboot = SettingsMonitor.bootCampWillRestart
+                nextOnly = SettingsMonitor.bootCampIsNextOnly
                 password = SettingsMonitor.password
                 passwordSaved = SettingsMonitor.passwordSaved
                 diskLabelSet = SettingsMonitor.bootCampDiskLabel
                 virtsExist = Virtuals.anyExist
             }while (isRun)
+        }
+        .onChange(of: isReboot) { newValue in
+            SettingsMonitor.bootCampWillRestart = newValue
+        }
+        .onChange(of: nextOnly) { newValue in
+            SettingsMonitor.bootCampIsNextOnly = newValue
         }
         .onDisappear {
             isRun = false

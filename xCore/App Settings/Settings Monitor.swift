@@ -21,6 +21,25 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var bootCampIsNextOnly: Bool {
+        get {
+            AppSettings.load(key: "bootCampIsNextOnly") ?? false
+        }
+        set {
+            AppSettings.set(key: "bootCampIsNextOnly", value: newValue)
+        }
+    }
+    
+    public static var bootCampWillRestart: Bool {
+        get {
+            AppSettings.load(key: "bootCampWillRestart") ?? false
+        }
+        set {
+            AppSettings.set(key: "bootCampWillRestart", value: newValue)
+        }
+    }
+
+    
     public static var memoryClensingInProgress: Bool {
         get {
             AppSettings.load(key: "clensingInProgress") ?? false
