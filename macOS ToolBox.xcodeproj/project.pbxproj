@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		9A06C1E82926C8760064419C /* Virtuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A06C1E72926C8760064419C /* Virtuals.swift */; };
-		9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A2F4EC92908BE5600084B2B /* Localizable.strings */; };
+		9A28A069292D83ED001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
+		9A28A06D292D8538001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
 		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
@@ -62,7 +63,6 @@
 		9ABFD1552908BC67003D7575 /* Launchpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1312908BC67003D7575 /* Launchpad.swift */; };
 		9ABFD1562908BC67003D7575 /* Dock Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1322908BC67003D7575 /* Dock Manager.swift */; };
 		9ABFD1572908BC67003D7575 /* Sleep Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1332908BC67003D7575 /* Sleep Manager.swift */; };
-		9ABFD1582908BC67003D7575 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD1342908BC67003D7575 /* Localizable.strings */; };
 		9ABFD1592908BC67003D7575 /* Stylers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1362908BC67003D7575 /* Stylers.swift */; };
 		9ABFD15A2908BC67003D7575 /* Settings Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1372908BC67003D7575 /* Settings Monitor.swift */; };
 		9ABFD15B2908BC67003D7575 /* App Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1382908BC67003D7575 /* App Theme.swift */; };
@@ -122,8 +122,8 @@
 
 /* Begin PBXFileReference section */
 		9A06C1E72926C8760064419C /* Virtuals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtuals.swift; sourceTree = "<group>"; };
-		9A2F4EC82908BE5600084B2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		9A2F4ECA2908BE8B00084B2B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A28A06A292D83ED001E2083 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A28A06C292D83F1001E2083 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A462A162912EA8F00D1723D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A5E706B290C1887000F479A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift"; sourceTree = "<group>"; };
@@ -181,7 +181,6 @@
 		9ABFD1312908BC67003D7575 /* Launchpad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.swift; sourceTree = "<group>"; };
 		9ABFD1322908BC67003D7575 /* Dock Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dock Manager.swift"; sourceTree = "<group>"; };
 		9ABFD1332908BC67003D7575 /* Sleep Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sleep Manager.swift"; sourceTree = "<group>"; };
-		9ABFD1342908BC67003D7575 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		9ABFD1362908BC67003D7575 /* Stylers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylers.swift; sourceTree = "<group>"; };
 		9ABFD1372908BC67003D7575 /* Settings Monitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings Monitor.swift"; sourceTree = "<group>"; };
 		9ABFD1382908BC67003D7575 /* App Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App Theme.swift"; sourceTree = "<group>"; };
@@ -261,7 +260,6 @@
 				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9ABFD0DF2908BC02003D7575 /* Views */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
-				9A2F4EC92908BE5600084B2B /* Localizable.strings */,
 				9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */,
 				9ABFD02A2908BA2D003D7575 /* Preview Content */,
 			);
@@ -338,7 +336,7 @@
 				9ABFD1222908BC66003D7575 /* Documentation.docc */,
 				9ABFD1212908BC66003D7575 /* Header.h */,
 				9ABFD12A2908BC66003D7575 /* INIT.swift */,
-				9ABFD1342908BC67003D7575 /* Localizable.strings */,
+				9A28A06B292D83ED001E2083 /* Localizable.strings */,
 				9ABFD13B2908BC67003D7575 /* Networking */,
 				9ABFD1232908BC66003D7575 /* Parcers */,
 				9ABFD12F2908BC67003D7575 /* System Settings */,
@@ -585,8 +583,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A28A06D292D8538001E2083 /* Localizable.strings in Resources */,
 				9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */,
-				9A2F4EC72908BE5600084B2B /* Localizable.strings in Resources */,
 				9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */,
 				9AE1B85B2912CE5200444E6A /* InMenuBar.storyboard in Resources */,
 			);
@@ -596,7 +594,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ABFD1582908BC67003D7575 /* Localizable.strings in Resources */,
+				9A28A069292D83ED001E2083 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -727,11 +725,11 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		9A2F4EC92908BE5600084B2B /* Localizable.strings */ = {
+		9A28A06B292D83ED001E2083 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9A2F4EC82908BE5600084B2B /* en */,
-				9A2F4ECA2908BE8B00084B2B /* ru */,
+				9A28A06A292D83ED001E2083 /* en */,
+				9A28A06C292D83F1001E2083 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

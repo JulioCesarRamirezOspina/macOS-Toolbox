@@ -48,8 +48,7 @@
 "parallels.button" = "Parallels Desktop";
 "noDisk.button" = "Can't find BootCamp volume";
 "novm.text" = "No Virtual Machine found";
-"setDevice1.button" = "Set volume";
-"setDevice2.button" = "bootable";
+"setDevice.button" = "Set volume";
 "nextOnly.toggle" = "Only next restart";
 "empty.warning" = "No Virtual Machine or Windows BootCamp volume found";
 "refresh.button" = "Refresh";
@@ -82,6 +81,7 @@
 "password.placeholder" = "Password";
 "ok.button" = "OK";
 "cancel.button" = "Cancel";
+
 "enroll.button" = "Enroll";
 "unenroll.button" = "Unenroll";
 "main.title" = "I'll help you to get BETA";
@@ -90,7 +90,12 @@
 "seed.public" = "Public Beta";
 "seed.dev" = "Developer Beta";
 "seed.none" = "Unenrolled";
+"channel.dev" = "Developer seed channel";
+"channel.public" = "Public seed channel";
+"channel.none" = "Not in beta channel";
 "seed.current" = "Current channel is:";
+"osIsBeta.string" = "macOS Beta is installed";
+
 "checkupdates.toggle" = "Check for updates";
 "exit.toggle" = "Exit when done";
 "app.name" = "macOS Beta Testing";
@@ -102,13 +107,14 @@
 "remove.password" = "Remove password";
 "noPassword.string" = "No password provided. Go to settings and save your password.";
 "settings.string" = "Settings";
-"camperView.string" = "BootCamp, VMs, Dual Boot";
+"camperView.string" = "BootCamp & VMs";
 "torView.string" = "TOR Virtual Private Network Proxy";
 "alreadyConnected.string" = "The connection has already been established.";
 "settingsView.string" = "Here's couple application settings.\nHere'll be more in time as app functions being added...";
 
 "tid.title" = "TouchID systemwide";
 "done.title" = "TouchID activated.";
+"noTouchIDInstalled.string" = "It appears that TouchID is not installed on your Mac.";
 "done.disabled.title" = "TouchID deactivated.";
 "status.title" = "Status:";
 "switch.button" = "Switch";
@@ -123,7 +129,7 @@
 
 "settingsOverview.string" = "Settings Overview";
 "parallelsDir.string" = "Parallels VMs directory: ";
-"utmDir.String" = "UTM VMs directory: ";
+"utmDir.string" = "UTM VMs directory: ";
 "passwordSavedTrue.string" = "Password is saved";
 "passwordSavedFalse.string" = "Password is not saved";
 "passwordState.string" = "Pasword status:";
@@ -133,6 +139,9 @@
 "secondaryAnimationDuration.string" = "Other screens animation duration";
 "navigationAnimationDuration.string" = "Navigation panels animation duration";
 "anim.settings" = "Animation Settings";
+"batteryAnimation.string" = "Animate battery on main screen";
+"showSerialNumber.string" = "Don't blur Mac's Serial Number";
+"isInMenuBar.string" = "Launch in Menu Bar";
 
 "ultrafast.string" = "Ultra fast";
 "fast.string"= "Fast";
@@ -142,7 +151,7 @@
 
 "defaults.string" = "Defaults";
 "WARNING.STRING" = "CAUTION";
-"warning.details.string" = "These three buttons will drop YOUR settings of this app to default values. For changes to take effect MultiTool will restart";
+"warning.details.string" = "This button WILL erase all of this app's settings. Proceed with caution";
 "parallels.default" = "Reset Parallels directory to default folder in home folder";
 "all.default" = "ERASE ALL";
 "UTM.default" = "Reset UTM directory to default folder in containers directory";
@@ -150,7 +159,7 @@
 "disable.string" = "Disable";
 
 "clear.button" = "Clear";
-"userCaches.string" = "User cache";
+"userCaches.string" = "Cached";
 
 "packer.title" = "I'll pack selected application to .pkg installer for you";
 "pwdTitle.text" = "Enter password:";
@@ -180,12 +189,14 @@
 "hibernationWithPoweroff.string" = "Hibernation enabled with power off";
 "undefined.string" = "Undefined";
 "clicktoquit.string" = "Click to quit app\n or hit \"esc\" key";
+"clicktohide.string" = "⎋ or ⬉ to hide\nhold to quit";
 "ramStatus.string" = "RAM Status";
 "diskLabel.string" = "Disk name";
 "createDisk.string" = "Create disk";
 "gig.string" = "GB";
 "tib.string" = "TB";
 "mib.string" = "MB";
+"capacity.string" = "capacity";
 "ramDiskVolume.string" = "RAM drive volume";
 "clearRAM.string" = "Clear RAM";
 "noRAM.string" = "No free RAM to create RAM drive is available.\nTry closing apps and freeing RAM\nwith button in the right-bottom corner.";
@@ -196,6 +207,7 @@
 "drivePlaceholder.string" = "RAM Drive";
 "eject.button" = "Eject all";
 "ejectSingle.button" = "Eject drive";
+"eject.reason" = "eject drive";
 "incorrectPassword.string" = "Wrong password";
 "autofill.string" = "Autofill";
 "currentDeveloperIDInstaller.string" = "Current Developer ID Installer";
@@ -255,6 +267,8 @@
 "batt.comp" = "Charged";
 "batt.onAC" = "AC Attached";
 "batt.fin" = "Finishing Charge";
+"batt.enableLowPowerMode" = "Enable low power mode";
+"batt.disableLowPowerMode" = "Disable low power mode";
 
 "clensing.string" = "RAM clensing in progress";
 "powerSource.string" = "Power source:";
@@ -268,12 +282,12 @@
 "totalRAM.string" = "Total RAM";
 "cachedFiles.string" = "Cached files";
 "ramStatus.string" = "RAM Status";
+"clear_RAM.string" = "Memory clensing process";
 
-"memPressure" = "Memory pressure:";
-"memPressure.nominal" = "nominal";
-"memPressure.warning" = "high";
-"memPressure.critical" = "critical";
-"memPressure.undefined" = "undefined";
+"memPressure.nominal" = "Memory pressure: nominal";
+"memPressure.warning" = "Memory pressure: high";
+"memPressure.critical" = "Memory pressure: critical";
+"memPressure.undefined" = "Memory pressure: undefined";
 
 "colorSchemeSwitch.string" = "Switch";
 "colorSchemeDefault.string" = "macOS color scheme";
@@ -294,8 +308,47 @@
 
 "sysUpdateAvailable.string" = "macOS Update Available";
 "currentOS.string" = "Current Build";
+"bn.string" = "Build number";
 "sysUpdateInProgress.string" = "Checking for macOS update";
 "sysUpdateNotAvailable.string" = "No new macOS update available";
 "macOSUpdate.string" = "macOS Update";
-"sysUpdateNoInternet.string" = "No Internet connection. Check your internet connecttion and try again.";
+"sysUpdateNoInternet.string" = "Unable to connect to Apple Update Server. Check your connecttion and try again.";
 "sysUpdateCheck.string" = "Check for macOS update";
+"otherUpdate.string" = "Additional software update available";
+
+"cachesClear.reason" = "clear user caches";
+"NODISKACCESS" = "To clear caches app needs to have Full Disk Access.";
+"openDiskAccessPrefPane.string" = "Open Disk Access preferences";
+"justForCaches.string" = "Permission is needed to clear only caches. No other data will be accessed.";
+
+"cpuLoad.string" = "CPU Load";
+"coresCount.string" = "Cores";
+"user.string" = "User";
+"system.string" = "System";
+"load.string" = "Load";
+
+"chip.string" = "Chip";
+"memory.string" = "Memory";
+"macOS.string" = "macOS";
+"graphics.string" = "Graphics";
+"bootDrive.string" = "Boot Drive";
+"serial.string" = "Srial Number";
+"inch.string" = "-inch";
+"year.string" = " year";
+
+"more.string" = "More";
+
+"arm.string" = "Apple Silicon";
+"intel.string" = "Intel";
+"rosetta.string" = "Apple Silicon (Rosetta 2)";
+
+"therm.nominal" = "Thermal Pressure: nominal";
+"therm.fair" = "Thermal Pressure: fair";
+"therm.serious" = "Thermal Pressure: serious";
+"therm.critical" = "Thermal Pressure: overheating";
+"therm.unknown" = "Thermal Pressure: unknown";
+
+"autoLaunch.string" = "Launch on login";
+
+"creationDate" = "Creation date";
+"lastAccessDate" = "Last access date";
