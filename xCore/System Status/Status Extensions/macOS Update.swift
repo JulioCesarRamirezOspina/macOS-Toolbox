@@ -415,6 +415,12 @@ public class macOSUpdate: xCore {
                     })
                 }
             }
+            // MARK: - View Settings
+            .onTapGesture(perform: {
+                if sysUpdateAvailable == .available {
+                    SeedUtil.checkUpdates()
+                }
+            })
             .task {
                 await update()
                 isInLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled

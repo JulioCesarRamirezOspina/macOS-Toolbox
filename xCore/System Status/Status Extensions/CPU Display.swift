@@ -11,7 +11,7 @@ import SwiftUI
 public class CPUDisplay: xCore {
     public struct view: View {
         @Environment(\.colorScheme) var cs
-        @State private var cpuValue: (user: Double, system: Double, idle: Double, total: Double) = (0,0,0,0)
+        @State private var cpuValue: cpuValues = (0,0,0,0)
         @Binding var isRun: Bool
         @State private var thermals: ThermalData = ("", state: .undefined)
         private var dynamicColor: Color {
@@ -31,10 +31,11 @@ public class CPUDisplay: xCore {
             }
         }
         
-        private func loadData() async -> Task<(user: Double, system: Double, idle: Double, total: Double), Never> {
+        private func loadData() async -> Task<(cpuValues), Never> {
             Task{
                 let data = macOS_Subsystem().getCPURealUsage()
-                return (user: data.user, system: data.system, idle: data.idle, total: data.total)
+                let usage = (data.system, data.user, data.idle, data.total)
+                return usage
             }
         }
 
@@ -51,23 +52,13 @@ public class CPUDisplay: xCore {
                                 .font(.footnote)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
-                            HStack{
-                                Divider()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .monospacedDigit()
-                            }.frame(height: 10)
+                            TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                             Text("\(StringLocalizer("coresCount.string")): \(macOS_Subsystem.logicalCores())")
                                 .font(.footnote)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
                                 .monospacedDigit()
                             if SettingsMonitor.passwordSaved {
-                                HStack{
-                                    Divider()
-                                        .font(.footnote)
-                                        .foregroundColor(SettingsMonitor.textColor(cs))
-                                        .monospacedDigit()
-                                }.frame(height: 10)
+                                TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                 Text(thermals.label)
                                     .font(.footnote)
                                     .bold(thermals.state == .fair || thermals.state == .critical || thermals.state == .serious)

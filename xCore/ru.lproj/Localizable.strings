@@ -329,7 +329,7 @@
 
 "chip.string" = "Процессор";
 "memory.string" = "Память";
-"macOS.string" = "macOS";
+"macOS.string" = "Версия macOS";
 "graphics.string" = "Графика";
 "bootDrive.string" = "Загрузочный диск";
 "serial.string" = "Серийный номер";

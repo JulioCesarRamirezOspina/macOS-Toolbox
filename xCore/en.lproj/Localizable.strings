@@ -329,7 +329,7 @@
 
 "chip.string" = "Chip";
 "memory.string" = "Memory";
-"macOS.string" = "macOS";
+"macOS.string" = "macOS Version";
 "graphics.string" = "Graphics";
 "bootDrive.string" = "Boot Drive";
 "serial.string" = "Srial Number";

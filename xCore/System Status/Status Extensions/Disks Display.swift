@@ -140,7 +140,7 @@ public class DisksDisplay: xCore {
                 HStack (spacing: 2) {
                     Group {
                         Text(singleToReadable(usedSpace))
-                        Divider()
+                        TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                         Text(singleToReadable(totalSpace))
                         Spacer()
                         Text(twoToReadable(freeSpace, totalSpace))

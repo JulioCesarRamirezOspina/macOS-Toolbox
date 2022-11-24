@@ -107,6 +107,7 @@ public class Virtuals: xCore {
         // MARK: - Funcs
         let shadowOffset: CGFloat = 3
         let shadowRadius: CGFloat = 5
+        @Environment(\.colorScheme) var cs
         private func generateForEach(filesList: [VMPropertiesList], width: CGFloat) -> some View {
             return ForEach(filesList.sorted(by: <)) { file in
                 ZStack{
@@ -158,9 +159,7 @@ public class Virtuals: xCore {
                                 HStack{
                                     Text("creationDate")
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
-                                    HStack{
-                                        Divider()
-                                    }.frame(height: 10)
+                                    TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                     Text(file.creationDate)
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()
@@ -168,9 +167,7 @@ public class Virtuals: xCore {
                                 HStack{
                                     Text("lastAccessDate")
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
-                                    HStack{
-                                        Divider()
-                                    }.frame(height: 10)
+                                    TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                     Text(file.lastAccessDate)
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()

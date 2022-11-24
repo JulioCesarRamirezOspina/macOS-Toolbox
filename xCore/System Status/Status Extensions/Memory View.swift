@@ -90,9 +90,7 @@ public class MemoryDisplay: xCore {
                             }
                             switch clensingInProgress {
                             case true:
-                                HStack{
-                                    Divider()
-                                }.frame(height: 10)
+                                TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                 Text("clensing.string")
                                     .fontWeight(.heavy)
                                     .shadow(radius: 0)
@@ -100,17 +98,13 @@ public class MemoryDisplay: xCore {
                                 EmptyView()
                             }
                             if hovered && !clensingInProgress {
-                                HStack {
-                                    Divider()
-                                }.frame(height: 10)
+                                TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                 Text("clear_RAM.string")
                                     .fontWeight(.heavy)
                                     .shadow(radius: 0)
                             }
                             if hovered && clensingInProgress {
-                                HStack {
-                                    Divider()
-                                }.frame(height: 10)
+                                TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
                                 Text("cancel.button")
                                     .fontWeight(.heavy)
                                     .shadow(radius: 0)

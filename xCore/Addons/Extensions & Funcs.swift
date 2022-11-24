@@ -291,6 +291,16 @@ extension FileManager {
     }
 }
 
+extension View {
+    func TextDivider(height: CGFloat, foregroundColor: Color = .primary, font: Font = .body) -> some View {
+        HStack{
+            Divider()
+                .font(font)
+                .foregroundColor(foregroundColor)
+                .monospacedDigit()
+        }.frame(height: height)
+    }
+}
 //MARK: - Structs & Classes
 public struct PullToRefresh: View {
     
