@@ -101,7 +101,7 @@ public class SystemStatus: xCore {
     private static var processor: StringData {
         get {
             let p = macOS_Subsystem().cpuName()
-            return (StringLocalizer("chip.string"), p)
+            return (StringLocalizer(macOS_Subsystem.isArm() ? "chip.string" : "processor.string"), p)
         }
     }
     private static var memory: StringData {
@@ -109,6 +109,53 @@ public class SystemStatus: xCore {
             return (StringLocalizer("memory.string"), "\(Int(macOS_Subsystem.physicalMemory(.gigabyte))) \(StringLocalizer("gig.string"))")
         }
     }
+    
+    private class func processorInfo(_ cs: ColorScheme) -> some View {
+        VStack{
+            if macOS_Subsystem.isArm() {
+                HStack{
+                    HStack{
+                        Spacer()
+                        Text(processor.label)
+                    }
+                    HStack{
+                        Text(processor.value)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
+                            
+                        Spacer()
+                    }
+                }
+            } else {
+                HStack{
+                    HStack{
+                        Spacer()
+                        Text(processor.label)
+                    }
+                    HStack{
+                        Text(processor.value)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
+                            
+                        Spacer()
+                    }
+                }
+                if graphics.label != "" {
+                    HStack{
+                        HStack{
+                            Spacer()
+                            Text(graphics.label)
+                        }
+                        HStack{
+                            Text(graphics.value)
+                                .foregroundColor(SettingsMonitor.textColor(cs))
+                            
+                            Spacer()
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     private static var bootDrive: StringData {
         get {
             return (StringLocalizer("bootDrive.string"), macOS_Subsystem().macOSDriveName()!)
@@ -317,37 +364,10 @@ public class SystemStatus: xCore {
                     }
                 }.padding(.all)
                 Text(modelName.label).font(.largeTitle)
-                Text(modelName.value).font(.title3).foregroundColor(SettingsMonitor.textColor(cs))
-                if !SettingsMonitor.isInMenuBar {
-                    Spacer()
-                }
+                Text(modelName.value).font(.subheadline).foregroundColor(SettingsMonitor.textColor(cs))
+                    .padding(.bottom)
                 VStack{
-                    HStack{
-                        HStack{
-                            Spacer()
-                            Text(processor.label)
-                        }
-                        HStack{
-                            Text(processor.value)
-                                .foregroundColor(SettingsMonitor.textColor(cs))
-                                
-                            Spacer()
-                        }
-                    }
-                    if graphics.label != "" {
-                        HStack{
-                            HStack{
-                                Spacer()
-                                Text(graphics.label)
-                            }
-                            HStack{
-                                Text(graphics.value)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                
-                                Spacer()
-                            }
-                        }
-                    }
+                    processorInfo(cs)
                     HStack{
                         HStack{
                             Spacer()
@@ -567,5 +587,12 @@ public class SystemStatus: xCore {
             })
             .animation(SettingsMonitor.secondaryAnimation, value: toggle)
         }
+    }
+}
+
+struct infoPreview: PreviewProvider {
+    @State static var b = false
+    static var previews: some View {
+        SystemStatus.InfoView(toggle: $b)
     }
 }

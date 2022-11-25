@@ -327,7 +327,8 @@
 "system.string" = "Система";
 "load.string" = "Нагрузка";
 
-"chip.string" = "Процессор";
+"processor.string" = "Процессор";
+"chip.string" = "Чип";
 "memory.string" = "Память";
 "macOS.string" = "Версия macOS";
 "graphics.string" = "Графика";

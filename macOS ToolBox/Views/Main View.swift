@@ -171,12 +171,14 @@ struct MainView: View {
                             })
                             .buttonStyle(.borderless)
                             Divider()
-                            ScrollView(.vertical, showsIndicators: true) {
-                                NavigationLinkGenerator(Views: inMenuBar ? inMenuBarViews : plainAppViews)
+                            GeometryReader { pr in
+                                ScrollView(.vertical, showsIndicators: true) {
+                                    NavigationLinkGenerator(Views: inMenuBar ? inMenuBarViews : plainAppViews)
+                                }
+                                .frame(width: pr.size.width)
                             }
                             TimeAndQuit(colorScheme: $colorScheme)
                                 .background(SplitViewAccessor(isCollapsed: $collapsed))
-                                .frame(width: width, alignment: .center)
                                 .listStyle(.sidebar)
                         }
                         .border(.separator.opacity(SettingsMonitor.isInMenuBar ? 1 : 0))
