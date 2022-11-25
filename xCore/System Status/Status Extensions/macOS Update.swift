@@ -288,7 +288,7 @@ public class macOSUpdate: xCore {
                                             Text(OSUpdateAvailable)
                                                 .foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
                                                 .shadow(radius: 0)
-                                            Divider().frame(height: 10).foregroundColor(sysUpdateAvailable == .available ? .black : SettingsMonitor.textColor(cs))
+                                            TextDivider(height: 10)
                                                 .shadow(radius: 0)
                                         }
                                         Text(updateData.label + " " + (updateData.buildNumber == "" ? "" : StringLocalizer("bn.string")) + " " + updateData.buildNumber)

@@ -82,9 +82,9 @@ public class SettingsMonitor: xCore {
     
     public class func textColor(_ c: ColorScheme) -> Color {
         if isInMenuBar && c == .dark {
-            return .white
+            return .white.opacity(0.7)
         } else if isInMenuBar && c == .light {
-            return .black
+            return .black.opacity(0.5)
         } else {
             return .secondary
         }

@@ -121,14 +121,14 @@ public class BatteryDisplay: xCore {
                     .font(.footnote)
                     .foregroundColor(SettingsMonitor.textColor(cs))
                     if isInLowPower && !hovered2 {
-                        TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
+                        TextDivider(height: 10)
                         Text("batt.lowPowerMode")
                             .font(.footnote)
                             .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
                             .fontWeight(.heavy)
                     }
                     if hovered2 && SettingsMonitor.passwordSaved {
-                        TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
+                        TextDivider(height: 10)
                         Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
                             .font(.footnote)
                             .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
@@ -159,7 +159,7 @@ public class BatteryDisplay: xCore {
                                 default: tempUnit = .celsius
                                 }
                             }
-                        TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
+                        TextDivider(height: 10)
                         Text(String(Int(Percentage)) + "%")
                     }
                     .font(.footnote)

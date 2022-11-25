@@ -292,7 +292,7 @@ extension FileManager {
 }
 
 extension View {
-    func TextDivider(height: CGFloat, foregroundColor: Color = .primary, font: Font = .body) -> some View {
+    func TextDivider(height: CGFloat, foregroundColor: Color = .secondary, font: Font = .body) -> some View {
         HStack{
             Divider()
                 .font(font)

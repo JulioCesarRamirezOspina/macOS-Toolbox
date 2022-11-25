@@ -589,10 +589,3 @@ public class SystemStatus: xCore {
         }
     }
 }
-
-struct infoPreview: PreviewProvider {
-    @State static var b = false
-    static var previews: some View {
-        SystemStatus.InfoView(toggle: $b)
-    }
-}

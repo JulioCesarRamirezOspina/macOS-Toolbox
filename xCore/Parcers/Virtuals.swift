@@ -159,7 +159,7 @@ public class Virtuals: xCore {
                                 HStack{
                                     Text("creationDate")
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
-                                    TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
+                                    TextDivider(height: 10)
                                     Text(file.creationDate)
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()
@@ -167,7 +167,7 @@ public class Virtuals: xCore {
                                 HStack{
                                     Text("lastAccessDate")
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
-                                    TextDivider(height: 10, foregroundColor: SettingsMonitor.textColor(cs))
+                                    TextDivider(height: 10)
                                     Text(file.lastAccessDate)
                                         .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
                                     Spacer()
