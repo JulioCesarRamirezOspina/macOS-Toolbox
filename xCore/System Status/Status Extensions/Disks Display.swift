@@ -137,7 +137,7 @@ public class DisksDisplay: xCore {
                         HStack{
                             Text(title)
                                 .shadow(radius: 0)
-                            if caches != nil {
+                            if caches != nil && caches != "" && caches != "\(StringLocalizer("userCaches.string")): 0 MB" {
                                 TextDivider(height: 10)
                                 Text(caches ?? "")
                             }
@@ -198,6 +198,7 @@ public class DisksDisplay: xCore {
                         }
                         .animation(SettingsMonitor.secondaryAnimation, value: caches)
                         .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
+                        .animation(SettingsMonitor.secondaryAnimation, value: snapshotsCount)
                         .popover(isPresented: $selfTapped[index]) {
                             DiskSheet(disksData: disksData, index: index)
                         }
