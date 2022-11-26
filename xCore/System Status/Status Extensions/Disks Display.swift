@@ -187,10 +187,6 @@ public class DisksDisplay: xCore {
                         .onHover(perform: { t in
                             selfHovered[index] = t
                         })
-                        .onAppear(perform: {
-                            print("\"\(disksData[index].DiskLabel)\"")
-                            print(String(disksData[index].DiskLabel.first!) != ".")
-                        })
                         .background {
                             ZStack{
                                 RoundedRectangle(cornerRadius: 15)
