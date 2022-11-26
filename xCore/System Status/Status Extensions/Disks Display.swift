@@ -88,7 +88,7 @@ public class DisksDisplay: xCore {
                     for volume in volumes {
                         let url = URL(filePath: rootFP + volume)
                         let theVolSizeAvail = try url.resourceValues(forKeys: [.volumeSupportsVolumeSizesKey])
-                        if !url.pathComponents.contains(".timemachine") && !url.pathComponents.contains(StringLocalizer("clear_RAM.string")) {
+                        if !url.pathComponents.contains(".timemachine") && !url.pathComponents.contains(StringLocalizer("clear_RAM.string")) && !url.pathComponents.contains("com.apple.TimeMachine.localsnapshots") {
                             if let theVolSizeIsAvail = theVolSizeAvail.volumeSupportsVolumeSizes {
                                 if theVolSizeIsAvail {
                                     let theRes = try url.resourceValues(forKeys: [.volumeAvailableCapacityKey, .volumeTotalCapacityKey])
