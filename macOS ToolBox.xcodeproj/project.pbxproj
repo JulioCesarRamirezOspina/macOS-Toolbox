@@ -191,6 +191,7 @@
 				9AD98C3D29133F6C00618E0D /* Frameworks */,
 			);
 			sourceTree = "<group>";
+			usesTabs = 0;
 		};
 		9ABFD0192908BA02003D7575 /* Products */ = {
 			isa = PBXGroup;
@@ -432,6 +433,7 @@
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1410;
 				LastUpgradeCheck = 1410;
+				ORGANIZATIONNAME = "~X~ Lab";
 				TargetAttributes = {
 					9ABFD0172908BA02003D7575 = {
 						CreatedOnToolsVersion = 14.1;

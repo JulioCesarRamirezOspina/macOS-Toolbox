@@ -88,16 +88,18 @@ public class DisksDisplay: xCore {
                     for volume in volumes {
                         let url = URL(filePath: rootFP + volume)
                         let theVolSizeAvail = try url.resourceValues(forKeys: [.volumeSupportsVolumeSizesKey])
-                        if let theVolSizeIsAvail = theVolSizeAvail.volumeSupportsVolumeSizes {
-                            if theVolSizeIsAvail {
-                                let theRes = try url.resourceValues(forKeys: [.volumeAvailableCapacityKey, .volumeTotalCapacityKey])
-                                if let theCap = theRes.volumeAvailableCapacity {
-                                    if let theTotal = theRes.volumeTotalCapacity {
-                                        retval.append(DiskData(DiskLabel: volume,
-                                                               FreeSpace: (convertValue(Double(theCap))),
-                                                               UsedSpace: (convertValue(Double(theTotal - theCap))),
-                                                               TotalSpace: (convertValue(Double(theTotal)))
-                                                              ))
+                        if !url.pathComponents.contains(".timemachine") && !url.pathComponents.contains(StringLocalizer("clear_RAM.string")) {
+                            if let theVolSizeIsAvail = theVolSizeAvail.volumeSupportsVolumeSizes {
+                                if theVolSizeIsAvail {
+                                    let theRes = try url.resourceValues(forKeys: [.volumeAvailableCapacityKey, .volumeTotalCapacityKey])
+                                    if let theCap = theRes.volumeAvailableCapacity {
+                                        if let theTotal = theRes.volumeTotalCapacity {
+                                            retval.append(DiskData(DiskLabel: volume,
+                                                                   FreeSpace: (convertValue(Double(theCap))),
+                                                                   UsedSpace: (convertValue(Double(theTotal - theCap))),
+                                                                   TotalSpace: (convertValue(Double(theTotal)))
+                                                                  ))
+                                        }
                                     }
                                 }
                             }
@@ -173,41 +175,39 @@ public class DisksDisplay: xCore {
             @State var h: CGFloat = 10
             @State var w: CGFloat = 10
             return ForEach(disksData.indices, id: \.self, content: { index in
-                if disksData[index].DiskLabel != StringLocalizer("clear_RAM.string") && String(disksData[index].DiskLabel.first!) != "." {
-                    VStack{
-                        diskTile(title: disksData[index].DiskLabel,
-                                 snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : nil,
-                                 caches: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? caches : nil,
-                                 usedSpace: disksData[index].UsedSpace,
-                                 freeSpace: disksData[index].FreeSpace,
-                                 totalSpace: disksData[index].TotalSpace,
-                                 tintColor: disksData[index].tintColor)
-                        .frame(minWidth: 250, maxWidth: .greatestFiniteMagnitude, alignment: .center)
-                        .padding(.all)
-                        .onHover(perform: { t in
-                            selfHovered[index] = t
-                        })
-                        .background {
-                            ZStack{
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundColor(selfHovered[index] ? disksData[index].backgroundColor : disksData[index].clearedColor)
-                                RoundedRectangle(cornerRadius: 15)
-                                    .foregroundStyle(.ultraThinMaterial)
-                                    .shadow(radius: 5)
-                            }
-                        }
-                        .animation(SettingsMonitor.secondaryAnimation, value: caches)
-                        .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
-                        .animation(SettingsMonitor.secondaryAnimation, value: snapshotsCount)
-                        .popover(isPresented: $selfTapped[index]) {
-                            DiskSheet(disksData: disksData, index: index)
-                        }
-                        .onTapGesture {
-                            selfTapped[index] = true
+                VStack{
+                    diskTile(title: disksData[index].DiskLabel,
+                             snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : nil,
+                             caches: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? caches : nil,
+                             usedSpace: disksData[index].UsedSpace,
+                             freeSpace: disksData[index].FreeSpace,
+                             totalSpace: disksData[index].TotalSpace,
+                             tintColor: disksData[index].tintColor)
+                    .frame(minWidth: 250, maxWidth: .greatestFiniteMagnitude, alignment: .center)
+                    .padding(.all)
+                    .onHover(perform: { t in
+                        selfHovered[index] = t
+                    })
+                    .background {
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundColor(selfHovered[index] ? disksData[index].backgroundColor : disksData[index].clearedColor)
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.ultraThinMaterial)
+                                .shadow(radius: 5)
                         }
                     }
-                    .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
+                    .animation(SettingsMonitor.secondaryAnimation, value: caches)
+                    .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
+                    .animation(SettingsMonitor.secondaryAnimation, value: snapshotsCount)
+                    .popover(isPresented: $selfTapped[index]) {
+                        DiskSheet(disksData: disksData, index: index)
+                    }
+                    .onTapGesture {
+                        selfTapped[index] = true
+                    }
                 }
+                .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
             })
         }
         
