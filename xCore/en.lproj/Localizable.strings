@@ -317,6 +317,8 @@
 "otherUpdate.string" = "Additional software update available";
 
 "cachesClear.reason" = "clear user caches";
+"snapshots.string" = "Snapshots";
+"clearTM.string" = "Clear snapshots";
 "NODISKACCESS" = "To clear caches app needs to have Full Disk Access.";
 "openDiskAccessPrefPane.string" = "Open Disk Access preferences";
 "justForCaches.string" = "Permission is needed to clear only caches. No other data will be accessed.";

@@ -7,6 +7,7 @@
 
 import Foundation
 import AppKit
+import SwiftUI
 
 /// RAM Manager + RAM Disk Creator
 public class Memory: xCore {
@@ -173,6 +174,58 @@ public class Memory: xCore {
             }
             return output
         }
+    }
+    
+    private func TimeMachineClear() {
+        do {
+            let process = Process()
+            process.executableURL = URL(filePath: "/bin/bash")
+            process.arguments = ["-c", "tmutil deletelocalsnapshots /"]
+            try process.run()
+        } catch let error {
+            NSLog(error.localizedDescription)
+        }
+    }
+    
+    private func TimeMachineCount() -> Int {
+        do {
+            let process = Process()
+            let pipe = Pipe()
+            process.executableURL = URL(filePath: "/bin/bash")
+            process.arguments = ["-c", "tmutil listlocalsnapshots /"]
+            process.standardOutput = pipe
+            try process.run()
+            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
+                let arr = out.byLines.count - 1
+                return arr
+            } else {
+                return 0
+            }
+        } catch let error {
+            NSLog(error.localizedDescription)
+            return 0
+        }
+    }
+    
+    public func TimeMachineControls() -> (view: some View, snapshotsCount: Int) {
+        
+        var view: some View {
+            Button {
+                Task{
+                    self.TimeMachineClear()
+                }
+            } label: {
+                Text("clearTM.string")
+            }
+            .disabled(TimeMachineCount() < 1)
+            .buttonStyle(Stylers.ColoredButtonStyle(glyph: "clock.arrow.circlepath",
+                                                    disabled: TimeMachineCount() < 1,
+                                                    enabled: false,
+                                                    alwaysShowTitle: true,
+                                                    color: .blue,
+                                                    glow: true))
+        }
+        return (view: view, snapshotsCount: TimeMachineCount())
     }
     
     public func cachesSize() async -> Task<String, Never> {

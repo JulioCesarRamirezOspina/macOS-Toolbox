@@ -18,6 +18,7 @@ public class DisksDisplay: xCore {
         @State private var clearResult = false
         @State private var cachesHover = false
         @State private var showClearCaches = false
+        @State private var snapshotsCount = Memory().TimeMachineControls().snapshotsCount
         @Binding var emergencyPopover: Bool
         @Binding var isRun: Bool
         @State private var disksData = [DiskData(DiskLabel: "",
@@ -123,15 +124,29 @@ public class DisksDisplay: xCore {
             return d.1 == .gigabyte ? d.0.round(to: 2) * 1024 : d.1 == .terabyte ? d.0.round(to: 2) * 1024 * 1024 : d.0.round(to: 2)
         }
         
-        private func diskTile(_ title: String,
+        private func diskTile(title: String,
+                              snapshots: Int?,
+                              caches: String?,
                               usedSpace: (Double, Unit),
                               freeSpace: (Double, Unit),
                               totalSpace: (Double, Unit),
                               tintColor: Color) -> some View {
             VStack{
                 HStack{
-                    Text(title)
-                        .shadow(radius: 0)
+                    ScrollView(.horizontal, showsIndicators: true) {
+                        HStack{
+                            Text(title)
+                                .shadow(radius: 0)
+                            if caches != nil {
+                                TextDivider(height: 10)
+                                Text(caches ?? "")
+                            }
+                            if snapshots != nil && snapshots ?? 0 > 0 {
+                                TextDivider(height: 10)
+                                Text("\(StringLocalizer("snapshots.string")): \(snapshots ?? 0)")
+                            }
+                        }
+                    }
                     Spacer()
                 }
                 GeometryReader { g in
@@ -158,11 +173,11 @@ public class DisksDisplay: xCore {
             @State var h: CGFloat = 10
             @State var w: CGFloat = 10
             return ForEach(disksData.indices, id: \.self, content: { index in
-                VStack{
-                    if disksData[index].DiskLabel != StringLocalizer("clear_RAM.string") {
-                        diskTile(disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ?
-                                 (caches == "" || caches == "\(StringLocalizer("userCaches.string")): 0 MB" ? "\(disksData[index].DiskLabel)" : "\(disksData[index].DiskLabel) | \(caches)") :
-                                    disksData[index].DiskLabel,
+                if disksData[index].DiskLabel != StringLocalizer("clear_RAM.string") && String(disksData[index].DiskLabel.first!) != "." {
+                    VStack{
+                        diskTile(title: disksData[index].DiskLabel,
+                                 snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : nil,
+                                 caches: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? caches : nil,
                                  usedSpace: disksData[index].UsedSpace,
                                  freeSpace: disksData[index].FreeSpace,
                                  totalSpace: disksData[index].TotalSpace,
@@ -171,6 +186,10 @@ public class DisksDisplay: xCore {
                         .padding(.all)
                         .onHover(perform: { t in
                             selfHovered[index] = t
+                        })
+                        .onAppear(perform: {
+                            print("\"\(disksData[index].DiskLabel)\"")
+                            print(String(disksData[index].DiskLabel.first!) != ".")
                         })
                         .background {
                             ZStack{
@@ -190,8 +209,8 @@ public class DisksDisplay: xCore {
                             selfTapped[index] = true
                         }
                     }
+                    .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
                 }
-                .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
             })
         }
         
@@ -241,6 +260,7 @@ public class DisksDisplay: xCore {
                         Divider()
                         VStack{
                             CachesButton()
+                            Memory().TimeMachineControls().view
                             OpenInFinderButton(disksData[index].DiskLabel)
                             CancelButton(index: index)
                         }.padding(.all)
@@ -292,6 +312,7 @@ public class DisksDisplay: xCore {
                 repeat{
                     do {
                         disksData = await diskCheck().value ?? DiskData.isEmpty
+                        snapshotsCount = Memory().TimeMachineControls().snapshotsCount
                         try await Task.sleep(seconds: 3)
                     } catch _ {}
                 }while(isRun)
