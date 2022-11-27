@@ -16,6 +16,7 @@ struct TimeView: View {
     @State var font: Font? = .body
     @State var uptime = macOS_Subsystem.uptime()
     @State var hover = false
+    let localPublisher = Timer.publish(every: 0.2, on: .current, in: .common).autoconnect()
     var body: some View {
         VStack{
             Group {
@@ -43,13 +44,10 @@ struct TimeView: View {
             .monospacedDigit()
         }
         .animation(SettingsMonitor.secondaryAnimation, value: hover)
-        .onAppear {
-            Timer.scheduledTimer(withTimeInterval: 0.5, repeats: true) { t in
-                let dateTime = Date()
-                timeNow = dateTime.formatted(date: .omitted, time: .standard)
-                uptime = macOS_Subsystem.uptime()
-            }
-        }
+        .onReceive(localPublisher, perform: { _ in
+            timeNow = Date().formatted(date: .omitted, time: .standard)
+            uptime = macOS_Subsystem.uptime()
+        })
         .onHover(perform: { t in
             hover = t
         })

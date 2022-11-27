@@ -14,7 +14,6 @@ struct RAMDiskView: View {
     @State private var diskLabel = ""
     @State private var selection = 2
     @State private var percentage: Float = 0
-    @State private var timer: Timer?
     @State private var isRun = false
     @State private var password = SettingsMonitor.password
     @State private var popoverIsPresented = false
@@ -464,7 +463,6 @@ struct RAMDiskView: View {
             volume = newValue
         })
         .onDisappear {
-            timer = nil
             password = ""
             isRun = false
         }
