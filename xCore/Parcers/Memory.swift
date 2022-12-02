@@ -80,6 +80,7 @@ public class Memory: xCore {
             let process = Process()
             process.executableURL = URL(filePath: "/usr/bin/env")
             process.arguments = ["bash", "-c", "umount -f \"/Volumes/\(each)\" && diskutil eject \"\(each)\""]
+            process.standardOutput = nil
             do {
                 try process.run()
             } catch let error {
@@ -176,14 +177,17 @@ public class Memory: xCore {
         }
     }
     
-    private func TimeMachineClear() {
-        do {
-            let process = Process()
-            process.executableURL = URL(filePath: "/bin/bash")
-            process.arguments = ["-c", "tmutil deletelocalsnapshots /"]
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
+    private func TimeMachineClear() async {
+        Task{
+            do {
+                let process = Process()
+                process.executableURL = URL(filePath: "/bin/bash")
+                process.arguments = ["-c", "tmutil deletelocalsnapshots /"]
+                process.standardOutput = nil
+                try process.run()
+            } catch let error {
+                NSLog(error.localizedDescription)
+            }
         }
     }
     
@@ -212,7 +216,7 @@ public class Memory: xCore {
         var view: some View {
             Button {
                 Task{
-                    self.TimeMachineClear()
+                    await self.TimeMachineClear()
                 }
             } label: {
                 Text("clearTM.string")

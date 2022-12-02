@@ -18,10 +18,9 @@ public class LaunchpadManager: xCore {
         switch coord {
         case .x: _ = Shell.Parcer.oneExecutable(exe: "/usr/bin/defaults", args: ["write", "com.apple.dock", "springboard-columns", "-int", "\(value)"]) as Void
         case .y: _ = Shell.Parcer.oneExecutable(exe: "/usr/bin/defaults", args: ["write", "com.apple.dock", "springboard-rows", "-int", "\(value)"]) as Void
-
         }
     }
-
+    
     public func getCoord(_ coord: Coord) -> Float {
         let process = Process()
         let pipe = Pipe()
@@ -34,10 +33,11 @@ public class LaunchpadManager: xCore {
         do {
             try process.run()
             let ShellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            guard let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) else {             switch coord {
-            case .x: return 7
-            case .y: return 5
-            }
+            guard let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) else {
+                switch coord {
+                case .x: return 7
+                case .y: return 5
+                }
             }
             return result
         } catch let error {

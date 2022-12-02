@@ -74,7 +74,6 @@ public class BootCampStart: xCore {
             for volumeURL in mountedVolumeURLs {
                 if let disk = DADiskCreateFromVolumePath(kCFAllocatorDefault, session, volumeURL as CFURL),
                    let bsdName = DADiskGetBSDName(disk) {
-//                    print(bsdName)
                     if node == String(cString: bsdName) {
                         retval = true
                     }
@@ -130,6 +129,7 @@ public class BootCampStart: xCore {
                 let process = Process()
                 process.executableURL = URL(filePath: "/bin/bash")
                 process.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"]
+                process.standardOutput = nil
                 do {
                     try process.run()
                 } catch let error {
