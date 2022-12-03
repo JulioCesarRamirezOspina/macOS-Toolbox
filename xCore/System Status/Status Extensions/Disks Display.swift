@@ -18,7 +18,7 @@ public class DisksDisplay: xCore {
         @State private var clearResult = false
         @State private var cachesHover = false
         @State private var showClearCaches = false
-        @State private var snapshotsCount = Memory().TimeMachineControls().snapshotsCount
+        @State private var snapshotsCount = Memory().TimeMachineControls(volumeName: "").snapshotsCount
         @Binding var emergencyPopover: Bool
         @Binding var isRun: Bool
         @State private var disksData = [DiskData(DiskLabel: "",
@@ -177,7 +177,7 @@ public class DisksDisplay: xCore {
             return ForEach(disksData.indices, id: \.self, content: { index in
                 VStack{
                     diskTile(title: disksData[index].DiskLabel,
-                             snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : nil,
+                             snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : Memory().TimeMachineControls(volumeName: disksData[index].DiskLabel).snapshotsCount,
                              caches: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? caches : nil,
                              usedSpace: disksData[index].UsedSpace,
                              freeSpace: disksData[index].FreeSpace,
@@ -257,7 +257,7 @@ public class DisksDisplay: xCore {
                         Divider()
                         VStack{
                             CachesButton()
-                            Memory().TimeMachineControls().view
+                            Memory().TimeMachineControls(volumeName: macOS_Subsystem().macOSDriveName()!).view
                             OpenInFinderButton(disksData[index].DiskLabel)
                             CancelButton(index: index)
                         }.padding(.all)
@@ -309,7 +309,7 @@ public class DisksDisplay: xCore {
                 repeat{
                     do {
                         disksData = await diskCheck().value ?? DiskData.isEmpty
-                        snapshotsCount = Memory().TimeMachineControls().snapshotsCount
+                        snapshotsCount = Memory().TimeMachineControls(volumeName: macOS_Subsystem().macOSDriveName()!).snapshotsCount
                         try await Task.sleep(seconds: 3)
                     } catch _ {}
                 }while(isRun)
