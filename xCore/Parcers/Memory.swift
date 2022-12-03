@@ -191,68 +191,28 @@ public class Memory: xCore {
         }
     }
     
-    private func TimeMachineCount(volumeName: String) -> Int {
-        enum ExecError: Error {
-            case noerror
-            case error
-        }
-        let processA = Process()
-        let processB = Process()
-        let pipeA = Pipe()
-        let pipeB = Pipe()
-        let aArgs = ["-c", "tmutil listlocalsnapshots \"/Volumes/\(volumeName)\""]
-        let bArgs = ["-c", "tmutil listbackups \"/Volumes/\(volumeName)\""]
-        let exe = URL(filePath: "/bin/bash")
-        processA.standardOutput = pipeA
-        processA.standardError = pipeA
-        processA.executableURL = exe
-        processB.standardOutput = pipeB
-        processB.standardError = pipeB
-        processB.executableURL = exe
+    private func TimeMachineCount() -> Int {
         do {
-            processA.arguments = aArgs
-            try processA.run()
-            if let out = String(data: try pipeA.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                if out.contains("listbackups"){
-                    if processA.isRunning {
-                        processA.terminate()
-                    }
-                    throw ExecError.error
-                } else {
-                    if processA.isRunning {
-                        processA.terminate()
-                    }
-                    return (out.byLines.count - 1)
-                }
+            let process = Process()
+            let pipe = Pipe()
+            process.executableURL = URL(filePath: "/bin/bash")
+            process.arguments = ["-c", "tmutil listlocalsnapshots /"]
+            process.standardOutput = pipe
+            try process.run()
+            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
+                let arr = out.byLines.count - 1
+                return arr
             } else {
-                if processA.isRunning {
-                    processA.terminate()
-                }
                 return 0
             }
-        } catch _ {
-            do {
-                processB.arguments = bArgs
-                try processB.run()
-                if let out = String(data: try pipeB.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                    if processB.isRunning {
-                        processB.terminate()
-                    }
-                    return (out.byLines.count - 1)
-                } else {
-                    if processB.isRunning {
-                        processB.terminate()
-                    }
-                    return 0
-                }
-            } catch _ {
-                return 0
-            }
+        } catch let error {
+            NSLog(error.localizedDescription)
+            return 0
         }
     }
     
-    public func TimeMachineControls(volumeName: String) -> (view: some View, snapshotsCount: Int) {
-        let snapshotsCount = TimeMachineCount(volumeName: volumeName)
+    public func TimeMachineControls() -> (view: some View, snapshotsCount: Int) {
+        
         var view: some View {
             Button {
                 Task{
@@ -261,15 +221,15 @@ public class Memory: xCore {
             } label: {
                 Text("clearTM.string")
             }
-            .disabled(snapshotsCount < 1)
+            .disabled(TimeMachineCount() < 1)
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "clock.arrow.circlepath",
-                                                    disabled: snapshotsCount < 1,
+                                                    disabled: TimeMachineCount() < 1,
                                                     enabled: false,
                                                     alwaysShowTitle: true,
                                                     color: .blue,
                                                     glow: true))
         }
-        return (view: view, snapshotsCount: snapshotsCount)
+        return (view: view, snapshotsCount: TimeMachineCount())
     }
     
     public func cachesSize() async -> Task<String, Never> {
