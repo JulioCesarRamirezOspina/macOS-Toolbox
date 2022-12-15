@@ -72,7 +72,6 @@ public struct macOS_Subsystem {
         let prepString = ProcessInfo.processInfo.operatingSystemVersionString.byWords.dropFirst()
         var extendedRetval = "macOS"
         var shortenedRetval = "macOS"
-        print(prepString.count)
         let extendedSymbols = prepString.count == 3 ?
         [" \(osName) " ," (" , " "] :
         [" \(osName) "," \n\(StringLocalizer("secResponse.string")): " , "\n" , " "]
