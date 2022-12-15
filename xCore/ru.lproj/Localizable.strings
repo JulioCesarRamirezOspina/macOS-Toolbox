@@ -351,3 +351,4 @@
 
 "creationDate" = "Дата создания";
 "lastAccessDate" = "Дата открытия";
+"secResponse.string" = "Версия исправления безопасности";

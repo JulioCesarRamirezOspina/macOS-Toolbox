@@ -61,26 +61,37 @@ public struct macOS_Subsystem {
      TODO: Pages?
      */
     
-    public static func osVersion() -> String {
+    public static func osVersion() -> (extended: String, shortened: String) {
         var osName: String {
             switch ProcessInfo.processInfo.operatingSystemVersion.majorVersion {
-            case 11: return "Big Sur"
-            case 12: return "Monterey"
             case 13: return "Ventura"
-            default: return "NaN"
+            default: return "UNRELEASED FUTURE VERSION"
             }
         }
         
         let prepString = ProcessInfo.processInfo.operatingSystemVersionString.byWords.dropFirst()
-        var retval = "macOS"
-        let symbols = [" \(osName) ", "" ," (" , " "]
-        var index = 0
+        var extendedRetval = "macOS"
+        var shortenedRetval = "macOS"
+        print(prepString.count)
+        let extendedSymbols = prepString.count == 3 ?
+        [" \(osName) " ," (" , " "] :
+        [" \(osName) "," \n\(StringLocalizer("secResponse.string")): " , "\n" , " "]
+        let shortenedSymbols = prepString.count == 3 ?
+        [" \(osName) " ," (" , " "] :
+        [" \(osName) ", " (", ") ", ": "]
+        var extendedIndex = 0
+        var shortenedIndex = 0
         for each in prepString {
-            retval += symbols[index] + each
-            index += 1
+            extendedRetval += extendedSymbols[extendedIndex] + each
+            extendedIndex += 1
         }
-        retval = String(retval.replacingOccurrences(of: "Выпуск", with: "Сборка"))
-        return retval + ")"
+        for each in prepString {
+            shortenedRetval += shortenedSymbols[shortenedIndex] + each
+            shortenedIndex += 1
+        }
+        extendedRetval = String(extendedRetval.replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
+        shortenedRetval = String(shortenedRetval.replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
+        return (extended: prepString.count == 3 ? extendedRetval + ")" : extendedRetval, shortened: prepString.count == 3 ? shortenedRetval + ")" : shortenedRetval)
     }
     
     public static func osIsBeta() -> Bool {

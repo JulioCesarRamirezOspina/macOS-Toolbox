@@ -206,7 +206,7 @@ public class SystemStatus: xCore {
 
     private static var macOSVer: StringData {
         get {
-            return (StringLocalizer("macOS.string"), macOS_Subsystem.osVersion())
+            return (StringLocalizer("macOS.string"), macOS_Subsystem.osVersion().extended)
         }
     }
     private static var graphics: StringData {

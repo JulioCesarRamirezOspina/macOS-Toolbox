@@ -355,3 +355,4 @@
 
 "creationDate" = "Creation date";
 "lastAccessDate" = "Last access date";
+"secResponse.string" = "Security Response Version";

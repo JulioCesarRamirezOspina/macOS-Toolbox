@@ -187,7 +187,7 @@ public class macOSUpdate: xCore {
         private var halfScreen: Bool = true
         private var alignment: HorizontalAlignment
         private var showTitle: Bool
-        private let currentOSVerbatium = "\(StringLocalizer("currentOS.string")): " + macOS_Subsystem.osVersion()
+        private let currentOSVerbatium = "\(StringLocalizer("currentOS.string")): " + macOS_Subsystem.osVersion().shortened
         private let OSUpdateAvailable = StringLocalizer("sysUpdateAvailable.string") //+
         private let OSBeta = SettingsMonitor.passwordSaved ? SeedUtil.getSeedString(SettingsMonitor.password) : ""
         private let OSUpdateCheckInProgress = StringLocalizer("sysUpdateInProgress.string")
