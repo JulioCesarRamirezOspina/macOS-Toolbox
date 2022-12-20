@@ -21,6 +21,15 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var buttonActionDelayEnabled: Bool {
+        get {
+            AppSettings.load(key: "buttonActionDelayEnabled") ?? true
+        }
+        set {
+            AppSettings.set(key: "buttonActionDelayEnabled", value: newValue)
+        }
+    }
+    
     public static var bootCampIsNextOnly: Bool {
         get {
             AppSettings.load(key: "bootCampIsNextOnly") ?? false

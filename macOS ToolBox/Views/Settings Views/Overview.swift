@@ -17,6 +17,7 @@ struct SettingsOverview: View {
     @State private var isRun = false
     @State private var showSerialNumber = SettingsMonitor.showSerialNumber
     @State private var isInMenuBar = SettingsMonitor.isInMenuBar
+    @State private var buttonActionDelayEnabled = SettingsMonitor.buttonActionDelayEnabled
     @Binding var pcs: ColorScheme?
     
     @State private var launchAtLogin = SettingsMonitor.autoLaunch {
@@ -28,6 +29,22 @@ struct SettingsOverview: View {
                 SMAppService.loginItem(identifier: Bundle.main.bundleIdentifier!)
             }
         }
+    }
+    
+    private var ButtonActionDelayEnabled: some View {
+        Button {
+            SettingsMonitor.buttonActionDelayEnabled = !buttonActionDelayEnabled
+            buttonActionDelayEnabled = SettingsMonitor.buttonActionDelayEnabled
+        } label: {
+            Text("buttonActionDelayEnabled.string")
+        }
+        .buttonStyle(Stylers.ColoredButtonStyle(glyph: SettingsMonitor.buttonActionDelayEnabled ? "cursorarrow.click.badge.clock" : "cursorarrow.motionlines.click",
+                                                enabled: buttonActionDelayEnabled,
+                                                alwaysShowTitle: true,
+                                                width: width,
+                                                color: .indigo,
+                                                hideBackground: false,
+                                                backgroundShadow: true))
     }
 
     private var AutoLaunch: some View {
@@ -176,6 +193,7 @@ struct SettingsOverview: View {
                                         ShowSerialNumber
                                         IsInMenuBar
                                         AutoLaunch
+                                        ButtonActionDelayEnabled
                                         AppTheme
                                     }.padding(.all)
                                     Spacer()
@@ -208,6 +226,6 @@ struct SettingsOverview: View {
         })
         .animation(SettingsMonitor.secondaryAnimation, value: pcs)
         .animation(SettingsMonitor.secondaryAnimation, value: animateBatteryOverview)
-        
+        .animation(SettingsMonitor.secondaryAnimation, value: buttonActionDelayEnabled)
     }
 }

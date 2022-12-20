@@ -49,26 +49,30 @@ public class SystemStatus: xCore {
         
         public var buttons: some View {
             let buttons: [actionsStruct] = [
-                .init(activity: .shutDown, glyph: "power", color: .red, description: "", actionDealy: 5),
-                .init(activity: .reboot, glyph: "restart", color: .yellow, description: "", actionDealy: 5),
-                .init(activity: .sleep, glyph: "sleep", color: .cyan, description: "", actionDealy: 1),
-                .init(activity: .displayOff, glyph: "lock.display", color: .gray, description: "", actionDealy: 0)
+                .init(activity: .shutDown,
+                      glyph: "power",
+                      color: .red,
+                      description: "",
+                      actionDealy: SettingsMonitor.buttonActionDelayEnabled ? 5 : 0),
+                .init(activity: .reboot,
+                      glyph: "restart",
+                      color: .yellow,
+                      description: "",
+                      actionDealy: SettingsMonitor.buttonActionDelayEnabled ?  5 : 0),
+                .init(activity: .sleep,
+                      glyph: "sleep",
+                      color: .cyan,
+                      description: "",
+                      actionDealy: SettingsMonitor.buttonActionDelayEnabled ?  1 : 0),
+                .init(activity: .displayOff,
+                      glyph: "lock.display",
+                      color: .gray,
+                      description: "",
+                      actionDealy: 0)
             ]
             
             return ForEach(buttons) { button in
-                if button.activity != .displayOff {
-                    Button {} label: {}
-                        .modifier(CustomViews.DualActionMod(tapAction: { Void() }, longPressAction: {
-                            actions(button.activity)
-                        },
-                                                            frameSize: CGSize(width: 50, height: 50),
-                                                            ltActionDelay: button.actionDealy))
-                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
-                                                                alwaysShowTitle: false,
-                                                                width: 50, height: 50,
-                                                                color: button.color,
-                                                                hideBackground: true))
-                } else {
+                if !SettingsMonitor.buttonActionDelayEnabled {
                     Button { actions(button.activity) } label: { }
                         .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
                                                                 alwaysShowTitle: false,
@@ -76,6 +80,28 @@ public class SystemStatus: xCore {
                                                                 height: 50,
                                                                 color: button.color,
                                                                 hideBackground: true))
+                } else {
+                    if button.activity != .displayOff {
+                        Button {} label: {}
+                            .modifier(CustomViews.DualActionMod(tapAction: { Void() }, longPressAction: {
+                                actions(button.activity)
+                            },
+                                                                frameSize: CGSize(width: 50, height: 50),
+                                                                ltActionDelay: button.actionDealy))
+                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
+                                                                    alwaysShowTitle: false,
+                                                                    width: 50, height: 50,
+                                                                    color: button.color,
+                                                                    hideBackground: true))
+                    } else {
+                        Button { actions(button.activity) } label: { }
+                            .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
+                                                                    alwaysShowTitle: false,
+                                                                    width: 50,
+                                                                    height: 50,
+                                                                    color: button.color,
+                                                                    hideBackground: true))
+                    }
                 }
             }
         }
@@ -215,7 +241,7 @@ public class SystemStatus: xCore {
             var GPUCheck: Bool {
                 if GPUs == [""] {
                     return false
-                }else {
+                } else {
                     return true
                 }
             }

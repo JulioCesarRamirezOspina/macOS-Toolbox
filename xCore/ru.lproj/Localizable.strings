@@ -352,3 +352,4 @@
 "creationDate" = "Дата создания";
 "lastAccessDate" = "Дата открытия";
 "secResponse.string" = "Версия исправления безопасности";
+"buttonActionDelayEnabled.string" = "Задержка действий кнопок главного экрана";

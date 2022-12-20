@@ -356,3 +356,4 @@
 "creationDate" = "Creation date";
 "lastAccessDate" = "Last access date";
 "secResponse.string" = "Security Response Version";
+"buttonActionDelayEnabled.string" = "Delay for main screen action buttons";
