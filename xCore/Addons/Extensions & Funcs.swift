@@ -459,7 +459,7 @@ public struct DiskData: Identifiable, Equatable {
             self.backgroundColor = .orange
         } else {
             self.tintColor = Color(nsColor: NSColor(#colorLiteral(red: 0, green: 0.9767891765, blue: 0, alpha: 1)))
-            self.backgroundColor = .blue
+            self.backgroundColor = .green
         }
     }
     public static let isEmpty = [DiskData(DiskLabel: "", FreeSpace: (0, .byte), UsedSpace: (0, .byte), TotalSpace: (0, .byte))]
