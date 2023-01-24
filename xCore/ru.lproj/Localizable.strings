@@ -117,6 +117,7 @@
 "noTouchIDInstalled.string" = "Похоже, что TouchID не установлен в Вашем Mac.";
 "status.title" = "Статус:";
 "switch.button" = "Переключить";
+"hwkey.string" = "Аппаратный ключ";
 "cancel.button" = "Отмена";
 "enabled.string" = "Включено";
 "disabled.string" = "Выключено";

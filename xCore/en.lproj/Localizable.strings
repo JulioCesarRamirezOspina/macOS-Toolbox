@@ -117,6 +117,7 @@
 "noTouchIDInstalled.string" = "It appears that TouchID is not installed on your Mac.";
 "done.disabled.title" = "TouchID deactivated.";
 "status.title" = "Status:";
+"hwkey.string" = "Hardware Key";
 "switch.button" = "Switch";
 "cancel.button" = "Cancel";
 "enabled.string" = "Enabled";

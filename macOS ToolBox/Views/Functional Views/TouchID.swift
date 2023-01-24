@@ -73,116 +73,177 @@ struct TouchIDView: View {
     @State var sudoNew = PAMManager.SystemAuthData().sudoContents.state == .enable
     @State var screensaverNew = PAMManager.SystemAuthData().screensaverContents.state == .enable
     @State var isDisabled = true
+    @State var showPAM = false
     var touchIDExists: some View {
         VStack {
             if SettingsMonitor.passwordSaved {
-                GroupBox {
-                    VStack{
-                        if !loading {
-                            Spacer()
-                            Group {
-                                if data.notInstalled() {
-                                    Text(data.localizedErrorReturner(1))
-                                }
-
-                                HStack(alignment: .center) {
-                                    Spacer()
-                                    Button {
-                                        screensaverNew.toggle()
-                                    } label: {
-                                        Text(StringLocalizer("screensaver.string"))
-                                    }
-                                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: screensaverNew ? "person.badge.key" : "person.badge.key.fill", enabled: screensaverNew, color: screensaverNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
-
-                                    
-                                    Button {
-                                        sudoNew.toggle()
-                                    } label: {
-                                        Text(StringLocalizer("sudo.string"))
-                                    }
-                                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: sudoNew ? "person.fill.checkmark" : "person.fill.questionmark", enabled: sudoNew, color: sudoNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
-                                    Spacer()
-                                }
+                VStack{
+                    if !loading {
+                        Spacer()
+                        Group {
+                            
+                            HStack(alignment: .center){
+                                Spacer()
                                 
-                                HStack(alignment: .center){
-                                    Spacer()
-                                    
-                                    Button { [self] in
-                                        data.edit(!sudoNew ? .disable : .enable, .sudo, password)
-                                        data.edit(!screensaverNew ? .disable : .enable, .screensaver, password)
-                                        screensaverOld = data.screensaverContents.state == .enable
-                                        sudoOld = data.sudoContents.state == .enable
-                                        isDisabled = isDisabledUpdate()
-                                    } label: {
-                                        Text(StringLocalizer("save.button"))
-                                    }.disabled(isDisabled || data.notInstalled())
-                                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", disabled: isDisabled ||  data.notInstalled(), enabled: sudoNew != sudoOld || screensaverNew != screensaverOld, hideBackground: false, backgroundIsNotFill: true))
-                                    
-                                    Button {
-                                        run()
-                                    } label: {
-                                        Text(!status ? StringLocalizer("enable.string") : StringLocalizer("disable.string"))
-                                    }.keyboardShortcut(.defaultAction)
-                                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: !status ? "power.circle" : "poweroff", enabled: status, color: !status ? .blue : .green, hideBackground: false, backgroundIsNotFill: true))
-                                    Spacer()
-                                }.padding(.all)
-                            }
-                        } else {
-                            Spacer()
+                                Button {
+                                    run()
+                                } label: {
+                                    Text(!status ? StringLocalizer("enable.string") : StringLocalizer("disable.string"))
+                                }.keyboardShortcut(.defaultAction)
+                                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: !status ? "touchid" : "poweroff", enabled: status, color: !status ? .blue : .green, hideBackground: false, backgroundIsNotFill: true))
+                                
+                                Spacer()
+                            }.padding(.all)
                         }
+                    } else {
+                        Spacer()
                     }
-                } label: {
-                    CustomViews.AnimatedTextView(Input: "tid.title", TimeToStopAnimation: SettingsMonitor.secAnimDur)
-                }
-                .groupBoxStyle(Stylers.CustomGBStyle())
-                .background(content: {
-                    HStack{
-                        if status {
-                            img(enabledColors, name: "touchid")
-                        } else {
-                            img(disabledColors, name: "touchid")
-                        }
-                        
-                        if allUp {
-                            img(enabledColors, name: "key.fill")
-                        } else {
-                            img(disabledColors, name: "key.fill")
-                        }
-                        
-                    }
-                })
-                .onAppear {
-                    status = PAMManager.TouchID().analyzePam_d()
-                    loading = false
-                    passwordExists = SettingsMonitor.passwordSaved
-                    
-                }.onChange(of: sudoOld) { newValue in
-                    isDisabled = isDisabledUpdate()
-                }.onChange(of: screensaverOld) { newValue in
-                    isDisabled = isDisabledUpdate()
-                }.onChange(of: sudoNew) { newValue in
-                    isDisabled = isDisabledUpdate()
-                }.onChange(of: screensaverNew) { newValue in
-                    isDisabled = isDisabledUpdate()
                 }
                 .onChange(of: status, perform: { newValue in
                     passwordExists = SettingsMonitor.passwordSaved
                 })
                 .animation(SettingsMonitor.secondaryAnimation, value: status)
-                .animation(SettingsMonitor.secondaryAnimation, value: sudoNew)
-                .animation(SettingsMonitor.secondaryAnimation, value: screensaverNew)
-                .animation(SettingsMonitor.secondaryAnimation, value: isDisabled)
             } else {
                 CustomViews.NoPasswordView(false, toggle: $dummy)
             }
         }
+        .background(content: {
+            HStack{
+                if status {
+                    img(enabledColors, name: "touchid")
+                } else {
+                    img(disabledColors, name: "touchid")
+                }
+                
+            }
+        })
+    }
+    
+    var PAMView: some View {
+        VStack{
+            Spacer()
+            HStack{
+                Spacer()
+                Button {
+                    showPAM.toggle()
+                } label: {
+                    Text("hwkey.string")
+                }.popover(isPresented: $showPAM) {
+                    PAMSubView.padding()
+                }
+                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", enabled: sudoOld || screensaverOld, color: sudoOld || screensaverOld ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                Spacer()
+            }.padding(.all)
+        }
+        .background(content: {
+            HStack{
+                if allUp {
+                    img(enabledColors, name: "key.fill")
+                } else {
+                    img(disabledColors, name: "key.fill")
+                }
+                
+            }
+        })
+    }
+    
+    var PAMSubView: some View {
+        ZStack {
+            VStack{
+                if data.notInstalled() {
+                    Text(data.localizedErrorReturner(1))
+                }
+                HStack(alignment: .center) {
+                    Spacer()
+                    Button {
+                        screensaverNew.toggle()
+                    } label: {
+                        Text(StringLocalizer("screensaver.string"))
+                    }
+                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: screensaverNew ? "person.badge.key" : "person.badge.key.fill", enabled: screensaverNew, color: screensaverNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                    
+                    
+                    Button {
+                        sudoNew.toggle()
+                    } label: {
+                        Text(StringLocalizer("sudo.string"))
+                    }
+                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: sudoNew ? "person.fill.checkmark" : "person.fill.questionmark", enabled: sudoNew, color: sudoNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                    Spacer()
+                }
+                
+                HStack{
+                    Button { [self] in
+                        data.edit(!sudoNew ? .disable : .enable, .sudo, password)
+                        data.edit(!screensaverNew ? .disable : .enable, .screensaver, password)
+                        screensaverOld = PAMManager.SystemAuthData().screensaverContents.state == .enable
+                        sudoOld = PAMManager.SystemAuthData().sudoContents.state == .enable
+                        isDisabled = isDisabledUpdate()
+                        showPAM.toggle()
+                    } label: {
+                        Text(StringLocalizer("save.button"))
+                    }.disabled(isDisabled || data.notInstalled())
+                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", disabled: isDisabled ||  data.notInstalled(), enabled: sudoNew != sudoOld || screensaverNew != screensaverOld, color: .blue, hideBackground: false, backgroundIsNotFill: true))
+                    
+                    Button { [self] in
+                        screensaverNew = screensaverOld
+                        sudoNew = sudoOld
+                        showPAM.toggle()
+                    } label: {
+                        Text(StringLocalizer("cancel.button"))
+                    }
+                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: "escape", color: .red, hideBackground: false, backgroundIsNotFill: true))
+                    
+                }
+                
+            }
+        }
+        .onChange(of: sudoOld) { newValue in
+            isDisabled = isDisabledUpdate()
+        }.onChange(of: screensaverOld) { newValue in
+            isDisabled = isDisabledUpdate()
+        }.onChange(of: sudoNew) { newValue in
+            isDisabled = isDisabledUpdate()
+        }.onChange(of: screensaverNew) { newValue in
+            isDisabled = isDisabledUpdate()
+        }
+        .animation(SettingsMonitor.secondaryAnimation, value: sudoNew)
+        .animation(SettingsMonitor.secondaryAnimation, value: screensaverNew)
+        .animation(SettingsMonitor.secondaryAnimation, value: isDisabled)
     }
     
     var body: some View {
-        if AuthType == .touchID || AuthType == .faceID {
-            touchIDExists
-        } else {
-            noTouchID
+        GroupBox {
+            if SettingsMonitor.passwordSaved {
+                if !loading {
+                    HStack{
+                        if AuthType == .faceID || AuthType == .touchID {
+                            touchIDExists
+                        } else {
+                            noTouchID
+                        }
+                        Spacer()
+                        PAMView
+                    }
+                } else {
+                    Spacer()
+                }
+            } else {
+                CustomViews.NoPasswordView(false, toggle: $dummy)
+            }
+        } label: {
+            CustomViews.AnimatedTextView(Input: "tid.title", TimeToStopAnimation: SettingsMonitor.secAnimDur)
+        }
+        .groupBoxStyle(Stylers.CustomGBStyle())
+        .onChange(of: status, perform: { newValue in
+            passwordExists = SettingsMonitor.passwordSaved
+        })
+        .animation(SettingsMonitor.secondaryAnimation, value: status)
+        .onAppear {
+            status = PAMManager.TouchID().analyzePam_d()
+            loading = false
+            passwordExists = SettingsMonitor.passwordSaved
+            
         }
     }
 }
