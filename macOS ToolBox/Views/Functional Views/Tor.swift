@@ -92,7 +92,7 @@ struct TorView: View {
         isConnected = connectivity.status()
     }
     
-    private func startStopButton() -> some View {
+    private var startStopButton: some View {
         VStack{
             Button {
                 if isConnected {
@@ -109,7 +109,7 @@ struct TorView: View {
     }
     
     //MARK: - Main View
-    private func mainView() -> some View {
+    private var mainView: some View {
         VStack{
             Image(systemName: !(connectedState == 100) ? "network" : "network.badge.shield.half.filled")
                 .font(.custom("San Francisco", size: 140))
@@ -150,7 +150,7 @@ struct TorView: View {
                 }.padding(.all)
             }
             Spacer()
-            startStopButton()
+            startStopButton
         }
     }
     
@@ -158,7 +158,7 @@ struct TorView: View {
     func generateView(_ geometry: GeometryProxy) -> some View {
         DispatchQueue.main.async { self.winFrame = geometry.size }
         return VStack{
-            mainView().onAppear {
+            mainView.onAppear {
                 isConnected = connectivity.status()
                 if !isConnected {
                     statusString = StringLocalizer("disconnected.string")

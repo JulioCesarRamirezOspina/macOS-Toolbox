@@ -207,6 +207,24 @@ public enum directionalFlip {
     case none
 }
 
+public enum pamTask {
+    case enable
+    case disable
+}
+
+public enum pamFile {
+    case sudo
+    case screensaver
+}
+
+public enum pamWhatIsEnabled {
+    case sudo
+    case screensaver
+    case both
+    case neither
+}
+
+
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
 public typealias ThermalData = (label: String, state: ThermalPressure)

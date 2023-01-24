@@ -112,7 +112,7 @@
 "alreadyConnected.string" = "The connection has already been established.";
 "settingsView.string" = "Here's couple application settings.\nHere'll be more in time as app functions being added...";
 
-"tid.title" = "TouchID systemwide";
+"tid.title" = "TouchID and Hardware Key";
 "done.title" = "TouchID activated.";
 "noTouchIDInstalled.string" = "It appears that TouchID is not installed on your Mac.";
 "done.disabled.title" = "TouchID deactivated.";
@@ -320,6 +320,9 @@
 "snapshots.string" = "Snapshots";
 "clearTM.string" = "Clear snapshots";
 "NODISKACCESS" = "To clear caches app needs to have Full Disk Access.";
+"PAMNODISKACCESS" = "No Full Disk Access.";
+"sudo.string" = "Hardware key with sudo";
+"screensaver.string" = "Hardware key with screensaver";
 "openDiskAccessPrefPane.string" = "Open Disk Access preferences";
 "justForCaches.string" = "Permission is needed to clear only caches. No other data will be accessed.";
 

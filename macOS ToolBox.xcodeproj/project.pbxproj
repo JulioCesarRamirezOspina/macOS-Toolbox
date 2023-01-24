@@ -11,6 +11,7 @@
 		9A28A069292D83ED001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
 		9A28A06D292D8538001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
+		9A6B99B4297EC11800F38BE1 /* PAM Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */; };
 		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
 		9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0482908BA2E003D7575 /* Assets.xcassets */; };
@@ -100,6 +101,7 @@
 		9A28A06C292D83F1001E2083 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A462A162912EA8F00D1723D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		9A5E706B290C1887000F479A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PAM Manager.swift"; sourceTree = "<group>"; };
 		9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift"; sourceTree = "<group>"; };
 		9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "macOS-ToolBox-Info.plist"; sourceTree = SOURCE_ROOT; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -340,6 +342,7 @@
 				9ABFD1302908BC67003D7575 /* SeedUtil.swift */,
 				9ABFD1312908BC67003D7575 /* Launchpad.swift */,
 				9ABFD1322908BC67003D7575 /* Dock Manager.swift */,
+				9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */,
 				9ABFD1332908BC67003D7575 /* Sleep Manager.swift */,
 			);
 			path = "System Settings";
@@ -544,6 +547,7 @@
 				9ABFD1412908BC67003D7575 /* Memory View.swift in Sources */,
 				9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */,
 				9ABFD14B2908BC67003D7575 /* Memory.swift in Sources */,
+				9A6B99B4297EC11800F38BE1 /* PAM Manager.swift in Sources */,
 				9ABFD1552908BC67003D7575 /* Launchpad.swift in Sources */,
 				9ABFD1462908BC67003D7575 /* Custom Views.swift in Sources */,
 				9ABFD14C2908BC67003D7575 /* Shell.swift in Sources */,
@@ -725,7 +729,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.3.8;
+				MARKETING_VERSION = 4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -771,7 +775,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.3.8;
+				MARKETING_VERSION = 4.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

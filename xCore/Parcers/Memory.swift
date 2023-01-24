@@ -372,7 +372,7 @@ public class Memory: xCore {
         NSWorkspace.shared.open(prefPaneURL!)
     }
     
-    private func diskAccess() -> Bool {
+    public func diskAccess() -> Bool {
         switch FileManager.default.isReadableFile(atPath: "/Library/Preferences/com.apple.TimeMachine.plist") {
         case true: return true
         case false: return false

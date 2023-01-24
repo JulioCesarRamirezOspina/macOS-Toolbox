@@ -24,7 +24,7 @@ struct CamperView: View {
     @State private var isRun = false
     
     private func tidIsEnabled() -> Bool {
-        let pam = Shell.macOS_Auth_Subsystem()
+        let pam = PAMManager.TouchID()
         return pam.analyzePam_d()
     }
     

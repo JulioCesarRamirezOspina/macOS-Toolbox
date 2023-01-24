@@ -33,7 +33,7 @@ struct TimeAndQuit: View {
                                                         blurBackground: true,
                                                         backgroundShadow: true,
                                                         render: .monochrome,
-                                                        glow: false))
+                                                        glow: true))
             }
             VStack{
                 VStack{

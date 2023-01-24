@@ -18,12 +18,12 @@ struct TouchIDView: View {
     @State private var loading = true
     @State private var dummy = false
     func run() -> Void {
-        Shell.macOS_Auth_Subsystem().switchState(password)
-        status = Shell.macOS_Auth_Subsystem().analyzePam_d()
+        PAMManager.TouchID().switchState(password)
+        status = PAMManager.TouchID().analyzePam_d()
     }
     
-    func img(_ colors: [Color]) -> some View {
-        Image(systemName: "touchid")
+    func img(_ colors: [Color], name: String) -> some View {
+        Image(systemName: name)
             .font(.custom("San Francisco", size: 140))
             .foregroundStyle(
                 RadialGradient(
@@ -52,13 +52,27 @@ struct TouchIDView: View {
         .groupBoxStyle(Stylers.CustomGBStyle())
         .background(content: {
             if status {
-                img(enabledColors)
+                img(enabledColors, name: "touchid")
             } else {
-                img(disabledColors)
+                img(disabledColors, name: "touchid")
             }
         })
     }
     
+    func isDisabledUpdate() -> Bool {
+        return (PAMManager.SystemAuthData().sudoContents.state == .enable) == sudoNew && screensaverNew == (PAMManager.SystemAuthData().screensaverContents.state == .enable)
+    }
+    
+    var allUp: Bool {
+        return PAMManager.SystemAuthData().sudoContents.state == .enable && PAMManager.SystemAuthData().screensaverContents.state == .enable
+    }
+    
+    var data = PAMManager.SystemAuthData()
+    @State var sudoOld = PAMManager.SystemAuthData().sudoContents.state == .enable
+    @State var screensaverOld = PAMManager.SystemAuthData().screensaverContents.state == .enable
+    @State var sudoNew = PAMManager.SystemAuthData().sudoContents.state == .enable
+    @State var screensaverNew = PAMManager.SystemAuthData().screensaverContents.state == .enable
+    @State var isDisabled = true
     var touchIDExists: some View {
         VStack {
             if SettingsMonitor.passwordSaved {
@@ -67,8 +81,43 @@ struct TouchIDView: View {
                         if !loading {
                             Spacer()
                             Group {
+                                if data.notInstalled() {
+                                    Text(data.localizedErrorReturner(1))
+                                }
+
+                                HStack(alignment: .center) {
+                                    Spacer()
+                                    Button {
+                                        screensaverNew.toggle()
+                                    } label: {
+                                        Text(StringLocalizer("screensaver.string"))
+                                    }
+                                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: screensaverNew ? "person.badge.key" : "person.badge.key.fill", enabled: screensaverNew, color: screensaverNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+
+                                    
+                                    Button {
+                                        sudoNew.toggle()
+                                    } label: {
+                                        Text(StringLocalizer("sudo.string"))
+                                    }
+                                    .buttonStyle(Stylers.ColoredButtonStyle(glyph: sudoNew ? "person.fill.checkmark" : "person.fill.questionmark", enabled: sudoNew, color: sudoNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                                    Spacer()
+                                }
+                                
                                 HStack(alignment: .center){
                                     Spacer()
+                                    
+                                    Button { [self] in
+                                        data.edit(!sudoNew ? .disable : .enable, .sudo, password)
+                                        data.edit(!screensaverNew ? .disable : .enable, .screensaver, password)
+                                        screensaverOld = data.screensaverContents.state == .enable
+                                        sudoOld = data.sudoContents.state == .enable
+                                        isDisabled = isDisabledUpdate()
+                                    } label: {
+                                        Text(StringLocalizer("save.button"))
+                                    }.disabled(isDisabled || data.notInstalled())
+                                        .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", disabled: isDisabled ||  data.notInstalled(), enabled: sudoNew != sudoOld || screensaverNew != screensaverOld, hideBackground: false, backgroundIsNotFill: true))
+                                    
                                     Button {
                                         run()
                                     } label: {
@@ -87,22 +136,42 @@ struct TouchIDView: View {
                 }
                 .groupBoxStyle(Stylers.CustomGBStyle())
                 .background(content: {
-                    if status {
-                        img(enabledColors)
-                    } else {
-                        img(disabledColors)
+                    HStack{
+                        if status {
+                            img(enabledColors, name: "touchid")
+                        } else {
+                            img(disabledColors, name: "touchid")
+                        }
+                        
+                        if allUp {
+                            img(enabledColors, name: "key.fill")
+                        } else {
+                            img(disabledColors, name: "key.fill")
+                        }
+                        
                     }
                 })
                 .onAppear {
-                    status = Shell.macOS_Auth_Subsystem().analyzePam_d()
+                    status = PAMManager.TouchID().analyzePam_d()
                     loading = false
                     passwordExists = SettingsMonitor.passwordSaved
                     
+                }.onChange(of: sudoOld) { newValue in
+                    isDisabled = isDisabledUpdate()
+                }.onChange(of: screensaverOld) { newValue in
+                    isDisabled = isDisabledUpdate()
+                }.onChange(of: sudoNew) { newValue in
+                    isDisabled = isDisabledUpdate()
+                }.onChange(of: screensaverNew) { newValue in
+                    isDisabled = isDisabledUpdate()
                 }
                 .onChange(of: status, perform: { newValue in
                     passwordExists = SettingsMonitor.passwordSaved
                 })
                 .animation(SettingsMonitor.secondaryAnimation, value: status)
+                .animation(SettingsMonitor.secondaryAnimation, value: sudoNew)
+                .animation(SettingsMonitor.secondaryAnimation, value: screensaverNew)
+                .animation(SettingsMonitor.secondaryAnimation, value: isDisabled)
             } else {
                 CustomViews.NoPasswordView(false, toggle: $dummy)
             }

@@ -111,7 +111,7 @@
 "settingsView.string" = "Тут есть пара-тройка настроек приложения. Со временем их будет больше, как и функционала у приложения...";
 "alreadyConnected.string" = "Соединение уже было установлено.";
 
-"tid.title" = "TouchID по всей macOS";
+"tid.title" = "TouchID и Аппаратный ключ";
 "done.title" = "TouchID активирован.";
 "done.disabled.title" = "TouchID деактивирован.";
 "noTouchIDInstalled.string" = "Похоже, что TouchID не установлен в Вашем Mac.";
@@ -320,6 +320,9 @@
 "snapshots.string" = "Снимков";
 "clearTM.string" = "Очистить снимки";
 "NODISKACCESS" = "Для очистки кешей приложению необходим полный доступ к диску.";
+"PAMNODISKACCESS" = "Нет доступа к диску.";
+"sudo.string" = "Аппаратный ключ с sudo";
+"screensaver.string" = "Аппаратный ключ на экране блокировки";
 "openDiskAccessPrefPane.string" = "Открыть настройки доступа";
 "justForCaches.string" = "Разрешение нужно только для очистки кешей. Никакие другие данные не будут затронуты.";
 
