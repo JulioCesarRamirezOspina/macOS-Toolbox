@@ -224,6 +224,13 @@ public enum pamWhatIsEnabled {
     case neither
 }
 
+public enum vmType {
+    case utm
+    case pvm
+    case vbox
+    case fusion
+    case unknown
+}
 
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
@@ -263,7 +270,7 @@ public struct VMPropertiesList: Identifiable, Comparable {
 
     public var name: String
     public var path: URL
-    public var fileExtension: String
+    public var fileExtension: vmType
     public var creationDate: String
     public var lastAccessDate: String
     public let id = UUID()

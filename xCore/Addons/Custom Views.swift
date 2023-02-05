@@ -41,6 +41,64 @@ public class CustomViews: xCore {
         }
     }
     
+    public struct ParallelsLogo: View {
+        public init(){}
+        
+        public var body: some View {
+            HStack{
+                Image(systemName: "line.diagonal")
+                    .rotationEffect(.degrees(-45), anchor: .center)
+                    .font(.custom("San Francisco", size: 140))
+                    .fontWeight(.light)
+                    .frame(width: 20, height: 140, alignment: .center)
+                Image(systemName: "line.diagonal")
+                    .rotationEffect(.degrees(-45), anchor: .center)
+                    .font(.custom("San Francisco", size: 140))
+                    .fontWeight(.light)
+                    .frame(width: 20, height: 140, alignment: .center)
+            }
+            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
+            .opacity(0.5).blur(radius: 2)
+            .shadow(radius: 15)
+            .padding(.all)
+        }
+    }
+    
+    public struct VBoxLogo: View {
+        public init(){}
+        public var body: some View {
+            Image(systemName: "cube.fill")
+                .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
+                .opacity(0.5).blur(radius: 2)
+                .shadow(radius: 15)
+                .padding(.all)
+        }
+    }
+    
+    public struct FusionLogo: View {
+        public init(){}
+        public var body: some View {
+            GeometryReader { gr in
+                Path { path in
+                    path.addLines([CGPoint(x: 0, y: 0), CGPoint(x: gr.size.width / 3 * 2, y: 0),
+                                   CGPoint(x: gr.size.width / 3 * 2, y: gr.size.height / 3),
+                                   CGPoint(x: gr.size.width, y: gr.size.height / 3),
+                                   CGPoint(x: gr.size.width, y: gr.size.height),
+                                   CGPoint(x: gr.size.width / 3, y: gr.size.height),
+                                   CGPoint(x: gr.size.width / 3, y: gr.size.height - gr.size.height / 3),
+                                   CGPoint(x: 0, y: gr.size.height - gr.size.height / 3),
+                                   CGPoint(x: 0, y: 0)
+                                  ])
+                    
+                }.stroke(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140), style: StrokeStyle(lineWidth: 10, lineCap: CoreGraphics.CGLineCap.round, lineJoin: CoreGraphics.CGLineJoin.round))
+            }
+            .frame(width: 140, height: 140, alignment: .center)
+            .opacity(0.5).blur(radius: 2)
+            .shadow(radius: 15)
+            .padding(.all)
+        }
+    }
+    
     public struct LinuxLogo: View {
         public init(){}
         public var body: some View {

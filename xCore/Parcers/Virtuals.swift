@@ -12,8 +12,9 @@ import SwiftUI
 public class Virtuals: xCore {
     public override init() {}
     //MARK: - Constants
-    private static let vmList = ["utm", "pvm", "vbox"]
-
+    
+    private static let vmList = ["utm", "pvm", "vbox", "vmwarevm"]
+    
     //MARK: - Vars
     private static var alreadyCheck = false
     
@@ -88,8 +89,16 @@ public class Virtuals: xCore {
                     let dates = getDates(url: url)
                     let creationDate = dates.creation
                     let lastAccessDate = dates.access
+                    var vmType: vmType?
                     if ext == fileExtension {
-                        retval.append(.init(name: name, path: url, fileExtension: fileExtension, creationDate: creationDate, lastAccessDate: lastAccessDate))
+                        switch ext {
+                        case "pvm" : vmType = .pvm
+                        case "vbox": vmType = .vbox
+                        case "utm" : vmType = .utm
+                        case "vmwarevm" : vmType = .fusion
+                        default: vmType = .unknown
+                        }
+                        retval.append(.init(name: name, path: url, fileExtension: vmType!, creationDate: creationDate, lastAccessDate: lastAccessDate))
                     }
                 }
                 return retval
@@ -115,25 +124,13 @@ public class Virtuals: xCore {
                         RoundedRectangle(cornerRadius: 15)
                             .foregroundStyle(.ultraThinMaterial.shadow(.inner(radius: 15)))
                             .frame(width: width)
-                        if file.fileExtension == "utm" {
-                            CustomViews.UTMLogo()
-                        } else {
-                            HStack{
-                                Image(systemName: "line.diagonal")
-                                    .rotationEffect(.degrees(-45), anchor: .center)
-                                    .font(.custom("San Francisco", size: 140))
-                                    .fontWeight(.light)
-                                    .frame(width: 20, height: 140, alignment: .center)
-                                Image(systemName: "line.diagonal")
-                                    .rotationEffect(.degrees(-45), anchor: .center)
-                                    .font(.custom("San Francisco", size: 140))
-                                    .fontWeight(.light)
-                                    .frame(width: 20, height: 140, alignment: .center)
-                            }
-                            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
-                            .opacity(0.5).blur(radius: 2)
-                            .shadow(radius: 15)
-                            .padding(.all)
+                        switch file.fileExtension {
+                        case .fusion : CustomViews.FusionLogo()
+                        case .utm : CustomViews.UTMLogo()
+                        case .pvm : CustomViews.ParallelsLogo()
+                        case .vbox : CustomViews.VBoxLogo()
+                        default: CustomViews.ImageView(imageName: "questionmark")
+                            
                         }
                     }
                     VStack{
@@ -151,7 +148,7 @@ public class Virtuals: xCore {
                                 }
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt",
                                                                         alwaysShowTitle: false,
-                                                                        color: file.fileExtension == "utm" ? .blue : .red,
+                                                                        color: file.fileExtension == .utm ? .blue : .red,
                                                                         glow: true))
                         }
                         HStack{
