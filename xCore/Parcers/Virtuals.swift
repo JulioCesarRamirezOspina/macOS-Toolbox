@@ -148,7 +148,10 @@ public class Virtuals: xCore {
                                 }
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "bolt",
                                                                         alwaysShowTitle: false,
-                                                                        color: file.fileExtension == .utm ? .blue : .red,
+                                                                        color: file.fileExtension == .utm ? .blue :
+                                                                            file.fileExtension == .fusion ? .green :
+                                                                            file.fileExtension == .pvm ? .red :
+                                                                            file.fileExtension == .vbox ? .cyan : .white,
                                                                         glow: true))
                         }
                         HStack{
