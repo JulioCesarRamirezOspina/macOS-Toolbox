@@ -151,6 +151,7 @@ struct CamperView: View {
             isRun = false
         }
         .animation(SettingsMonitor.secondaryAnimation, value: isReboot)
+        .animation(SettingsMonitor.secondaryAnimation, value: isRun)
     }
 }
 

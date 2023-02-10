@@ -14,27 +14,31 @@ public class CustomViews: xCore {
     public struct UTMLogo: View {
         public init(){}
         public var body: some View {
-            ZStack(alignment: .center){
-                Circle()
-                    .frame(width: 20, height: 20, alignment: .center)
-                    .padding(.all)
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .inset(by: 10)
-                    .stroke(lineWidth: 5)
-                    .frame(width: 60, height: 60, alignment: .center)
-                    .padding(.all)
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .inset(by: 10)
-                    .stroke(lineWidth: 5)
-                    .frame(width: 100, height: 100, alignment: .center)
-                    .padding(.all)
-                RoundedRectangle(cornerRadius: 15, style: .continuous)
-                    .inset(by: 10)
-                    .stroke(lineWidth: 5)
-                    .frame(width: 140, height: 140, alignment: .center)
-                    .padding(.all)
+            GeometryReader { gr in
+                Path { path in
+                    path.addLines([
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 2),
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 2)
+                    ])
+                }
+                .stroke(.cyan, style: .init(lineWidth: 20, lineCap: .round, lineJoin: .round))
+                
+                Path { path in
+                    path.addRect(CGRect(x: gr.size.width / 8, y: gr.size.height / 8, width: gr.size.width - gr.size.width / 8 * 2, height: gr.size.height - gr.size.height / 8 * 2))
+                }
+                .stroke(.cyan, style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                
+                Path { path in
+                    path.addRect(CGRect(x: gr.size.width / 4, y: gr.size.height / 4, width: gr.size.width - gr.size.width / 4 * 2, height: gr.size.height - gr.size.height / 4 * 2))
+                }
+                .stroke(.blue, style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                
+                Path { path in
+                    path.addRect(CGRect(x: 0, y: 0, width: gr.size.width, height: gr.size.height))
+                }
+                .stroke(.blue, style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
             }
-            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
+            .frame(width: 140, height: 140, alignment: .center)
             .opacity(0.5).blur(radius: 2)
             .shadow(radius: 15)
             .padding(.all)
@@ -45,19 +49,21 @@ public class CustomViews: xCore {
         public init(){}
         
         public var body: some View {
-            HStack{
-                Image(systemName: "line.diagonal")
-                    .rotationEffect(.degrees(-45), anchor: .center)
-                    .font(.custom("San Francisco", size: 140))
-                    .fontWeight(.light)
-                    .frame(width: 20, height: 140, alignment: .center)
-                Image(systemName: "line.diagonal")
-                    .rotationEffect(.degrees(-45), anchor: .center)
-                    .font(.custom("San Francisco", size: 140))
-                    .fontWeight(.light)
-                    .frame(width: 20, height: 140, alignment: .center)
+            GeometryReader {gr in
+                Path {twix in
+                    twix.addLines([
+                        .init(x: gr.size.width / 3, y: 0),
+                        .init(x: gr.size.width / 3, y: gr.size.height)
+                    ])
+                    twix.closeSubpath()
+                    twix.addLines([
+                        .init(x: gr.size.width / 3 * 2, y: 0),
+                        .init(x: gr.size.width / 3 * 2, y: gr.size.height)
+                    ])
+                }
+                .stroke(RadialGradient(colors: [.red, .white], center: .center, startRadius: 0, endRadius: gr.size.height), style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
             }
-            .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
+            .frame(width: 140, height: 140, alignment: .center)
             .opacity(0.5).blur(radius: 2)
             .shadow(radius: 15)
             .padding(.all)
@@ -67,11 +73,54 @@ public class CustomViews: xCore {
     public struct VBoxLogo: View {
         public init(){}
         public var body: some View {
-            Image(systemName: "cube.fill")
-                .foregroundStyle(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140))
-                .opacity(0.5).blur(radius: 2)
-                .shadow(radius: 15)
-                .padding(.all)
+            GeometryReader { gr in
+                Path {leftSide in
+                    leftSide.addLines([
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 3),
+                        CGPoint(x: 0, y: gr.size.height / 6),
+                        CGPoint(x: 0, y: gr.size.height - (gr.size.height / 6)),
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height)
+                    ])
+                    leftSide.closeSubpath()
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.green)
+                Path {rightSide in
+                    rightSide.addLines([
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 3),
+                        CGPoint(x: gr.size.width, y: gr.size.height / 6),
+                        CGPoint(x: gr.size.width, y: gr.size.height - (gr.size.height / 6)),
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height)
+                    ])
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.red)
+                Path {top in
+                    top.addLines([
+                        CGPoint(x: 0, y: gr.size.height / 6),
+                        CGPoint(x: gr.size.width / 2, y: 0),
+                        CGPoint(x: gr.size.width, y: gr.size.height / 6),
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 3),
+                        CGPoint(x: 0, y: gr.size.height / 6)
+                    ])
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.blue)
+                Path { centralLine in
+                    centralLine.addLines([
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height / 3),
+                        CGPoint(x: gr.size.width / 2, y: gr.size.height)
+                    ])
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .onAppear {
+                    print(gr.size)
+                }
+            }
+            .frame(width: 140, height: 140, alignment: .center)
+            .opacity(0.5).blur(radius: 2)
+            .shadow(radius: 15)
+            .padding(.all)
         }
     }
     
@@ -79,18 +128,29 @@ public class CustomViews: xCore {
         public init(){}
         public var body: some View {
             GeometryReader { gr in
-                Path { path in
-                    path.addLines([CGPoint(x: 0, y: 0), CGPoint(x: gr.size.width / 3 * 2, y: 0),
-                                   CGPoint(x: gr.size.width / 3 * 2, y: gr.size.height / 3),
-                                   CGPoint(x: gr.size.width, y: gr.size.height / 3),
-                                   CGPoint(x: gr.size.width, y: gr.size.height),
-                                   CGPoint(x: gr.size.width / 3, y: gr.size.height),
-                                   CGPoint(x: gr.size.width / 3, y: gr.size.height - gr.size.height / 3),
-                                   CGPoint(x: 0, y: gr.size.height - gr.size.height / 3),
-                                   CGPoint(x: 0, y: 0)
-                                  ])
-                    
-                }.stroke(RadialGradient(colors: [.blue, .gray, .white], center: .center, startRadius: 0, endRadius: 140), style: StrokeStyle(lineWidth: 10, lineCap: CoreGraphics.CGLineCap.round, lineJoin: CoreGraphics.CGLineJoin.round))
+                Path { bluePath in
+                    bluePath.addLines([
+                        CGPoint(x: gr.size.width / 3 + 10, y: gr.size.height / 3 * 2),
+                        CGPoint(x: 0, y: gr.size.height / 3 * 2),
+                        CGPoint(x: 0, y: 0),
+                        CGPoint(x: gr.size.width / 3 * 2, y: 0),
+                        CGPoint(x: gr.size.width / 3 * 2, y: gr.size.height / 3 + 10)
+                    ])
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.blue)
+                
+                Path { redPath in
+                    redPath.addLines([
+                        CGPoint(x: gr.size.width / 3 * 2 - 10, y: gr.size.height / 3),
+                        CGPoint(x: gr.size.width, y: gr.size.height / 3),
+                        CGPoint(x: gr.size.width, y: gr.size.height),
+                        CGPoint(x: gr.size.width / 3, y: gr.size.height),
+                        CGPoint(x: gr.size.width / 3, y: gr.size.height / 3 * 2 - 10)
+                    ])
+                }
+                .stroke(style: .init(lineWidth: 10, lineCap: .round, lineJoin: .round))
+                .foregroundColor(.red)
             }
             .frame(width: 140, height: 140, alignment: .center)
             .opacity(0.5).blur(radius: 2)

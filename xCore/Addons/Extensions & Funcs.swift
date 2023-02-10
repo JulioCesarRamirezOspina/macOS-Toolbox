@@ -303,9 +303,12 @@ extension View {
 }
 //MARK: - Structs & Classes
 public struct PullToRefresh: View {
-    
+    public init (coordinateSpaceName: String, onRefresh: @escaping () -> Void) {
+        self.coordinateSpaceName = coordinateSpaceName
+        self.onRefresh = onRefresh
+    }
     var coordinateSpaceName: String
-    var onRefresh: ()->Void
+    var onRefresh: () -> Void
     
     @State var needRefresh: Bool = false
     
