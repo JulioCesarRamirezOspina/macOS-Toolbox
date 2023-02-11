@@ -322,6 +322,7 @@ public class DisksDisplay: xCore {
                     } catch _ {}
                 }while(isRun)
             }
+            .animation(SettingsMonitor.secondaryAnimation, value: isRun)
         }
     }
 }

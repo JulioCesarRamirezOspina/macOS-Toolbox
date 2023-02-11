@@ -500,90 +500,104 @@ public class SystemStatus: xCore {
                 }
             }
         }
-        public var body: some View {
-            if !SettingsMonitor.isInMenuBar {
-                Spacer().frame(height: 50)
-            }
-            GeometryReader { g in
-                VStack{
-                    ScrollView(.vertical, showsIndicators: true) {
-                        DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
-                            .padding(.all)
-                        Divider()
-                        CPUDisplay.view(isRun: $isRun)
-                            .padding(.all)
-                        Divider()
-                        MemoryDisplay.view(isRun: $isRun)
-                            .padding(.all)
-                        Divider()
-                        macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
-                                         HalfScreen: false,
-                                         Alignment: .leading,
-                                         ShowTitle: true)
-                        .padding(.all)
-                        if batteryIsPresent {
-                            Divider()
-                            BatteryDisplay.view(isRun: $isRun)
-                                .padding(.all)
-                        }
-                    }
-                    .onAppear(perform: {
-                        height = g.size.height / 12
-                    })
-                    .onChange(of: g.size.height, perform: { newValue in
-                        height = newValue / 12
-                    })
-                    .frame(width: g.size.width, height: g.size.height, alignment: .center)
+        
+        private var preView: some View {
+            VStack{
+                if !SettingsMonitor.isInMenuBar {
+                    Spacer().frame(height: 50)
                 }
-            }
-            .sheet(isPresented: $emergencyPopover, content: {
-                VStack{
-                    ZStack{
-                        RoundedRectangle(cornerRadius: 15)
-                            .foregroundStyle(.radialGradient(colors: [.blue, .blue, .cyan], center: .center, startRadius: 0, endRadius: 40))
-                            .frame(width: 75, height: 75, alignment: .center)
-                            .shadow(radius: 15)
-                        Image(systemName: "lock.trianglebadge.exclamationmark.fill")
-                            .symbolRenderingMode(.multicolor)
-                            .foregroundStyle(.mint, .yellow)
-                            .font(Font.custom("San Francisco", size: 40))
+                GeometryReader { g in
+                    VStack{
+                        ScrollView(.vertical, showsIndicators: true) {
+                            DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
+                                .padding(.all)
+                            Divider()
+                            CPUDisplay.view(isRun: $isRun)
+                                .padding(.all)
+                            Divider()
+                            MemoryDisplay.view(isRun: $isRun)
+                                .padding(.all)
+                            Divider()
+                            macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
+                                             HalfScreen: false,
+                                             Alignment: .leading,
+                                             ShowTitle: true)
+                            .padding(.all)
+                            if batteryIsPresent {
+                                Divider()
+                                BatteryDisplay.view(isRun: $isRun)
+                                    .padding(.all)
+                            }
+                        }
+                        .onAppear(perform: {
+                            height = g.size.height / 12
+                        })
+                        .onChange(of: g.size.height, perform: { newValue in
+                            height = newValue / 12
+                        })
+                        .frame(width: g.size.width, height: g.size.height, alignment: .center)
+                    }
+                }
+                .sheet(isPresented: $emergencyPopover, content: {
+                    VStack{
+                        ZStack{
+                            RoundedRectangle(cornerRadius: 15)
+                                .foregroundStyle(.radialGradient(colors: [.blue, .blue, .cyan], center: .center, startRadius: 0, endRadius: 40))
+                                .frame(width: 75, height: 75, alignment: .center)
+                                .shadow(radius: 15)
+                            Image(systemName: "lock.trianglebadge.exclamationmark.fill")
+                                .symbolRenderingMode(.multicolor)
+                                .foregroundStyle(.mint, .yellow)
+                                .font(Font.custom("San Francisco", size: 40))
+                        }
+                        .padding(.all)
+                        Spacer()
+                        Text("NODISKACCESS")
+                            .font(.title2)
+                            .padding(.all)
+                        Text("justForCaches.string")
+                            .font(.title3)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
+                            .padding(.all)
+                        HStack{
+                            Button {
+                                Memory().openSecurityPrefPane()
+                                emergencyPopover = false
+                            } label: {
+                                Text("openDiskAccessPrefPane.string")
+                            }
+                            .keyboardShortcut(.defaultAction)
+                            Spacer()
+                            Button {
+                                emergencyPopover = false
+                            } label: {
+                                Text("cancel.button")
+                            }
+                            .keyboardShortcut(.cancelAction)
+                        }.padding(.all)
                     }
                     .padding(.all)
-                    Spacer()
-                    Text("NODISKACCESS")
-                        .font(.title2)
-                        .padding(.all)
-                    Text("justForCaches.string")
-                        .font(.title3)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
-                        .padding(.all)
-                    HStack{
-                        Button {
-                            Memory().openSecurityPrefPane()
-                            emergencyPopover = false
-                        } label: {
-                            Text("openDiskAccessPrefPane.string")
-                        }
-                        .keyboardShortcut(.defaultAction)
-                        Spacer()
-                        Button {
-                            emergencyPopover = false
-                        } label: {
-                            Text("cancel.button")
-                        }
-                        .keyboardShortcut(.cancelAction)
-                    }.padding(.all)
-                }
+                    .backgroundStyle(.ultraThinMaterial)
+                })
                 .padding(.all)
-                .backgroundStyle(.ultraThinMaterial)
-            })
-            .padding(.all)
+            }
+        }
+        
+        public var body: some View {
+            VStack {
+                if isRun {
+                    preView
+                } else {
+                    Spacer()
+                }
+            }
             .onAppear(perform: {
                 isRun = true
             })
             .onDisappear(perform: {
                 isRun = false
             })
+            .animation(SettingsMonitor.secondaryAnimation, value: isRun)
         }
     }
     // MARK: - Switcher View
@@ -596,22 +610,29 @@ public class SystemStatus: xCore {
         var withButton: Bool
         public var body: some View {
             VStack{
-                if toggle {
-                    StatusView().transition(.push(from: toggle ? .top : .bottom))
-                } else {
-                    InfoView(toggle: $toggle, withButton: withButton).transition(.push(from: toggle ? .top : .bottom))
-                }
+                InfoView(toggle: $toggle, withButton: withButton).transition(.push(from: !toggle ? .top : .bottom))
             }
-            .background(content: {
-                if toggle {
-                    RoundedRectangle(cornerRadius: 15)
-                        .foregroundStyle(.ultraThinMaterial)
-                        .shadow(radius: 5)
-                        .transition(.push(from: toggle ? .top : .bottom))
-                        .padding(.all)
-                }
-            })
             .animation(SettingsMonitor.secondaryAnimation, value: toggle)
+            .sheet(isPresented: $toggle) {
+                VStack{
+                    StatusView()
+                        .transition(.push(from: !toggle ? .top : .bottom))
+                        .frame(width: SettingsMonitor.isInMenuBar ? NSApp.keyWindow?.frame.width : (NSApp.keyWindow?.frame.width)! / 3 * 2,
+                               height: SettingsMonitor.isInMenuBar ? NSApp.keyWindow?.frame.height : (NSApp.keyWindow?.frame.width)! / 3 * 2,
+                               alignment: .center)
+                    Button {
+                        toggle.toggle()
+                    } label: {
+                        Text("goBack.button")
+                    }
+                    .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                    .focusable(false)
+                    .padding(.bottom)
+                }
+                .background(Stylers.VisualEffectView()).ignoresSafeArea()
+                .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
+                            EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+            }.padding(.top)
         }
     }
 }

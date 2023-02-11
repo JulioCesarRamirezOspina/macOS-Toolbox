@@ -35,14 +35,7 @@ struct MainView: View {
 					}
 				}
 			Spacer()
-			SystemStatus.Switcher(toggleViews: $isMore, withButton: true)
-            if isMore {
-                Button("goBack.button") {
-                    isMore.toggle()
-                }
-                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: 150, height: 50, color: .blue))
-                .padding(.all)
-            }
+            SystemStatus.Switcher(toggleViews: $isMore, withButton: true)
 		}
 	}
     
@@ -170,6 +163,7 @@ struct MainView: View {
                                 }
                             })
                             .buttonStyle(.borderless)
+                            .focusable(false)
                             Divider()
                             GeometryReader { pr in
                                 ScrollView(.vertical, showsIndicators: true) {
@@ -180,6 +174,7 @@ struct MainView: View {
                             TimeAndQuit(colorScheme: $colorScheme)
                                 .background(SplitViewAccessor(isCollapsed: $collapsed))
                                 .listStyle(.sidebar)
+                                .focusable(false)
                         }
                         .border(.separator.opacity(SettingsMonitor.isInMenuBar ? 1 : 0))
                     }, detail: {

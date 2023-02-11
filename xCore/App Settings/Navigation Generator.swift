@@ -110,6 +110,7 @@ public struct NavigationLinkGenerator: View {
                 .onHover { Bool in
                     inLowPower = ProcessInfo.processInfo.isLowPowerModeEnabled
                 }
+                .focusable(false)
             case .spacer:
                 Spacer()
             case .divider:
