@@ -58,7 +58,6 @@ struct PasswordSettings: View {
                             }
                             .keyboardShortcut(.defaultAction).disabled(password == "")
                             .buttonStyle(Stylers.ColoredButtonStyle(disabled: password == "", enabled: password != "", alwaysShowTitle: true, width: g.size.width / 5, height: 50, color: .cyan, backgroundShadow: true))
-                            .focusable(false)
                             Spacer()
                             Button {
                                 SettingsMonitor.password = ""
@@ -69,7 +68,6 @@ struct PasswordSettings: View {
                             }
                             .disabled(!passwordSaved)
                             .buttonStyle(Stylers.ColoredButtonStyle(disabled: !passwordSaved, alwaysShowTitle: true, width: g.size.width / 5, height: 50, color: .red, backgroundShadow: true))
-                            .focusable(false)
 
                         }.padding(.all)
                     }

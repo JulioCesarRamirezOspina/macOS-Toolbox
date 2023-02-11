@@ -34,7 +34,6 @@ struct TimeAndQuit: View {
                                                         backgroundShadow: true,
                                                         render: .monochrome,
                                                         glow: true))
-                .focusable(false)
             }
             VStack{
                 VStack{
@@ -56,7 +55,6 @@ struct TimeAndQuit: View {
                     }
                     .keyboardShortcut(.cancelAction)
                     .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, hideBackground: true))
-                    .focusable(false)
                     .modifier(CustomViews.DualActionMod(tapAction: {
                         if SettingsMonitor.isInMenuBar {
                             AppDelegate.tog()

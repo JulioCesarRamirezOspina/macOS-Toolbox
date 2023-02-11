@@ -55,7 +55,7 @@ struct RAMDiskView: View {
                         selection = 0
                     }
                 }
-                    .buttonStyle(Stylers.ColoredButtonStyle(disabled: pickerDisabled || clensingInProgress, enabled: selection == p, alwaysShowTitle: true ,color: .cyan, backgroundIsNotFill: true)).focusable(false)})
+                    .buttonStyle(Stylers.ColoredButtonStyle(disabled: pickerDisabled || clensingInProgress, enabled: selection == p, alwaysShowTitle: true ,color: .cyan, backgroundIsNotFill: true))})
             }
         }
         return retval
@@ -128,7 +128,6 @@ struct RAMDiskView: View {
         }
         .disabled(!drivesCreated)
         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "externaldrive.badge.minus", disabled: !drivesCreated, enabled: drivesCreated, color: .red, backgroundIsNotFill: true))
-        .focusable(false)
     }
     
     private func Title(width: CGFloat, height: CGFloat) -> some View {
@@ -281,7 +280,6 @@ struct RAMDiskView: View {
             Text("createDisk.string")
         }
         .buttonStyle(Stylers.ColoredButtonStyle(glyphs: clensingInProgress ? ["externaldrive.badge.plus","line.diagonal"] : ["externaldrive.badge.plus"],disabled: clensingInProgress || selection == 0, enabled: selection != 0, alwaysShowTitle: selection != 0, color: .blue, backgroundIsNotFill: true))
-        .focusable(false)
         .keyboardShortcut(.defaultAction)
         .disabled(pickerDisabled || clensingInProgress || selection == 0)
         .onHover { t in
@@ -345,7 +343,6 @@ struct RAMDiskView: View {
             Text("cancel.button")
         }
         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "memorychip", disabled: false, enabled: true, alwaysShowTitle: true, width: size.width - 10, height: size.height, color: .green))
-        .focusable(false)
     }
     
     private func ClearRAMButton(width: CGFloat, height: CGFloat) -> some View {
@@ -360,7 +357,6 @@ struct RAMDiskView: View {
             Text(clensingInProgress ? "clensing.string" : "clearRAM.string")
         }
         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "memorychip", disabled: clensingInProgress, enabled: sheetIsPresented, alwaysShowTitle: clensingInProgress, width: width - 10, height: height, color: .green))
-        .focusable(false)
         .sheet(isPresented: $popoverIsPresented) {
             CustomViews.NoPasswordView(true, toggle: $popoverIsPresented)
         }

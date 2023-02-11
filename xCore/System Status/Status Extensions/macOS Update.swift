@@ -67,9 +67,7 @@ public class macOSUpdate: xCore {
                                     actuallyChangedSettings = true
                                 } label: {
                                     Text("seed.public")
-                                }
-                                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "β", enabled: selection == 1, width: g.size.width / 3 - 10, color: .blue))
-                                .focusable(false)
+                                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "β", enabled: selection == 1, width: g.size.width / 3 - 10, color: .blue))
                                 Spacer()
                                 Button {
                                     selection = 2
@@ -80,9 +78,7 @@ public class macOSUpdate: xCore {
                                     actuallyChangedSettings = true
                                 } label: {
                                     Text("seed.dev")
-                                }
-                                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "𝛼", enabled: selection == 2, width: g.size.width / 3 - 10, color: .cyan))
-                                .focusable(false)
+                                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "𝛼", enabled: selection == 2, width: g.size.width / 3 - 10, color: .cyan))
                                 Spacer()
                                 Button {
                                     selection = 0
@@ -92,9 +88,7 @@ public class macOSUpdate: xCore {
                                     actuallyChangedSettings = true
                                 } label: {
                                     Text(selection == 0 ? "seed.none" : "unenroll.button")
-                                }
-                                .buttonStyle(Stylers.ColoredButtonStyle(glyph: "ω", enabled: selection == 0, width: g.size.width / 3 - 10, color: .red))
-                                .focusable(false)
+                                }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "ω", enabled: selection == 0, width: g.size.width / 3 - 10, color: .red))
                             }
                             .onAppear {
                                 width = g.size.width

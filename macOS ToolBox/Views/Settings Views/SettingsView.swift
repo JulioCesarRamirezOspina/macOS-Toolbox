@@ -53,7 +53,6 @@ struct SettingsView: View {
                             SettingsOverview(pcs: $colorScheme)
                         })
                         .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, hideBackground: true, render: .monochrome))
-                        .focusable(false)
                     }
                     .background(.ultraThickMaterial)
                 } detail: {

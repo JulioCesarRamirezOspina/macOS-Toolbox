@@ -80,7 +80,6 @@ public class SystemStatus: xCore {
                                                                 height: 50,
                                                                 color: button.color,
                                                                 hideBackground: true))
-                        .focusable(false)
                 } else {
                     if button.activity != .displayOff {
                         Button {} label: {}
@@ -94,7 +93,6 @@ public class SystemStatus: xCore {
                                                                     width: 50, height: 50,
                                                                     color: button.color,
                                                                     hideBackground: true))
-                            .focusable(false)
                     } else {
                         Button { actions(button.activity) } label: { }
                             .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
@@ -103,7 +101,6 @@ public class SystemStatus: xCore {
                                                                     height: 50,
                                                                     color: button.color,
                                                                     hideBackground: true))
-                            .focusable(false)
                     }
                 }
             }
@@ -390,7 +387,6 @@ public class SystemStatus: xCore {
                                                                 width: deviceImage(scale: SettingsMonitor.isInMenuBar ? 2 : 1).size.width / 1.5,
                                                                 height: deviceImage(scale: SettingsMonitor.isInMenuBar ? 2 : 1).size.height / 2,
                                                                 hideBackground: true))
-                        .focusable(false)
                     }
                 }.padding(.all)
                 Text(modelName.label).font(.largeTitle)

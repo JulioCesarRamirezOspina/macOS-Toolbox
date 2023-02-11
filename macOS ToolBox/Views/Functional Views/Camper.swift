@@ -62,7 +62,6 @@ struct CamperView: View {
                         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "restart.circle",
                                                                 enabled: isReboot,
                                                                 color: .red))
-                        .focusable(false)
                         Button {
                             nextOnly.toggle()
                         } label: {
@@ -71,7 +70,6 @@ struct CamperView: View {
                         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "repeat.1.circle",
                                                                 enabled: nextOnly,
                                                                 color: .blue))
-                        .focusable(false)
                     }
                     BootCampStart.setBootDevice(diskLabel: diskLabelSet, password: password, nextOnly: nextOnly, isReboot: isReboot).keyboardShortcut(.defaultAction).padding().disabled(!BootCampStart.getOSType(diskLabel: diskLabelSet).canBoot)
                         .buttonStyle(Stylers.ColoredButtonStyle(glyph:
@@ -79,7 +77,6 @@ struct CamperView: View {
                                                                 alwaysShowTitle: false,
                                                                 color: .blue,
                                                                 backgroundShadow: true))
-                        .focusable(false)
                 }
             }
         }

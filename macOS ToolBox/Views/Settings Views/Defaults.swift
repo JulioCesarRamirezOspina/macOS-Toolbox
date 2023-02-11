@@ -38,7 +38,6 @@ struct Defaults: View {
                             CustomViews.AnimatedTextView(Input: "all.default", Font: .title2, FontWeight: .bold).padding(.all)
                         }
                         .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: gp.size.width, height: gp.size.height, color: .red))
-                        .focusable(false)
                     }
                 }.padding(.all)
             }

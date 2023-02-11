@@ -41,7 +41,6 @@ struct DevIDSettings: View {
                             }
                             .disabled(devIDString == "")
                             .buttonStyle(Stylers.ColoredButtonStyle(disabled: devIDString == "", enabled: devIDString != "", alwaysShowTitle: true, width: g.size.width / 5, height: 50, color: .cyan, backgroundShadow: true))
-                            .focusable(false)
                             Spacer()
                             Button {
                                 let dev = tryToGetDeveloperIDInstallerSignature()
@@ -61,7 +60,6 @@ struct DevIDSettings: View {
                                 Text(StringLocalizer("autofill.string"))
                             }
                             .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: g.size.width / 5, height: 50, color: .green, backgroundShadow: true))
-                            .focusable(false)
                             Spacer()
                             Button {
                                 SettingsMonitor.devID = ""
@@ -71,7 +69,6 @@ struct DevIDSettings: View {
                                 Text(StringLocalizer("password.remove"))
                             }
                             .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, width: g.size.width / 5, height: 50, color: .red, backgroundShadow: true))
-                            .focusable(false)
                         }.padding(.all)
                     }
                 }

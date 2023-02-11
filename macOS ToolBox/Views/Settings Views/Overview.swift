@@ -45,7 +45,6 @@ struct SettingsOverview: View {
                                                 color: .indigo,
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
 
     private var AutoLaunch: some View {
@@ -62,7 +61,6 @@ struct SettingsOverview: View {
                                                 color: .cyan,
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
     
     private var ShowSerialNumber: some View {
@@ -80,7 +78,6 @@ struct SettingsOverview: View {
                                                 hideBackground: false,
                                                 backgroundShadow: true,
                                                 glyphBlured: !showSerialNumber))
-        .focusable(false)
     }
     
     private var IsInMenuBar: some View {
@@ -97,7 +94,6 @@ struct SettingsOverview: View {
                                                 color: Color(nsColor: .findHighlightColor),
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
 
     private var BatteryButton: some View {
@@ -119,7 +115,6 @@ struct SettingsOverview: View {
                                                 color: .green,
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
     
     private var MaintenanceButton: some View {
@@ -138,7 +133,6 @@ struct SettingsOverview: View {
                                                 color: .cyan,
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
     
     private var PasswordStateButton: some View {
@@ -154,7 +148,6 @@ struct SettingsOverview: View {
                                                 color: SettingsMonitor.passwordSaved ? .green : .red,
                                                 hideBackground: false,
                                                 backgroundShadow: true))
-        .focusable(false)
     }
     
     private var AppTheme: some View {
@@ -180,7 +173,6 @@ struct SettingsOverview: View {
                             .blue,
                     render: .hierarchical)
                 )
-                .focusable(false)
             }
         }
     }

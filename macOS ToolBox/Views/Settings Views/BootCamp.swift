@@ -82,7 +82,6 @@ struct BootcampSettings: View {
                         }
                         .padding(.all)
                        .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, height: 50, color: .red, backgroundShadow: true))
-                       .focusable(false)
                 }
                 } else {
                     Spacer()
