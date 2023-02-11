@@ -105,6 +105,7 @@ struct TorView: View {
             }
             .keyboardShortcut(.defaultAction).disabled(isDisabled)
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "point.3.filled.connected.trianglepath.dotted", disabled: isDisabled, enabled: isConnected, color: .blue, backgroundIsNotFill: true))
+            .focusable(false)
         }.padding(.all)
     }
     

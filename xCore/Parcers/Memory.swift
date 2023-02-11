@@ -228,6 +228,7 @@ public class Memory: xCore {
                                                     alwaysShowTitle: true,
                                                     color: .blue,
                                                     glow: true))
+            .focusable(false)
         }
         return (view: view, snapshotsCount: TimeMachineCount())
     }

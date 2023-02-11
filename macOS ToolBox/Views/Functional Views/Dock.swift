@@ -34,18 +34,21 @@ struct DockManagerView: View {
                     Text("suckAnim.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "chevron.down", enabled: animType == .suck, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
+                .focusable(false)
                 Button {
                     animType = .genie
                 } label: {
                     Text("genieAnim.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "water.waves.and.arrow.down", enabled: animType == .genie, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .green))
+                .focusable(false)
                 Button {
                     animType = .scale
                 } label: {
                     Text("scaleAnim.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.right.and.arrow.up.left", enabled: animType == .scale, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
+                .focusable(false)
             }
             
         }.frame(height: 100, alignment: .center).padding(.all)
@@ -60,18 +63,21 @@ struct DockManagerView: View {
                     Text("off.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "stop.circle.fill", enabled: animSpeed == 0, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .focusable(false)
                 Button {
                     animSpeed = 50
                 } label: {
                     Text("norm.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "play.circle.fill", enabled: animSpeed == 50, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .focusable(false)
                 Button {
                     animSpeed = 100
                 } label: {
                     Text("slow.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "infinity.circle.fill", enabled: animSpeed == 100, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue, render: .hierarchical))
+                .focusable(false)
             }
         }.frame(height: 100, alignment: .center).padding(.all)
     }
@@ -85,18 +91,21 @@ struct DockManagerView: View {
                     Text("off.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.slash"], enabled: animDelay == 0, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
+                .focusable(false)
                 Button {
                     animDelay = 50
                 } label: {
                     Text("norm.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.wave.circle", "circle.dotted"], enabled: animDelay == 50, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
+                .focusable(false)
                 Button {
                     animDelay = 100
                 } label: {
                     Text("slow.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["figure.walk.circle", "circle.dashed"], enabled: animDelay == 100, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .blue))
+                .focusable(false)
             }
         }.frame(height: 100, alignment: .center).padding(.all)    }
     
@@ -132,6 +141,7 @@ struct DockManagerView: View {
                 Text(!autohide ? "enableAutohide.reason" : animSettings ? "goBack.button" : "anim.settings")
             }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "livephoto.play", disabled: !autohide, enabled: animSettings, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width - 10, color: animSettings ? .cyan : .blue))
                 .disabled(!autohide)
+                .focusable(false)
         }.frame(height: 100).padding(.all)
     }
     
@@ -144,12 +154,14 @@ struct DockManagerView: View {
                     Text("singleAppMode.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "1.square", enabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .blue))
+                .focusable(false)
                 Button {
                     autohide.toggle()
                 } label: {
                     Text("dockAutohide.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "dock.arrow.down.rectangle", enabled: autohide, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .green))
+                .focusable(false)
                 
                 Button {
                     magnification.toggle()
@@ -157,6 +169,7 @@ struct DockManagerView: View {
                     Text("dockMagnification.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "rectangle.expand.vertical", enabled: magnification, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 5 - 10, color: .purple))
+                .focusable(false)
                 
                 Button {
                     hiddenAppsMode.toggle()
@@ -164,6 +177,7 @@ struct DockManagerView: View {
                     Text("hiddenGrayedOut.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "app.dashed", enabled: hiddenAppsMode, hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 5 - 10, color: Color(nsColor: NSColor(#colorLiteral(red: 0.3179988265, green: 0.3179988265, blue: 0.3179988265, alpha: 1)))))
+                .focusable(false)
                 
                 Button {
                     DockManager().dockDefaults()
@@ -179,6 +193,7 @@ struct DockManagerView: View {
                     Text("defaults.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "menubar.dock.rectangle.badge.record", hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 5 - 10, color: .red))
+                .focusable(false)
             }
         }.frame(height: 100).padding(.all)
     }
@@ -192,18 +207,21 @@ struct DockManagerView: View {
                     Text("left.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.left.to.line",enabled: DockOrientation == .left, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
+                .focusable(false)
                 Button {
                     DockOrientation = .bottom
                 } label: {
                     Text("bottom.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.down.to.line",enabled: DockOrientation == .bottom, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
+                .focusable(false)
                 Button {
                     DockOrientation = .right
                 } label: {
                     Text("right.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.right.to.line",enabled: DockOrientation == .right, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10 ,color: .blue))
+                .focusable(false)
             }
         }.frame(height: 100).padding(.all)
     }
@@ -217,6 +235,7 @@ struct DockManagerView: View {
                 } label: {
                     Text(singleApp ? "disableSA.reason" : "wideSpacer.string")
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.left.and.line.vertical.and.arrowtriangle.right", disabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
+                    .focusable(false)
                     .disabled(singleApp)
                 Button {
                     if SettingsMonitor.passwordSaved {
@@ -229,6 +248,7 @@ struct DockManagerView: View {
                     Text("diskNotification.string")
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "externaldrive.badge.checkmark", disabled: !SettingsMonitor.passwordSaved, enabled: DA,hideTitle: SettingsMonitor.isInMenuBar, width: g.size.width / 3 - 10, color: .blue))
+                .focusable(false)
                 .disabled(!SettingsMonitor.passwordSaved)
                 .onTapGesture {
                     if !SettingsMonitor.passwordSaved {
@@ -264,6 +284,7 @@ struct DockManagerView: View {
                 } label: {
                     Text(singleApp ? "disableSA.reason" : "narrowSpacer.string")
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrowtriangle.right.and.line.vertical.and.arrowtriangle.left", disabled: singleApp, hideTitle: SettingsMonitor.isInMenuBar,width: g.size.width / 3 - 10, color: .green))
+                    .focusable(false)
                     .disabled(singleApp)
             }
         }.frame(height: 100).padding(.all)

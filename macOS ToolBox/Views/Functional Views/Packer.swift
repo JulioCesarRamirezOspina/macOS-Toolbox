@@ -149,6 +149,7 @@ struct PackerView: View {
                                                                         backgroundIsNotFill: false,
                                                                         blurBackground: true,
                                                                         render: .palette))
+                                .focusable(false)
                             Spacer()
                             DefaultPathPicker
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "square",
@@ -161,6 +162,7 @@ struct PackerView: View {
                                                                         backgroundIsNotFill: false,
                                                                         blurBackground: true,
                                                                         render: .palette))
+                                .focusable(false)
                         }
                         Divider()
                         AppToPackPicker
@@ -173,6 +175,7 @@ struct PackerView: View {
                                                                     backgroundIsNotFill: false,
                                                                     blurBackground: true,
                                                                     render: .palette))
+                            .focusable(false)
                         SavePackDirPicker
                             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "questionmark.square",
                                                                     disabled: savePickerDisabled,
@@ -183,6 +186,7 @@ struct PackerView: View {
                                                                     backgroundIsNotFill: false,
                                                                     blurBackground: true,
                                                                     render: .palette))
+                            .focusable(false)
                         Divider()
                         HStack{
                             StartPacking
@@ -196,6 +200,7 @@ struct PackerView: View {
                                                                         backgroundIsNotFill: false,
                                                                         blurBackground: true,
                                                                         render: .palette))
+                                .focusable(false)
                             Spacer()
                             startOver
                                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "arrow.uturn.left.square",
@@ -208,6 +213,7 @@ struct PackerView: View {
                                                                         backgroundIsNotFill: false,
                                                                         blurBackground: true,
                                                                         render: .palette))
+                                .focusable(false)
                         }
                         Spacer()
                     }

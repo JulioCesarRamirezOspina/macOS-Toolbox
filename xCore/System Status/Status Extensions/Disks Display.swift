@@ -37,6 +37,7 @@ public class DisksDisplay: xCore {
                                                     disabled: clearResult,
                                                     alwaysShowTitle: true,
                                                     color: .blue))
+            .focusable(false)
         }
         
         private func CachesButton() -> some View {
@@ -65,6 +66,7 @@ public class DisksDisplay: xCore {
                                                     color: clearResult ? .green : .cyan,
                                                     hideBackground: false,
                                                     backgroundShadow: true))
+            .focusable(false)
         }
         
         private func OpenInFinderButton(_ disk: String) -> some View {
@@ -75,6 +77,7 @@ public class DisksDisplay: xCore {
                 Text("finder.text")
             }
             .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["faceid", "square"], alwaysShowTitle: true, color: .blue, render: .monochrome))
+            .focusable(false)
         }
                 
         private func diskCheck() -> Task<[DiskData]?, Never> {
@@ -246,6 +249,7 @@ public class DisksDisplay: xCore {
                                                         backgroundShadow: true,
                                                         swapItems: false,
                                                         render: .monochrome))
+                .focusable(false)
             }
         }
         

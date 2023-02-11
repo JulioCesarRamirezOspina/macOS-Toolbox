@@ -91,6 +91,7 @@ struct TouchIDView: View {
                                     Text(!status ? StringLocalizer("enable.string") : StringLocalizer("disable.string"))
                                 }.keyboardShortcut(.defaultAction)
                                     .buttonStyle(Stylers.ColoredButtonStyle(glyph: !status ? "touchid" : "poweroff", enabled: status, color: !status ? .blue : .green, hideBackground: false, backgroundIsNotFill: true))
+                                    .focusable(false)
                                 
                                 Spacer()
                             }.padding(.all)
@@ -132,6 +133,7 @@ struct TouchIDView: View {
                     PAMSubView.padding()
                 }
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", enabled: sudoOld || screensaverOld, color: sudoOld || screensaverOld ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                .focusable(false)
                 Spacer()
             }.padding(.all)
         }
@@ -161,6 +163,7 @@ struct TouchIDView: View {
                         Text(StringLocalizer("screensaver.string"))
                     }
                     .buttonStyle(Stylers.ColoredButtonStyle(glyph: screensaverNew ? "person.badge.key" : "person.badge.key.fill", enabled: screensaverNew, color: screensaverNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                    .focusable(false)
                     
                     
                     Button {
@@ -169,6 +172,7 @@ struct TouchIDView: View {
                         Text(StringLocalizer("sudo.string"))
                     }
                     .buttonStyle(Stylers.ColoredButtonStyle(glyph: sudoNew ? "person.fill.checkmark" : "person.fill.questionmark", enabled: sudoNew, color: sudoNew ? .blue : .gray, hideBackground: false, backgroundIsNotFill: true))
+                    .focusable(false)
                     Spacer()
                 }
                 
@@ -184,6 +188,7 @@ struct TouchIDView: View {
                         Text(StringLocalizer("save.button"))
                     }.disabled(isDisabled || data.notInstalled())
                         .buttonStyle(Stylers.ColoredButtonStyle(glyph: "key", disabled: isDisabled ||  data.notInstalled(), enabled: sudoNew != sudoOld || screensaverNew != screensaverOld, color: .blue, hideBackground: false, backgroundIsNotFill: true))
+                        .focusable(false)
                     
                     Button { [self] in
                         screensaverNew = screensaverOld
@@ -193,6 +198,7 @@ struct TouchIDView: View {
                         Text(StringLocalizer("cancel.button"))
                     }
                     .buttonStyle(Stylers.ColoredButtonStyle(glyph: "escape", color: .red, hideBackground: false, backgroundIsNotFill: true))
+                    .focusable(false)
                     
                 }
                 

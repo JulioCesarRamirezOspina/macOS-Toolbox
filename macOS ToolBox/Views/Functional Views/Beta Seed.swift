@@ -66,6 +66,7 @@ struct BetaSeedView: View {
                             } label: {
                                 Text("seed.public")
                             }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "β", enabled: selection == 1, width: g.size.width / 3 - 10, color: .blue))
+                                .focusable(false)
                             Spacer()
                             Button {
                                 selection = 2
@@ -78,6 +79,7 @@ struct BetaSeedView: View {
                             } label: {
                                 Text("seed.dev")
                             }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "𝛼", enabled: selection == 2, width: g.size.width / 3 - 10, color: .cyan))
+                                .focusable(false)
                             Spacer()
                             Button {
                                 selection = 0
@@ -89,6 +91,7 @@ struct BetaSeedView: View {
                             } label: {
                                 Text(selection == 0 ? "seed.none" : "unenroll.button")
                             }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "ω", enabled: selection == 0, width: g.size.width / 3 - 10, color: .red))
+                                .focusable(false)
                         }
                         .onAppear {
                             width = g.size.width

@@ -153,6 +153,7 @@ public class Virtuals: xCore {
                                                                             file.fileExtension == .pvm ? .red :
                                                                             file.fileExtension == .vbox ? .cyan : .white,
                                                                         glow: true))
+                                .focusable(false)
                         }
                         HStack{
                             VStack(alignment: .trailing){
@@ -183,6 +184,7 @@ public class Virtuals: xCore {
                                                                         alwaysShowTitle: false,
                                                                         color: .secondary,
                                                                         glow: true))
+                                .focusable(false)
                         }
                     }.padding(.all)
                 }

@@ -50,6 +50,7 @@ struct SleepManagerView: View {
                 } label: {
                     Text(SleepManager().getSleepSetting(0))
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "sun.max.fill", disabled: sysSleepState, enabled: selection == 0, width: g.size.width / 3 - 10, color: .blue))
+                    .focusable(false)
                     .disabled(sysSleepState)
                 Spacer()
                 Button {
@@ -57,6 +58,7 @@ struct SleepManagerView: View {
                 } label: {
                     Text(SleepManager().getSleepSetting(3))
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "bed.double.fill", disabled: sysSleepState, enabled: selection == 3, width: g.size.width / 3 - 10, color: .cyan))
+                    .focusable(false)
                     .disabled(sysSleepState)
                 Spacer()
                 Button {
@@ -64,6 +66,7 @@ struct SleepManagerView: View {
                 } label: {
                     Text(SleepManager().getSleepSetting(25))
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "moon.zzz", disabled: sysSleepState, enabled: selection == 25, width: g.size.width / 3 - 10, color: .indigo))
+                    .focusable(false)
                     .disabled(sysSleepState)
             }
             .frame(height: 100)
@@ -98,6 +101,7 @@ struct SleepManagerView: View {
                     Text("preventSleep.string")
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: selection == 25 ? "sun.max" : "wake", disabled: (sleepInt == 0 || sysSleepState), enabled: preventSleep, width: g.size.width / 3 - 10, color: .purple))
                     .disabled(sleepInt == 0 || sysSleepState)
+                    .focusable(false)
                 Spacer()
                 Button {
                     sleepNow()
@@ -105,6 +109,7 @@ struct SleepManagerView: View {
                     Text("sleepNow.string")
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: selection == 25 ? "powersleep" : "sleep", disabled: (preventSleep || sleepInt == 0 || sysSleepState), width: g.size.width / 3 - 10, color: .blue))
                     .disabled(preventSleep || sleepInt == 0 || sysSleepState)
+                    .focusable(false)
                 Spacer()
                 Button {
                     caffButtonDisabled.toggle()
@@ -112,6 +117,7 @@ struct SleepManagerView: View {
                     Text("screenAllowedToSleep.string")
                 }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "display.trianglebadge.exclamationmark", disabled: (preventSleep == true || sleepInt == 0 || sysSleepState), enabled: caffButtonDisabled, width: g.size.width / 3 - 10, color: .yellow))
                     .disabled(preventSleep || sleepInt == 0 || sysSleepState)
+                    .focusable(false)
             }
             .frame(height: 100)
         }.padding(.all)
