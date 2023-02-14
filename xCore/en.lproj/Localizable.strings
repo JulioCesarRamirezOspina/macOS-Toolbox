@@ -81,6 +81,7 @@
 "password.placeholder" = "Password";
 "ok.button" = "OK";
 "cancel.button" = "Cancel";
+"loading.string" = "Loading...";
 
 "enroll.button" = "Enroll";
 "unenroll.button" = "Unenroll";

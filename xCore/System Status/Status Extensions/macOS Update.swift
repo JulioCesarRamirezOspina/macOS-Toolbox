@@ -440,6 +440,7 @@ public class macOSUpdate: xCore {
             .animation(SettingsMonitor.secondaryAnimation, value: hovered)
             .animation(SettingsMonitor.secondaryAnimation, value: hovered2)
             .animation(SettingsMonitor.secondaryAnimation, value: hovered3)
+            .padding(.all)
         }
     }
     deinit{}

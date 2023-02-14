@@ -81,6 +81,7 @@
 "ok.button" = "ОК";
 "cancel.button" = "Отмена";
 "enroll.button" = "Начать";
+"loading.string" = "Загрузка...";
 
 "unenroll.button" = "Выйти из тестирования";
 "main.title" = "Я помогу вашему Mac получить macOS Beta";

@@ -80,6 +80,7 @@ public class SystemStatus: xCore {
                                                                 height: 50,
                                                                 color: button.color,
                                                                 hideBackground: true))
+                        .focusable(false)
                 } else {
                     if button.activity != .displayOff {
                         Button {} label: {}
@@ -93,6 +94,7 @@ public class SystemStatus: xCore {
                                                                     width: 50, height: 50,
                                                                     color: button.color,
                                                                     hideBackground: true))
+                            .focusable(false)
                     } else {
                         Button { actions(button.activity) } label: { }
                             .buttonStyle(Stylers.ColoredButtonStyle(glyph: button.glyph,
@@ -101,6 +103,7 @@ public class SystemStatus: xCore {
                                                                     height: 50,
                                                                     color: button.color,
                                                                     hideBackground: true))
+                            .focusable(false)
                     }
                 }
             }
@@ -147,7 +150,7 @@ public class SystemStatus: xCore {
                     HStack{
                         Text(processor.value)
                             .foregroundColor(SettingsMonitor.textColor(cs))
-                            
+                        
                         Spacer()
                     }
                 }
@@ -160,7 +163,7 @@ public class SystemStatus: xCore {
                     HStack{
                         Text(processor.value)
                             .foregroundColor(SettingsMonitor.textColor(cs))
-                            
+                        
                         Spacer()
                     }
                 }
@@ -207,7 +210,7 @@ public class SystemStatus: xCore {
         }
         return info
     }
-
+    
     private static var bootDriveCapacity: StringData {
         let label = StringLocalizer("capacity.string")
         let volumeData = driveInfo()
@@ -229,7 +232,7 @@ public class SystemStatus: xCore {
         }
         return (label: label, value: capacity.description + " " + type)
     }
-
+    
     private static var macOSVer: StringData {
         get {
             return (StringLocalizer("macOS.string"), macOS_Subsystem.osVersion().extended)
@@ -387,6 +390,7 @@ public class SystemStatus: xCore {
                                                                 width: deviceImage(scale: SettingsMonitor.isInMenuBar ? 2 : 1).size.width / 1.5,
                                                                 height: deviceImage(scale: SettingsMonitor.isInMenuBar ? 2 : 1).size.height / 2,
                                                                 hideBackground: true))
+                        .focusable(false)
                     }
                 }.padding(.all)
                 Text(modelName.label).font(.largeTitle)
@@ -402,7 +406,7 @@ public class SystemStatus: xCore {
                         HStack{
                             Text(memory.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                
+                            
                             Spacer()
                         }
                     }
@@ -425,7 +429,7 @@ public class SystemStatus: xCore {
                         HStack{
                             Text(macOSVer.value)
                                 .foregroundColor(SettingsMonitor.textColor(cs))
-                                
+                            
                             Spacer()
                         }
                     }
@@ -486,6 +490,7 @@ public class SystemStatus: xCore {
     public struct StatusView: View {
         public init(){}
         @State var isRun = false
+        @State var isLoading = true
         @State var width: CGFloat = 1
         @State var height: CGFloat = 50
         @State var emergencyPopover = false
@@ -503,9 +508,6 @@ public class SystemStatus: xCore {
         
         private var preView: some View {
             VStack{
-                if !SettingsMonitor.isInMenuBar {
-                    Spacer().frame(height: 50)
-                }
                 GeometryReader { g in
                     VStack{
                         ScrollView(.vertical, showsIndicators: true) {
@@ -583,21 +585,38 @@ public class SystemStatus: xCore {
             }
         }
         
+        private var loadingScreen: some View {
+            VStack{
+                ProgressView()
+                    .padding(.all)
+                Text("loading.string")
+                    .font(.largeTitle)
+                    .fontWeight(.black)
+                    .padding(.all)
+            }
+        }
+        
         public var body: some View {
             VStack {
                 if isRun {
                     preView
                 } else {
-                    Spacer()
+                    loadingScreen
                 }
             }
             .onAppear(perform: {
-                isRun = true
+                Task {
+                    try? await Task.sleep(seconds: 1)
+                    isRun = true
+                    isLoading = false
+                }
             })
             .onDisappear(perform: {
+                isLoading = true
                 isRun = false
             })
             .animation(SettingsMonitor.secondaryAnimation, value: isRun)
+            .animation(SettingsMonitor.secondaryAnimation, value: isLoading)
         }
     }
     // MARK: - Switcher View
@@ -608,31 +627,61 @@ public class SystemStatus: xCore {
         }
         @Binding var toggle: Bool
         var withButton: Bool
-        public var body: some View {
+        
+        private var preBody: some View {
             VStack{
                 InfoView(toggle: $toggle, withButton: withButton).transition(.push(from: !toggle ? .top : .bottom))
             }
             .animation(SettingsMonitor.secondaryAnimation, value: toggle)
-            .sheet(isPresented: $toggle) {
-                VStack{
-                    StatusView()
-                        .transition(.push(from: !toggle ? .top : .bottom))
-                        .frame(width: SettingsMonitor.isInMenuBar ? NSApp.keyWindow?.frame.width : (NSApp.keyWindow?.frame.width)! / 3 * 2,
-                               height: SettingsMonitor.isInMenuBar ? NSApp.keyWindow?.frame.height : (NSApp.keyWindow?.frame.width)! / 3 * 2,
-                               alignment: .center)
-                    Button {
-                        toggle.toggle()
-                    } label: {
-                        Text("goBack.button")
-                    }
-                    .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
-                    .focusable(false)
-                    .padding(.bottom)
-                }
-                .background(Stylers.VisualEffectView()).ignoresSafeArea()
-                .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
-                            EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-            }.padding(.top)
+            .padding(.top)
         }
-    }
-}
+        
+        public var body: some View {
+            if SettingsMonitor.isInMenuBar {
+                preBody
+                    .popover(isPresented: $toggle) {
+                        VStack{
+                            StatusView()
+                                .transition(.push(from: !toggle ? .top : .bottom))
+                                .frame(width: NSScreen.main!.frame.width / 2,
+                                       height: NSScreen.main!.frame.height / 4 * 3,
+                                       alignment: .center)
+                            Button {
+                                toggle.toggle()
+                            } label: {
+                                Text("goBack.button")
+                            }
+                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                            .focusable(false)
+                            .keyboardShortcut(.cancelAction)
+                            .padding(.bottom)
+                        }
+                        .background(Stylers.VisualEffectView()).ignoresSafeArea()
+                        .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
+                                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    }
+            } else {
+                preBody
+                    .sheet(isPresented: $toggle) {
+                        VStack{
+                            StatusView()
+                                .transition(.push(from: !toggle ? .top : .bottom))
+                                .frame(width: (NSApp.mainWindow?.frame.width)! / 8 * 7,
+                                       height: (NSApp.mainWindow?.frame.height)! / 8 * 7,
+                                       alignment: .center)
+                            Button {
+                                toggle.toggle()
+                            } label: {
+                                Text("goBack.button")
+                            }
+                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                            .focusable(false)
+                            .padding(.bottom)
+                        }
+                        .background(Stylers.VisualEffectView()).ignoresSafeArea()
+                        .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
+                                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    }
+            }
+        }
+    }}

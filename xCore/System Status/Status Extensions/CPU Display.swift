@@ -104,7 +104,7 @@ public class CPUDisplay: xCore {
                     } while(isRun)
                 }
                 .animation(SettingsMonitor.secondaryAnimation, value: thermals.state)
-            }
+            }.padding(.all)
         }
     }
 }

@@ -270,6 +270,7 @@ public class MemoryDisplay: xCore {
                     clensingInProgress = V
                 }
             }
+            .padding(.all)
             .animation(SettingsMonitor.secondaryAnimation, value: clensingInProgress)
         }
     }

@@ -12,7 +12,7 @@ import ServiceManagement
 
 struct SettingsOverview: View {
     @State private var maintenanceLastRun = SettingsMonitor.maintenanceLastRun
-    @State private var width: CGFloat = (NSApplication.shared.keyWindow?.frame.width)! / 2
+    @State private var width: CGFloat = (NSScreen.main!.frame.size.width / 1.8) / 2
     @State private var animateBatteryOverview = SettingsMonitor.batteryAnimation
     @State private var isRun = false
     @State private var showSerialNumber = SettingsMonitor.showSerialNumber
