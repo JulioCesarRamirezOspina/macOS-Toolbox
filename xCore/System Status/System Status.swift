@@ -637,51 +637,28 @@ public class SystemStatus: xCore {
         }
         
         public var body: some View {
-            if SettingsMonitor.isInMenuBar {
-                preBody
-                    .popover(isPresented: $toggle) {
-                        VStack{
-                            StatusView()
-                                .transition(.push(from: !toggle ? .top : .bottom))
-                                .frame(width: NSScreen.main!.frame.width / 2,
-                                       height: NSScreen.main!.frame.height / 4 * 3,
-                                       alignment: .center)
-                            Button {
-                                toggle.toggle()
-                            } label: {
-                                Text("goBack.button")
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
-                            .focusable(false)
-                            .keyboardShortcut(.cancelAction)
-                            .padding(.bottom)
+            preBody
+                .sheet(isPresented: $toggle) {
+                    VStack{
+                        StatusView()
+                            .transition(.push(from: !toggle ? .top : .bottom))
+                            .frame(width: SettingsMonitor.isInMenuBar ? NSScreen.main!.frame.width / 2 : (NSApp.mainWindow?.frame.width)! / 8 * 7,
+                                   height: SettingsMonitor.isInMenuBar ? NSScreen.main!.frame.height / 4 * 3 : (NSApp.mainWindow?.frame.height)! / 8 * 7,
+                                   alignment: .center)
+                        Button {
+                            toggle.toggle()
+                        } label: {
+                            Text("goBack.button")
                         }
-                        .background(Stylers.VisualEffectView()).ignoresSafeArea()
-                        .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
-                                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                        .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                        .focusable(false)
+                        .keyboardShortcut(toggle ? .cancelAction : nil)
+                        .padding(.bottom)
                     }
-            } else {
-                preBody
-                    .sheet(isPresented: $toggle) {
-                        VStack{
-                            StatusView()
-                                .transition(.push(from: !toggle ? .top : .bottom))
-                                .frame(width: (NSApp.mainWindow?.frame.width)! / 8 * 7,
-                                       height: (NSApp.mainWindow?.frame.height)! / 8 * 7,
-                                       alignment: .center)
-                            Button {
-                                toggle.toggle()
-                            } label: {
-                                Text("goBack.button")
-                            }
-                            .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
-                            .focusable(false)
-                            .padding(.bottom)
-                        }
-                        .background(Stylers.VisualEffectView()).ignoresSafeArea()
-                        .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
-                                    EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
-                    }
-            }
+                    .background(Stylers.VisualEffectView()).ignoresSafeArea()
+                    .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
+                                EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                }
         }
-    }}
+    }
+}
