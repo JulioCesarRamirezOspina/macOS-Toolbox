@@ -63,7 +63,7 @@ public enum DisplaySleep {
     case deny
 }
 
-public enum ChargingState {
+public enum ChargingState: Sendable {
     case charging
     case charged
     case discharging
@@ -72,13 +72,13 @@ public enum ChargingState {
     case unknown
 }
 
-public enum PowerSource {
+public enum PowerSource: Sendable {
     case AC
     case Internal
     case unknown
 }
 
-public enum Unit : Double {
+public enum Unit : Double, Sendable {
     // For going from byte to -
     case byte     = 1
     case kilobyte = 1024
@@ -114,7 +114,7 @@ public enum ThermalLevel: String {
     case Unknown = "Unknown"
 }
 
-public enum ThermalPressure {
+public enum ThermalPressure: Sendable {
     case nominal
     case fair
     case serious
@@ -123,7 +123,7 @@ public enum ThermalPressure {
     case noPassword
 }
 
-public enum MemoryPressure {
+public enum MemoryPressure: Sendable {
     case nominal
     case warning
     case critical

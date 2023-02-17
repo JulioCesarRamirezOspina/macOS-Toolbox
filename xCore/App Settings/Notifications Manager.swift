@@ -7,6 +7,7 @@
 
 import Foundation
 import UserNotifications
+import Combine
 
 //MARK: - Local Notifications Manager
 //MARK: Public

@@ -12,7 +12,7 @@ public class Biometrics: xCore {
     
     private static var error: NSError?
     
-    public class func execute(code: (@escaping () -> Void?), reason: String) async throws -> Task<(Bool), Never> {
+    @Sendable public class func execute(code: (@escaping @Sendable () -> Void?), reason: String) async throws -> Task<(Bool), Never> {
         Task {
             let context = LAContext()
             if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometricsOrWatch, error: &error) {
@@ -35,7 +35,7 @@ public class Biometrics: xCore {
         }
     }
     
-    public class func execute(code: (@escaping () -> Void?), reason: String) throws {
+    @Sendable public class func execute(code: (@escaping () -> Void?), reason: String) throws {
         let context = LAContext()
         if context.canEvaluatePolicy(.deviceOwnerAuthenticationWithBiometricsOrWatch, error: &error) {
             context.evaluatePolicy(.deviceOwnerAuthenticationWithBiometricsOrWatch, localizedReason: StringLocalizer(reason)) { success, error in

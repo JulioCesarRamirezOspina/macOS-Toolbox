@@ -420,7 +420,7 @@ extension Task where Success == Never, Failure == Never {
     }
 }
 
-public struct DiskData: Identifiable, Equatable {
+public struct DiskData: Identifiable, Equatable, Sendable {
     public static func == (lhs: DiskData, rhs: DiskData) -> Bool {
         return lhs.DiskLabel == rhs.DiskLabel &&
         lhs.TotalSpace == rhs.TotalSpace &&
@@ -476,6 +476,8 @@ public struct DiskData: Identifiable, Equatable {
     var tapped: Bool = false
     public let id = UUID()
 }
+
+extension Color: @unchecked Sendable { }
 
 extension BinaryInteger {
     public var isPowerOfTwo: Bool {

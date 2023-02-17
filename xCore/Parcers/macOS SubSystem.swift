@@ -171,7 +171,7 @@ public struct macOS_Subsystem {
         }
     }
     
-    public class ThermalMonitor {
+    final public class ThermalMonitor: Sendable {
         public init(){}
         
         private func parce(_ s: ThermalPressure) -> ThermalData {
@@ -207,7 +207,7 @@ public struct macOS_Subsystem {
             }
         }
         
-        public func run() -> ThermalData {
+        @Sendable public func run() -> ThermalData {
             let process = Process()
             let killer = Process()
             let pipe = Pipe()

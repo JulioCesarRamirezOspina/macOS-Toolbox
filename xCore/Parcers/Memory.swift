@@ -10,7 +10,7 @@ import AppKit
 import SwiftUI
 
 /// RAM Manager + RAM Disk Creator
-public class Memory: xCore {
+final public class Memory: xCore, @unchecked Sendable {
     
     /// All RAM Data
     private var allRAMData: memoryValues {
