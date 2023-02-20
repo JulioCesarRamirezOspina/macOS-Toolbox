@@ -587,12 +587,14 @@ public class SystemStatus: xCore {
         
         private var loadingScreen: some View {
             VStack{
+                Spacer()
                 ProgressView()
                     .padding(.all)
                 Text("loading.string")
                     .font(.largeTitle)
                     .fontWeight(.black)
                     .padding(.all)
+                Spacer()
             }
         }
         
@@ -636,29 +638,35 @@ public class SystemStatus: xCore {
             .padding(.top)
         }
         
+        private var preStatus: some View {
+            VStack{
+                StatusView()
+                Button {
+                    toggle.toggle()
+                } label: {
+                    Text("goBack.button")
+                }
+                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                .focusable(false)
+                .keyboardShortcut(toggle ? .cancelAction : nil)
+                .padding(.bottom)
+            }
+            .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
+                        EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+        }
+        
         public var body: some View {
+            VStack{
+                if !toggle { preBody } else { preStatus }
+            }.animation(SettingsMonitor.secondaryAnimation, value: toggle)
+        }
+        
+        public var oldBody: some View {
             preBody
                 .sheet(isPresented: $toggle) {
-                    VStack{
-                        StatusView()
-                            .transition(.push(from: !toggle ? .top : .bottom))
-                            .frame(width: SettingsMonitor.isInMenuBar ? NSScreen.main!.frame.width / 2 : (NSApp.mainWindow?.frame.width)! / 8 * 7,
-                                   height: SettingsMonitor.isInMenuBar ? NSScreen.main!.frame.height / 4 * 3 : (NSApp.mainWindow?.frame.height)! / 8 * 7,
-                                   alignment: .center)
-                        Button {
-                            toggle.toggle()
-                        } label: {
-                            Text("goBack.button")
-                        }
-                        .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
-                        .focusable(false)
-                        .keyboardShortcut(toggle ? .cancelAction : nil)
-                        .padding(.bottom)
-                    }
-                    .background(Stylers.VisualEffectView()).ignoresSafeArea()
-                    .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
-                                EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                    preStatus
                 }
         }
+        
     }
 }

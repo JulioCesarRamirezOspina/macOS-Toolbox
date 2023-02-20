@@ -686,20 +686,7 @@ public struct macOS_Subsystem {
         var process: Process?
         var pipe: Pipe?
         do {
-            if isArm() {
-                process = Process()
-                pipe = Pipe()
-                process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Apple"]
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
-                }
-                process?.terminate()
-                process = nil
-                pipe = nil
-            } else {
+            if !isArm() {
                 process = Process()
                 pipe = Pipe()
                 process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Intel"]
