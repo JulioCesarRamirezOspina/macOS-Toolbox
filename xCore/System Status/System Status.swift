@@ -646,7 +646,7 @@ public class SystemStatus: xCore {
                 } label: {
                     Text("goBack.button")
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true))
+                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, color: .blue))
                 .focusable(false)
                 .keyboardShortcut(toggle ? .cancelAction : nil)
                 .padding(.bottom)
