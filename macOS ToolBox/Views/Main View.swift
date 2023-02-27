@@ -46,11 +46,11 @@ struct MainView: View {
             view: AnyView(CamperView()),
             label: "Camper", typeOf: .link
         ),
-        ViewForGenerator(
-            view: AnyView(TorView()),
-            label: "Tor VPN",
-            typeOf: ViewType.link
-        ),
+//        ViewForGenerator(
+//            view: AnyView(TorView()),
+//            label: "Tor VPN",
+//            typeOf: ViewType.link
+//        ),
         ViewForGenerator(
             view: AnyView(TouchIDView()),
             label: "TouchID",
