@@ -18,7 +18,8 @@ public class DisksDisplay: xCore {
         @State private var clearResult = false
         @State private var cachesHover = false
         @State private var showClearCaches = false
-        @State private var snapshotsCount = Memory().TimeMachineControls().snapshotsCount
+        @State private var snapshotsCount = Memory().TimeMachineCount()
+        @State private var currentyActive = 0
         @Binding var emergencyPopover: Bool
         @Binding var isRun: Bool
         @State private var disksData = [DiskData(DiskLabel: "",
@@ -205,6 +206,7 @@ public class DisksDisplay: xCore {
                     }
                     .onTapGesture {
                         selfTapped[index] = true
+                        currentyActive = index
                     }
                 }
                 .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
@@ -257,7 +259,7 @@ public class DisksDisplay: xCore {
                         Divider()
                         VStack{
                             CachesButton()
-                            Memory().TimeMachineControls().view
+                            Memory.TimeMachineControls(toggle: $selfTapped[currentyActive])
                             OpenInFinderButton(disksData[index].DiskLabel)
                             CancelButton(index: index)
                         }.padding(.all)
@@ -309,7 +311,7 @@ public class DisksDisplay: xCore {
                 repeat{
                     do {
                         disksData = await diskCheck().value ?? DiskData.isEmpty
-                        snapshotsCount = Memory().TimeMachineControls().snapshotsCount
+                        snapshotsCount = Memory().TimeMachineCount()
                         try await Task.sleep(seconds: 3)
                     } catch _ {}
                 }while(isRun)

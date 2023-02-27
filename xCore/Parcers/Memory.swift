@@ -191,7 +191,7 @@ final public class Memory: xCore, @unchecked Sendable {
         }
     }
     
-    private func TimeMachineCount() -> Int {
+    public func TimeMachineCount() -> Int {
         do {
             let process = Process()
             let pipe = Pipe()
@@ -211,25 +211,25 @@ final public class Memory: xCore, @unchecked Sendable {
         }
     }
     
-    public func TimeMachineControls() -> (view: some View, snapshotsCount: Int) {
-        
-        var view: some View {
+    public struct TimeMachineControls: View {
+        @Binding var toggle: Bool
+        public var body: some View {
             Button {
                 Task{
-                    await self.TimeMachineClear()
+                    toggle.toggle()
+                    await Memory().TimeMachineClear()
                 }
             } label: {
                 Text("clearTM.string")
             }
-            .disabled(TimeMachineCount() < 1)
+            .disabled(Memory().TimeMachineCount() < 1)
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "clock.arrow.circlepath",
-                                                    disabled: TimeMachineCount() < 1,
+                                                    disabled: Memory().TimeMachineCount() < 1,
                                                     enabled: false,
                                                     alwaysShowTitle: true,
                                                     color: .blue,
                                                     glow: true))
         }
-        return (view: view, snapshotsCount: TimeMachineCount())
     }
     
     public func cachesSize() async -> Task<String, Never> {
