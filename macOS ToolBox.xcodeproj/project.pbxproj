@@ -69,6 +69,7 @@
 		9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */; };
 		9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13C2908BC67003D7575 /* Tor Networking.swift */; };
 		9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */; };
+		9AF7DD8A29B224DF00836B81 /* Net Parcer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF7DD8929B224DF00836B81 /* Net Parcer.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -162,6 +163,7 @@
 		9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift"; sourceTree = "<group>"; };
 		9ABFD13C2908BC67003D7575 /* Tor Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift"; sourceTree = "<group>"; };
 		9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
+		9AF7DD8929B224DF00836B81 /* Net Parcer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Net Parcer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -364,6 +366,7 @@
 			isa = PBXGroup;
 			children = (
 				9ABFD13C2908BC67003D7575 /* Tor Networking.swift */,
+				9AF7DD8929B224DF00836B81 /* Net Parcer.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -552,6 +555,7 @@
 				9ABFD1462908BC67003D7575 /* Custom Views.swift in Sources */,
 				9ABFD14C2908BC67003D7575 /* Shell.swift in Sources */,
 				9ABFD14F2908BC67003D7575 /* Packer.swift in Sources */,
+				9AF7DD8A29B224DF00836B81 /* Net Parcer.swift in Sources */,
 				9ABFD14A2908BC67003D7575 /* Apple Script.swift in Sources */,
 				9ABFD1402908BC67003D7575 /* macOS Update.swift in Sources */,
 			);

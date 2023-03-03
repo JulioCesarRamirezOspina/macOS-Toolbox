@@ -358,3 +358,9 @@
 "lastAccessDate" = "Дата открытия";
 "secResponse.string" = "Версия исправления безопасности";
 "buttonActionDelayEnabled.string" = "Задержка действий кнопок главного экрана";
+
+"wired.string" = "Проводное";
+"wireless.string" = "Wi-Fi";
+"vpn.string" = "VPN";
+"cellular.string" = "Сотовое";
+"disconnected.string" = "Оффлайн";

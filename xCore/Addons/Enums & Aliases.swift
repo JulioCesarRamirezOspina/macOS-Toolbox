@@ -232,6 +232,21 @@ public enum vmType {
     case unknown
 }
 
+public enum VPNConn {
+    case tap
+    case tun
+    case ipsec
+    case ppp
+    case none
+}
+public enum iface {
+    case wired
+    case wireless
+    case vpn
+    case cellular
+    case none
+}
+
 // MARK: - Type Aliases
 public typealias StringData = (label: String, value: String)
 public typealias ThermalData = (label: String, state: ThermalPressure)
@@ -255,6 +270,9 @@ public typealias platformData = (model: String,
                                  platform: String,
                                  platformServiceData: platform)
 public typealias file = (name: String, path: URL, fileExtension: String)
+public typealias netProps = (address: String?, interface: iface)
+public typealias VPNProps = (connected: Bool, interface: VPNConn)
+public typealias Bandwidth = (In: Double, Out: Double)
 
 // MARK: - Structs
 public struct VMPropertiesList: Identifiable, Comparable {
