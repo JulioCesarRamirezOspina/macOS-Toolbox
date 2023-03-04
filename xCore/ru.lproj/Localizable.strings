@@ -359,8 +359,12 @@
 "secResponse.string" = "Версия исправления безопасности";
 "buttonActionDelayEnabled.string" = "Задержка действий кнопок главного экрана";
 
-"wired.string" = "Проводное";
+"wiredConn.string" = "Проводное";
 "wireless.string" = "Wi-Fi";
 "vpn.string" = "VPN";
 "cellular.string" = "Сотовое";
 "disconnected.string" = "Оффлайн";
+"megabytesOut.string" = "MБ/c отдача";
+"megabytesIn.string" = "МБ/с приём";
+"ipaddress.string" = "IP-адрес";
+"interface.string" = "Сетевой интерфейс";

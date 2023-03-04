@@ -145,7 +145,7 @@ public class NetParcer: xCore {
     public class func netInterface() async -> String {
         switch await self.ip().value.interface {
         case .wired:
-            return StringLocalizer("wired.string")
+            return StringLocalizer("wiredConn.string")
         case .wireless:
             return StringLocalizer("wireless.string")
         case .vpn:
@@ -159,20 +159,20 @@ public class NetParcer: xCore {
 }
 
 public class NetViews: xCore {
-    struct Monitor: View {
+    public struct Monitor: View {
         @State var isRun = false
         @State var bandwidth: Bandwidth = (0, 0)
         @State var interface: String = ""
         @State var ip = ""
 
-        var body: some View {
+        public var body: some View {
             ZStack{
                 if isRun {
                     VStack{
                         HStack{
                             HStack{
                                 Spacer()
-                                Text("\(StringLocalizer("interface.string")):").monospacedDigit()
+                                Text("\(StringLocalizer("interface.string")):").monospacedDigit().fontWeight(.bold)
                             }
                             HStack{
                                 Text(interface).monospacedDigit()
@@ -182,34 +182,20 @@ public class NetViews: xCore {
                         HStack{
                             HStack{
                                 Spacer()
-                                Text("\(StringLocalizer("ipaddress.string")):").monospacedDigit()
+                                Text("\(StringLocalizer("ipaddress.string")):").monospacedDigit().fontWeight(.bold)
                             }
                             HStack{
                                 Text(ip).monospacedDigit()
                                 Spacer()
                             }
                         }
-                        HStack{
-                            HStack{
-                                Spacer()
-                                Text("\(StringLocalizer("megabytesIn.string")):").monospacedDigit()
-                            }
-                            HStack{
-                                Text(bandwidth.In.description).monospacedDigit()
-                                Spacer()
+                        Spacer()
+                        VStack{
+                            GeometryReader { g in
+                                CustomViews.MultiProgressBar(total: (label: "load.string", value: bandwidth.In + bandwidth.Out), values: [("megabytesOut.string", bandwidth.Out, .blue), ("megabytesIn.string", bandwidth.In, .red)], widthFrame: g.size.width, showDots: false, geometry: g.size, fixTo100: true)
                             }
                         }
-                        HStack{
-                            HStack{
-                                Spacer()
-                                Text("\(StringLocalizer("megabytesOut.string")):").monospacedDigit()
-                            }
-                            HStack{
-                                Text(bandwidth.Out.description).monospacedDigit()
-                                Spacer()
-                            }
-                        }
-                    }
+                    }.padding(.all)
                 } else {
                     ProgressView()
                 }

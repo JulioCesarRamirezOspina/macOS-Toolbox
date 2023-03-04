@@ -144,76 +144,10 @@ public class MemoryDisplay: xCore {
                                                                                     memory.compressed)), color: .brown)
                                                          ],
                                                          widthFrame: g.size.width,
-                                                         geometry: g.size)
+                                                         geometry: g.size,
+                                                         popOnHover: true)
                         }
                         Spacer()
-                    }
-                    HStack{
-                        if !clensingInProgress {
-                            HStack{
-                                Circle()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.blue)
-                                    .blur(radius: 1)
-                                    .shadow(radius: 2)
-                                Text("\(StringLocalizer("active.string")): \(Int(memory.active).description) \(StringLocalizer("mib.string"))")
-                                    .monospacedDigit()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .shadow(radius: 0)
-                            }
-                            HStack{
-                                Circle()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.gray)
-                                    .blur(radius: 1)
-                                    .shadow(radius: 2)
-                                Text("\(StringLocalizer("inactive.string")): \(Int(memory.inactive).description) \(StringLocalizer("mib.string"))")
-                                    .monospacedDigit()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .shadow(radius: 0)
-                            }
-                            HStack{
-                                Circle()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.green)
-                                    .blur(radius: 1)
-                                    .shadow(radius: 2)
-                                Text("\(StringLocalizer("wired.string")): \(Int(memory.wired).description) \(StringLocalizer("mib.string"))")
-                                    .monospacedDigit()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .shadow(radius: 0)
-                            }
-                            HStack{
-                                Circle()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(Color(nsColor: NSColor(
-                                        #colorLiteral(red: 0.6953116059, green: 0.5059728026, blue: 0.9235290885, alpha: 1)
-                                    )))
-                                    .blur(radius: 1)
-                                    .shadow(radius: 2)
-                                Text("\(StringLocalizer("compressed.string")): \(Int(memory.compressed).description) \(StringLocalizer("mib.string"))")
-                                    .monospacedDigit()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .shadow(radius: 0)
-                            }
-                            HStack{
-                                Circle()
-                                    .frame(width: 10, height: 10, alignment: .center)
-                                    .foregroundColor(.brown)
-                                    .blur(radius: 1)
-                                    .shadow(radius: 2)
-                                Text("\(StringLocalizer("cachedFiles.string")): \(Int(memory.cachedFiles).description) \(StringLocalizer("mib.string"))")
-                                    .monospacedDigit()
-                                    .font(.footnote)
-                                    .foregroundColor(SettingsMonitor.textColor(cs))
-                                    .shadow(radius: 0)
-                            }
-                            Spacer()
-                        }
                     }
                 }
                 .padding(.all)

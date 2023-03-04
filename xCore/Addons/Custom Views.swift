@@ -604,9 +604,12 @@ public class CustomViews: xCore {
         var showDots: Bool = true
         var textColor: Color = !SettingsMonitor.isInMenuBar ? .secondary : NSApplication.shared.effectiveAppearance.name == .aqua ? .black : .white
         var geometry: CGSize
-        let rectHeight: CGFloat = .pi * 1.5
+        @State var rectHeight: CGFloat = .pi * 1.5
+        @State var dummyBool = false
         var fixTo100: Bool = false
         var dontShowLabels = false
+        var popOnHover = false
+        @State var pops: [(popped: Bool , width: CGFloat)] = []
         private func summaryload(_ s: [(label: String, value: Double, color: Color)]) -> Double {
             var sum: Double = 0
             for each in s {
@@ -644,25 +647,93 @@ public class CustomViews: xCore {
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
                                             width: calculateWidth(fraction: values[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width),
-                                            height: rectHeight, alignment: .center)
+                                            height: pops.isEmpty ? rectHeight : pops[index].width, alignment: .center)
                                         .foregroundColor(values[index].color)
                                         .animation(SettingsMonitor.secondaryAnimation, value: values[index].value)
+                                        .animation(SettingsMonitor.secondaryAnimation, value: pops.isEmpty ? rectHeight : pops[index].width)
                                         .shadow(radius: 5)
+                                        .popover(isPresented: pops.isEmpty ? $dummyBool : $pops[index].popped, content: {
+                                            HStack{
+                                                Circle()
+                                                    .frame(width: 10, height: 10, alignment: .center)
+                                                    .foregroundColor(values[index].color)
+                                                    .blur(radius: 1)
+                                                    .shadow(radius: 2)
+                                                Text(StringLocalizer(values[index].label) + "\n" + values[index].value.round(to: 1).description + " " + StringLocalizer("mib.string"))
+                                                    .monospacedDigit()
+                                                    .font(.footnote)
+                                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                                                    .shadow(radius: 0)
+                                            }.padding(.all)
+                                        })
+                                        .overlay {
+                                            Rectangle().frame(width: calculateWidth(fraction: values[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width), height: rectHeight * 2, alignment: .center).foregroundColor(.clear)
+                                                .onHover { b in
+                                                    if popOnHover {
+                                                        pops[index].popped = b
+                                                    }
+                                                }
+                                                .onHover { wider in
+                                                    if popOnHover {
+                                                        pops[index].width = wider ? rectHeight * 2 : rectHeight
+                                                    }
+                                                }
+                                        }
                                 }
                                 RoundedRectangle(cornerRadius: 0.01)
                                 .foregroundColor(.clear)
+                                .onHover { b in
+                                    for each in 0..<pops.count {
+                                        pops[each].popped = false
+                                        pops[each].width = rectHeight
+                                    }
+                                }
                             } else {
                                 ForEach(0..<intValues.count, id: \.self) { index in
                                     RoundedRectangle(cornerRadius: 5)
                                         .frame(
                                             width: calculateIntWidth(fraction: intValues[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width),
-                                            height: rectHeight, alignment: .center)
+                                            height: pops.isEmpty ? rectHeight : pops[index].width, alignment: .center)
                                         .foregroundColor(intValues[index].color)
                                         .animation(SettingsMonitor.secondaryAnimation, value: intValues[index].value)
+                                        .animation(SettingsMonitor.secondaryAnimation, value: pops.isEmpty ? rectHeight : pops[index].width)
                                         .shadow(radius: 5)
+                                        .popover(isPresented: pops.isEmpty ? $dummyBool : $pops[index].popped, content: {
+                                            HStack{
+                                                Circle()
+                                                    .frame(width: 10, height: 10, alignment: .center)
+                                                    .foregroundColor(intValues[index].color)
+                                                    .blur(radius: 1)
+                                                    .shadow(radius: 2)
+                                                Text(StringLocalizer(intValues[index].label) + "\n" + intValues[index].value.description + " " + StringLocalizer("mib.string"))
+                                                    .monospacedDigit()
+                                                    .font(.footnote)
+                                                    .foregroundColor(SettingsMonitor.textColor(cs))
+                                                    .shadow(radius: 0)
+                                            }
+                                        })
+                                        .overlay {
+                                            Rectangle().frame(width: calculateIntWidth(fraction: intValues[index].value, total: fixTo100 ? 100 : total.value, width: geometry.width), height: rectHeight * 2, alignment: .center).foregroundColor(.clear)
+                                                .onHover { b in
+                                                    if popOnHover {
+                                                        pops[index].popped = b
+                                                    }
+                                                }
+                                                .onHover { wider in
+                                                    if popOnHover {
+                                                        pops[index].width = wider ? rectHeight * 2 : rectHeight
+                                                    }
+                                                }
+                                        }
                                 }
                                 RoundedRectangle(cornerRadius: 0.01)
                                 .foregroundColor(.clear)
+                                .onHover { b in
+                                    for each in 0..<pops.count {
+                                        pops[each].popped = false
+                                        pops[each].width = rectHeight
+                                    }
+                                }
                             }
                         }
                     }
@@ -712,7 +783,11 @@ public class CustomViews: xCore {
                         }
                     }
                 }
-            }.frame(width: geometry.width)
+            }
+            .onAppear(perform: {
+                pops = Array(repeating: (false, rectHeight), count: values.count)
+            })
+            .frame(width: geometry.width)
         }
     }
     

@@ -363,8 +363,12 @@
 "secResponse.string" = "Security Response Version";
 "buttonActionDelayEnabled.string" = "Delay for main screen action buttons";
 
-"wired.string" = "Wired";
+"wiredConn.string" = "Wired";
 "wireless.string" = "Wi-Fi";
 "vpn.string" = "VPN";
 "cellular.string" = "Cellular";
 "disconnected.string" = "Offline";
+"megabytesOut.string" = "MB/s out";
+"megabytesIn.string" = "MB/s in";
+"ipaddress.string" = "IP-address";
+"interface.string" = "Network Interface";

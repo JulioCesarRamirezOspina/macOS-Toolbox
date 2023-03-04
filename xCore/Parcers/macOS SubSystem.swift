@@ -65,6 +65,7 @@ public struct macOS_Subsystem {
         var osName: String {
             switch ProcessInfo.processInfo.operatingSystemVersion.majorVersion {
             case 13: return "Ventura"
+            case 14: return ""
             default: return "UNRELEASED FUTURE VERSION"
             }
         }
@@ -89,7 +90,7 @@ public struct macOS_Subsystem {
             shortenedIndex += 1
         }
         extendedRetval = String(extendedRetval.replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
-        shortenedRetval = String(shortenedRetval.replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
+        shortenedRetval = String(shortenedRetval.replacingOccurrences(of: "Выпуск:", with: ""))
         return (extended: prepString.count == 3 ? extendedRetval + ")" : extendedRetval, shortened: prepString.count == 3 ? shortenedRetval + ")" : shortenedRetval)
     }
     

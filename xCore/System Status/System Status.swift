@@ -514,21 +514,35 @@ public class SystemStatus: xCore {
                             DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
                                 .padding(.all)
                             Divider()
-                            CPUDisplay.view(isRun: $isRun)
-                                .padding(.all)
-                            Divider()
-                            MemoryDisplay.view(isRun: $isRun)
-                                .padding(.all)
-                            Divider()
-                            macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
-                                             HalfScreen: false,
-                                             Alignment: .leading,
-                                             ShowTitle: true)
-                            .padding(.all)
-                            if batteryIsPresent {
-                                Divider()
-                                BatteryDisplay.view(isRun: $isRun)
+                            HStack{
+                                CPUDisplay.view(isRun: $isRun)
                                     .padding(.all)
+//                                Divider()
+                                MemoryDisplay.view(isRun: $isRun)
+                                    .padding(.all)
+                            }
+//                            Divider()
+//                            NetViews.Monitor().padding(.all)
+                            if batteryIsPresent {
+//                                Divider()
+                                HStack{
+                                    macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
+                                                     HalfScreen: false,
+                                                     Alignment: .leading,
+                                                     ShowTitle: true)
+                                    .padding(.all)
+//                                    Divider()
+                                    BatteryDisplay.view(isRun: $isRun)
+                                        .padding(.all)
+                                }
+//                                Divider()
+                            } else {
+//                                Divider()
+                                macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
+                                                 HalfScreen: false,
+                                                 Alignment: .leading,
+                                                 ShowTitle: true)
+                                .padding(.all)
                             }
                         }
                         .onAppear(perform: {
