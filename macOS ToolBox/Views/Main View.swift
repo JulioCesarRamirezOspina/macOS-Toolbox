@@ -129,7 +129,7 @@ struct MainView: View {
 
 	@State var view: ViewForGenerator.ID = UUID()
 	
-	@State var mainTitle = StringLocalizer("developerTeam")
+	@State var mainTitle = Host.current().localizedName ?? "ToolBox"
 	
 	@State var isMore = false
 	
@@ -147,20 +147,22 @@ struct MainView: View {
                                     HStack{
                                         Spacer()
                                         Text(mainTitle)
-                                            .animation(SettingsMonitor.secondaryAnimation, value: mainTitle)
                                             .font(.largeTitle)
-                                            .foregroundColor(.primary)
+                                            .lineLimit(3)
                                             .monospacedDigit()
+                                            .foregroundColor(.primary)
+                                            .minimumScaleFactor(0.5)
+                                            .allowsTightening(/*@START_MENU_TOKEN@*/true/*@END_MENU_TOKEN@*/)
+                                            .dynamicTypeSize(/*@START_MENU_TOKEN@*/.xLarge/*@END_MENU_TOKEN@*/)
+                                            .tracking(/*@START_MENU_TOKEN@*/1.0/*@END_MENU_TOKEN@*/)
                                         Spacer()
                                     }
                                 }
+                                .animation(SettingsMonitor.secondaryAnimation, value: mainTitle)
                             }
                             .padding(.all)
                             .onHover(perform: { t in
-                                switch t {
-                                case true: mainTitle = StringLocalizer("overview.string")
-                                case false: mainTitle = StringLocalizer("developerTeam")
-                                }
+                                mainTitle = t ? StringLocalizer("overview.string") : Host.current().localizedName ?? "ToolBox"
                             })
                             .buttonStyle(.borderless)
                             .focusable(false)
