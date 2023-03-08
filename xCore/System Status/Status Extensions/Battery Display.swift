@@ -85,55 +85,54 @@ public class BatteryDisplay: xCore {
                         }.shadow(radius: 0)
                     }
                     HStack{
-                        Group{
-                            switch ChargingState {
-                            case .charging:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.on")
-                                }
-                            case .charged:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.comp")
-                                }
-                            case .discharging:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.dis")
-                                }
-                            case .acAttached:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.onAC")
-                                }
-                            case .finishingCharge:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("batt.fin")
-                                }
-                            case .unknown:
-                                HStack{
-                                    Text("chargingState.string")
-                                    Text("calculating.string")
-                                }
-                            }
-                        }
-                        .font(.footnote)
-                        .foregroundColor(SettingsMonitor.textColor(cs))
                         if isInLowPower && !hovered2 {
-                            TextDivider(height: 10)
                             Text("batt.lowPowerMode")
                                 .font(.footnote)
                                 .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
-                        }
+                        } else
                         if hovered2 && SettingsMonitor.passwordSaved {
-                            TextDivider(height: 10)
                             Text(isInLowPower ? "batt.disableLowPowerMode" : "batt.enableLowPowerMode")
                                 .font(.footnote)
                                 .foregroundColor(hovered2 ? .primary : SettingsMonitor.textColor(cs))
                                 .fontWeight(.heavy)
+                        } else {
+                            Group{
+                                switch ChargingState {
+                                case .charging:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("batt.on")
+                                    }
+                                case .charged:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("batt.comp")
+                                    }
+                                case .discharging:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("batt.dis")
+                                    }
+                                case .acAttached:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("batt.onAC")
+                                    }
+                                case .finishingCharge:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("batt.fin")
+                                    }
+                                case .unknown:
+                                    HStack{
+                                        Text("chargingState.string")
+                                        Text("calculating.string")
+                                    }
+                                }
+                            }
+                            .font(.footnote)
+                            .foregroundColor(SettingsMonitor.textColor(cs))
                         }
                         Spacer()
                     }

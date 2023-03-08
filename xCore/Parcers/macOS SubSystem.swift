@@ -89,8 +89,17 @@ public struct macOS_Subsystem {
             shortenedRetval += shortenedSymbols[shortenedIndex] + each
             shortenedIndex += 1
         }
-        extendedRetval = String(extendedRetval.replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
-        shortenedRetval = String(shortenedRetval.replacingOccurrences(of: "Выпуск:", with: ""))
+        extendedRetval = String(extendedRetval
+            .replacingOccurrences(of: "Выпуск:", with: "Сборка:"))
+        shortenedRetval = String(shortenedRetval
+            .replacingOccurrences(of: "Выпуск:", with: "")
+            .replacingOccurrences(of: "Выпуск", with: "")
+            .replacingOccurrences(of: "(Выпуск", with: "(")
+            .replacingOccurrences(of: "Build:", with: "")
+            .replacingOccurrences(of: "Build", with: "")
+            .replacingOccurrences(of: "(Build", with: "(")
+            .replacingOccurrences(of: "( ", with: "("))
+        print(shortenedRetval)
         return (extended: prepString.count == 3 ? extendedRetval + ")" : extendedRetval, shortened: prepString.count == 3 ? shortenedRetval + ")" : shortenedRetval)
     }
     

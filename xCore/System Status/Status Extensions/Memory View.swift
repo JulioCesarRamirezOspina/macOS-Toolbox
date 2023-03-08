@@ -81,12 +81,24 @@ public class MemoryDisplay: xCore {
                     HStack{
                         Group{
                             HStack {
-                                Text(memoryPressure == .nominal ? StringLocalizer("memPressure.nominal") :
-                                        memoryPressure == .warning ? StringLocalizer("memPressure.warning") :
-                                        memoryPressure == .critical ? StringLocalizer("memPressure.critical") :
-                                        StringLocalizer("memPressure.undefined"))
-                                .fontWeight(memoryPressure == .warning ? .heavy : memoryPressure == .critical ? .black : .regular)
-                                .shadow(radius: 0)
+                                if hovered && !clensingInProgress {
+                                    Text("clear_RAM.string")
+                                        .fontWeight(.heavy)
+                                        .shadow(radius: 0)
+                                } else
+                                if hovered && clensingInProgress {
+                                    Text("cancel.button")
+                                        .fontWeight(.heavy)
+                                        .shadow(radius: 0)
+                                } else {
+                                    
+                                    Text(memoryPressure == .nominal ? StringLocalizer("memPressure.nominal") :
+                                            memoryPressure == .warning ? StringLocalizer("memPressure.warning") :
+                                            memoryPressure == .critical ? StringLocalizer("memPressure.critical") :
+                                            StringLocalizer("memPressure.undefined"))
+                                    .fontWeight(memoryPressure == .warning ? .heavy : memoryPressure == .critical ? .black : .regular)
+                                    .shadow(radius: 0)
+                                }
                             }
                             switch clensingInProgress {
                             case true:
@@ -96,18 +108,6 @@ public class MemoryDisplay: xCore {
                                     .shadow(radius: 0)
                             case false:
                                 EmptyView()
-                            }
-                            if hovered && !clensingInProgress {
-                                TextDivider(height: 10)
-                                Text("clear_RAM.string")
-                                    .fontWeight(.heavy)
-                                    .shadow(radius: 0)
-                            }
-                            if hovered && clensingInProgress {
-                                TextDivider(height: 10)
-                                Text("cancel.button")
-                                    .fontWeight(.heavy)
-                                    .shadow(radius: 0)
                             }
                         }
                         .font(.footnote)
