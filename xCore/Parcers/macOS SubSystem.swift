@@ -99,7 +99,6 @@ public struct macOS_Subsystem {
             .replacingOccurrences(of: "Build", with: "")
             .replacingOccurrences(of: "(Build", with: "(")
             .replacingOccurrences(of: "( ", with: "("))
-        print(shortenedRetval)
         return (extended: prepString.count == 3 ? extendedRetval + ")" : extendedRetval, shortened: prepString.count == 3 ? shortenedRetval + ")" : shortenedRetval)
     }
     
