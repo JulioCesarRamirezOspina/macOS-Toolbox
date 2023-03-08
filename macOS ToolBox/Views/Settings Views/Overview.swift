@@ -204,8 +204,11 @@ struct SettingsOverview: View {
                                     Spacer()
                                     Group{
                                         MaintenanceButton
-                                        PasswordStateButton
-                                        PINStateButton
+                                        if !checkIfSecurityKeyPersists() {
+                                            PasswordStateButton
+                                        } else {
+                                            PINStateButton
+                                        }
                                         BatteryButton
                                         ShowSerialNumber
                                         IsInMenuBar

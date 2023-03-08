@@ -31,12 +31,8 @@ struct SettingsView: View {
                                         label: "bootcamp.settings",
                                         typeOf: ViewType.link),
                                     ViewForGenerator(
-                                        view: AnyView(PasswordSettings()),
-                                        label: "password.settings",
-                                        typeOf: ViewType.link),
-                                    ViewForGenerator(
-                                        view: AnyView(PINSettings()),
-                                        label: "pin.settings",
+                                        view: (!checkIfSecurityKeyPersists() ? AnyView(PasswordSettings()) : AnyView(PINSettings())),
+                                        label: !checkIfSecurityKeyPersists() ? "password.settings" : "pin.settings",
                                         typeOf: ViewType.link),
                                     ViewForGenerator(
                                         view: AnyView(DevIDSettings()),
