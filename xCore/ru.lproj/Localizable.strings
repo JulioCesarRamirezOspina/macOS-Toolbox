@@ -11,6 +11,7 @@
 "passwordprompt.text" = "Введите пароль:";
 "wrongAtempts.text" = "Ошибок входа:";
 "password.placeholder" = "Пароль";
+"pin.placeholder" = "PIN";
 "save.button" = "Сохранить";
 "settings.tab" = "Настройки";
 "password.settings" = "Пароль";
@@ -20,6 +21,13 @@
 "password.remove" = "Удалить пароль";
 "password.exists" = "Пароль сохранён";
 "password.wait" = "Подождите...";
+"pin.settings" = "PIN";
+"pin.info" = "Сохранить для автоматического входа";
+"pin.text" = "PIN";
+"pin.save" = "Сохранить PIN";
+"pin.remove" = "Удалить PIN";
+"pin.exists" = "PIN сохранён";
+"pin.wait" = "Подождите...";
 "connected.string" = "Подключено";
 "disconnected.string" = "Отключено";
 "connect.string" = "Подключить";
@@ -134,6 +142,9 @@
 "passwordSavedTrue.string" = "Пароль сохранён";
 "passwordSavedFalse.string" = "Пароль не сохранён";
 "passwordState.string" = "Статус пароля:";
+"pinSavedTrue.string" = "PIN сохранён";
+"pinSavedFalse.string" = "PIN не сохранён";
+"pinState.string" = "Статус PIN:";
 "undefined.string" = "НЕ НАСТРОЕНО";
 "backToOverview.settings" = "Назад к обзору";
 "mainAnimationDuration.string" = "Длительность анимации на главном экране";
@@ -211,6 +222,7 @@
 "ejectSingle.button" = "Извлечь диск";
 "eject.reason" = "извлечь диск";
 "incorrectPassword.string" = "Введён неверный пароль";
+"incorrectPIN.string" = "Введён неверный PIN";
 "autofill.string" = "Автозаполнить";
 "currentDeveloperIDInstaller.string" = "Developer ID Installer";
 "newDevID.string" = "Developer ID Installer";

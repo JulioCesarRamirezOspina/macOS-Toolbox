@@ -13,6 +13,7 @@
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
 		9A6B99B4297EC11800F38BE1 /* PAM Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */; };
 		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
+		9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB1AE0829B804E7006C4ECA /* PIN.swift */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
 		9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0482908BA2E003D7575 /* Assets.xcassets */; };
 		9ABFD0AA2908BBA5003D7575 /* xCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; };
@@ -105,6 +106,7 @@
 		9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PAM Manager.swift"; sourceTree = "<group>"; };
 		9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift"; sourceTree = "<group>"; };
 		9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "macOS-ToolBox-Info.plist"; sourceTree = SOURCE_ROOT; };
+		9AB1AE0829B804E7006C4ECA /* PIN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIN.swift; sourceTree = "<group>"; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "macOS ToolBox.entitlements"; sourceTree = "<group>"; };
@@ -245,6 +247,7 @@
 				9ABFD0E12908BC02003D7575 /* SettingsView.swift */,
 				9ABFD0E22908BC02003D7575 /* Overview.swift */,
 				9ABFD0E32908BC02003D7575 /* Password.swift */,
+				9AB1AE0829B804E7006C4ECA /* PIN.swift */,
 				9ABFD0E62908BC02003D7575 /* Defaults.swift */,
 				9ABFD0E72908BC02003D7575 /* DevID.swift */,
 				9ABFD0E82908BC02003D7575 /* BootCamp.swift */,
@@ -503,6 +506,7 @@
 				9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */,
 				9ABFD1082908BC02003D7575 /* Camper.swift in Sources */,
 				9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */,
+				9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */,
 				9ABFD1092908BC02003D7575 /* Dock.swift in Sources */,
 				9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */,
 				9ABFD1002908BC02003D7575 /* DevID.swift in Sources */,
@@ -709,7 +713,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 134;
+				CURRENT_PROJECT_VERSION = 139;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -733,7 +737,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.4.5;
+				MARKETING_VERSION = 4.4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -755,7 +759,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 134;
+				CURRENT_PROJECT_VERSION = 139;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -779,7 +783,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.4.5;
+				MARKETING_VERSION = 4.4.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

@@ -150,6 +150,22 @@ struct SettingsOverview: View {
                                                 backgroundShadow: true))
     }
     
+    private var PINStateButton: some View {
+        NavigationLink {
+            PINSettings()
+        } label: {
+            Text("\(StringLocalizer("pinState.string")) \(SettingsMonitor.pinSaved ? StringLocalizer("pinSavedTrue.string") : StringLocalizer("pinSavedFalse.string"))")
+        }
+        .buttonStyle(Stylers.ColoredButtonStyle(glyphs: SettingsMonitor.pinSaved ? ["lock"] : ["lock", "line.diagonal"],
+                                                enabled: true,
+                                                alwaysShowTitle: true,
+                                                width: width,
+                                                color: SettingsMonitor.pinSaved ? .green : .red,
+                                                hideBackground: false,
+                                                backgroundShadow: true,
+                                                render: .monochrome))
+    }
+    
     private var AppTheme: some View {
         VStack{
             HStack{
@@ -189,6 +205,7 @@ struct SettingsOverview: View {
                                     Group{
                                         MaintenanceButton
                                         PasswordStateButton
+                                        PINStateButton
                                         BatteryButton
                                         ShowSerialNumber
                                         IsInMenuBar

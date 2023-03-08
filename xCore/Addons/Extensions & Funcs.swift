@@ -196,6 +196,30 @@ func showInFinder(url: URL?) {
     }
 }
 
+public func checkIfSecurityKeyPersists() -> Bool {
+    let process = Process()
+    let pipe = Pipe()
+    process.executableURL = URL(filePath: "/bin/bash")
+    let arg = "ioreg -p IOUSB -w0 | sed 's/[^o]*o //; s/@.*$//' | grep -v '^Root.*'"
+    process.arguments = ["-c", arg]
+    process.standardOutput = pipe
+    do {
+        try process.run()
+        if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
+            if out.contains("OTP") || out.contains("FIDO") || out.contains("CCID") {
+                return true
+            } else {
+                return false
+            }
+        } else {
+            return false
+        }
+    } catch let error {
+        print(error.localizedDescription)
+        return false
+    }
+}
+
 // MARK: - Extensions
 public extension Double {
     func toDegrees(fraction: Double, total: Double) -> Double {

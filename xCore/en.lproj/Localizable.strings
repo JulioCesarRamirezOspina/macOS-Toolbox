@@ -11,6 +11,7 @@
 "passwordprompt.text" = "Enter password:";
 "wrongAtempts.text" = "Invalid attempts:";
 "password.placeholder" = "Password";
+"pin.placeholder" = "PIN";
 "save.button" = "Save";
 "settings.tab" = "Settings";
 "password.settings" = "Password";
@@ -20,6 +21,13 @@
 "password.remove" = "Remove";
 "password.exists" = "Password is saved";
 "password.wait" = "Wait...";
+"pin.settings" = "PIN";
+"pin.info" = "Save this PIN for autologin";
+"pin.text" = "PIN";
+"pin.save" = "Save";
+"pin.remove" = "Remove";
+"pin.exists" = "PIN is saved";
+"pin.wait" = "Wait...";
 "select.utmDir" = "Select";
 "connected.string" = "Connected";
 "disconnected.string" = "Disconnected";
@@ -135,6 +143,9 @@
 "passwordSavedTrue.string" = "Password is saved";
 "passwordSavedFalse.string" = "Password is not saved";
 "passwordState.string" = "Pasword status:";
+"pinSavedTrue.string" = "PIN is saved";
+"pinSavedFalse.string" = "PIN is not saved";
+"pinState.string" = "PIN status:";
 "undefined.string" = "UNDEFINED";
 "backToOverview.settings" = "Back to overview";
 "mainAnimationDuration.string" = "Main screen animation duration";
@@ -211,6 +222,7 @@
 "ejectSingle.button" = "Eject drive";
 "eject.reason" = "eject drive";
 "incorrectPassword.string" = "Wrong password";
+"incorrectPIN.string" = "Wrong PIN";
 "autofill.string" = "Autofill";
 "currentDeveloperIDInstaller.string" = "Current Developer ID Installer";
 "newDevID.string" = "New Developer ID Installer";

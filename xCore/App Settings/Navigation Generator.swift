@@ -49,6 +49,7 @@ public func LinkGlyph(_ label: String) -> String {
     case "bootcamp.settings": return "externaldrive.badge.checkmark"
     case "anim.settings": return "line.3.crossed.swirl.circle"
     case "password.settings": return "key"
+    case "pin.settings": return "lock"
     case "Developer ID": return "person"
     case "defaults.string": return "exclamationmark.triangle"
     case "parallels.settings": return "pause"

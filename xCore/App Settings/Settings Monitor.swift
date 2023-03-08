@@ -265,13 +265,28 @@ public class SettingsMonitor: xCore {
     /// gets/sets sudo password
     public static var password: String {
         get {
-            AppSettings.loadPassword() ?? ""
+            if checkIfSecurityKeyPersists() {
+                AppSettings.loadPIN() ?? ""
+            } else {
+                AppSettings.loadPassword() ?? ""
+            }
         }
         set {
             if newValue == "" {
                 AppSettings.removePassword()
             } else {
                 AppSettings.savePassword(newValue)
+            }
+        }
+    }
+    
+    public static var pin: String {
+        get {AppSettings.loadPIN() ?? ""}
+        set {
+            if newValue == "" {
+                AppSettings.removePIN()
+            } else {
+                AppSettings.savePIN(newValue)
             }
         }
     }
@@ -286,6 +301,17 @@ public class SettingsMonitor: xCore {
             }
         }
     }
+    
+    public static var pinSaved: Bool {
+        get {
+            if pin != "" {
+                return true
+            } else {
+                return false
+            }
+        }
+    }
+
     public override init() {
     }
 }
@@ -534,6 +560,11 @@ fileprivate class AppSettings: xCore {
         defaults.set(AES.data(message: pwd, operation: true)!, forKey: "password")
     }
     
+    public class func savePIN(_ pwd: String) {
+        defaults.set(AES.data(message: pwd, operation: true)!, forKey: "pin")
+    }
+
+    
     /// Load password
     /// - Returns: returns password
     public class func loadPassword() -> String? {
@@ -541,10 +572,19 @@ fileprivate class AppSettings: xCore {
         let password = AES.data(message: pwd, operation: false)!
         return password
     }
-    
+
+    public class func loadPIN() -> String? {
+        let pwd : String = defaults.string(forKey: "pin") ?? ""
+        let password = AES.data(message: pwd, operation: false)!
+        return password
+    }
+
     /// Removes password
     public class func removePassword() {
         defaults.removeObject(forKey: "password")
+    }
+    public class func removePIN() {
+        defaults.removeObject(forKey: "pin")
     }
     //MARK: - Initializer
     public override init() {}

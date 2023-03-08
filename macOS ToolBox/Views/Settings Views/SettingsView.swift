@@ -35,6 +35,10 @@ struct SettingsView: View {
                                         label: "password.settings",
                                         typeOf: ViewType.link),
                                     ViewForGenerator(
+                                        view: AnyView(PINSettings()),
+                                        label: "pin.settings",
+                                        typeOf: ViewType.link),
+                                    ViewForGenerator(
                                         view: AnyView(DevIDSettings()),
                                         label: "Developer ID",
                                         typeOf: ViewType.link),
