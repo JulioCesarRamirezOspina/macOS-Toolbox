@@ -41,15 +41,12 @@ struct TouchIDView: View {
     @State private var AuthType = LAContext().biometricType
     
     var noTouchID: some View {
-        GroupBox {
+        VStack{
             Spacer()
             Spacer()
             CustomViews.AnimatedTextView(Input: "noTouchIDInstalled.string", Font: .largeTitle, FontWeight: .black, TimeToStopAnimation: SettingsMonitor.secAnimDur)
             Spacer()
-        } label: {
-            CustomViews.AnimatedTextView(Input: "tid.title", TimeToStopAnimation: SettingsMonitor.secAnimDur)
         }
-        .groupBoxStyle(Stylers.CustomGBStyle())
         .background(content: {
             if status {
                 img(enabledColors, name: "touchid")
