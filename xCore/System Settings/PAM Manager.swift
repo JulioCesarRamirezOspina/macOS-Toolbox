@@ -65,7 +65,7 @@ public class PAMManager: xCore {
                 let sudoText = String(data: data!, encoding: .utf8)!
                 var state: pamTask = .disable
                 sudoText.split(separator: "\n").forEach { line in
-                    if line.contains(pamLibLocationInOpt!) {
+                    if line.contains(pamLibLocationInOpt ?? "asdasdasd") {
                         state = .enable
                     }
                 }
@@ -77,7 +77,7 @@ public class PAMManager: xCore {
                 let sudoText = String(data: data!, encoding: .utf8)!
                 var state: pamTask = .disable
                 sudoText.split(separator: "\n").forEach { line in
-                    if line.contains(pamLibLocationInOpt!) {
+                    if line.contains(pamLibLocationInOpt ?? "asdasdasd") {
                         state = .enable
                     }
                 }
