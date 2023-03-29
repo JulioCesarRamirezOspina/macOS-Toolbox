@@ -112,35 +112,52 @@ struct CamperView: View {
             }
         }
     }
-    
+    private var animation: Animation {
+        Animation.linear(duration: SettingsMonitor.secAnimDur * 2).repeatForever(autoreverses: false)
+    }
+
     var body: some View {
         GroupBox {
-            VStack{
-                MainViewWithoutPassword()
-                    .environment(\.locale, locale)
+            if isRun {
+                VStack{
+                    MainViewWithoutPassword()
+                        .environment(\.locale, locale)
+                }
+            } else {
+                loadingScreen
             }
         } label: {
-            CustomViews.AnimatedTextView(Input: StringLocalizer("camperView.string"), TimeToStopAnimation: SettingsMonitor.secAnimDur)
+            HStack{
+                CustomViews.AnimatedTextView(Input: StringLocalizer("camperView.string"), TimeToStopAnimation: SettingsMonitor.secAnimDur)
+                Spacer()
+                    Button {
+                        Task {
+                            await reload()
+                        }
+                    } label: {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                    }
+                    .buttonStyle(.borderless)
+                    .padding(.all)
+            }
         }
         .groupBoxStyle(Stylers.CustomGBStyle())
         .onAppear {
-            isRun = true
+//            isRun = true
+            Task {
+                await reload()
+            }
         }
-        .task {
-            repeat {
-                do {
-                    try await Task.sleep(nanoseconds: 1000000000)
-                } catch _ {}
-                _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
-                isBC = BootCampStart.bcExists(diskLabelSet)
-                isReboot = SettingsMonitor.bootCampWillRestart
-                nextOnly = SettingsMonitor.bootCampIsNextOnly
-                password = SettingsMonitor.password
-                passwordSaved = SettingsMonitor.passwordSaved
-                diskLabelSet = SettingsMonitor.bootCampDiskLabel
-                virtsExist = Virtuals.anyExist
-            }while (isRun)
-        }
+//        .task {
+//            _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
+//            isBC = BootCampStart.bcExists(diskLabelSet)
+//            isReboot = SettingsMonitor.bootCampWillRestart
+//            nextOnly = SettingsMonitor.bootCampIsNextOnly
+//            password = SettingsMonitor.password
+//            passwordSaved = SettingsMonitor.passwordSaved
+//            diskLabelSet = SettingsMonitor.bootCampDiskLabel
+//            virtsExist = Virtuals.anyExist
+//        }
         .onChange(of: isReboot) { newValue in
             SettingsMonitor.bootCampWillRestart = newValue
         }
@@ -153,12 +170,20 @@ struct CamperView: View {
         .animation(SettingsMonitor.secondaryAnimation, value: isReboot)
         .animation(SettingsMonitor.secondaryAnimation, value: isRun)
     }
-}
-
-
-struct camperPreview: PreviewProvider {
-    static var previews: some View {
-        CamperView()
+    func reload() async {
+        Task {
+            isRun = false
+            _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
+            isBC = BootCampStart.bcExists(diskLabelSet)
+            isReboot = SettingsMonitor.bootCampWillRestart
+            nextOnly = SettingsMonitor.bootCampIsNextOnly
+            password = SettingsMonitor.password
+            passwordSaved = SettingsMonitor.passwordSaved
+            diskLabelSet = SettingsMonitor.bootCampDiskLabel
+            virtsExist = Virtuals.anyExist
+            try? await Task.sleep(nanoseconds: 3000000000)
+            isRun = true
+        }
     }
 }
 

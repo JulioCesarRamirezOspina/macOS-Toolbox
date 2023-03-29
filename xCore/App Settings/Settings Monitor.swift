@@ -266,9 +266,9 @@ public class SettingsMonitor: xCore {
     public static var password: String {
         get {
             if checkIfSecurityKeyPersists() {
-                AppSettings.loadPIN() ?? ""
+                return AppSettings.loadPIN() ?? ""
             } else {
-                AppSettings.loadPassword() ?? ""
+                return AppSettings.loadPassword() ?? ""
             }
         }
         set {

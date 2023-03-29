@@ -90,6 +90,19 @@ func convertValueRounded(_ v: Double, _ u: Unit = .byte) -> (Double, Unit) {
     }
 }
 
+public var loadingScreen: some View {
+    VStack{
+        Spacer()
+        ProgressView()
+            .padding(.all)
+        Text("loading.string")
+            .font(.largeTitle)
+            .fontWeight(.black)
+            .padding(.all)
+        Spacer()
+    }
+}
+
 func convertValue(_ v: Double) -> (Double, Unit) {
     let bytes = v
     var kilobytes: Double {

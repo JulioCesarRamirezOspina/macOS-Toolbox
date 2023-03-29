@@ -291,6 +291,7 @@ public struct VMPropertiesList: Identifiable, Comparable {
     public var fileExtension: vmType
     public var creationDate: String
     public var lastAccessDate: String
+    public var isExternal: Bool
     public let id = UUID()
     
 }

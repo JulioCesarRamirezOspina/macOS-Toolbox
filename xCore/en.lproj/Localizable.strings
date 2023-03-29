@@ -47,6 +47,7 @@
 "rebootnow.button" = "Reboot now";
 "parallels.title" = "I can launch Parallels Desktop VMs from list:";
 "parallels.picker" = "VMs:";
+"external.string" = "This VM placed on external drive";
 "launch.button" = "Launch";
 "quit.button" = "Quit";
 "passwordprompt.text" = "Enter password:";

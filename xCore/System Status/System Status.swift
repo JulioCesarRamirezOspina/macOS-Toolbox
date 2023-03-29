@@ -598,20 +598,7 @@ public class SystemStatus: xCore {
                 .padding(.all)
             }
         }
-        
-        private var loadingScreen: some View {
-            VStack{
-                Spacer()
-                ProgressView()
-                    .padding(.all)
-                Text("loading.string")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .padding(.all)
-                Spacer()
-            }
-        }
-        
+                
         public var body: some View {
             VStack {
                 if isRun {

@@ -47,6 +47,7 @@
 "parallels.title" = "Я могу запустить выбранную виртуальную машину";
 "parallels.picker" = "Виртуальные машины:";
 "launch.button" = "Запустить";
+"external.string" = "Находится на внешнем диске";
 "quit.button" = "Выход";
 "passwordprompt.text" = "Введите пароль:";
 "wrongAtempts.text" = "Неправильных попыток ввода:";

@@ -223,7 +223,7 @@ struct TouchIDView: View {
                         PAMView
                     }
                 } else {
-                    Spacer()
+                    loadingScreen
                 }
             } else {
                 CustomViews.NoPasswordView(false, toggle: $dummy)
@@ -236,11 +236,20 @@ struct TouchIDView: View {
             passwordExists = SettingsMonitor.passwordSaved
         })
         .animation(SettingsMonitor.secondaryAnimation, value: status)
+        .animation(SettingsMonitor.secondaryAnimation, value: loading)
         .onAppear {
             status = PAMManager.TouchID().analyzePam_d()
-            loading = false
             passwordExists = SettingsMonitor.passwordSaved
-            
+            Task {
+                await del()
+            }
+        }
+    }
+    
+    private func del() async {
+        Task {
+            try? await Task.sleep(nanoseconds: 3000000000)
+            loading = false
         }
     }
 }

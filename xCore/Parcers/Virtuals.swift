@@ -98,7 +98,13 @@ public class Virtuals: xCore {
                         case "vmwarevm" : vmType = .fusion
                         default: vmType = .unknown
                         }
-                        retval.append(.init(name: name, path: url, fileExtension: vmType!, creationDate: creationDate, lastAccessDate: lastAccessDate))
+                        retval.append(.init(name: name,
+                                            path: url,
+                                            fileExtension: vmType!,
+                                            creationDate: creationDate,
+                                            lastAccessDate: lastAccessDate,
+                                            isExternal: components.dropFirst().first?.description == "Users" ? false : true
+                                           ))
                     }
                 }
                 return retval
@@ -135,11 +141,22 @@ public class Virtuals: xCore {
                     }
                     VStack{
                         HStack{
-                            Text(file.name)
-                                .font(.largeTitle)
-                                .fontWeight(.black)
-                                .foregroundStyle(.primary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
-                                .padding(.all)
+                            VStack {
+                                HStack{
+                                    Text(file.name)
+                                        .font(.largeTitle)
+                                        .fontWeight(.black)
+                                        .foregroundStyle(.primary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
+                                    Spacer()
+                                }
+                                if file.isExternal {
+                                    HStack{
+                                        Text(StringLocalizer("external.string"))
+                                            .foregroundStyle(.secondary.shadow(.drop(radius: shadowRadius, x: shadowOffset, y: shadowOffset)))
+                                        Spacer()
+                                    }
+                                }
+                            }.padding(.all)
                             Spacer()
                                 Button {
                                     NSWorkspace().open(file.path)
