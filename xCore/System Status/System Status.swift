@@ -517,33 +517,28 @@ public class SystemStatus: xCore {
                             HStack{
                                 CPUDisplay.view(isRun: $isRun)
                                     .padding(.all)
-//                                Divider()
                                 MemoryDisplay.view(isRun: $isRun)
                                     .padding(.all)
                             }
-//                            Divider()
-//                            NetViews.Monitor().padding(.all)
                             if batteryIsPresent {
-//                                Divider()
                                 HStack{
                                     macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
                                                      HalfScreen: false,
                                                      Alignment: .leading,
                                                      ShowTitle: true)
                                     .padding(.all)
-//                                    Divider()
                                     BatteryDisplay.view(isRun: $isRun)
                                         .padding(.all)
                                 }
-//                                Divider()
                             } else {
-//                                Divider()
                                 macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
                                                  HalfScreen: false,
                                                  Alignment: .leading,
                                                  ShowTitle: true)
                                 .padding(.all)
                             }
+//                            Divider()
+//                            NetViews.Monitor().padding(.all)
                         }
                         .onAppear(perform: {
                             height = g.size.height / 12
