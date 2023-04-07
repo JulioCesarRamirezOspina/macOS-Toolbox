@@ -39,6 +39,11 @@ public class SettingsMonitor: xCore {
         }
     }
     
+    public static var vmsLocalOnly: Bool {
+        get {AppSettings.load(key: "vmsLocalOnly") ?? false}
+        set {AppSettings.set(key: "vmsLocalOnly", value: newValue)}
+    }
+    
     public static var bootCampWillRestart: Bool {
         get {
             AppSettings.load(key: "bootCampWillRestart") ?? false

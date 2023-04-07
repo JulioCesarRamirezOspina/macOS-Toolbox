@@ -22,6 +22,7 @@ struct CamperView: View {
     @State private var showSettings = false
     @State private var dummy = false
     @State private var isRun = false
+    @State private var localOnly = SettingsMonitor.vmsLocalOnly
     
     private func tidIsEnabled() -> Bool {
         let pam = PAMManager.TouchID()
@@ -98,7 +99,8 @@ struct CamperView: View {
                     if isBC {
                         BootCampView(proxy: proxy.size)
                     }
-                    Virtuals.FileSearch().onlyForEachView(width: proxy.size.width)
+                    Virtuals.FileSearch().onlyForEachView(width: proxy.size.width, isLocal: localOnly)
+                        .animation(SettingsMonitor.secondaryAnimation, value: localOnly)
                 }
             }
         }
@@ -130,34 +132,33 @@ struct CamperView: View {
             HStack{
                 CustomViews.AnimatedTextView(Input: StringLocalizer("camperView.string"), TimeToStopAnimation: SettingsMonitor.secAnimDur)
                 Spacer()
-                    Button {
-                        Task {
-                            await reload()
-                        }
-                    } label: {
-                        Image(systemName: "arrow.triangle.2.circlepath")
+                Toggle(isOn: $localOnly, label: {
+                    Text("vms.local.string")
+                })
+                .toggleStyle(.switch)
+                .padding(.all)
+                Button {
+                    Task {
+                        await reload()
                     }
-                    .buttonStyle(.borderless)
-                    .padding(.all)
+                } label: {
+                    Image(systemName: "arrow.triangle.2.circlepath")
+                }
+                .buttonStyle(.borderless)
+                .padding(.all)
             }
         }
         .groupBoxStyle(Stylers.CustomGBStyle())
         .onAppear {
-//            isRun = true
             Task {
                 await reload()
             }
         }
-//        .task {
-//            _ = BootCampStart.tryToMount(diskLabel: diskLabelSet, password: password)
-//            isBC = BootCampStart.bcExists(diskLabelSet)
-//            isReboot = SettingsMonitor.bootCampWillRestart
-//            nextOnly = SettingsMonitor.bootCampIsNextOnly
-//            password = SettingsMonitor.password
-//            passwordSaved = SettingsMonitor.passwordSaved
-//            diskLabelSet = SettingsMonitor.bootCampDiskLabel
-//            virtsExist = Virtuals.anyExist
-//        }
+        .onDisappear(perform: {
+            Task {
+                await reload()
+            }
+        })
         .onChange(of: isReboot) { newValue in
             SettingsMonitor.bootCampWillRestart = newValue
         }
@@ -167,6 +168,9 @@ struct CamperView: View {
         .onDisappear {
             isRun = false
         }
+        .onChange(of: localOnly, perform: { newValue in
+            SettingsMonitor.vmsLocalOnly = newValue
+        })
         .animation(SettingsMonitor.secondaryAnimation, value: isReboot)
         .animation(SettingsMonitor.secondaryAnimation, value: isRun)
     }
@@ -181,6 +185,7 @@ struct CamperView: View {
             passwordSaved = SettingsMonitor.passwordSaved
             diskLabelSet = SettingsMonitor.bootCampDiskLabel
             virtsExist = Virtuals.anyExist
+            localOnly = SettingsMonitor.vmsLocalOnly
             try? await Task.sleep(nanoseconds: 3000000000)
             isRun = true
         }

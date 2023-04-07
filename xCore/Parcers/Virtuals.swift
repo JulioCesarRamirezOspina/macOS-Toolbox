@@ -22,7 +22,17 @@ public class Virtuals: xCore {
         get {
             var retval: [VMPropertiesList] = Array()
             for each in vmList {
-                retval += files(fileExtension: each)
+                retval += files(fileExtension: each, isLocal: false)
+            }
+            return retval
+        }
+    }
+    
+    private static var localFiles: [VMPropertiesList] {
+        get {
+            var retval: [VMPropertiesList] = Array()
+            for each in vmList {
+                retval += files(fileExtension: each, isLocal: true)
             }
             return retval
         }
@@ -32,7 +42,7 @@ public class Virtuals: xCore {
         get {
             if !alreadyCheck {
                 func check(ext: String) -> Bool {
-                    if files(fileExtension: ext).isEmpty {
+                    if files(fileExtension: ext, isLocal: false).isEmpty {
                         return false
                     } else {
                         return true
@@ -57,7 +67,7 @@ public class Virtuals: xCore {
         }
     }
     //MARK: - Funcs
-    private static func files(fileExtension: String) -> [VMPropertiesList] {
+    private static func files(fileExtension: String, isLocal: Bool) -> [VMPropertiesList] {
         let process = Process()
         let pipe = Pipe()
         process.standardOutput = pipe
@@ -90,22 +100,40 @@ public class Virtuals: xCore {
                     let creationDate = dates.creation
                     let lastAccessDate = dates.access
                     var vmType: vmType?
-                    if ext == fileExtension {
-                        switch ext {
-                        case "pvm" : vmType = .pvm
-                        case "vbox": vmType = .vbox
-                        case "utm" : vmType = .utm
-                        case "vmwarevm" : vmType = .fusion
-                        default: vmType = .unknown
+                    if !isLocal {
+                        if ext == fileExtension {
+                            switch ext {
+                            case "pvm" : vmType = .pvm
+                            case "vbox": vmType = .vbox
+                            case "utm" : vmType = .utm
+                            case "vmwarevm" : vmType = .fusion
+                            default: vmType = .unknown
+                            }
+                            retval.append(.init(name: name,
+                                                path: url,
+                                                fileExtension: vmType!,
+                                                creationDate: creationDate,
+                                                lastAccessDate: lastAccessDate,
+                                                isExternal: components.dropFirst().first?.description == "Users" ? false : true
+                                               ))
                         }
-                        retval.append(.init(name: name,
-                                            path: url,
-                                            fileExtension: vmType!,
-                                            creationDate: creationDate,
-                                            lastAccessDate: lastAccessDate,
-                                            isExternal: components.dropFirst().first?.description == "Users" ? false : true
-                                           ))
-                    }
+                    } else {
+                        if ext == fileExtension && components.dropFirst().first?.description == "Users" {
+                            switch ext {
+                            case "pvm" : vmType = .pvm
+                            case "vbox": vmType = .vbox
+                            case "utm" : vmType = .utm
+                            case "vmwarevm" : vmType = .fusion
+                            default: vmType = .unknown
+                            }
+                            retval.append(.init(name: name,
+                                                path: url,
+                                                fileExtension: vmType!,
+                                                creationDate: creationDate,
+                                                lastAccessDate: lastAccessDate,
+                                                isExternal: components.dropFirst().first?.description == "Users" ? false : true
+                                               ))
+                        }                    }
                 }
                 return retval
             } else {
@@ -216,8 +244,8 @@ public class Virtuals: xCore {
             }
         }
         
-        public func onlyForEachView(width: CGFloat) -> some View {
-            generateForEach(filesList: allFiles, width: width)
+        public func onlyForEachView(width: CGFloat, isLocal: Bool) -> some View {
+            generateForEach(filesList: isLocal ? localFiles : allFiles, width: width)
         }
     }
 }

@@ -5,6 +5,7 @@
   Created by Олег Сазонов on 06.06.2022.
   
 */
+"vms.local.string" = "Только локальные";
 "ok.button" = "OK";
 "cancel.button" = "Отмена";
 "quit.button" = "Выход";

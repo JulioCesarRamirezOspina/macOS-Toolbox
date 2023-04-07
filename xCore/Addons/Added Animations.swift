@@ -11,7 +11,7 @@ import SwiftUI
 // MARK: - Pulsing Animation
 
 private struct PulsingAnimation: ViewModifier {
-    @State var isOn: Bool = false
+    @State private var isOn: Bool = false
     var direction: MoveDirection
     var color: Color
     func body(content: Content) -> some View {
