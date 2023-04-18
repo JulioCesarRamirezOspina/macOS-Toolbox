@@ -205,7 +205,13 @@ public class DisksDisplay: xCore {
                         DiskSheet(disksData: disksData, index: index)
                     }
                     .onTapGesture {
-                        selfTapped[index] = true
+                        for each in 0..<selfTapped.count {
+                            if each == index {
+                                selfTapped[each] = true
+                            } else {
+                                selfTapped[each] = false
+                            }
+                        }
                         currentyActive = index
                     }
                 }

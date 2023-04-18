@@ -13,5 +13,5 @@ import AppKit
 let app = NSApplication.shared
 let delegate = AppDelegate()
 app.delegate = delegate
-
-_ = NSApplicationMain(CommandLine.argc, CommandLine.unsafeArgv)
+var argv: UnsafeMutablePointer<CChar>? = nil
+_ = NSApplicationMain(0, &argv)
