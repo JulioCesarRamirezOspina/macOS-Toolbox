@@ -723,6 +723,7 @@
 				INFOPLIST_FILE = "macOS-ToolBox-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "macOS ToolBox";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©️ ~X~ Lab 2023. All rights reserved";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -769,6 +770,7 @@
 				INFOPLIST_FILE = "macOS-ToolBox-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "macOS ToolBox";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright ©️ ~X~ Lab 2023. All rights reserved";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
