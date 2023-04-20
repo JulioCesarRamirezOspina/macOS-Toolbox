@@ -38,7 +38,6 @@
 		9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */; };
 		9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */; };
 		9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */; };
-		9AD7B6A229F1C9AF00451930 /* Net Parcer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */; };
 		9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */; };
 		9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */; };
 		9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */; };
@@ -492,7 +491,6 @@
 				9AD7B6B529F1C9B000451930 /* macOS SubSystem.swift.xcore.swift in Sources */,
 				9ABFD1012908BC02003D7575 /* BootCamp.swift in Sources */,
 				9AD7B6B229F1C9B000451930 /* Settings Monitor.swift.xcore.swift in Sources */,
-				9AD7B6A229F1C9AF00451930 /* Net Parcer.swift.xcore.swift in Sources */,
 				9AD7B6B429F1C9B000451930 /* Apple Script.swift.xcore.swift in Sources */,
 				9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */,
 				9ABFD10A2908BC02003D7575 /* Beta Seed.swift in Sources */,
@@ -639,7 +637,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 168;
+				CURRENT_PROJECT_VERSION = 170;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -685,7 +683,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 168;
+				CURRENT_PROJECT_VERSION = 170;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;

@@ -99,7 +99,7 @@ public class SleepManager {
     
     /// Localized sleep setting descripton
     /// - Parameter input: 0 — sleep disabled, 3 — sleep, 25 — hibernation
-    
+
     /// - Returns: Exact what it's called
     public func getSleepSetting(_ input: Int) -> String {
         switch input {

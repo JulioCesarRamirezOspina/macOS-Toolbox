@@ -79,7 +79,7 @@ public class Shell {
                 NSLog(error.localizedDescription)
             }
         }
-
+        
         private static let exePath = URL(filePath: "/bin/bash")
         /// Executes one shell command
         /// - Parameters:
@@ -99,7 +99,9 @@ public class Shell {
                 arguments += (arg + " ")
             }
             let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+#if DEBUG
             print("-\(runLine)-")
+#endif
             process.executableURL = exePath
             process.arguments = ["-c", runLine]
             process.standardOutput = pipe
@@ -132,7 +134,9 @@ public class Shell {
                 arguments += (arg + " ")
             }
             let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+#if DEBUG
             print("-\(runLine)-")
+#endif
             process.executableURL = exePath
             process.arguments = ["-c", runLine]
             process.standardOutput = pipe
@@ -172,7 +176,9 @@ public class Shell {
                 arguments += (arg + " ")
             }
             let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+#if DEBUG
             print("-\(runLine)-")
+#endif
             process.executableURL = exePath
             process.arguments = ["-c", runLine]
             process.standardOutput = pipe
@@ -210,7 +216,7 @@ public class Shell {
             }
             return pipe
         }
-
+        
         /// Runs SUDO in swift
         /// - Parameters:
         ///   - exe: path to executable to runn with sudo
@@ -277,7 +283,7 @@ public class Shell {
                 NSLog(error.localizedDescription)
             }
         }
-
+        
         /// Checks if password provided is correct (use as variable value to eras in case of wrong input)
         /// - Parameter password: admin password
         /// - Returns: true if password is correct, false, if not
