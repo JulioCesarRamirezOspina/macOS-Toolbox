@@ -38,27 +38,17 @@ public class PAMManager {
        }       
        
        public init() {
-            self.pamLibLocationInOpt = {
-                var retval: String? = nil
-                let process = Process()
-                let pipe = Pipe()
-                process.executableURL = URL(filePath: "/bin/bash")
-                process.arguments = ["-c", "find /opt -name pam_u2f.so"]
-                process.standardOutput = pipe
-                do {
-                    try process.run()
-                    if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                        out.split(separator: "\n").forEach { line in
-                            if !line.contains("find: /opt: No such file or directory") {
-                                retval = String(out.replacingOccurrences(of: "\n", with: ""))
-                            }
-                        }
-                    }
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                }
-                return retval
-            }()
+           self.pamLibLocationInOpt = {
+               var retval: String? = nil
+               if let out: String = Shell.Parcer.oneExecutable(exe: "find", args: ["/opt", "-name", "pam_u2f.so"]) {
+                   out.split(separator: "\n").forEach { line in
+                       if !line.contains("find: /opt: No such file or directory") {
+                           retval = String(out.replacingOccurrences(of: "\n", with: ""))
+                       }
+                   }
+               }
+               return retval
+           }()
             
             self.sudoContents = {
                 let data = FileManager.default.contents(atPath: "/etc/pam.d/sudo")

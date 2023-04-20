@@ -24,11 +24,7 @@ struct Defaults: View {
                             SettingsMonitor().defaults()
                             AppDelegate().applicationWillTerminate(.init(name: NSApplication.willTerminateNotification, object: .none, userInfo: .none))
                             func relaunch(afterDelay seconds: TimeInterval = 0.5) -> Never {
-                                let task = Process()
-                                task.launchPath = "/bin/sh"
-                                task.arguments = ["-c", "sleep \(seconds); open \"\(Bundle.main.bundlePath)\""]
-                                task.launch()
-                                
+                                Shell.Parcer.oneExecutable(args: ["sleep \(seconds); open \"\(Bundle.main.bundlePath)\""]) as Void
                                 NSApp.terminate(self)
                                 exit(EXIT_SUCCESS)
                             }

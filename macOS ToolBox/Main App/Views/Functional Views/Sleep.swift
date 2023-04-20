@@ -31,14 +31,7 @@ struct SleepManagerView: View {
     }
     
     private func sleepNow() {
-        let process = Process()
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "pmset sleepnow"]
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
+        Shell.Parcer.oneExecutable(exe: "pmset", args: ["sleepnow"]) as Void
     }
     
     private var MainButtons: some View {

@@ -13,160 +13,89 @@ public class DockManager {
     deinit{}
     
     private func getKeyValue(key: DockBoolKeys) -> Bool {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .singleAppEnabled: process.arguments = ["-c", "defaults read com.apple.dock static-only -bool"]
-        case .singleAppDisabled: process.arguments = ["-c", "defaults read com.apple.dock static-only -bool"]
-        case .autohideEnabled: process.arguments = ["-c", "defaults read com.apple.dock autohide -bool"]
-        case .autohideDisabled: process.arguments = ["-c", "defaults read com.apple.dock autohide -bool"]
-        case .magnificationEnabled:
-            process.arguments = ["-c", "defaults read com.apple.dock magnification -bool"]
-        case .magnificationDisabled:
-            process.arguments = ["-c", "defaults read com.apple.dock magnification -bool"]
-        case .hiddenAppsGrayedOutEnabled:
-            process.arguments = ["-c", "defaults read com.apple.dock showhidden -bool"]
-        case .hiddenAppsGrayedOutDisabled:
-            process.arguments = ["-c", "defaults read com.apple.dock showhidden -bool"]
+        case .singleAppEnabled: arguments = ["read", "com.apple.dock", "static-only", "-bool"]
+        case .singleAppDisabled: arguments = ["read", "com.apple.dock", "static-only", "-bool"]
+        case .autohideEnabled: arguments = ["read", "com.apple.dock", "autohide", "-bool"]
+        case .autohideDisabled: arguments = ["read", "com.apple.dock", "autohide", "-bool"]
+        case .magnificationEnabled: arguments = ["read", "com.apple.dock", "magnification", "-bool"]
+        case .magnificationDisabled: arguments = ["read", "com.apple.dock", "magnification", "-bool"]
+        case .hiddenAppsGrayedOutEnabled: arguments = ["read", "com.apple.dock", "showhidden", "-bool"]
+        case .hiddenAppsGrayedOutDisabled: arguments = ["read", "com.apple.dock", "showhidden", "-bool"]
         }
-        do {
-            try process.run()
-            let ShellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            let result = Int(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")))
-            switch result {
-            case 1: return true
-            default: return false
-            }
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-            return false
+        let ShellResult: String = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let result = Int(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")))
+        switch result {
+        case 1: return true
+        default: return false
         }
     }
     
     private func getKeyValue(key: DockFloatKeys) -> Int {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .animationSpeed: process.arguments = ["-c", "defaults read com.apple.dock autohide-time-modifier -float"]
-        case .popDelay: process.arguments = ["-c", "defaults read com.apple.dock autohide-delay -float"]
+        case .animationSpeed: arguments = ["read", "com.apple.dock", "autohide-time-modifier", "-float"]
+        case .popDelay: arguments = ["read", "com.apple.dock", "autohide-delay", "-float"]
         }
-        do {
-            try process.run()
-            let ShellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) ?? 0
-            return Int(result * 100)
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-            return 0
-        }
+        let ShellResult = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) ?? 0
+        return Int(result * 100)
     }
     private func getKeyValue(key: DockStringKeys) -> String {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .typeOfAnimation: process.arguments = ["-c", "defaults read com.apple.dock mineffect -string"]
-        case .orientation:
-            process.arguments = ["-c", "defaults read com.apple.dock orientation -string"]
+        case .typeOfAnimation:  arguments = ["read", "com.apple.dock", "mineffect", "-string"]
+        case .orientation:      arguments = ["read", "com.apple.dock", "orientation", "-string"]
         }
-        do {
-            try process.run()
-            let ShellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            let result = String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))
-            return result
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-            return ""
-        }
+        let ShellResult = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let result = String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))
+        return result
     }
     
     
     private func setKeyValue(key: DockBoolKeys) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .singleAppEnabled: process.arguments = ["-c", "defaults write com.apple.dock static-only -bool true"]
-        case .singleAppDisabled: process.arguments = ["-c", "defaults write com.apple.dock static-only -bool false"]
-        case .autohideDisabled: process.arguments = ["-c", "defaults write com.apple.dock autohide -bool false"]
-        case .autohideEnabled: process.arguments = ["-c", "defaults write com.apple.dock autohide -bool true"]
-        case .magnificationEnabled:
-            process.arguments = ["-c", "defaults write com.apple.dock magnification -bool true"]
-        case .magnificationDisabled:
-            process.arguments = ["-c", "defaults write com.apple.dock magnification -bool false"]
-        case .hiddenAppsGrayedOutEnabled:
-            process.arguments = ["-c", "defaults write com.apple.dock showhidden -bool true"]
-        case .hiddenAppsGrayedOutDisabled:
-            process.arguments = ["-c", "defaults write com.apple.dock showhidden -bool false"]
+        case .singleAppEnabled: arguments = ["write", "com.apple.dock", "static-only", "-bool", "true"]
+        case .singleAppDisabled: arguments = ["write", "com.apple.dock", "static-only", "-bool", "false"]
+        case .autohideDisabled: arguments = ["write", "com.apple.dock", "autohide", "-bool", "false"]
+        case .autohideEnabled: arguments = ["write", "com.apple.dock", "autohide", "-bool", "true"]
+        case .magnificationEnabled: arguments = ["write", "com.apple.dock", "magnification", "-bool", "true"]
+        case .magnificationDisabled: arguments = ["write", "com.apple.dock", "magnification", "-bool", "false"]
+        case .hiddenAppsGrayedOutEnabled: arguments = ["write", "com.apple.dock", "showhidden", "-bool", "true"]
+        case .hiddenAppsGrayedOutDisabled: arguments = ["write", "com.apple.dock", "showhidden", "-bool", "false"]
         }
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
     }
     
     private func setKeyValue(key: DockFloatKeys, value: Int) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .animationSpeed: process.arguments = ["-c", "defaults write com.apple.dock autohide-time-modifier -float \(Float(value) / 100)"]
-        case .popDelay: process.arguments = ["-c", "defaults write com.apple.dock autohide-delay -float \(Float(value) / 100)"]
+        case .animationSpeed:   arguments = ["write", "com.apple.dock", "autohide-time-modifier", "-float", "\(Float(value) / 100)"]
+        case .popDelay:         arguments = ["write", "com.apple.dock", "autohide-delay", "-float", "\(Float(value) / 100)"]
         }
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
     }
     
     private func setKeyValue(key: orientation) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .right: process.arguments = ["-c", "defaults write com.apple.dock orientation right"]
-        case .left: process.arguments = ["-c", "defaults write com.apple.dock orientation left"]
-        case .bottom: process.arguments = ["-c", "defaults write com.apple.dock orientation bottom"]
+        case .right:    arguments = ["write", "com.apple.dock", "orientation", "right"]
+        case .left:     arguments = ["write", "com.apple.dock", "orientation", "left"]
+        case .bottom:   arguments = ["write", "com.apple.dock", "orientation", "bottom"]
         }
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
     }
     
     private func setKeyValue(key: AnimationTypes) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch key {
-        case .suck: process.arguments = ["-c", "defaults write com.apple.dock mineffect -string suck"]
-        case .genie: process.arguments = ["-c", "defaults write com.apple.dock mineffect -string genie"]
-        case .scale: process.arguments = ["-c", "defaults write com.apple.dock mineffect -string scale"]
+        case .suck:     arguments = ["write", "com.apple.dock", "mineffect", "-string", "suck"]
+        case .genie:    arguments = ["write", "com.apple.dock", "mineffect", "-string", "genie"]
+        case .scale:    arguments = ["write", "com.apple.dock", "mineffect", "-string", "scale"]
         }
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
     }
     
     private func writeDiskArbitration(_ enable: Bool) {
@@ -180,16 +109,10 @@ public class DockManager {
     }
     
     private func readDiskArbitration() -> Bool {
-        let process = Process()
-        let pipe = Pipe()
         var retval = false
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "defaults read /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist"]
-        do {
-            try process.run()
-            let shellResutl = try String(data: pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8)
-            for line in shellResutl!.components(separatedBy: "\n") {
+        let arguments = ["read", "/Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist"]
+            let shellResutl = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+            for line in shellResutl.components(separatedBy: "\n") {
                 if line.contains("DADisableEjectNotification"){
                     if line.contains("1") {
                         retval = true
@@ -200,57 +123,25 @@ public class DockManager {
                     }
                 }
             }
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-            return retval
-        }
         return retval
     }
     
     public func addSpacer(_ type: spacerType) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
+        var arguments = [String]()
         switch type {
-        case .wide: process.arguments = ["-c", "defaults write com.apple.dock persistent-apps -array-add '{tile-data={}; tile-type=\"spacer-tile\";}'"]
-        case .narrow: process.arguments = ["-c", "defaults write com.apple.dock persistent-apps -array-add '{\"tile-type\"=\"small-spacer-tile\";}'"]
+        case .wide:     arguments = ["write", "com.apple.dock", "persistent-apps", "-array-add", "'{tile-data={}; tile-type=\"spacer-tile\";}'"]
+        case .narrow:   arguments = ["write", "com.apple.dock", "persistent-apps", "-array-add", "'{\"tile-type\"=\"small-spacer-tile\";}'"]
         }
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
     }
     
     public func restartDock() {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "killall Dock"]
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "killall", args: ["Dock"]) as Void
     }
 
     public func dockDefaults() {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "defaults delete com.apple.dock; killall Dock"]
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-            process.terminate()
-        }
+        Shell.Parcer.oneExecutable(exe: "defaults", args: ["delete", "com.apple.dock"]) as Void
+        Shell.Parcer.oneExecutable(exe: "killall", args: ["Dock"]) as Void
     }
     
     public var AnimationType: AnimationTypes {

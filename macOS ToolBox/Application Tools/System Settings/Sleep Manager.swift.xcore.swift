@@ -14,18 +14,7 @@ public class SleepManager {
     /// Checks if Sleep is disabled
     /// - Returns: true if enabled, false otherwise
     public func getIsSleepEnabled() -> Bool {
-        let process = Process()
-        let pipe = Pipe()
-        process.executableURL = URL(filePath: "/usr/bin/pmset")
-        process.arguments = ["-g"]
-        process.standardOutput = pipe
-        var shellResult = ""
-        do {
-            try process.run()
-            shellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? ""
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
+        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
         var hibernationValue = ""
         var resultingValue = 0
         let findingResult = shellResult.byLines
@@ -47,30 +36,18 @@ public class SleepManager {
     /// System Sleep settings
     /// - Returns: true if sleep is disabled on system wide level, false otherwise
     public func SystemWideSleepStatus() -> Bool {
-        let process = Process()
-        let pipe = Pipe()
-        process.executableURL = URL(filePath: "/usr/bin/pmset")
-        process.arguments = ["-g"]
-        process.standardOutput = pipe
         var retval: Bool = false
-        do {
-            try process.run()
-            let shellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? ""
-            let findingResult = shellResult.byLines
-//            print(shellResult)
-            for line in findingResult {
-                if line.contains("SleepDisabled") {
-                    let stringValue = line.byWords.last ?? ""
-                    let value = Int(stringValue)
-                    switch value {
-                    case 1: retval = true
-                    default: retval = false
-                    }
+        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
+        let findingResult = shellResult.byLines
+        for line in findingResult {
+            if line.contains("SleepDisabled") {
+                let stringValue = line.byWords.last ?? ""
+                let value = Int(stringValue)
+                switch value {
+                case 1: retval = true
+                default: retval = false
                 }
             }
-        } catch let error {
-            NSLog(error.localizedDescription)
-            retval = false
         }
         return retval
     }
@@ -78,22 +55,10 @@ public class SleepManager {
     /// Gets hibernation mode
     /// - Returns: 0 — disabled, 3 — sleep, 25 — hibernation
     public func getIsSleepEnabled() -> Int {
-        let process = Process()
-        let pipe = Pipe()
-        process.executableURL = URL(filePath: "/usr/bin/pmset")
-        process.arguments = ["-g"]
-        process.standardOutput = pipe
-        var shellResult = ""
-        do {
-            try process.run()
-            shellResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? ""
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
+        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
         var hibernationValue = ""
         var resultingValue = 0
         let findingResult = shellResult.byLines
-//        print(shellResult)
         for line in findingResult {
             if line.contains("hibernatemode") {
                 hibernationValue = String(line)
@@ -134,7 +99,7 @@ public class SleepManager {
     
     /// Localized sleep setting descripton
     /// - Parameter input: 0 — sleep disabled, 3 — sleep, 25 — hibernation
-
+    
     /// - Returns: Exact what it's called
     public func getSleepSetting(_ input: Int) -> String {
         switch input {
@@ -160,31 +125,17 @@ public class SleepManager {
     
     /// If exists process caffeinate returns it's PID, nil otherwise
     private var caffeinatePID: Int? {
-        let process = Process()
-        let pipe = Pipe()
         var retval: Int? = nil
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.standardOutput = pipe
-        process.arguments = ["-c", "top -l 1 | grep caffeinate"]
-        do {
-            try process.run()
-            delay(after: 3) {
-                process.terminate()
+        let shellOut = Shell.Parcer.oneExecutable(args: ["top -l 1 | grep caffeinate"]) ?? ""
+        let lines = shellOut.byLines
+        for line in lines {
+            switch line.contains("caffeinate") {
+            case true:
+                let string = line.firstWord!.description
+                retval = Int(string)!
+                break
+            case false: retval = nil
             }
-            let data = try pipe.fileHandleForReading.readToEnd() ?? Data(capacity: 0)
-            let shellOut = String(data: data, encoding: .utf8) ?? ""
-            let lines = shellOut.byLines
-            for line in lines {
-                switch line.contains("caffeinate") {
-                case true:
-                    let string = line.firstWord!.description
-                    retval = Int(string)!
-                    break
-                case false: retval = nil
-                }
-            }
-        } catch let error {
-            NSLog(error.localizedDescription)
         }
         return retval
     }
@@ -199,27 +150,13 @@ public class SleepManager {
         case .deny:
             args = " -disum"
         }
-        let process = Process()
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "caffeinate\(args) & "]
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
+        Shell.Parcer.oneExecutable(exe: "caffeinate", args: [args]) as Void
     }
     
     /// Allow sleep
     public func allowSleep() {
         if sleepIsPermitted() {
-            let process = Process()
-            process.executableURL = URL(filePath: "/bin/kill")
-            process.arguments = ["-9", "\(caffeinatePID!)"]
-            do {
-                try process.run()
-            } catch let error {
-                NSLog(error.localizedDescription)
-            }
+            Shell.Parcer.oneExecutable(exe: "kill", args: ["-9", "\(caffeinatePID!)"]) as Void
         }
     }
 }

@@ -14,40 +14,29 @@ public class NetParcer {
     private static var oldBand: Bandwidth = (0, 0)
     
     private class func netMonitorTask() -> Bandwidth {
-        let process = Process()
-        let pipe = Pipe()
         var newBand: Bandwidth = (0, 0)
-        process.executableURL = URL(filePath: "/usr/bin/nettop")
-        process.arguments = ["-P", "-L", "1"]
-        process.standardOutput = pipe
         var totalCurrentBand: Bandwidth = (0, 0)
-        do {
-            if !process.isRunning {
-                try process.run()
-                process.waitUntilExit()
+        if let out: String = Shell.Parcer.oneExecutable(exe: "nettop", args: ["-P", "-L", "1"]) {
+            out.split(separator: "\n").dropFirst().forEach { line in
+                let arr = line.description.split(separator: ",").dropLast(3).dropFirst(2)
+                totalCurrentBand = (Double(arr.first ?? "0") ?? 0, Double(arr.last ?? "0") ?? 0)
             }
-            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                out.split(separator: "\n").dropFirst().forEach { line in
-                    let arr = line.description.split(separator: ",").dropLast(3).dropFirst(2)
-                    totalCurrentBand = (Double(arr.first ?? "0") ?? 0, Double(arr.last ?? "0") ?? 0)
-                }
-                if totalCurrentBand.Out - oldBand.Out < 0 {
-                    oldBand.Out = 0
-                    newBand.Out = 0
-                }
-                if totalCurrentBand.In - oldBand.In < 0 {
-                    oldBand.In = 0
-                    newBand.In = 0
-                }
-                if oldBand == newBand {
-                    oldBand.Out = 0
-                    newBand.Out = 0
-                    oldBand.In = 0
-                    newBand.In = 0
-                }
-                newBand = ((totalCurrentBand.In - oldBand.In) / 8, (totalCurrentBand.Out - oldBand.Out) / 8)
+            if totalCurrentBand.Out - oldBand.Out < 0 {
+                oldBand.Out = 0
+                newBand.Out = 0
             }
-        } catch {}
+            if totalCurrentBand.In - oldBand.In < 0 {
+                oldBand.In = 0
+                newBand.In = 0
+            }
+            if oldBand == newBand {
+                oldBand.Out = 0
+                newBand.Out = 0
+                oldBand.In = 0
+                newBand.In = 0
+            }
+            newBand = ((totalCurrentBand.In - oldBand.In) / 8, (totalCurrentBand.Out - oldBand.Out) / 8)
+        }
         totalCurrentBand = (0, 0)
         oldBand = newBand
         return newBand

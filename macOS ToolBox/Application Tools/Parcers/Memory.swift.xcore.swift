@@ -133,16 +133,7 @@ final public class Memory: @unchecked Sendable {
     ///   - volume: Disk volume (in gigs)
     ///   - open: Open disk in Finder
     public func createDisk(_ diskLabel: String, _ volume: Int, _ open: Bool = false) {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "$(diskutil eraseVolume JHFS+ \"\(diskLabel)\" $(hdiutil attach -nomount ram://\(volume * 1000 * 2000)))"]
-        do {
-            try process.run()
-        } catch let error {
-            NSLog(error.localizedDescription)
-        }
+        Shell.Parcer.oneExecutable(args: ["$(diskutil eraseVolume JHFS+ \"\(diskLabel)\" $(hdiutil attach -nomount ram://\(volume * 1000 * 2000)))"]) as Void
         if open {
             NSWorkspace.shared.open(URL(filePath: "/Volumes/\(diskLabel.replacingOccurrences(of: " ", with: "\\ "))"))
         }
@@ -150,17 +141,9 @@ final public class Memory: @unchecked Sendable {
     
     public func memoryPressure() async -> Task<MemoryPressure, Never> {
         Task {
-            let process = Process()
-            let pipe = Pipe()
-            var output: MemoryPressure
+            var output: MemoryPressure = .undefined
             var num = 3
-            process.executableURL = URL(filePath: "/usr/sbin/sysctl")
-            process.arguments = ["-a", "kern.memorystatus_vm_pressure_level"]
-            process.standardOutput = pipe
-            do {
-                try process.run()
-                let processResult = try String(data: pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData, encoding: .utf8) ?? "3"
-                process.waitUntilExit()
+            if let processResult: String = Shell.Parcer.oneExecutable(exe: "sysctl", args: ["-a", "kern.memorystatus_vm_pressure_level"]) {
                 let resultArray = processResult.byWords.last ?? ""
                 num = Int(resultArray) ?? 3
                 switch num {
@@ -169,9 +152,6 @@ final public class Memory: @unchecked Sendable {
                 case 4: output = .critical
                 default: output = .undefined
                 }
-            } catch let error {
-                NSLog(error.localizedDescription)
-                output = .undefined
             }
             return output
         }
@@ -179,34 +159,15 @@ final public class Memory: @unchecked Sendable {
     
     private func TimeMachineClear() async {
         Task{
-            do {
-                let process = Process()
-                process.executableURL = URL(filePath: "/bin/bash")
-                process.arguments = ["-c", "tmutil deletelocalsnapshots /"]
-                process.standardOutput = nil
-                try process.run()
-            } catch let error {
-                NSLog(error.localizedDescription)
-            }
+            Shell.Parcer.oneExecutable(exe: "tmutil", args: ["deletelocalsnapshots", "/"]) as Void
         }
     }
     
     public func TimeMachineCount() -> Int {
-        do {
-            let process = Process()
-            let pipe = Pipe()
-            process.executableURL = URL(filePath: "/bin/bash")
-            process.arguments = ["-c", "tmutil listlocalsnapshots /"]
-            process.standardOutput = pipe
-            try process.run()
-            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                let arr = out.byLines.count - 1
-                return arr
-            } else {
-                return 0
-            }
-        } catch let error {
-            NSLog(error.localizedDescription)
+        if let out: String = Shell.Parcer.oneExecutable(exe: "tmutil", args: ["listlocalsnapshots", "/"]) {
+            let arr = out.byLines.count - 1
+            return arr
+        } else {
             return 0
         }
     }

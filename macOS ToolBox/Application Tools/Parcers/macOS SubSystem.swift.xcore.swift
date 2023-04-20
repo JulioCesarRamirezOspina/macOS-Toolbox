@@ -117,26 +117,15 @@ public struct macOS_Subsystem {
     }
     
     public static func isInDarkMode() -> macOSMode {
-        let process = Process()
-        let pipe = Pipe()
-        process.arguments = ["-c", "defaults read -g AppleInterfaceStyle"]
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.standardOutput = pipe
         let savedColorScheme = Theme.colorScheme
         if savedColorScheme == nil {
-            do {
-                try process.run()
-                if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                    if out.byWords.first == "Dark" {
-                        return .dark
-                    } else {
-                        return .light
-                    }
+            if let out: String = Shell.Parcer.oneExecutable(exe: "defaults", args: ["read -g AppleInterfaceStyle"]) {
+                if out.byWords.first == "Dark" {
+                    return .dark
                 } else {
                     return .light
                 }
-            } catch let error {
-                NSLog(error.localizedDescription)
+            } else {
                 return .light
             }
         } else {
@@ -146,36 +135,25 @@ public struct macOS_Subsystem {
 
     
     public static func BatteryTemperature(TermperatureUnit t: UnitTemperature = .celsius) -> (value: Double, unit: UnitTemperature, valueString: String) {
-        let process = Process()
-        let pipe = Pipe()
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "ioreg -r -n AppleSmartBattery | grep Temperature"]
-        process.standardOutput = pipe
-        do {
-            try process.run()
-            if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                let s = out.byLines.last ?? "0"
-                let w = s.byWords.last ?? "0"
-                let cRetval = (Double(String(w)) ?? 0) / 100
-                let fRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .fahrenheit).value.rounded(.toNearestOrEven)
-                let kRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .kelvin).value.rounded(.toNearestOrEven)
-                let cRetvalString = "\(cRetval) ºC"
-                let fRetvalString = "\(fRetval) ºF"
-                let kRetvalString = "\(kRetval) K"
-                switch t {
-                case .celsius:
-                    return (value: cRetval, unit: .celsius, valueString: cRetvalString)
-                case .fahrenheit:
-                    return (value: fRetval, unit: .fahrenheit, valueString: fRetvalString)
-                case .kelvin:
-                    return (value: kRetval, unit: .kelvin, valueString: kRetvalString)
-                default: return (cRetval, .celsius, cRetvalString)
-                }
-            } else {
-                return (value: 0, unit: .kelvin, valueString: "0 K")
+        if let out: String = Shell.Parcer.oneExecutable(exe: "ioreg", args: ["-r -n AppleSmartBattery | grep Temperature"]) {
+            let s = out.byLines.last ?? "0"
+            let w = s.byWords.last ?? "0"
+            let cRetval = (Double(String(w)) ?? 0) / 100
+            let fRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .fahrenheit).value.rounded(.toNearestOrEven)
+            let kRetval = Measurement(value: cRetval, unit: UnitTemperature.celsius).converted(to: .kelvin).value.rounded(.toNearestOrEven)
+            let cRetvalString = "\(cRetval) ºC"
+            let fRetvalString = "\(fRetval) ºF"
+            let kRetvalString = "\(kRetval) K"
+            switch t {
+            case .celsius:
+                return (value: cRetval, unit: .celsius, valueString: cRetvalString)
+            case .fahrenheit:
+                return (value: fRetval, unit: .fahrenheit, valueString: fRetvalString)
+            case .kelvin:
+                return (value: kRetval, unit: .kelvin, valueString: kRetvalString)
+            default: return (cRetval, .celsius, cRetvalString)
             }
-        } catch let error {
-            NSLog(error.localizedDescription)
+        } else {
             return (value: 0, unit: .kelvin, valueString: "0 K")
         }
     }
@@ -217,49 +195,26 @@ public struct macOS_Subsystem {
         }
         
         @Sendable public func run() -> ThermalData {
-            let process = Process()
-            let killer = Process()
-            let pipe = Pipe()
-            let bash = URL(filePath: "/bin/bash")
-            process.executableURL = bash
-            process.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S thermal watch"]
-            process.standardOutput = pipe
-            process.standardError = pipe
-            killer.executableURL = bash
-            killer.arguments = ["-c", "sleep 0.1 && echo \(SettingsMonitor.password) | sudo -S killall thermal"]
             var data: ThermalData = ("",.undefined)
-
+            
             if SettingsMonitor.passwordSaved {
-                do {
-                    try killer.run()
-                    try process.run()
-                    if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data() , encoding: .utf8) {
-                        let p = String(out.byLines[0])
-                        if p.contains("therm_level=0"){
-                            data = parce(.nominal)
-                        } else if p.contains("therm_level=1") {
-                            data = parce(.fair)
-                        } else if p.contains("therm_level=2") {
-                            data = parce(.fair)
-                        } else if p.contains("therm_level=3") {
-                            data = parce(.serious)
-                        } else if p.contains("therm_level=4") {
-                            data = parce(.critical)
-                        } else {
-                            data = parce(.undefined)
-                        }
+                if let out: String = Shell.Parcer.oneExecutable(exe: "echo", args: ["\(SettingsMonitor.password) | sudo -S powermetrics -s thermal -n 1 -i 10"]) {
+                    let p = out.byLines.last?.byWords.last ?? ""
+                    if p.lowercased().contains("nominal"){
+                        data = parce(.nominal)
+                    } else if p.contains("moderate") {
+                        data = parce(.fair)
+                    } else if p.contains("heavy") {
+                        data = parce(.serious)
+                    } else if p.contains("trapping") {
+                        data = parce(.critical)
+                    } else if p.contains("sleeping") {
+                        data = parce(.critical)
+                    } else {
+                        data = parce(.undefined)
                     }
-                    if process.isRunning {
-                        process.terminate()
-                    }
-                    return data
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                    if process.isRunning {
-                        process.terminate()
-                    }
-                    return parce(.undefined)
                 }
+                return data
             } else {
                 return parce(.noPassword)
             }
@@ -349,36 +304,25 @@ public struct macOS_Subsystem {
             let d = Double(a[0]) ?? 0
             return d
         }
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
         var retval: cpuValues = (0, 0, 0, 0)
         var cpuusagestring = ""
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "top -l 1"]
-        do {
-            try process.run()
-            if let output = try String(data: pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                for line in output.byLines {
-                    if line.contains("CPU usage:") {
-                        cpuusagestring = String(line)
-                        break
-                    }
+        if let output: String = Shell.Parcer.oneExecutable(exe: "top", args: ["-l 1"]) {
+            for line in output.byLines {
+                if line.contains("CPU usage:") {
+                    cpuusagestring = String(line)
+                    break
                 }
             }
-            let indexOfPer = cpuusagestring.firstIndex(of: ":")!
-            let meanerData = String(cpuusagestring.dropFirst(cpuusagestring.distance(from: cpuusagestring.startIndex, to: indexOfPer) + 2))
-            let splitData = meanerData.split(separator: ",")
-            let user = convertToDouble(String(splitData[0]))
-            let sys = convertToDouble(String(splitData[1]))
-            let idle = convertToDouble(String(splitData[2]))
-            let total = user + sys + idle
-            retval = (sys, user, idle, total)
-            return retval
-        } catch let error {
-            NSLog(error.localizedDescription)
-            return (0,0,0,0)
         }
+        let indexOfPer = cpuusagestring.firstIndex(of: ":")!
+        let meanerData = String(cpuusagestring.dropFirst(cpuusagestring.distance(from: cpuusagestring.startIndex, to: indexOfPer) + 2))
+        let splitData = meanerData.split(separator: ",")
+        let user = convertToDouble(String(splitData[0]))
+        let sys = convertToDouble(String(splitData[1]))
+        let idle = convertToDouble(String(splitData[2]))
+        let total = user + sys + idle
+        retval = (sys, user, idle, total)
+        return retval
     }
     
     //--------------------------------------------------------------------------
@@ -467,20 +411,9 @@ public struct macOS_Subsystem {
     //    }
     
     public static func getModelYear() -> (localizedString: String, serviceData: String) {
-        let process = Process()
-        let pipe = Pipe()
-        var year = ""
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "/usr/libexec/PlistBuddy -c 'Print :0:product-name' /dev/stdin <<< \"$(ioreg -arc IOPlatformDevice -k product-name)\" 2> /dev/null | tr -cd '[:print:]'"]
-        process.standardOutput = pipe
-        do {
-            try process.run()
-            if let line = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-                year += line
-            }
-        } catch let error {
-            NSLog(error.localizedDescription)
-            return (localizedString: "", serviceData: "")
+        var year = String()
+        if let line: String = Shell.Parcer.oneExecutable(exe: "/usr/libexec/PlistBuddy", args: ["-c", "'Print :0:product-name' /dev/stdin <<< \"$(ioreg -arc IOPlatformDevice -k product-name)\" 2> /dev/null | tr -cd '[:print:]'"]) {
+            year = line
         }
         let words = year.byWords
         for word in words {
@@ -489,20 +422,8 @@ public struct macOS_Subsystem {
             }
         }
         if Int(year) == nil {
-            let reservedProcess = Process()
-            let reservedPipe = Pipe()
-            reservedProcess.executableURL = URL(filePath: "/bin/bash")
-            reservedProcess.arguments = ["-c", "defaults read /Users/\(FileManager.default.homeDirectoryForCurrentUser.lastPathComponent)/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]
-            reservedProcess.standardOutput = reservedPipe
-            reservedProcess.standardError = reservedPipe
-            do {
-                try reservedProcess.run()
-                if let line = String(data: reservedPipe.fileHandleForReading.availableData, encoding: .utf8) {
-                    year += line
-                }
-            } catch let error {
-                NSLog(error.localizedDescription)
-                return (localizedString: "", serviceData: "")
+            if let line: String = Shell.Parcer.oneExecutable(exe: "defaults", args: ["read /Users/\(FileManager.default.homeDirectoryForCurrentUser.lastPathComponent)/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]) {
+                year = line
             }
             let words = year.byWords
             for word in words {
@@ -668,57 +589,40 @@ public struct macOS_Subsystem {
     }
     
     public func cpuName() -> String  {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "sysctl -a"]
         var retval = ""
-        do {
-            try process.run()
-            if let output = try String(data: pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                for line in output.byLines {
-                    if line.contains("machdep.cpu.brand_string") {
-                        let index = line.firstIndex(of: ":")
-                        retval = String(line.dropFirst(line.distance(from: line.startIndex, to: index!) + 2))
-                    }
+        if let output: String = Shell.Parcer.oneExecutable(exe: "sysctl", args: ["-a"]) {
+            for line in output.byLines {
+                if line.contains("machdep.cpu.brand_string") {
+                    let index = line.firstIndex(of: ":")
+                    retval = String(line.dropFirst(line.distance(from: line.startIndex, to: index!) + 2))
                 }
             }
-        } catch let error {
-            NSLog(error.localizedDescription)
         }
         return retval
     }
     
     public static func gpuName() -> [String] {
         var out = Array<String>()
-        var process: Process?
-        var pipe: Pipe?
-        do {
-            if !isArm() {
-                process = Process()
-                pipe = Pipe()
-                process?.arguments = ["-c" , "system_profiler SPDisplaysDataType | grep Intel"]
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
-                    out.append(", ")
+        if !isArm() {
+            if let line: String = Shell.Parcer.oneExecutable(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep Intel"]) {
+                out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+                out.append(", ")
+            }
+            if let line: String = Shell.Parcer.oneExecutable(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep AMD"]) {
+                out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+            }
+            for each in out {
+                if each == ", " {
+                    out.remove(at: out.firstIndex(of: each)!)
                 }
-                process?.terminate()
-                process = nil
-                pipe = nil
-                
-                process = Process()
-                pipe = Pipe()
-                process?.standardOutput = pipe
-                process?.executableURL = URL(filePath: "/bin/bash")
-                process?.arguments = ["-c", "system_profiler SPDisplaysDataType | grep AMD"]
-                try process?.run()
-                if let line = String(data: (pipe?.fileHandleForReading.availableData)!, encoding: .utf8) {
-                    out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
+                if each == " " {
+                    out.remove(at: out.firstIndex(of: each)!)
                 }
+                if each == "" {
+                    out.remove(at: out.firstIndex(of: each)!)
+                }
+            }
+            if out.count > 1 {
                 for each in out {
                     if each == ", " {
                         out.remove(at: out.firstIndex(of: each)!)
@@ -730,27 +634,10 @@ public struct macOS_Subsystem {
                         out.remove(at: out.firstIndex(of: each)!)
                     }
                 }
-                if out.count > 1 {
-                    for each in out {
-                        if each == ", " {
-                            out.remove(at: out.firstIndex(of: each)!)
-                        }
-                        if each == " " {
-                            out.remove(at: out.firstIndex(of: each)!)
-                        }
-                        if each == "" {
-                            out.remove(at: out.firstIndex(of: each)!)
-                        }
-                    }
-                    out[0] = out[0] + ", "
-                }
+                out[0] = out[0] + ", "
             }
-            return out
-        } catch let error {
-            out = ["\(error.localizedDescription)"]
-            NSLog(error.localizedDescription)
-            return out
         }
+        return out
     }
     
     /// Number of physical cores on this machine.
@@ -936,21 +823,10 @@ public struct macOS_Subsystem {
      a percentage less than 100%.
      */
     
-    public static func getBatteryState() -> (PowerSource: PowerSource, ChargingState: ChargingState, Percentage: Double, TimeRemaining: String)
-    {
+    public static func getBatteryState() -> (PowerSource: PowerSource, ChargingState: ChargingState, Percentage: Double, TimeRemaining: String) {
         var battState: ChargingState
         var powerSource: PowerSource
-        let task = Process()
-        let pipe = Pipe()
-        task.launchPath = "/usr/bin/pmset"
-        task.arguments = ["-g", "batt"]
-        task.standardOutput = pipe
-        do {
-            try task.run()
-            let data = try pipe.fileHandleForReading.readToEnd()
-            task.waitUntilExit()
-            let output = String(data: data ?? Data(), encoding: .utf8) ?? ""
-            
+        if let output: String = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g", "batt"]) {
             let batteryArray = output.components(separatedBy: ";")
             let source = output.components(separatedBy: "'")[1]
             let state = batteryArray[1].trimmingCharacters(in: NSCharacterSet.whitespaces).capitalized
@@ -976,7 +852,7 @@ public struct macOS_Subsystem {
                 remaining = StringLocalizer("calculating.string")
             }
             return (PowerSource: powerSource, ChargingState: battState, Percentage: Double(percent)!, TimeRemaining: remaining)
-        } catch _ {
+        } else {
             return (PowerSource: PowerSource.unknown, ChargingState: ChargingState.unknown, Percentage: 0, TimeRemaining: "NaN")
         }
     }

@@ -68,12 +68,6 @@ public class Virtuals {
     }
     //MARK: - Funcs
     private static func files(fileExtension: String, isLocal: Bool) -> [VMPropertiesList] {
-        let process = Process()
-        let pipe = Pipe()
-        process.standardOutput = pipe
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "mdfind .\(fileExtension) | grep .\(fileExtension)"]
-        
         func getDates(url: URL) -> (creation: String, access: String) {
             do {
                 let access = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? Date()
@@ -86,61 +80,55 @@ public class Virtuals {
             }
         }
         
-        do {
-            var retval: [VMPropertiesList] = []
-            try process.run()
-            if let out = String(data: try pipe.fileHandleForReading.readToEnd() ?? Data(), encoding: .utf8) {
-                for line in out.byLines {
-                    let url = URL(filePath: String(line))
-                    let components = url.pathComponents
-                    let namePrep = components.last!
-                    let name = String(namePrep.split(separator: ".")[0])
-                    let ext = String(namePrep.split(separator: ".").last ?? "")
-                    let dates = getDates(url: url)
-                    let creationDate = dates.creation
-                    let lastAccessDate = dates.access
-                    var vmType: vmType?
-                    if !isLocal {
-                        if ext == fileExtension {
-                            switch ext {
-                            case "pvm" : vmType = .pvm
-                            case "vbox": vmType = .vbox
-                            case "utm" : vmType = .utm
-                            case "vmwarevm" : vmType = .fusion
-                            default: vmType = .unknown
-                            }
-                            retval.append(.init(name: name,
-                                                path: url,
-                                                fileExtension: vmType!,
-                                                creationDate: creationDate,
-                                                lastAccessDate: lastAccessDate,
-                                                isExternal: components.dropFirst().first?.description == "Users" ? false : true
-                                               ))
+        var retval: [VMPropertiesList] = []
+        if let out: String = Shell.Parcer.oneExecutable(exe: "mdfind", args: [".\(fileExtension) | grep .\(fileExtension)"]) {
+            for line in out.byLines {
+                let url = URL(filePath: String(line))
+                let components = url.pathComponents
+                let namePrep = components.last!
+                let name = String(namePrep.split(separator: ".")[0])
+                let ext = String(namePrep.split(separator: ".").last ?? "")
+                let dates = getDates(url: url)
+                let creationDate = dates.creation
+                let lastAccessDate = dates.access
+                var vmType: vmType?
+                if !isLocal {
+                    if ext == fileExtension {
+                        switch ext {
+                        case "pvm" : vmType = .pvm
+                        case "vbox": vmType = .vbox
+                        case "utm" : vmType = .utm
+                        case "vmwarevm" : vmType = .fusion
+                        default: vmType = .unknown
                         }
-                    } else {
-                        if ext == fileExtension && components.dropFirst().first?.description == "Users" {
-                            switch ext {
-                            case "pvm" : vmType = .pvm
-                            case "vbox": vmType = .vbox
-                            case "utm" : vmType = .utm
-                            case "vmwarevm" : vmType = .fusion
-                            default: vmType = .unknown
-                            }
-                            retval.append(.init(name: name,
-                                                path: url,
-                                                fileExtension: vmType!,
-                                                creationDate: creationDate,
-                                                lastAccessDate: lastAccessDate,
-                                                isExternal: components.dropFirst().first?.description == "Users" ? false : true
-                                               ))
-                        }                    }
-                }
-                return retval
-            } else {
-                return []
+                        retval.append(.init(name: name,
+                                            path: url,
+                                            fileExtension: vmType!,
+                                            creationDate: creationDate,
+                                            lastAccessDate: lastAccessDate,
+                                            isExternal: components.dropFirst().first?.description == "Users" ? false : true
+                                           ))
+                    }
+                } else {
+                    if ext == fileExtension && components.dropFirst().first?.description == "Users" {
+                        switch ext {
+                        case "pvm" : vmType = .pvm
+                        case "vbox": vmType = .vbox
+                        case "utm" : vmType = .utm
+                        case "vmwarevm" : vmType = .fusion
+                        default: vmType = .unknown
+                        }
+                        retval.append(.init(name: name,
+                                            path: url,
+                                            fileExtension: vmType!,
+                                            creationDate: creationDate,
+                                            lastAccessDate: lastAccessDate,
+                                            isExternal: components.dropFirst().first?.description == "Users" ? false : true
+                                           ))
+                    }                    }
             }
-        } catch let error {
-            NSLog(error.localizedDescription)
+            return retval
+        } else {
             return []
         }
     }

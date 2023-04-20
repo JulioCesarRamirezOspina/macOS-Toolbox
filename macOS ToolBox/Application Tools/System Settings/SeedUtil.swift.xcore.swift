@@ -112,33 +112,23 @@ public class SeedUtil {
     }
     
     public class func sysupdateAvailable(_ ad: NSApplicationDelegate? = nil) async -> (OSUpdateStatus, (label: String, buildNumber: String)) {
-        let process = Process()
-        let mainPipe = Pipe()
-        let errorPipe = Pipe()
-        process.executableURL = URL(filePath: "/usr/sbin/softwareupdate")
-        process.arguments = ["-l", "-a"]
-        process.standardOutput = mainPipe
-        process.standardError = errorPipe
-        var output = ""
-        var error = ""
-        do {
-            try process.run()
-            if let line = try mainPipe.fileHandleForReading.readToEnd() {
-                output += String(data: line, encoding: .utf8) ?? ""
-            }
-            if let line = try errorPipe.fileHandleForReading.readToEnd() {
-                error += String(data: line, encoding: .utf8) ?? ""
-            }
-            if output.contains("Software Update found the following new or updated software") {
-                let updateData = getUpdateInfo(input: output)
-                return (.available, updateData)
-            } else if error.contains("No new software available.") {
-                return (.notAvailable, ("", ""))
-            } else {
-                return (.noConnection, ("", ""))
-            }
-        } catch let error {
-            NSLog(error.localizedDescription)
+        var output = String()
+        var error = String()
+        
+        let processOutput: (success: String?, error: String?) = Shell.Parcer.oneExecutable(exe: "softwareupdate", args: ["-l", "-a"])
+        
+        if let line = processOutput.success {
+            output = line
+        }
+        if let line = processOutput.error {
+            error = line
+        }
+        if output.contains("Software Update found the following new or updated software") {
+            let updateData = getUpdateInfo(input: output)
+            return (.available, updateData)
+        } else if error.contains("No new software available.") {
+            return (.notAvailable, ("", ""))
+        } else {
             return (.noConnection, ("", ""))
         }
     }

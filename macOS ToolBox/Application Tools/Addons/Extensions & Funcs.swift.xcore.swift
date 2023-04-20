@@ -12,17 +12,9 @@ import LocalAuthentication
 //MARK: - Vars
 public var devIDInstallerSignature: String? {
     get {
-        let process = Process()
-        let pipe = Pipe()
         var rv: String? = nil
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.arguments = ["-c", "security find-identity -p basic -v"]
-        process.standardOutput = pipe
-        do {
-            try process.run()
-            process.waitUntilExit()
-            let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
-            let parcing = shellResult.byLines
+        if let out: String = Shell.Parcer.oneExecutable(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
+            let parcing = out.byLines
             for line in parcing {
                 switch line.contains("Installer") {
                 case true:
@@ -35,9 +27,6 @@ public var devIDInstallerSignature: String? {
                     break
                 }
             }
-            process.terminate()
-        } catch let error {
-            NSLog(error.localizedDescription)
         }
         return rv
     }
@@ -144,16 +133,8 @@ public func delay(after time: Double, execute codeBlock: @escaping () -> ()) {
 }
 
 public func tryToGetDeveloperIDInstallerSignature() -> (DevID: String, DevIDExists: Bool) {
-    let process = Process()
-    let pipe = Pipe()
-    process.executableURL = URL(filePath: "/bin/bash")
-    process.arguments = ["-c", "security find-identity -p basic -v"]
-    process.standardOutput = pipe
     var retval = (DevID: "nil", DevIDExists: false)
-    do {
-        try process.run()
-        process.waitUntilExit()
-        let shellResult = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8)!
+    if let shellResult: String = Shell.Parcer.oneExecutable(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
         let parcing = shellResult.byLines
         for line in parcing {
             switch line.contains("Installer") {
@@ -167,9 +148,6 @@ public func tryToGetDeveloperIDInstallerSignature() -> (DevID: String, DevIDExis
                 break
             }
         }
-        process.terminate()
-    } catch let error {
-        NSLog(error.localizedDescription)
     }
     return retval
 }
@@ -210,25 +188,14 @@ func showInFinder(url: URL?) {
 }
 
 public func checkIfSecurityKeyPersists() -> Bool {
-    let process = Process()
-    let pipe = Pipe()
-    process.executableURL = URL(filePath: "/bin/bash")
     let arg = "ioreg -p IOUSB -w0 | sed 's/[^o]*o //; s/@.*$//' | grep -v '^Root.*'"
-    process.arguments = ["-c", arg]
-    process.standardOutput = pipe
-    do {
-        try process.run()
-        if let out = String(data: pipe.fileHandleForReading.availableData, encoding: .utf8) {
-            if out.contains("OTP") || out.contains("FIDO") || out.contains("CCID") {
-                return true
-            } else {
-                return false
-            }
+    if let out: String = Shell.Parcer.oneExecutable(args: [arg]) {
+        if out.contains("OTP") || out.contains("FIDO") || out.contains("CCID") {
+            return true
         } else {
             return false
         }
-    } catch let error {
-        print(error.localizedDescription)
+    } else {
         return false
     }
 }

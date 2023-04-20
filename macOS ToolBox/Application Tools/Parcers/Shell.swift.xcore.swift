@@ -80,36 +80,102 @@ public class Shell {
             }
         }
 
+        private static let exePath = URL(filePath: "/bin/bash")
         /// Executes one shell command
         /// - Parameters:
         ///   - exe: path to executable
         ///   - args: args of executable
         /// - Returns: console output
-        public class func oneExecutable(exe: String, args: [String]) -> String {
+        public class func oneExecutable(exe: String? = nil, args: [String]) -> String? {
+            var propExe: URL? = nil
+            if exe != nil {
+                propExe = RunnerForTorNetworks().getAppPath(exe!)
+            }
             let process = Process()
-            var output = String()
-            process.executableURL = URL(fileURLWithPath: exe)
-            process.arguments = args
+            var output: String? = nil
             let pipe = Pipe()
+            var arguments = String()
+            args.forEach { arg in
+                arguments += (arg + " ")
+            }
+            let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+            print("-\(runLine)-")
+            process.executableURL = exePath
+            process.arguments = ["-c", runLine]
             process.standardOutput = pipe
             do {
-                let data = try pipe.fileHandleForReading.readToEnd()
-                output = (NSString(data: data!, encoding: String.Encoding.utf8.rawValue) ?? "") as String
                 try process.run()
+                if let prep = try pipe.fileHandleForReading.readToEnd() {
+                    if let string = String(data: prep, encoding: .utf8) {
+                        output = string
+                    }
+                }
             } catch let error {
                 process.interrupt()
                 NSLog(error.localizedDescription)
             }
             return output
         }
+        
+        public class func oneExecutable(exe: String? = nil, args: [String]) -> (success: String?, error: String?) {
+            var propExe: URL? = nil
+            if exe != nil {
+                propExe = RunnerForTorNetworks().getAppPath(exe!)
+            }
+            let process = Process()
+            var output: String? = nil
+            var error: String? = nil
+            let pipe = Pipe()
+            let errorPipe = Pipe()
+            var arguments = String()
+            args.forEach { arg in
+                arguments += (arg + " ")
+            }
+            let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+            print("-\(runLine)-")
+            process.executableURL = exePath
+            process.arguments = ["-c", runLine]
+            process.standardOutput = pipe
+            process.standardError = errorPipe
+            do {
+                try process.run()
+                if let prep = try pipe.fileHandleForReading.readToEnd() {
+                    if let string = String(data: prep, encoding: .utf8) {
+                        output = string
+                    }
+                }
+                if let err = try errorPipe.fileHandleForReading.readToEnd() {
+                    if let string = String(data: err, encoding: .utf8) {
+                        error = string
+                    }
+                }
+            } catch let error {
+                process.interrupt()
+                NSLog(error.localizedDescription)
+            }
+            return (output, error)
+        }
+        
         /// Executes one shell command
         /// - Parameters:
         ///   - exe: path to executable
         ///   - args: args of executable
-        public class func oneExecutable(exe: String, args: [String]) -> Void {
+        public class func oneExecutable(exe: String? = nil, args: [String]) {
+            var propExe: URL? = nil
+            if exe != nil {
+                propExe = RunnerForTorNetworks().getAppPath(exe!)
+            }
             let process = Process()
-            process.executableURL = URL(fileURLWithPath: exe)
-            process.arguments = args
+            let pipe = Pipe()
+            var arguments = String()
+            args.forEach { arg in
+                arguments += (arg + " ")
+            }
+            let runLine = String(propExe == nil ? arguments : propExe!.path(percentEncoded: false) + " " + arguments).dropLast().description
+            print("-\(runLine)-")
+            process.executableURL = exePath
+            process.arguments = ["-c", runLine]
+            process.standardOutput = pipe
             do {
                 try process.run()
             } catch let error {
@@ -126,14 +192,21 @@ public class Shell {
         public class func oneExecutable(exe: String, args: [String]) -> Pipe {
             let process = Process()
             let pipe = Pipe()
-            process.executableURL = URL(fileURLWithPath: exe)
-            process.arguments = args
-            do {
-                process.standardOutput = pipe
-                try process.run()
-            } catch let error {
-                process.interrupt()
-                NSLog(error.localizedDescription)
+            var arguments = String()
+            args.forEach { arg in
+                arguments += (arg + " ")
+            }
+            let runLine = exe + " " + arguments
+            process.executableURL = exePath
+            process.arguments = [runLine]
+            process.standardOutput = pipe
+            DispatchQueue.main.async {
+                do {
+                    try process.run()
+                } catch let error {
+                    process.interrupt()
+                    NSLog(error.localizedDescription)
+                }
             }
             return pipe
         }

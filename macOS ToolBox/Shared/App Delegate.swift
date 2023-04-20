@@ -51,13 +51,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         window.titlebarSeparatorStyle = .shadow
         hideButtons(3)
     }
-    private func isInDarkMode() {
-        let process = Process()
-        let pipe = Pipe()
-        process.arguments = ["-c", "defaults read -g AppleInterfaceStyle"]
-        process.executableURL = URL(filePath: "/bin/bash")
-        process.standardOutput = pipe
-    }
     func refreshPopoverViewController() {
         if SettingsMonitor.isInMenuBar {
             let screenSize = NSScreen.main!.frame.size

@@ -126,15 +126,7 @@ public class BootCampStart {
             }
             let label = StringLocalizer("setDevice.button") + "\n" + diskLabel
             retval = AnyView(Button(action: {
-                let process = Process()
-                process.executableURL = URL(filePath: "/bin/bash")
-                process.arguments = ["-c", "echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"]
-                process.standardOutput = nil
-                do {
-                    try process.run()
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                }
+                Shell.Parcer.oneExecutable(exe: nil, args: ["echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"]) as Void
                 if isReboot {
                     DispatchQueue.main.async {
                         exit(0)

@@ -75,11 +75,7 @@ public class SettingsMonitor {
         }
         set {
             AppSettings.set(key: "isInMenuBar", value: newValue)
-            let task = Process()
-            task.launchPath = "/bin/sh"
-            task.arguments = ["-c", "sleep \(0.5); open \"\(Bundle.main.bundlePath)\""]
-            task.launch()
-            
+            Shell.Parcer.oneExecutable(args: ["sleep \(0.5); open \"\(Bundle.main.bundlePath)\""]) as Void
             NSApp.terminate(self)
             exit(EXIT_SUCCESS)
         }

@@ -98,20 +98,8 @@ struct RAMDiskView: View {
     
     private func ejectAll(_ driveArray: [String]) {
         for each in driveArray {
-            let process = Process()
-            process.executableURL = URL(filePath: "/usr/bin/env")
-            process.arguments = ["bash", "-c", "umount -f \"/Volumes/\(each)\" && diskutil eject \"\(each)\""]
-            do {
-                try process.run()
-            } catch let error {
-                NSLog(error.localizedDescription)
-                do {
-                    try process.run()
-                } catch let err {
-                    NSLog(err.localizedDescription)
-                    process.terminate()
-                }
-            }
+            Shell.Parcer.oneExecutable(exe: "umount", args: ["-f", "\"/Volumes/\(each)\""]) as Void
+            Shell.Parcer.oneExecutable(exe: "diskutil", args: ["eject", "\"\(each)\""]) as Void
         }
         count = 0
     }
