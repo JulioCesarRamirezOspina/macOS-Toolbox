@@ -7,17 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		9A06C1E82926C8760064419C /* Virtuals.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A06C1E72926C8760064419C /* Virtuals.swift */; };
-		9A28A069292D83ED001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
 		9A28A06D292D8538001E2083 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A28A06B292D83ED001E2083 /* Localizable.strings */; };
 		9A462A172912EA8F00D1723D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A462A162912EA8F00D1723D /* main.swift */; };
-		9A6B99B4297EC11800F38BE1 /* PAM Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */; };
-		9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */; };
 		9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AB1AE0829B804E7006C4ECA /* PIN.swift */; };
 		9ABFD04A2908BA2E003D7575 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */; };
 		9ABFD0632908BA2E003D7575 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9ABFD0482908BA2E003D7575 /* Assets.xcassets */; };
-		9ABFD0AA2908BBA5003D7575 /* xCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; };
-		9ABFD0AB2908BBA5003D7575 /* xCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9ABFD0952908BBA4003D7575 /* xCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		9ABFD0FA2908BC02003D7575 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E12908BC02003D7575 /* SettingsView.swift */; };
 		9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E22908BC02003D7575 /* Overview.swift */; };
 		9ABFD0FC2908BC02003D7575 /* Password.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0E32908BC02003D7575 /* Password.swift */; };
@@ -38,50 +32,39 @@
 		9ABFD10D2908BC02003D7575 /* Sleep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F52908BC02003D7575 /* Sleep.swift */; };
 		9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F72908BC02003D7575 /* Packer.swift */; };
 		9ABFD1102908BC02003D7575 /* Main View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD0F82908BC02003D7575 /* Main View.swift */; };
-		9ABFD13D2908BC67003D7575 /* CPU Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1162908BC66003D7575 /* CPU Display.swift */; };
-		9ABFD13E2908BC67003D7575 /* Disks Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1172908BC66003D7575 /* Disks Display.swift */; };
-		9ABFD13F2908BC67003D7575 /* Battery Display.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1182908BC66003D7575 /* Battery Display.swift */; };
-		9ABFD1402908BC67003D7575 /* macOS Update.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1192908BC66003D7575 /* macOS Update.swift */; };
-		9ABFD1412908BC67003D7575 /* Memory View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11A2908BC66003D7575 /* Memory View.swift */; };
-		9ABFD1422908BC67003D7575 /* System Status.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11B2908BC66003D7575 /* System Status.swift */; };
-		9ABFD1432908BC67003D7575 /* Enums & Aliases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */; };
-		9ABFD1442908BC67003D7575 /* Extensions & Funcs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */; };
-		9ABFD1452908BC67003D7575 /* Biometrics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11E2908BC66003D7575 /* Biometrics.swift */; };
-		9ABFD1462908BC67003D7575 /* Custom Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD11F2908BC66003D7575 /* Custom Views.swift */; };
-		9ABFD1472908BC67003D7575 /* Cool Circles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1202908BC66003D7575 /* Cool Circles.swift */; };
-		9ABFD1482908BC67003D7575 /* Header.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ABFD1212908BC66003D7575 /* Header.h */; };
-		9ABFD1492908BC67003D7575 /* Documentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1222908BC66003D7575 /* Documentation.docc */; };
-		9ABFD14A2908BC67003D7575 /* Apple Script.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1242908BC66003D7575 /* Apple Script.swift */; };
-		9ABFD14B2908BC67003D7575 /* Memory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1252908BC66003D7575 /* Memory.swift */; };
-		9ABFD14C2908BC67003D7575 /* Shell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1262908BC66003D7575 /* Shell.swift */; };
-		9ABFD14D2908BC67003D7575 /* macOS SubSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1272908BC66003D7575 /* macOS SubSystem.swift */; };
-		9ABFD14E2908BC67003D7575 /* HomeBrew Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */; };
-		9ABFD14F2908BC67003D7575 /* Packer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1292908BC66003D7575 /* Packer.swift */; };
-		9ABFD1502908BC67003D7575 /* INIT.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12A2908BC66003D7575 /* INIT.swift */; };
-		9ABFD1532908BC67003D7575 /* BootCamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD12E2908BC67003D7575 /* BootCamp.swift */; };
-		9ABFD1542908BC67003D7575 /* SeedUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1302908BC67003D7575 /* SeedUtil.swift */; };
-		9ABFD1552908BC67003D7575 /* Launchpad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1312908BC67003D7575 /* Launchpad.swift */; };
-		9ABFD1562908BC67003D7575 /* Dock Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1322908BC67003D7575 /* Dock Manager.swift */; };
-		9ABFD1572908BC67003D7575 /* Sleep Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1332908BC67003D7575 /* Sleep Manager.swift */; };
-		9ABFD1592908BC67003D7575 /* Stylers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1362908BC67003D7575 /* Stylers.swift */; };
-		9ABFD15A2908BC67003D7575 /* Settings Monitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1372908BC67003D7575 /* Settings Monitor.swift */; };
-		9ABFD15B2908BC67003D7575 /* App Theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1382908BC67003D7575 /* App Theme.swift */; };
-		9ABFD15C2908BC67003D7575 /* Notifications Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD1392908BC67003D7575 /* Notifications Manager.swift */; };
-		9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */; };
-		9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ABFD13C2908BC67003D7575 /* Tor Networking.swift */; };
+		9AD7B69C29F1C9AF00451930 /* Memory View.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67729F1C9AF00451930 /* Memory View.xcore.swift */; };
+		9AD7B69D29F1C9AF00451930 /* Battery Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67829F1C9AF00451930 /* Battery Display.xcore.swift */; };
+		9AD7B69E29F1C9AF00451930 /* Disks Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67929F1C9AF00451930 /* Disks Display.xcore.swift */; };
+		9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */; };
+		9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */; };
+		9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */; };
+		9AD7B6A229F1C9AF00451930 /* Net Parcer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */; };
+		9AD7B6A329F1C9AF00451930 /* Tor Networking.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */; };
+		9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */; };
+		9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */; };
+		9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */; };
+		9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */; };
+		9AD7B6A829F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */; };
+		9AD7B6A929F1C9B000451930 /* Custom Views.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */; };
+		9AD7B6AA29F1C9B000451930 /* Launchpad.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */; };
+		9AD7B6AB29F1C9B000451930 /* Dock Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */; };
+		9AD7B6AC29F1C9B000451930 /* Sleep Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */; };
+		9AD7B6AD29F1C9B000451930 /* PAM Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */; };
+		9AD7B6AE29F1C9B000451930 /* SeedUtil.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */; };
+		9AD7B6AF29F1C9B000451930 /* Stylers.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */; };
+		9AD7B6B029F1C9B000451930 /* Navigation Generator.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */; };
+		9AD7B6B129F1C9B000451930 /* Notifications Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */; };
+		9AD7B6B229F1C9B000451930 /* Settings Monitor.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */; };
+		9AD7B6B329F1C9B000451930 /* App Theme.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */; };
+		9AD7B6B429F1C9B000451930 /* Apple Script.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */; };
+		9AD7B6B529F1C9B000451930 /* macOS SubSystem.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */; };
+		9AD7B6B729F1C9B000451930 /* Virtuals.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */; };
+		9AD7B6B829F1C9B000451930 /* Shell.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */; };
+		9AD7B6B929F1C9B000451930 /* BootCamp.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */; };
+		9AD7B6BA29F1C9B000451930 /* Memory.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */; };
+		9AD7B6BB29F1C9B000451930 /* Packer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */; };
 		9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */; };
-		9AF7DD8A29B224DF00836B81 /* Net Parcer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AF7DD8929B224DF00836B81 /* Net Parcer.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		9ABFD0A82908BBA5003D7575 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 9ABFD0102908BA02003D7575 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 9ABFD0942908BBA4003D7575;
-			remoteInfo = xCore;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		9ABFD0AF2908BBA5003D7575 /* Embed Frameworks */ = {
@@ -90,7 +73,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				9ABFD0AB2908BBA5003D7575 /* xCore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -98,20 +80,15 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		9A06C1E72926C8760064419C /* Virtuals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Virtuals.swift; sourceTree = "<group>"; };
 		9A28A06A292D83ED001E2083 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A28A06C292D83F1001E2083 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A462A162912EA8F00D1723D /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		9A5E706B290C1887000F479A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PAM Manager.swift"; sourceTree = "<group>"; };
-		9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift"; sourceTree = "<group>"; };
 		9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = "macOS-ToolBox-Info.plist"; sourceTree = SOURCE_ROOT; };
 		9AB1AE0829B804E7006C4ECA /* PIN.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PIN.swift; sourceTree = "<group>"; };
 		9ABFD0182908BA02003D7575 /* macOS ToolBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "macOS ToolBox.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD02B2908BA2D003D7575 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "macOS ToolBox.entitlements"; sourceTree = "<group>"; };
 		9ABFD0482908BA2E003D7575 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9ABFD0952908BBA4003D7575 /* xCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = xCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		9ABFD0E12908BC02003D7575 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		9ABFD0E22908BC02003D7575 /* Overview.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Overview.swift; sourceTree = "<group>"; };
 		9ABFD0E32908BC02003D7575 /* Password.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Password.swift; sourceTree = "<group>"; };
@@ -133,39 +110,39 @@
 		9ABFD0F72908BC02003D7575 /* Packer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift; sourceTree = "<group>"; };
 		9ABFD0F82908BC02003D7575 /* Main View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main View.swift"; sourceTree = "<group>"; };
 		9ABFD0F92908BC02003D7575 /* Main Scene (redundant).swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Main Scene (redundant).swift"; sourceTree = "<group>"; };
-		9ABFD1162908BC66003D7575 /* CPU Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU Display.swift"; sourceTree = "<group>"; };
-		9ABFD1172908BC66003D7575 /* Disks Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disks Display.swift"; sourceTree = "<group>"; };
-		9ABFD1182908BC66003D7575 /* Battery Display.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Battery Display.swift"; sourceTree = "<group>"; };
-		9ABFD1192908BC66003D7575 /* macOS Update.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS Update.swift"; sourceTree = "<group>"; };
-		9ABFD11A2908BC66003D7575 /* Memory View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Memory View.swift"; sourceTree = "<group>"; };
-		9ABFD11B2908BC66003D7575 /* System Status.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System Status.swift"; sourceTree = "<group>"; };
-		9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums & Aliases.swift"; sourceTree = "<group>"; };
-		9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions & Funcs.swift"; sourceTree = "<group>"; };
-		9ABFD11E2908BC66003D7575 /* Biometrics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biometrics.swift; sourceTree = "<group>"; };
-		9ABFD11F2908BC66003D7575 /* Custom Views.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Views.swift"; sourceTree = "<group>"; };
-		9ABFD1202908BC66003D7575 /* Cool Circles.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cool Circles.swift"; sourceTree = "<group>"; };
-		9ABFD1212908BC66003D7575 /* Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Header.h; sourceTree = "<group>"; };
-		9ABFD1222908BC66003D7575 /* Documentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Documentation.docc; sourceTree = "<group>"; };
-		9ABFD1242908BC66003D7575 /* Apple Script.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Apple Script.swift"; sourceTree = "<group>"; };
-		9ABFD1252908BC66003D7575 /* Memory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift; sourceTree = "<group>"; };
-		9ABFD1262908BC66003D7575 /* Shell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift; sourceTree = "<group>"; };
-		9ABFD1272908BC66003D7575 /* macOS SubSystem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS SubSystem.swift"; sourceTree = "<group>"; };
-		9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HomeBrew Class.swift"; sourceTree = "<group>"; };
-		9ABFD1292908BC66003D7575 /* Packer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift; sourceTree = "<group>"; };
-		9ABFD12A2908BC66003D7575 /* INIT.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = INIT.swift; sourceTree = "<group>"; };
-		9ABFD12E2908BC67003D7575 /* BootCamp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.swift; sourceTree = "<group>"; };
-		9ABFD1302908BC67003D7575 /* SeedUtil.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedUtil.swift; sourceTree = "<group>"; };
-		9ABFD1312908BC67003D7575 /* Launchpad.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.swift; sourceTree = "<group>"; };
-		9ABFD1322908BC67003D7575 /* Dock Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dock Manager.swift"; sourceTree = "<group>"; };
-		9ABFD1332908BC67003D7575 /* Sleep Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sleep Manager.swift"; sourceTree = "<group>"; };
-		9ABFD1362908BC67003D7575 /* Stylers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylers.swift; sourceTree = "<group>"; };
-		9ABFD1372908BC67003D7575 /* Settings Monitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings Monitor.swift"; sourceTree = "<group>"; };
-		9ABFD1382908BC67003D7575 /* App Theme.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App Theme.swift"; sourceTree = "<group>"; };
-		9ABFD1392908BC67003D7575 /* Notifications Manager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.swift"; sourceTree = "<group>"; };
-		9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift"; sourceTree = "<group>"; };
-		9ABFD13C2908BC67003D7575 /* Tor Networking.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift"; sourceTree = "<group>"; };
+		9AD7B67729F1C9AF00451930 /* Memory View.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Memory View.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67829F1C9AF00451930 /* Battery Display.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Battery Display.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67929F1C9AF00451930 /* Disks Display.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disks Display.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU Display.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS Update.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System Status.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Net Parcer.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biometrics.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cool Circles.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions & Funcs.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums & Aliases.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Views.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dock Manager.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sleep Manager.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PAM Manager.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedUtil.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylers.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings Monitor.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App Theme.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Apple Script.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS SubSystem.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69629F1C9AF00451930 /* HomeBrew Class.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HomeBrew Class.swift.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Virtuals.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift.xcore.swift; sourceTree = "<group>"; };
 		9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
-		9AF7DD8929B224DF00836B81 /* Net Parcer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Net Parcer.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,15 +150,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9ABFD0AA2908BBA5003D7575 /* xCore.framework in Frameworks */,
 				9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		9ABFD0922908BBA4003D7575 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,7 +160,6 @@
 		9ABFD00F2908BA02003D7575 = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1122908BC5A003D7575 /* xCore */,
 				9ABFD01A2908BA02003D7575 /* macOS ToolBox */,
 				9ABFD0192908BA02003D7575 /* Products */,
 				9AD98C3D29133F6C00618E0D /* Frameworks */,
@@ -203,7 +171,6 @@
 			isa = PBXGroup;
 			children = (
 				9ABFD0182908BA02003D7575 /* macOS ToolBox.app */,
-				9ABFD0952908BBA4003D7575 /* xCore.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -211,10 +178,10 @@
 		9ABFD01A2908BA02003D7575 /* macOS ToolBox */ = {
 			isa = PBXGroup;
 			children = (
+				9AD7B67329F1C94000451930 /* Main App */,
+				9AD7B67429F1C9AF00451930 /* xCore */,
 				9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */,
-				9A462A162912EA8F00D1723D /* main.swift */,
-				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
-				9ABFD0DF2908BC02003D7575 /* Views */,
+				9AD7B67229F1C90600451930 /* Shared */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
 				9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */,
 				9ABFD02A2908BA2D003D7575 /* Preview Content */,
@@ -274,104 +241,117 @@
 			path = "Functional Views";
 			sourceTree = "<group>";
 		};
-		9ABFD1122908BC5A003D7575 /* xCore */ = {
+		9AD7B67229F1C90600451930 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				9A5E706B290C1887000F479A /* Info.plist */,
-				9ABFD1142908BC66003D7575 /* System Status */,
-				9ABFD1132908BC66003D7575 /* Addons */,
-				9ABFD1352908BC67003D7575 /* App Settings */,
-				9ABFD1222908BC66003D7575 /* Documentation.docc */,
-				9ABFD1212908BC66003D7575 /* Header.h */,
-				9ABFD12A2908BC66003D7575 /* INIT.swift */,
 				9A28A06B292D83ED001E2083 /* Localizable.strings */,
-				9ABFD13B2908BC67003D7575 /* Networking */,
-				9ABFD1232908BC66003D7575 /* Parcers */,
-				9ABFD12F2908BC67003D7575 /* System Settings */,
+			);
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		9AD7B67329F1C94000451930 /* Main App */ = {
+			isa = PBXGroup;
+			children = (
+				9A462A162912EA8F00D1723D /* main.swift */,
+				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
+				9ABFD0DF2908BC02003D7575 /* Views */,
+			);
+			path = "Main App";
+			sourceTree = "<group>";
+		};
+		9AD7B67429F1C9AF00451930 /* xCore */ = {
+			isa = PBXGroup;
+			children = (
+				9AD7B67529F1C9AF00451930 /* System Status */,
+				9AD7B67D29F1C9AF00451930 /* Networking */,
+				9AD7B68029F1C9AF00451930 /* Addons */,
+				9AD7B68729F1C9AF00451930 /* System Settings */,
+				9AD7B68D29F1C9AF00451930 /* App Settings */,
+				9AD7B69329F1C9AF00451930 /* Parcers */,
 			);
 			path = xCore;
 			sourceTree = "<group>";
 		};
-		9ABFD1132908BC66003D7575 /* Addons */ = {
+		9AD7B67529F1C9AF00451930 /* System Status */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD11C2908BC66003D7575 /* Enums & Aliases.swift */,
-				9ABFD11D2908BC66003D7575 /* Extensions & Funcs.swift */,
-				9A8ECF0E291B0D360091B1A8 /* Added Animations.swift */,
-				9ABFD11E2908BC66003D7575 /* Biometrics.swift */,
-				9ABFD11F2908BC66003D7575 /* Custom Views.swift */,
-				9ABFD1202908BC66003D7575 /* Cool Circles.swift */,
-			);
-			path = Addons;
-			sourceTree = "<group>";
-		};
-		9ABFD1142908BC66003D7575 /* System Status */ = {
-			isa = PBXGroup;
-			children = (
-				9ABFD11B2908BC66003D7575 /* System Status.swift */,
-				9ABFD1152908BC66003D7575 /* Status Extensions */,
+				9AD7B67629F1C9AF00451930 /* Status Extensions */,
+				9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */,
 			);
 			path = "System Status";
 			sourceTree = "<group>";
 		};
-		9ABFD1152908BC66003D7575 /* Status Extensions */ = {
+		9AD7B67629F1C9AF00451930 /* Status Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1162908BC66003D7575 /* CPU Display.swift */,
-				9ABFD1172908BC66003D7575 /* Disks Display.swift */,
-				9ABFD1182908BC66003D7575 /* Battery Display.swift */,
-				9ABFD1192908BC66003D7575 /* macOS Update.swift */,
-				9ABFD11A2908BC66003D7575 /* Memory View.swift */,
+				9AD7B67729F1C9AF00451930 /* Memory View.xcore.swift */,
+				9AD7B67829F1C9AF00451930 /* Battery Display.xcore.swift */,
+				9AD7B67929F1C9AF00451930 /* Disks Display.xcore.swift */,
+				9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */,
+				9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */,
 			);
 			path = "Status Extensions";
 			sourceTree = "<group>";
 		};
-		9ABFD1232908BC66003D7575 /* Parcers */ = {
+		9AD7B67D29F1C9AF00451930 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1242908BC66003D7575 /* Apple Script.swift */,
-				9ABFD12E2908BC67003D7575 /* BootCamp.swift */,
-				9ABFD1252908BC66003D7575 /* Memory.swift */,
-				9ABFD1262908BC66003D7575 /* Shell.swift */,
-				9ABFD1272908BC66003D7575 /* macOS SubSystem.swift */,
-				9A06C1E72926C8760064419C /* Virtuals.swift */,
-				9ABFD1282908BC66003D7575 /* HomeBrew Class.swift */,
-				9ABFD1292908BC66003D7575 /* Packer.swift */,
+				9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */,
+				9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */,
 			);
-			path = Parcers;
+			path = Networking;
 			sourceTree = "<group>";
 		};
-		9ABFD12F2908BC67003D7575 /* System Settings */ = {
+		9AD7B68029F1C9AF00451930 /* Addons */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1302908BC67003D7575 /* SeedUtil.swift */,
-				9ABFD1312908BC67003D7575 /* Launchpad.swift */,
-				9ABFD1322908BC67003D7575 /* Dock Manager.swift */,
-				9A6B99B3297EC11800F38BE1 /* PAM Manager.swift */,
-				9ABFD1332908BC67003D7575 /* Sleep Manager.swift */,
+				9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */,
+				9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */,
+				9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */,
+				9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */,
+				9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */,
+				9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */,
+			);
+			path = Addons;
+			sourceTree = "<group>";
+		};
+		9AD7B68729F1C9AF00451930 /* System Settings */ = {
+			isa = PBXGroup;
+			children = (
+				9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */,
+				9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */,
+				9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */,
+				9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */,
+				9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */,
 			);
 			path = "System Settings";
 			sourceTree = "<group>";
 		};
-		9ABFD1352908BC67003D7575 /* App Settings */ = {
+		9AD7B68D29F1C9AF00451930 /* App Settings */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD1362908BC67003D7575 /* Stylers.swift */,
-				9ABFD1372908BC67003D7575 /* Settings Monitor.swift */,
-				9ABFD1382908BC67003D7575 /* App Theme.swift */,
-				9ABFD1392908BC67003D7575 /* Notifications Manager.swift */,
-				9ABFD13A2908BC67003D7575 /* Navigation Generator.swift */,
+				9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */,
+				9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */,
+				9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */,
+				9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */,
+				9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */,
 			);
 			path = "App Settings";
 			sourceTree = "<group>";
 		};
-		9ABFD13B2908BC67003D7575 /* Networking */ = {
+		9AD7B69329F1C9AF00451930 /* Parcers */ = {
 			isa = PBXGroup;
 			children = (
-				9ABFD13C2908BC67003D7575 /* Tor Networking.swift */,
-				9AF7DD8929B224DF00836B81 /* Net Parcer.swift */,
+				9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */,
+				9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */,
+				9AD7B69629F1C9AF00451930 /* HomeBrew Class.swift.xcore.swift */,
+				9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */,
+				9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */,
+				9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */,
+				9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */,
+				9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */,
 			);
-			path = Networking;
+			path = Parcers;
 			sourceTree = "<group>";
 		};
 		9AD98C3D29133F6C00618E0D /* Frameworks */ = {
@@ -383,17 +363,6 @@
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
-
-/* Begin PBXHeadersBuildPhase section */
-		9ABFD0902908BBA4003D7575 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9ABFD1482908BC67003D7575 /* Header.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		9ABFD0172908BA02003D7575 /* macOS ToolBox */ = {
@@ -408,30 +377,11 @@
 			buildRules = (
 			);
 			dependencies = (
-				9ABFD0A92908BBA5003D7575 /* PBXTargetDependency */,
 			);
 			name = "macOS ToolBox";
 			productName = "macOS ToolBox";
 			productReference = 9ABFD0182908BA02003D7575 /* macOS ToolBox.app */;
 			productType = "com.apple.product-type.application";
-		};
-		9ABFD0942908BBA4003D7575 /* xCore */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 9ABFD0AC2908BBA5003D7575 /* Build configuration list for PBXNativeTarget "xCore" */;
-			buildPhases = (
-				9ABFD0902908BBA4003D7575 /* Headers */,
-				9ABFD0912908BBA4003D7575 /* Sources */,
-				9ABFD0922908BBA4003D7575 /* Frameworks */,
-				9ABFD0932908BBA4003D7575 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = xCore;
-			productName = xCore;
-			productReference = 9ABFD0952908BBA4003D7575 /* xCore.framework */;
-			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
 
@@ -446,10 +396,6 @@
 				TargetAttributes = {
 					9ABFD0172908BA02003D7575 = {
 						CreatedOnToolsVersion = 14.1;
-					};
-					9ABFD0942908BBA4003D7575 = {
-						CreatedOnToolsVersion = 14.1;
-						LastSwiftMigration = 1410;
 					};
 				};
 			};
@@ -468,7 +414,6 @@
 			projectRoot = "";
 			targets = (
 				9ABFD0172908BA02003D7575 /* macOS ToolBox */,
-				9ABFD0942908BBA4003D7575 /* xCore */,
 			);
 		};
 /* End PBXProject section */
@@ -484,14 +429,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9ABFD0932908BBA4003D7575 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9A28A069292D83ED001E2083 /* Localizable.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -500,80 +437,62 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ABFD1052908BC02003D7575 /* Time.swift in Sources */,
+				9AD7B6BB29F1C9B000451930 /* Packer.swift.xcore.swift in Sources */,
 				9ABFD0FC2908BC02003D7575 /* Password.swift in Sources */,
+				9AD7B69C29F1C9AF00451930 /* Memory View.xcore.swift in Sources */,
+				9AD7B6AB29F1C9B000451930 /* Dock Manager.swift.xcore.swift in Sources */,
 				9A462A172912EA8F00D1723D /* main.swift in Sources */,
+				9AD7B6B129F1C9B000451930 /* Notifications Manager.swift.xcore.swift in Sources */,
 				9ABFD1022908BC02003D7575 /* App Delegate.swift in Sources */,
+				9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */,
 				9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */,
 				9ABFD1082908BC02003D7575 /* Camper.swift in Sources */,
 				9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */,
+				9AD7B6B729F1C9B000451930 /* Virtuals.swift.xcore.swift in Sources */,
+				9AD7B6A329F1C9AF00451930 /* Tor Networking.swift.xcore.swift in Sources */,
 				9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */,
+				9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */,
+				9AD7B6A929F1C9B000451930 /* Custom Views.swift.xcore.swift in Sources */,
+				9AD7B6AE29F1C9B000451930 /* SeedUtil.swift.xcore.swift in Sources */,
+				9AD7B6B329F1C9B000451930 /* App Theme.swift.xcore.swift in Sources */,
 				9ABFD1092908BC02003D7575 /* Dock.swift in Sources */,
 				9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */,
+				9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift in Sources */,
+				9AD7B6AF29F1C9B000451930 /* Stylers.swift.xcore.swift in Sources */,
 				9ABFD1002908BC02003D7575 /* DevID.swift in Sources */,
 				9ABFD0FA2908BC02003D7575 /* SettingsView.swift in Sources */,
+				9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */,
 				9ABFD1072908BC02003D7575 /* Launchpad.swift in Sources */,
+				9AD7B69E29F1C9AF00451930 /* Disks Display.xcore.swift in Sources */,
+				9AD7B6B029F1C9B000451930 /* Navigation Generator.swift.xcore.swift in Sources */,
+				9AD7B6AA29F1C9B000451930 /* Launchpad.swift.xcore.swift in Sources */,
+				9AD7B6B829F1C9B000451930 /* Shell.swift.xcore.swift in Sources */,
+				9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */,
+				9AD7B69D29F1C9AF00451930 /* Battery Display.xcore.swift in Sources */,
 				9ABFD10D2908BC02003D7575 /* Sleep.swift in Sources */,
+				9AD7B6A829F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift in Sources */,
+				9AD7B6AD29F1C9B000451930 /* PAM Manager.swift.xcore.swift in Sources */,
 				9ABFD1102908BC02003D7575 /* Main View.swift in Sources */,
 				9ABFD1032908BC02003D7575 /* Tor.swift in Sources */,
 				9ABFD10B2908BC02003D7575 /* TouchID.swift in Sources */,
+				9AD7B6AC29F1C9B000451930 /* Sleep Manager.swift.xcore.swift in Sources */,
+				9AD7B6B929F1C9B000451930 /* BootCamp.swift.xcore.swift in Sources */,
+				9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */,
 				9ABFD1062908BC02003D7575 /* Help.swift in Sources */,
+				9AD7B6BA29F1C9B000451930 /* Memory.swift.xcore.swift in Sources */,
 				9ABFD1042908BC02003D7575 /* RAM Disk.swift in Sources */,
+				9AD7B6B529F1C9B000451930 /* macOS SubSystem.swift.xcore.swift in Sources */,
 				9ABFD1012908BC02003D7575 /* BootCamp.swift in Sources */,
+				9AD7B6B229F1C9B000451930 /* Settings Monitor.swift.xcore.swift in Sources */,
+				9AD7B6A229F1C9AF00451930 /* Net Parcer.swift.xcore.swift in Sources */,
+				9AD7B6B429F1C9B000451930 /* Apple Script.swift.xcore.swift in Sources */,
+				9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */,
 				9ABFD10A2908BC02003D7575 /* Beta Seed.swift in Sources */,
 				9ABFD10C2908BC02003D7575 /* TimeButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		9ABFD0912908BBA4003D7575 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				9ABFD1442908BC67003D7575 /* Extensions & Funcs.swift in Sources */,
-				9ABFD1502908BC67003D7575 /* INIT.swift in Sources */,
-				9ABFD1592908BC67003D7575 /* Stylers.swift in Sources */,
-				9ABFD1562908BC67003D7575 /* Dock Manager.swift in Sources */,
-				9ABFD14E2908BC67003D7575 /* HomeBrew Class.swift in Sources */,
-				9ABFD1532908BC67003D7575 /* BootCamp.swift in Sources */,
-				9ABFD13E2908BC67003D7575 /* Disks Display.swift in Sources */,
-				9ABFD14D2908BC67003D7575 /* macOS SubSystem.swift in Sources */,
-				9ABFD15C2908BC67003D7575 /* Notifications Manager.swift in Sources */,
-				9ABFD15B2908BC67003D7575 /* App Theme.swift in Sources */,
-				9A8ECF0F291B0D360091B1A8 /* Added Animations.swift in Sources */,
-				9ABFD1422908BC67003D7575 /* System Status.swift in Sources */,
-				9ABFD15E2908BC67003D7575 /* Tor Networking.swift in Sources */,
-				9ABFD15A2908BC67003D7575 /* Settings Monitor.swift in Sources */,
-				9A06C1E82926C8760064419C /* Virtuals.swift in Sources */,
-				9ABFD1452908BC67003D7575 /* Biometrics.swift in Sources */,
-				9ABFD13F2908BC67003D7575 /* Battery Display.swift in Sources */,
-				9ABFD1472908BC67003D7575 /* Cool Circles.swift in Sources */,
-				9ABFD13D2908BC67003D7575 /* CPU Display.swift in Sources */,
-				9ABFD1542908BC67003D7575 /* SeedUtil.swift in Sources */,
-				9ABFD1492908BC67003D7575 /* Documentation.docc in Sources */,
-				9ABFD1572908BC67003D7575 /* Sleep Manager.swift in Sources */,
-				9ABFD1432908BC67003D7575 /* Enums & Aliases.swift in Sources */,
-				9ABFD1412908BC67003D7575 /* Memory View.swift in Sources */,
-				9ABFD15D2908BC67003D7575 /* Navigation Generator.swift in Sources */,
-				9ABFD14B2908BC67003D7575 /* Memory.swift in Sources */,
-				9A6B99B4297EC11800F38BE1 /* PAM Manager.swift in Sources */,
-				9ABFD1552908BC67003D7575 /* Launchpad.swift in Sources */,
-				9ABFD1462908BC67003D7575 /* Custom Views.swift in Sources */,
-				9ABFD14C2908BC67003D7575 /* Shell.swift in Sources */,
-				9ABFD14F2908BC67003D7575 /* Packer.swift in Sources */,
-				9AF7DD8A29B224DF00836B81 /* Net Parcer.swift in Sources */,
-				9ABFD14A2908BC67003D7575 /* Apple Script.swift in Sources */,
-				9ABFD1402908BC67003D7575 /* macOS Update.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		9ABFD0A92908BBA5003D7575 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 9ABFD0942908BBA4003D7575 /* xCore */;
-			targetProxy = 9ABFD0A82908BBA5003D7575 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		9A28A06B292D83ED001E2083 /* Localizable.strings */ = {
@@ -706,7 +625,6 @@
 		9ABFD0282908BA03003D7575 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
@@ -753,7 +671,6 @@
 		9ABFD0292908BA03003D7575 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = "macOS ToolBox/macOS ToolBox.entitlements";
@@ -797,87 +714,6 @@
 			};
 			name = Release;
 		};
-		9ABFD0AD2908BBA5003D7575 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5XE9Q47HH3;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = xCore/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "$(GCC_C_LANGUAGE_STANDARD) $(CLANG_CXX_LANGUAGE_STANDARD)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.xCore;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		9ABFD0AE2908BBA5003D7575 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "Apple Development";
-				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 1;
-				DEAD_CODE_STRIPPING = YES;
-				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 5XE9Q47HH3;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = xCore/Info.plist;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 1.0;
-				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
-				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "$(GCC_C_LANGUAGE_STANDARD) $(CLANG_CXX_LANGUAGE_STANDARD)";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.xCore;
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = macosx;
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -895,15 +731,6 @@
 			buildConfigurations = (
 				9ABFD0282908BA03003D7575 /* Debug */,
 				9ABFD0292908BA03003D7575 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		9ABFD0AC2908BBA5003D7575 /* Build configuration list for PBXNativeTarget "xCore" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				9ABFD0AD2908BBA5003D7575 /* Debug */,
-				9ABFD0AE2908BBA5003D7575 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
