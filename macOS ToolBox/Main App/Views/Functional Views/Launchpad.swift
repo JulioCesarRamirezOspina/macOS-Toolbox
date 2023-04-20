@@ -263,9 +263,3 @@ struct LaunchpadManagerView: View {
         }
     }
 }
-
-struct LaunchpadManagerPreview: PreviewProvider {
-    static var previews: some View {
-        LaunchpadManagerView().frame(width: 1000, height: 800, alignment: .center)
-    }
-}

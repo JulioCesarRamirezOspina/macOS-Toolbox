@@ -8,84 +8,6 @@
 import Foundation
 
 public class Shell {
-    public class Runner {
-        //MARK: - INIT and DEINIT
-        public init(app: String = "/opt/homebrew/bin/tor", args: [String] = []) {
-            func getAppPath(_ app: String) -> URL {
-                let p = Process()
-                let pi = Pipe()
-                p.standardOutput = pi
-                p.executableURL = URL(fileURLWithPath: "/usr/bin/which")
-                p.arguments = [app]
-                var retval = ""
-                do {
-                    try p.run()
-                    retval = String(data: pi.fileHandleForReading.availableData, encoding: .utf8)!
-                } catch let error {
-                    NSLog(error.localizedDescription)
-                    p.interrupt()
-                }
-                return URL(fileURLWithPath: String(retval.dropLast()))
-            }
-            appPath = getAppPath(app)
-            process = Process()
-            pipe = Pipe()
-            process.executableURL = appPath
-            process.arguments = args
-            process.standardOutput = pipe
-        }
-        public init(appURL: URL, args: [String]) {
-            appPath = appURL
-            process = Process()
-            pipe = Pipe()
-            process.executableURL = appURL
-            process.arguments = args
-            process.standardOutput = pipe
-        }
-        //MARK: - Vars
-        private var appPath: URL = .init(fileURLWithPath: "")
-        public var process: Process = Process()
-        public var pipe: Pipe = Pipe()
-        
-        //MARK: - Funcs
-        public func getAppPath(_ app: String) -> URL {
-            let p = Process()
-            let pi = Pipe()
-            p.standardOutput = pi
-            p.executableURL = URL(fileURLWithPath: "/usr/bin/which")
-            p.arguments = [app]
-            var retval = ""
-            do {
-                try p.run()
-                retval = String(data: pi.fileHandleForReading.availableData, encoding: .utf8)!
-            } catch let error {
-                NSLog(error.localizedDescription)
-                p.interrupt()
-            }
-            return URL(fileURLWithPath: String(retval.dropLast()))
-        }
-        
-        public func stopTask() {
-            do {
-                process.terminate()
-                try pipe.fileHandleForReading.close()
-            } catch let error {
-                NSLog(String(error.localizedDescription))
-            }
-        }
-        
-        public func returnAllOutput() -> String {
-            var string = Data()
-            do{
-                try string = pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData
-            } catch let error {
-                NSLog(error.localizedDescription)
-            }
-            let retval = String(data: string, encoding: .utf8)!
-            return retval
-        }
-    }
-    
     //MARK: - Shell Script Parcer
     //MARK: Public
     /// Parces and executes shell I/O
@@ -317,5 +239,83 @@ public class Shell {
         
         //MARK: - Initializer
         public init() {}
+    }
+    
+    public class RunnerForTorNetworks {
+        //MARK: - INIT and DEINIT
+        public init(app: String = "/opt/homebrew/bin/tor", args: [String] = []) {
+            func getAppPath(_ app: String) -> URL {
+                let p = Process()
+                let pi = Pipe()
+                p.standardOutput = pi
+                p.executableURL = URL(fileURLWithPath: "/usr/bin/which")
+                p.arguments = [app]
+                var retval = ""
+                do {
+                    try p.run()
+                    retval = String(data: pi.fileHandleForReading.availableData, encoding: .utf8)!
+                } catch let error {
+                    NSLog(error.localizedDescription)
+                    p.interrupt()
+                }
+                return URL(fileURLWithPath: String(retval.dropLast()))
+            }
+            appPath = getAppPath(app)
+            process = Process()
+            pipe = Pipe()
+            process.executableURL = appPath
+            process.arguments = args
+            process.standardOutput = pipe
+        }
+        public init(appURL: URL, args: [String]) {
+            appPath = appURL
+            process = Process()
+            pipe = Pipe()
+            process.executableURL = appURL
+            process.arguments = args
+            process.standardOutput = pipe
+        }
+        //MARK: - Vars
+        private var appPath: URL = .init(fileURLWithPath: "")
+        public var process: Process = Process()
+        public var pipe: Pipe = Pipe()
+        
+        //MARK: - Funcs
+        public func getAppPath(_ app: String) -> URL {
+            let p = Process()
+            let pi = Pipe()
+            p.standardOutput = pi
+            p.executableURL = URL(fileURLWithPath: "/usr/bin/which")
+            p.arguments = [app]
+            var retval = ""
+            do {
+                try p.run()
+                retval = String(data: pi.fileHandleForReading.availableData, encoding: .utf8)!
+            } catch let error {
+                NSLog(error.localizedDescription)
+                p.interrupt()
+            }
+            return URL(fileURLWithPath: String(retval.dropLast()))
+        }
+        
+        public func stopTask() {
+            do {
+                process.terminate()
+                try pipe.fileHandleForReading.close()
+            } catch let error {
+                NSLog(String(error.localizedDescription))
+            }
+        }
+        
+        public func returnAllOutput() -> String {
+            var string = Data()
+            do{
+                try string = pipe.fileHandleForReading.readToEnd() ?? pipe.fileHandleForReading.availableData
+            } catch let error {
+                NSLog(error.localizedDescription)
+            }
+            let retval = String(data: string, encoding: .utf8)!
+            return retval
+        }
     }
 }

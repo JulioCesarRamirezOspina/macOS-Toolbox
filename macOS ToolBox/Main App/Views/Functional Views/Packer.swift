@@ -231,9 +231,3 @@ struct PackerView: View {
         }
     }
 }
-
-struct PackerPreview: PreviewProvider {
-    static var previews: some View {
-        PackerView()
-    }
-}

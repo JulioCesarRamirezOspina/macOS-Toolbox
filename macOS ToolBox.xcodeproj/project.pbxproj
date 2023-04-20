@@ -39,7 +39,6 @@
 		9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */; };
 		9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */; };
 		9AD7B6A229F1C9AF00451930 /* Net Parcer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */; };
-		9AD7B6A329F1C9AF00451930 /* Tor Networking.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */; };
 		9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */; };
 		9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */; };
 		9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */; };
@@ -63,6 +62,7 @@
 		9AD7B6B929F1C9B000451930 /* BootCamp.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */; };
 		9AD7B6BA29F1C9B000451930 /* Memory.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */; };
 		9AD7B6BB29F1C9B000451930 /* Packer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */; };
+		9AD7B6BD29F1CD7400451930 /* Tor Networking.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */; };
 		9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
 
@@ -179,10 +179,10 @@
 			isa = PBXGroup;
 			children = (
 				9AD7B67329F1C94000451930 /* Main App */,
-				9AD7B67429F1C9AF00451930 /* xCore */,
-				9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */,
+				9AD7B67429F1C9AF00451930 /* Application Tools */,
 				9AD7B67229F1C90600451930 /* Shared */,
 				9ABFD0482908BA2E003D7575 /* Assets.xcassets */,
+				9A95BC36290C173100F1E780 /* macOS-ToolBox-Info.plist */,
 				9ABFD0472908BA2D003D7575 /* macOS ToolBox.entitlements */,
 				9ABFD02A2908BA2D003D7575 /* Preview Content */,
 			);
@@ -202,8 +202,7 @@
 			children = (
 				9ABFD0E02908BC02003D7575 /* Settings Views */,
 				9ABFD0EA2908BC02003D7575 /* Functional Views */,
-				9ABFD0F82908BC02003D7575 /* Main View.swift */,
-				9ABFD0F92908BC02003D7575 /* Main Scene (redundant).swift */,
+				9AD7B6BC29F1CD1E00451930 /* Main Views */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -244,6 +243,7 @@
 		9AD7B67229F1C90600451930 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9A28A06B292D83ED001E2083 /* Localizable.strings */,
 			);
 			path = Shared;
@@ -253,13 +253,12 @@
 			isa = PBXGroup;
 			children = (
 				9A462A162912EA8F00D1723D /* main.swift */,
-				9ABFD0E92908BC02003D7575 /* App Delegate.swift */,
 				9ABFD0DF2908BC02003D7575 /* Views */,
 			);
 			path = "Main App";
 			sourceTree = "<group>";
 		};
-		9AD7B67429F1C9AF00451930 /* xCore */ = {
+		9AD7B67429F1C9AF00451930 /* Application Tools */ = {
 			isa = PBXGroup;
 			children = (
 				9AD7B67529F1C9AF00451930 /* System Status */,
@@ -269,7 +268,7 @@
 				9AD7B68D29F1C9AF00451930 /* App Settings */,
 				9AD7B69329F1C9AF00451930 /* Parcers */,
 			);
-			path = xCore;
+			path = "Application Tools";
 			sourceTree = "<group>";
 		};
 		9AD7B67529F1C9AF00451930 /* System Status */ = {
@@ -352,6 +351,15 @@
 				9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */,
 			);
 			path = Parcers;
+			sourceTree = "<group>";
+		};
+		9AD7B6BC29F1CD1E00451930 /* Main Views */ = {
+			isa = PBXGroup;
+			children = (
+				9ABFD0F82908BC02003D7575 /* Main View.swift */,
+				9ABFD0F92908BC02003D7575 /* Main Scene (redundant).swift */,
+			);
+			path = "Main Views";
 			sourceTree = "<group>";
 		};
 		9AD98C3D29133F6C00618E0D /* Frameworks */ = {
@@ -446,10 +454,10 @@
 				9ABFD1022908BC02003D7575 /* App Delegate.swift in Sources */,
 				9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */,
 				9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */,
+				9AD7B6BD29F1CD7400451930 /* Tor Networking.swift.xcore.swift in Sources */,
 				9ABFD1082908BC02003D7575 /* Camper.swift in Sources */,
 				9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */,
 				9AD7B6B729F1C9B000451930 /* Virtuals.swift.xcore.swift in Sources */,
-				9AD7B6A329F1C9AF00451930 /* Tor Networking.swift.xcore.swift in Sources */,
 				9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */,
 				9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */,
 				9AD7B6A929F1C9B000451930 /* Custom Views.swift.xcore.swift in Sources */,
@@ -631,7 +639,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 167;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -656,7 +664,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.4.8;
+				MARKETING_VERSION = 4.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -677,7 +685,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 143;
+				CURRENT_PROJECT_VERSION = 167;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -702,7 +710,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.0;
-				MARKETING_VERSION = 4.4.8;
+				MARKETING_VERSION = 4.5.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.xlab.macOSToolBox;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

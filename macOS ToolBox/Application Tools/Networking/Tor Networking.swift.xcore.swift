@@ -22,14 +22,14 @@ public class TorNetworking {
         
         /// Enables Proxy
         public func connect() {
-            let f = Shell.Runner(app: n, args: conArgs)
+            let f = Shell.RunnerForTorNetworks(app: n, args: conArgs)
             try? f.process.run()
             f.process.waitUntilExit()
         }
         
         /// Disables proxy
         public func disconnect() {
-            let f = Shell.Runner(app: n, args: disArgs)
+            let f = Shell.RunnerForTorNetworks(app: n, args: disArgs)
             try? f.process.run()
             f.process.waitUntilExit()
         }
@@ -37,7 +37,7 @@ public class TorNetworking {
         /// Gets proxy status
         /// - Returns: true if enabled, false otherwise
         public func status() -> Bool {
-            let data = Shell.Runner(app: n, args: ["-getsocksfirewallproxy", "Wi-Fi"])
+            let data = Shell.RunnerForTorNetworks(app: n, args: ["-getsocksfirewallproxy", "Wi-Fi"])
             try? data.process.run()
             let put = data.returnAllOutput()
             if put.contains("Enabled: Yes") {

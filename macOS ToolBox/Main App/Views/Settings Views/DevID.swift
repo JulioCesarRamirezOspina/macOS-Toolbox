@@ -92,9 +92,3 @@ struct DevIDSettings: View {
         }
     }
 }
-
-struct devIDPreview: PreviewProvider {
-    static var previews: some View {
-        DevIDSettings()
-    }
-}

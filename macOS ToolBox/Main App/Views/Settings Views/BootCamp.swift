@@ -109,9 +109,3 @@ struct BootcampSettings: View {
         }
     }
 }
-
-struct BootCampPreview: PreviewProvider {
-    static var previews: some View {
-        BootcampSettings()
-    }
-}

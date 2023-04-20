@@ -470,9 +470,3 @@ struct RAMDiskView: View {
         .animation(SettingsMonitor.secondaryAnimation, value: selection)
     }
 }
-
-struct RAMPreview: PreviewProvider {
-    static var previews: some View{
-        RAMDiskView().frame(width: 500, height: 500, alignment: .center)
-    }
-}

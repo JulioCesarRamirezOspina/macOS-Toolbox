@@ -53,9 +53,3 @@ struct TimeView: View {
         .environment(\.locale, locale)
     }
 }
-
-struct TimePreview: PreviewProvider {
-    static var previews: some View {
-        TimeView(textStyle: .bold, font: .body)
-    }
-}

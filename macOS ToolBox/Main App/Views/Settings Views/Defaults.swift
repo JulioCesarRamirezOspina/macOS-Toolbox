@@ -55,9 +55,3 @@ struct Defaults: View {
         .animation(.easeInOut(duration: 1), value: DispatchTime.now())
     }
 }
-
-struct DefaultsPreview: PreviewProvider {
-    static var previews: some View {
-        Defaults()
-    }
-}

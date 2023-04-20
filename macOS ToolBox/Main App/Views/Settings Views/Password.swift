@@ -113,9 +113,3 @@ struct PasswordSettings: View {
         }
     }
 }
-
-struct PasswordPreview: PreviewProvider {
-    static var previews: some View {
-        PasswordSettings()
-    }
-}

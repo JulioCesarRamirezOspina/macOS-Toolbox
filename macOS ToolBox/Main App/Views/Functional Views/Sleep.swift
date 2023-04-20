@@ -208,9 +208,3 @@ struct SleepManagerView: View {
         }
     }
 }
-
-struct SleepPreview: PreviewProvider {
-    static var previews: some View {
-        SleepManagerView().frame(width: 500, height: 700, alignment: .center)
-    }
-}

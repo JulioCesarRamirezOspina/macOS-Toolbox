@@ -189,10 +189,3 @@ struct TorView: View {
         .animation(SettingsMonitor.secondaryAnimation, value: isDisabled)
     }
 }
-
-//MARK: - Preview provider
-struct torVreview: PreviewProvider {
-    static var previews: some View {
-        TorView()
-    }
-}

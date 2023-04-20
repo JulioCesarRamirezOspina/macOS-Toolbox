@@ -252,10 +252,3 @@ struct TouchIDView: View {
         }
     }
 }
-
-
-struct TidPreivew: PreviewProvider {
-    static var previews: some View {
-        TouchIDView()
-    }
-}

@@ -396,9 +396,3 @@ struct DockManagerView: View {
         .animation(SettingsMonitor.secondaryAnimation, value: animSettings)
     }
 }
-
-struct previewDockManager: PreviewProvider {
-    static var previews: some View {
-        DockManagerView().frame(width: 700, height: 500, alignment: .center)
-    }
-}
