@@ -37,31 +37,31 @@
 		9AD7B69E29F1C9AF00451930 /* Disks Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67929F1C9AF00451930 /* Disks Display.xcore.swift */; };
 		9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */; };
 		9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */; };
-		9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */; };
-		9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */; };
-		9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */; };
-		9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */; };
-		9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */; };
-		9AD7B6A829F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */; };
-		9AD7B6A929F1C9B000451930 /* Custom Views.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */; };
-		9AD7B6AA29F1C9B000451930 /* Launchpad.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */; };
-		9AD7B6AB29F1C9B000451930 /* Dock Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */; };
-		9AD7B6AC29F1C9B000451930 /* Sleep Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */; };
-		9AD7B6AD29F1C9B000451930 /* PAM Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */; };
-		9AD7B6AE29F1C9B000451930 /* SeedUtil.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */; };
-		9AD7B6AF29F1C9B000451930 /* Stylers.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */; };
-		9AD7B6B029F1C9B000451930 /* Navigation Generator.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */; };
-		9AD7B6B129F1C9B000451930 /* Notifications Manager.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */; };
-		9AD7B6B229F1C9B000451930 /* Settings Monitor.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */; };
-		9AD7B6B329F1C9B000451930 /* App Theme.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */; };
-		9AD7B6B429F1C9B000451930 /* Apple Script.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */; };
-		9AD7B6B529F1C9B000451930 /* macOS SubSystem.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */; };
-		9AD7B6B729F1C9B000451930 /* Virtuals.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */; };
-		9AD7B6B829F1C9B000451930 /* Shell.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */; };
-		9AD7B6B929F1C9B000451930 /* BootCamp.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */; };
-		9AD7B6BA29F1C9B000451930 /* Memory.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */; };
-		9AD7B6BB29F1C9B000451930 /* Packer.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */; };
-		9AD7B6BD29F1CD7400451930 /* Tor Networking.swift.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */; };
+		9AD7B6A129F1C9AF00451930 /* System Status.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67C29F1C9AF00451930 /* System Status.xcore.swift */; };
+		9AD7B6A429F1C9AF00451930 /* Added Animations.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68129F1C9AF00451930 /* Added Animations.xcore.swift */; };
+		9AD7B6A529F1C9AF00451930 /* Biometrics.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68229F1C9AF00451930 /* Biometrics.xcore.swift */; };
+		9AD7B6A629F1C9AF00451930 /* Cool Circles.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68329F1C9AF00451930 /* Cool Circles.xcore.swift */; };
+		9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68429F1C9AF00451930 /* Extensions & Funcs.xcore.swift */; };
+		9AD7B6A829F1C9AF00451930 /* Enums & Aliases.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68529F1C9AF00451930 /* Enums & Aliases.xcore.swift */; };
+		9AD7B6A929F1C9B000451930 /* Custom Views.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68629F1C9AF00451930 /* Custom Views.xcore.swift */; };
+		9AD7B6AA29F1C9B000451930 /* Launchpad.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68829F1C9AF00451930 /* Launchpad.xcore.swift */; };
+		9AD7B6AB29F1C9B000451930 /* Dock Manager.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68929F1C9AF00451930 /* Dock Manager.xcore.swift */; };
+		9AD7B6AC29F1C9B000451930 /* Sleep Manager.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68A29F1C9AF00451930 /* Sleep Manager.xcore.swift */; };
+		9AD7B6AD29F1C9B000451930 /* PAM Manager.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68B29F1C9AF00451930 /* PAM Manager.xcore.swift */; };
+		9AD7B6AE29F1C9B000451930 /* SeedUtil.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68C29F1C9AF00451930 /* SeedUtil.xcore.swift */; };
+		9AD7B6AF29F1C9B000451930 /* Stylers.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68E29F1C9AF00451930 /* Stylers.xcore.swift */; };
+		9AD7B6B029F1C9B000451930 /* Navigation Generator.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B68F29F1C9AF00451930 /* Navigation Generator.xcore.swift */; };
+		9AD7B6B129F1C9B000451930 /* Notifications Manager.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69029F1C9AF00451930 /* Notifications Manager.xcore.swift */; };
+		9AD7B6B229F1C9B000451930 /* Settings Monitor.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69129F1C9AF00451930 /* Settings Monitor.xcore.swift */; };
+		9AD7B6B329F1C9B000451930 /* App Theme.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69229F1C9AF00451930 /* App Theme.xcore.swift */; };
+		9AD7B6B429F1C9B000451930 /* Apple Script.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69429F1C9AF00451930 /* Apple Script.xcore.swift */; };
+		9AD7B6B529F1C9B000451930 /* macOS SubSystem.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69529F1C9AF00451930 /* macOS SubSystem.xcore.swift */; };
+		9AD7B6B729F1C9B000451930 /* Virtuals.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69729F1C9AF00451930 /* Virtuals.xcore.swift */; };
+		9AD7B6B829F1C9B000451930 /* Shell.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69829F1C9AF00451930 /* Shell.xcore.swift */; };
+		9AD7B6B929F1C9B000451930 /* BootCamp.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69929F1C9AF00451930 /* BootCamp.xcore.swift */; };
+		9AD7B6BA29F1C9B000451930 /* Memory.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69A29F1C9AF00451930 /* Memory.xcore.swift */; };
+		9AD7B6BB29F1C9B000451930 /* Packer.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B69B29F1C9AF00451930 /* Packer.xcore.swift */; };
+		9AD7B6BD29F1CD7400451930 /* Tor Networking.xcore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7B67F29F1C9AF00451930 /* Tor Networking.xcore.swift */; };
 		9AD98C3F29133F6C00618E0D /* ServiceManagement.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */; };
 /* End PBXBuildFile section */
 
@@ -114,33 +114,33 @@
 		9AD7B67929F1C9AF00451930 /* Disks Display.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Disks Display.xcore.swift"; sourceTree = "<group>"; };
 		9AD7B67A29F1C9AF00451930 /* CPU Display.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CPU Display.xcore.swift"; sourceTree = "<group>"; };
 		9AD7B67B29F1C9AF00451930 /* macOS Update.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS Update.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System Status.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Net Parcer.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Added Animations.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biometrics.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cool Circles.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions & Funcs.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums & Aliases.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Views.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dock Manager.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sleep Manager.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PAM Manager.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedUtil.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylers.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings Monitor.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App Theme.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Apple Script.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS SubSystem.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69629F1C9AF00451930 /* HomeBrew Class.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HomeBrew Class.swift.xcore.swift"; sourceTree = "<group>"; };
-		9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Virtuals.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.swift.xcore.swift; sourceTree = "<group>"; };
-		9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.swift.xcore.swift; sourceTree = "<group>"; };
+		9AD7B67C29F1C9AF00451930 /* System Status.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "System Status.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67E29F1C9AF00451930 /* Net Parcer.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Net Parcer.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B67F29F1C9AF00451930 /* Tor Networking.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Tor Networking.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68129F1C9AF00451930 /* Added Animations.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Added Animations.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68229F1C9AF00451930 /* Biometrics.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Biometrics.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68329F1C9AF00451930 /* Cool Circles.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Cool Circles.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68429F1C9AF00451930 /* Extensions & Funcs.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Extensions & Funcs.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68529F1C9AF00451930 /* Enums & Aliases.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Enums & Aliases.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68629F1C9AF00451930 /* Custom Views.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Custom Views.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68829F1C9AF00451930 /* Launchpad.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Launchpad.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68929F1C9AF00451930 /* Dock Manager.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Dock Manager.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68A29F1C9AF00451930 /* Sleep Manager.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Sleep Manager.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68B29F1C9AF00451930 /* PAM Manager.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "PAM Manager.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B68C29F1C9AF00451930 /* SeedUtil.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeedUtil.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68E29F1C9AF00451930 /* Stylers.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Stylers.xcore.swift; sourceTree = "<group>"; };
+		9AD7B68F29F1C9AF00451930 /* Navigation Generator.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Navigation Generator.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69029F1C9AF00451930 /* Notifications Manager.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Notifications Manager.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69129F1C9AF00451930 /* Settings Monitor.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Settings Monitor.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69229F1C9AF00451930 /* App Theme.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "App Theme.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69429F1C9AF00451930 /* Apple Script.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Apple Script.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69529F1C9AF00451930 /* macOS SubSystem.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "macOS SubSystem.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69629F1C9AF00451930 /* HomeBrew Class.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "HomeBrew Class.xcore.swift"; sourceTree = "<group>"; };
+		9AD7B69729F1C9AF00451930 /* Virtuals.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Virtuals.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69829F1C9AF00451930 /* Shell.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Shell.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69929F1C9AF00451930 /* BootCamp.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BootCamp.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69A29F1C9AF00451930 /* Memory.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Memory.xcore.swift; sourceTree = "<group>"; };
+		9AD7B69B29F1C9AF00451930 /* Packer.xcore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Packer.xcore.swift; sourceTree = "<group>"; };
 		9AD98C3E29133F6C00618E0D /* ServiceManagement.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ServiceManagement.framework; path = System/Library/Frameworks/ServiceManagement.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -274,7 +274,7 @@
 			isa = PBXGroup;
 			children = (
 				9AD7B67629F1C9AF00451930 /* Status Extensions */,
-				9AD7B67C29F1C9AF00451930 /* System Status.swift.xcore.swift */,
+				9AD7B67C29F1C9AF00451930 /* System Status.xcore.swift */,
 			);
 			path = "System Status";
 			sourceTree = "<group>";
@@ -294,8 +294,8 @@
 		9AD7B67D29F1C9AF00451930 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B67E29F1C9AF00451930 /* Net Parcer.swift.xcore.swift */,
-				9AD7B67F29F1C9AF00451930 /* Tor Networking.swift.xcore.swift */,
+				9AD7B67E29F1C9AF00451930 /* Net Parcer.xcore.swift */,
+				9AD7B67F29F1C9AF00451930 /* Tor Networking.xcore.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -303,12 +303,12 @@
 		9AD7B68029F1C9AF00451930 /* Addons */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B68129F1C9AF00451930 /* Added Animations.swift.xcore.swift */,
-				9AD7B68229F1C9AF00451930 /* Biometrics.swift.xcore.swift */,
-				9AD7B68329F1C9AF00451930 /* Cool Circles.swift.xcore.swift */,
-				9AD7B68429F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift */,
-				9AD7B68529F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift */,
-				9AD7B68629F1C9AF00451930 /* Custom Views.swift.xcore.swift */,
+				9AD7B68129F1C9AF00451930 /* Added Animations.xcore.swift */,
+				9AD7B68229F1C9AF00451930 /* Biometrics.xcore.swift */,
+				9AD7B68329F1C9AF00451930 /* Cool Circles.xcore.swift */,
+				9AD7B68429F1C9AF00451930 /* Extensions & Funcs.xcore.swift */,
+				9AD7B68529F1C9AF00451930 /* Enums & Aliases.xcore.swift */,
+				9AD7B68629F1C9AF00451930 /* Custom Views.xcore.swift */,
 			);
 			path = Addons;
 			sourceTree = "<group>";
@@ -316,11 +316,11 @@
 		9AD7B68729F1C9AF00451930 /* System Settings */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B68829F1C9AF00451930 /* Launchpad.swift.xcore.swift */,
-				9AD7B68929F1C9AF00451930 /* Dock Manager.swift.xcore.swift */,
-				9AD7B68A29F1C9AF00451930 /* Sleep Manager.swift.xcore.swift */,
-				9AD7B68B29F1C9AF00451930 /* PAM Manager.swift.xcore.swift */,
-				9AD7B68C29F1C9AF00451930 /* SeedUtil.swift.xcore.swift */,
+				9AD7B68829F1C9AF00451930 /* Launchpad.xcore.swift */,
+				9AD7B68929F1C9AF00451930 /* Dock Manager.xcore.swift */,
+				9AD7B68A29F1C9AF00451930 /* Sleep Manager.xcore.swift */,
+				9AD7B68B29F1C9AF00451930 /* PAM Manager.xcore.swift */,
+				9AD7B68C29F1C9AF00451930 /* SeedUtil.xcore.swift */,
 			);
 			path = "System Settings";
 			sourceTree = "<group>";
@@ -328,11 +328,11 @@
 		9AD7B68D29F1C9AF00451930 /* App Settings */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B68E29F1C9AF00451930 /* Stylers.swift.xcore.swift */,
-				9AD7B68F29F1C9AF00451930 /* Navigation Generator.swift.xcore.swift */,
-				9AD7B69029F1C9AF00451930 /* Notifications Manager.swift.xcore.swift */,
-				9AD7B69129F1C9AF00451930 /* Settings Monitor.swift.xcore.swift */,
-				9AD7B69229F1C9AF00451930 /* App Theme.swift.xcore.swift */,
+				9AD7B68E29F1C9AF00451930 /* Stylers.xcore.swift */,
+				9AD7B68F29F1C9AF00451930 /* Navigation Generator.xcore.swift */,
+				9AD7B69029F1C9AF00451930 /* Notifications Manager.xcore.swift */,
+				9AD7B69129F1C9AF00451930 /* Settings Monitor.xcore.swift */,
+				9AD7B69229F1C9AF00451930 /* App Theme.xcore.swift */,
 			);
 			path = "App Settings";
 			sourceTree = "<group>";
@@ -340,14 +340,14 @@
 		9AD7B69329F1C9AF00451930 /* Parcers */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B69429F1C9AF00451930 /* Apple Script.swift.xcore.swift */,
-				9AD7B69529F1C9AF00451930 /* macOS SubSystem.swift.xcore.swift */,
-				9AD7B69629F1C9AF00451930 /* HomeBrew Class.swift.xcore.swift */,
-				9AD7B69729F1C9AF00451930 /* Virtuals.swift.xcore.swift */,
-				9AD7B69829F1C9AF00451930 /* Shell.swift.xcore.swift */,
-				9AD7B69929F1C9AF00451930 /* BootCamp.swift.xcore.swift */,
-				9AD7B69A29F1C9AF00451930 /* Memory.swift.xcore.swift */,
-				9AD7B69B29F1C9AF00451930 /* Packer.swift.xcore.swift */,
+				9AD7B69429F1C9AF00451930 /* Apple Script.xcore.swift */,
+				9AD7B69529F1C9AF00451930 /* macOS SubSystem.xcore.swift */,
+				9AD7B69629F1C9AF00451930 /* HomeBrew Class.xcore.swift */,
+				9AD7B69729F1C9AF00451930 /* Virtuals.xcore.swift */,
+				9AD7B69829F1C9AF00451930 /* Shell.xcore.swift */,
+				9AD7B69929F1C9AF00451930 /* BootCamp.xcore.swift */,
+				9AD7B69A29F1C9AF00451930 /* Memory.xcore.swift */,
+				9AD7B69B29F1C9AF00451930 /* Packer.xcore.swift */,
 			);
 			path = Parcers;
 			sourceTree = "<group>";
@@ -444,54 +444,54 @@
 			buildActionMask = 2147483647;
 			files = (
 				9ABFD1052908BC02003D7575 /* Time.swift in Sources */,
-				9AD7B6BB29F1C9B000451930 /* Packer.swift.xcore.swift in Sources */,
+				9AD7B6BB29F1C9B000451930 /* Packer.xcore.swift in Sources */,
 				9ABFD0FC2908BC02003D7575 /* Password.swift in Sources */,
 				9AD7B69C29F1C9AF00451930 /* Memory View.xcore.swift in Sources */,
-				9AD7B6AB29F1C9B000451930 /* Dock Manager.swift.xcore.swift in Sources */,
+				9AD7B6AB29F1C9B000451930 /* Dock Manager.xcore.swift in Sources */,
 				9A462A172912EA8F00D1723D /* main.swift in Sources */,
-				9AD7B6B129F1C9B000451930 /* Notifications Manager.swift.xcore.swift in Sources */,
+				9AD7B6B129F1C9B000451930 /* Notifications Manager.xcore.swift in Sources */,
 				9ABFD1022908BC02003D7575 /* App Delegate.swift in Sources */,
-				9AD7B6A429F1C9AF00451930 /* Added Animations.swift.xcore.swift in Sources */,
+				9AD7B6A429F1C9AF00451930 /* Added Animations.xcore.swift in Sources */,
 				9ABFD0FB2908BC02003D7575 /* Overview.swift in Sources */,
-				9AD7B6BD29F1CD7400451930 /* Tor Networking.swift.xcore.swift in Sources */,
+				9AD7B6BD29F1CD7400451930 /* Tor Networking.xcore.swift in Sources */,
 				9ABFD1082908BC02003D7575 /* Camper.swift in Sources */,
 				9ABFD10F2908BC02003D7575 /* Packer.swift in Sources */,
-				9AD7B6B729F1C9B000451930 /* Virtuals.swift.xcore.swift in Sources */,
+				9AD7B6B729F1C9B000451930 /* Virtuals.xcore.swift in Sources */,
 				9AB1AE0929B804E7006C4ECA /* PIN.swift in Sources */,
 				9AD7B69F29F1C9AF00451930 /* CPU Display.xcore.swift in Sources */,
-				9AD7B6A929F1C9B000451930 /* Custom Views.swift.xcore.swift in Sources */,
-				9AD7B6AE29F1C9B000451930 /* SeedUtil.swift.xcore.swift in Sources */,
-				9AD7B6B329F1C9B000451930 /* App Theme.swift.xcore.swift in Sources */,
+				9AD7B6A929F1C9B000451930 /* Custom Views.xcore.swift in Sources */,
+				9AD7B6AE29F1C9B000451930 /* SeedUtil.xcore.swift in Sources */,
+				9AD7B6B329F1C9B000451930 /* App Theme.xcore.swift in Sources */,
 				9ABFD1092908BC02003D7575 /* Dock.swift in Sources */,
 				9ABFD0FF2908BC02003D7575 /* Defaults.swift in Sources */,
-				9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.swift.xcore.swift in Sources */,
-				9AD7B6AF29F1C9B000451930 /* Stylers.swift.xcore.swift in Sources */,
+				9AD7B6A729F1C9AF00451930 /* Extensions & Funcs.xcore.swift in Sources */,
+				9AD7B6AF29F1C9B000451930 /* Stylers.xcore.swift in Sources */,
 				9ABFD1002908BC02003D7575 /* DevID.swift in Sources */,
 				9ABFD0FA2908BC02003D7575 /* SettingsView.swift in Sources */,
-				9AD7B6A629F1C9AF00451930 /* Cool Circles.swift.xcore.swift in Sources */,
+				9AD7B6A629F1C9AF00451930 /* Cool Circles.xcore.swift in Sources */,
 				9ABFD1072908BC02003D7575 /* Launchpad.swift in Sources */,
 				9AD7B69E29F1C9AF00451930 /* Disks Display.xcore.swift in Sources */,
-				9AD7B6B029F1C9B000451930 /* Navigation Generator.swift.xcore.swift in Sources */,
-				9AD7B6AA29F1C9B000451930 /* Launchpad.swift.xcore.swift in Sources */,
-				9AD7B6B829F1C9B000451930 /* Shell.swift.xcore.swift in Sources */,
-				9AD7B6A529F1C9AF00451930 /* Biometrics.swift.xcore.swift in Sources */,
+				9AD7B6B029F1C9B000451930 /* Navigation Generator.xcore.swift in Sources */,
+				9AD7B6AA29F1C9B000451930 /* Launchpad.xcore.swift in Sources */,
+				9AD7B6B829F1C9B000451930 /* Shell.xcore.swift in Sources */,
+				9AD7B6A529F1C9AF00451930 /* Biometrics.xcore.swift in Sources */,
 				9AD7B69D29F1C9AF00451930 /* Battery Display.xcore.swift in Sources */,
 				9ABFD10D2908BC02003D7575 /* Sleep.swift in Sources */,
-				9AD7B6A829F1C9AF00451930 /* Enums & Aliases.swift.xcore.swift in Sources */,
-				9AD7B6AD29F1C9B000451930 /* PAM Manager.swift.xcore.swift in Sources */,
+				9AD7B6A829F1C9AF00451930 /* Enums & Aliases.xcore.swift in Sources */,
+				9AD7B6AD29F1C9B000451930 /* PAM Manager.xcore.swift in Sources */,
 				9ABFD1102908BC02003D7575 /* Main View.swift in Sources */,
 				9ABFD1032908BC02003D7575 /* Tor.swift in Sources */,
 				9ABFD10B2908BC02003D7575 /* TouchID.swift in Sources */,
-				9AD7B6AC29F1C9B000451930 /* Sleep Manager.swift.xcore.swift in Sources */,
-				9AD7B6B929F1C9B000451930 /* BootCamp.swift.xcore.swift in Sources */,
-				9AD7B6A129F1C9AF00451930 /* System Status.swift.xcore.swift in Sources */,
+				9AD7B6AC29F1C9B000451930 /* Sleep Manager.xcore.swift in Sources */,
+				9AD7B6B929F1C9B000451930 /* BootCamp.xcore.swift in Sources */,
+				9AD7B6A129F1C9AF00451930 /* System Status.xcore.swift in Sources */,
 				9ABFD1062908BC02003D7575 /* Help.swift in Sources */,
-				9AD7B6BA29F1C9B000451930 /* Memory.swift.xcore.swift in Sources */,
+				9AD7B6BA29F1C9B000451930 /* Memory.xcore.swift in Sources */,
 				9ABFD1042908BC02003D7575 /* RAM Disk.swift in Sources */,
-				9AD7B6B529F1C9B000451930 /* macOS SubSystem.swift.xcore.swift in Sources */,
+				9AD7B6B529F1C9B000451930 /* macOS SubSystem.xcore.swift in Sources */,
 				9ABFD1012908BC02003D7575 /* BootCamp.swift in Sources */,
-				9AD7B6B229F1C9B000451930 /* Settings Monitor.swift.xcore.swift in Sources */,
-				9AD7B6B429F1C9B000451930 /* Apple Script.swift.xcore.swift in Sources */,
+				9AD7B6B229F1C9B000451930 /* Settings Monitor.xcore.swift in Sources */,
+				9AD7B6B429F1C9B000451930 /* Apple Script.xcore.swift in Sources */,
 				9AD7B6A029F1C9AF00451930 /* macOS Update.xcore.swift in Sources */,
 				9ABFD10A2908BC02003D7575 /* Beta Seed.swift in Sources */,
 				9ABFD10C2908BC02003D7575 /* TimeButton.swift in Sources */,
