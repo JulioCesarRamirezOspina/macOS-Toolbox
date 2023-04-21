@@ -249,7 +249,7 @@ public class Shell {
             }
             
             let data = pipeToMe.fileHandleForReading.readDataToEndOfFile()
-            let output : String = NSString(data: data, encoding: String.Encoding.utf8.rawValue)! as String
+            let output : String = String(data: data, encoding: .utf8) ?? ""
             return output
         }
         

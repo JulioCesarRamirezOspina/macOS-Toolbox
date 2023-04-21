@@ -77,54 +77,39 @@ final public class Memory: @unchecked Sendable {
     }
     public func ejectAll(_ driveArray: [String]) {
         for each in driveArray {
-            let process = Process()
-            process.executableURL = URL(filePath: "/usr/bin/env")
-            process.arguments = ["bash", "-c", "umount -f \"/Volumes/\(each)\" && diskutil eject \"\(each)\""]
-            process.standardOutput = nil
-            do {
-                try process.run()
-            } catch let error {
-                NSLog(error.localizedDescription)
-                do {
-                    try process.run()
-                } catch let err {
-                    NSLog(err.localizedDescription)
-                    process.terminate()
-                }
-            }
+            Shell.Parcer.oneExecutable(exe: "unmount", args: ["-f", "/Volumes/\(each)\""]) as Void
+            Shell.Parcer.oneExecutable(exe: "diskutil", args: ["eject", "\"\(each)\""]) as Void
         }
     }
     
     /// Uses internal algorythm to clear RAM
     public func clearRAM() async -> Task<(Bool), Never> {
-        Task(operation: {
+        Task {
             SettingsMonitor.memoryClensingInProgress = true
             let diskName = StringLocalizer("clear_RAM.string")
             let fileName = "ramFiller.deleteMe"
             let fileSize = Int(macOS_Subsystem.physicalMemory(.megabyte))
+            var objCBool = ObjCBool(true)
             createDisk(diskName, Int(macOS_Subsystem.physicalMemory(.gigabyte)))
-            do {
-                try await Task.sleep(seconds: 5)
-            } catch _ {}
-            let arg = "touch \"/Volumes/\(diskName)/\(fileName)\" ; echo \(SettingsMonitor.password) | sudo -S dd if=/dev/random of=\"/Volumes/\(diskName)/\(fileName)\" bs=2M count=\(fileSize)"
-            let process = Process()
-            process.executableURL = URL(filePath: "/bin/bash")
-            process.arguments = ["-c", arg]
-            do {
-                try process.run()
-                repeat {
-                    try await Task.sleep(seconds: 1)
-                } while (process.isRunning)
-                ejectAll([diskName])
-            } catch let error {
-                NSLog(error.localizedDescription)
-            }
+            repeat {
+                try? await Task.sleep(seconds: 1)
+                #if DEBUG
+                print("waiting for volume to appear...")
+                #endif
+            } while (!FileManager.default.fileExists(atPath: "/Volumes/\(diskName)", isDirectory: &objCBool))
+            Shell.Parcer.oneExecutable(exe: "touch", args: ["\"/Volumes/\(diskName)/\(fileName)\""]) as Void
+            Shell.Parcer.oneExecutable(args: ["echo \(SettingsMonitor.password) | sudo -S /bin/dd if=/dev/random of=\"/Volumes/\(diskName)/\(fileName)\" bs=2M count=\(fileSize)"]) as Void
+            repeat {
+                try? await Task.sleep(seconds: 1)
+            } while await Memory().memoryPressure().value != .warning
+            Shell.Parcer.oneExecutable(args: ["echo \(SettingsMonitor.password) | sudo -S killall dd"]) as Void
+            ejectAll(["\(diskName)"])
             Shell.Parcer.sudo("/usr/sbin/purge", [""], password: SettingsMonitor.password) as Void
             try? await Task.sleep(seconds: 3)
             Shell.Parcer.sudo("/bin/bash", ["-c", "killall coreaudiod"], password: SettingsMonitor.password) as Void
             SettingsMonitor.memoryClensingInProgress = false
             return false
-        })
+        }
     }
     
     /// Create RAM Disk

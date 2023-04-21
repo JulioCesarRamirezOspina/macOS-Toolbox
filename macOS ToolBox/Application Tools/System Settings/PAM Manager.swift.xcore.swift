@@ -52,7 +52,7 @@ public class PAMManager {
             
             self.sudoContents = {
                 let data = FileManager.default.contents(atPath: "/etc/pam.d/sudo")
-                let sudoText = String(data: data!, encoding: .utf8)!
+                let sudoText = String(data: data!, encoding: .utf8) ?? ""
                 var state: pamTask = .disable
                 sudoText.split(separator: "\n").forEach { line in
                     if line.contains(pamLibLocationInOpt ?? "asdasdasd") {
@@ -64,7 +64,7 @@ public class PAMManager {
             
             self.screensaverContents = {
                 let data = FileManager.default.contents(atPath: "/etc/pam.d/screensaver")
-                let sudoText = String(data: data!, encoding: .utf8)!
+                let sudoText = String(data: data!, encoding: .utf8) ?? ""
                 var state: pamTask = .disable
                 sudoText.split(separator: "\n").forEach { line in
                     if line.contains(pamLibLocationInOpt ?? "asdasdasd") {

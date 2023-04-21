@@ -55,10 +55,7 @@ public class TorNetworking {
         //MARK: - INIT and DEINIT
         public init() {
             func killPreviousTOR() {
-                let process = Process()
-                process.executableURL = URL(fileURLWithPath: "/usr/bin/killall")
-                process.arguments = ["tor"]
-                try? process.run()
+                Shell.Parcer.oneExecutable(exe: "killall", args: ["tor"]) as Void
             }
             
             killPreviousTOR()
