@@ -81,7 +81,7 @@ public class Virtuals {
         }
         
         var retval: [VMPropertiesList] = []
-        if let out: String = Shell.Parcer.oneExecutable(exe: "mdfind", args: [".\(fileExtension) | grep .\(fileExtension)"]) {
+        if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "mdfind", args: [".\(fileExtension) | grep .\(fileExtension)"]) {
             for line in out.byLines {
                 let url = URL(filePath: String(line))
                 let components = url.pathComponents

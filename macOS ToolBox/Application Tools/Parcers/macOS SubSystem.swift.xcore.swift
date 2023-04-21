@@ -119,7 +119,7 @@ public struct macOS_Subsystem {
     public static func isInDarkMode() -> macOSMode {
         let savedColorScheme = Theme.colorScheme
         if savedColorScheme == nil {
-            if let out: String = Shell.Parcer.oneExecutable(exe: "defaults", args: ["read -g AppleInterfaceStyle"]) {
+            if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: ["read -g AppleInterfaceStyle"]) {
                 if out.byWords.first == "Dark" {
                     return .dark
                 } else {
@@ -135,7 +135,7 @@ public struct macOS_Subsystem {
 
     
     public static func BatteryTemperature(TermperatureUnit t: UnitTemperature = .celsius) -> (value: Double, unit: UnitTemperature, valueString: String) {
-        if let out: String = Shell.Parcer.oneExecutable(exe: "ioreg", args: ["-r -n AppleSmartBattery | grep Temperature"]) {
+        if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "ioreg", args: ["-r -n AppleSmartBattery | grep Temperature"]) {
             let s = out.byLines.last ?? "0"
             let w = s.byWords.last ?? "0"
             let cRetval = (Double(String(w)) ?? 0) / 100
@@ -198,7 +198,7 @@ public struct macOS_Subsystem {
             var data: ThermalData = ("",.undefined)
             
             if SettingsMonitor.passwordSaved {
-                if let out: String = Shell.Parcer.oneExecutable(exe: "echo", args: ["\(SettingsMonitor.password) | sudo -S powermetrics -s thermal -n 1 -i 10"]) {
+                if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "echo", args: ["\(SettingsMonitor.password) | sudo -S powermetrics -s thermal -n 1 -i 10"]) {
                     let p = out.byLines.last?.byWords.last ?? ""
                     if p.lowercased().contains("nominal"){
                         data = parce(.nominal)
@@ -306,7 +306,7 @@ public struct macOS_Subsystem {
         }
         var retval: cpuValues = (0, 0, 0, 0)
         var cpuusagestring = ""
-        if let output: String = Shell.Parcer.oneExecutable(exe: "top", args: ["-l 1"]) {
+        if let output = Shell.Parcer.OneExecutable.withOptionalString(exe: "top", args: ["-l 1"]) {
             for line in output.byLines {
                 if line.contains("CPU usage:") {
                     cpuusagestring = String(line)
@@ -412,7 +412,7 @@ public struct macOS_Subsystem {
     
     public static func getModelYear() -> (localizedString: String, serviceData: String) {
         var year = String()
-        if let line: String = Shell.Parcer.oneExecutable(exe: "/usr/libexec/PlistBuddy", args: ["-c", "'Print :0:product-name' /dev/stdin <<< \"$(ioreg -arc IOPlatformDevice -k product-name)\" 2> /dev/null | tr -cd '[:print:]'"]) {
+        if let line = Shell.Parcer.OneExecutable.withOptionalString(exe: "/usr/libexec/PlistBuddy", args: ["-c", "'Print :0:product-name' /dev/stdin <<< \"$(ioreg -arc IOPlatformDevice -k product-name)\" 2> /dev/null | tr -cd '[:print:]'"]) {
             year = line
         }
         let words = year.byWords
@@ -422,7 +422,7 @@ public struct macOS_Subsystem {
             }
         }
         if Int(year) == nil {
-            if let line: String = Shell.Parcer.oneExecutable(exe: "defaults", args: ["read /Users/\(FileManager.default.homeDirectoryForCurrentUser.lastPathComponent)/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]) {
+            if let line = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: ["read /Users/\(FileManager.default.homeDirectoryForCurrentUser.lastPathComponent)/Library/Preferences/com.apple.SystemProfiler.plist 'CPU Names' | cut -sd '\"' -f 4 | uniq"]) {
                 year = line
             }
             let words = year.byWords
@@ -590,7 +590,7 @@ public struct macOS_Subsystem {
     
     public func cpuName() -> String  {
         var retval = ""
-        if let output: String = Shell.Parcer.oneExecutable(exe: "sysctl", args: ["-a"]) {
+        if let output = Shell.Parcer.OneExecutable.withOptionalString(exe: "sysctl", args: ["-a"]) {
             for line in output.byLines {
                 if line.contains("machdep.cpu.brand_string") {
                     let index = line.firstIndex(of: ":")
@@ -604,11 +604,11 @@ public struct macOS_Subsystem {
     public static func gpuName() -> [String] {
         var out = Array<String>()
         if !isArm() {
-            if let line: String = Shell.Parcer.oneExecutable(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep Intel"]) {
+            if let line = Shell.Parcer.OneExecutable.withOptionalString(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep Intel"]) {
                 out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
                 out.append(", ")
             }
-            if let line: String = Shell.Parcer.oneExecutable(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep AMD"]) {
+            if let line = Shell.Parcer.OneExecutable.withOptionalString(exe: "system_profiler", args: ["system_profiler SPDisplaysDataType | grep AMD"]) {
                 out.append(String(String(line.components(separatedBy: "\n")[0].dropFirst(4)).dropLast(1)))
             }
             for each in out {
@@ -826,7 +826,7 @@ public struct macOS_Subsystem {
     public static func getBatteryState() -> (PowerSource: PowerSource, ChargingState: ChargingState, Percentage: Double, TimeRemaining: String) {
         var battState: ChargingState
         var powerSource: PowerSource
-        if let output: String = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g", "batt"]) {
+        if let output = Shell.Parcer.OneExecutable.withOptionalString(exe: "pmset", args: ["-g", "batt"]) {
             let batteryArray = output.components(separatedBy: ";")
             let source = output.components(separatedBy: "'")[1]
             let state = batteryArray[1].trimmingCharacters(in: NSCharacterSet.whitespaces).capitalized

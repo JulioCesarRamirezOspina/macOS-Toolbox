@@ -40,7 +40,7 @@ public class PAMManager {
        public init() {
            self.pamLibLocationInOpt = {
                var retval: String? = nil
-               if let out: String = Shell.Parcer.oneExecutable(exe: "find", args: ["/opt", "-name", "pam_u2f.so"]) {
+               if let out: String = Shell.Parcer.OneExecutable.withOptionalString(exe: "find", args: ["/opt", "-name", "pam_u2f.so"]) {
                    out.split(separator: "\n").forEach { line in
                        if !line.contains("find: /opt: No such file or directory") {
                            retval = String(out.replacingOccurrences(of: "\n", with: ""))
@@ -134,7 +134,7 @@ public class PAMManager {
                         textToWrite += line + "\n"
                     }
                     FileManager().createFile(atPath: "/tmp/\(file == .sudo ? "sudo" : "screensaver")", contents: textToWrite.data(using: .utf8))
-                    _ = Shell.Parcer.sudo("/bin/cp", ["/tmp/\(file == .sudo ? "sudo" : "screensaver")", "/etc/pam.d/\(file == .sudo ? "sudo" : "screensaver")"], password: password) as String
+                    _ = Shell.Parcer.SUDO.withString("/bin/cp", ["/tmp/\(file == .sudo ? "sudo" : "screensaver")", "/etc/pam.d/\(file == .sudo ? "sudo" : "screensaver")"], password: password) as String
                     do {
                         try FileManager().removeItem(atPath: "/tmp/\(file == .sudo ? "sudo" : "screensaver")")
                     } catch let error {
@@ -150,7 +150,7 @@ public class PAMManager {
                         }
                     }
                     FileManager().createFile(atPath: "/tmp/\(file == .sudo ? "sudo" : "screensaver")", contents: temp.data(using: .utf8))
-                    _ = Shell.Parcer.sudo("/bin/cp", ["/tmp/\(file == .sudo ? "sudo" : "screensaver")", "/etc/pam.d/\(file == .sudo ? "sudo" : "screensaver")"], password: password) as String
+                    _ = Shell.Parcer.SUDO.withString("/bin/cp", ["/tmp/\(file == .sudo ? "sudo" : "screensaver")", "/etc/pam.d/\(file == .sudo ? "sudo" : "screensaver")"], password: password) as String
                     do {
                         try FileManager().removeItem(atPath: "/tmp/\(file == .sudo ? "sudo" : "screensaver")")
                     } catch let error {
@@ -194,7 +194,7 @@ public class PAMManager {
         private func writeToFile(_ input: String, _ password: String) {
             let fm = FileManager()
             fm.createFile(atPath: "/tmp/sudo", contents: input.data(using: .utf8), attributes: [:])
-            _ = Shell.Parcer.sudo("/bin/cp", ["/tmp/sudo", "/etc/pam.d/sudo"], password: password) as String
+            _ = Shell.Parcer.SUDO.withString("/bin/cp", ["/tmp/sudo", "/etc/pam.d/sudo"], password: password) as String
             do {
                 try fm.removeItem(atPath: "/tmp/sudo")
             } catch let error {

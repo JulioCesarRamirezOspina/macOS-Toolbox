@@ -98,8 +98,8 @@ struct RAMDiskView: View {
     
     private func ejectAll(_ driveArray: [String]) {
         for each in driveArray {
-            Shell.Parcer.oneExecutable(exe: "umount", args: ["-f", "\"/Volumes/\(each)\""]) as Void
-            Shell.Parcer.oneExecutable(exe: "diskutil", args: ["eject", "\"\(each)\""]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "umount", args: ["-f", "\"/Volumes/\(each)\""])
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "diskutil", args: ["eject", "\"\(each)\""])
         }
         count = 0
     }
@@ -293,7 +293,7 @@ struct RAMDiskView: View {
             Spacer()
             HStack {
                 Button {
-                    _ = Shell.Parcer.sudo("/usr/sbin/purge", [], password: password) as String
+                    Shell.Parcer.SUDO.withoutOutput("/usr/sbin/purge", [], password: password)
                     sheetIsPresented = false
                 } label: {
                     Text("clearRAMPages.string")
@@ -312,7 +312,7 @@ struct RAMDiskView: View {
                     Task {
                         clensingInProgress = await Memory().clearRAM().value
                     }
-                    _ = Shell.Parcer.sudo("/usr/sbin/purge", [], password: password) as String
+                    Shell.Parcer.SUDO.withoutOutput("/usr/sbin/purge", [], password: password)
                     sheetIsPresented = false
                 } label: {
                     Text("clearRAM.string")

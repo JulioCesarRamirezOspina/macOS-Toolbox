@@ -77,8 +77,8 @@ final public class Memory: @unchecked Sendable {
     }
     public func ejectAll(_ driveArray: [String]) {
         for each in driveArray {
-            Shell.Parcer.oneExecutable(exe: "unmount", args: ["-f", "/Volumes/\(each)\""]) as Void
-            Shell.Parcer.oneExecutable(exe: "diskutil", args: ["eject", "\"\(each)\""]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "unmount", args: ["-f", "/Volumes/\(each)\""])
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "diskutil", args: ["eject", "\"\(each)\""])
         }
     }
     
@@ -97,17 +97,21 @@ final public class Memory: @unchecked Sendable {
                 print("waiting for volume to appear...")
                 #endif
             } while (!FileManager.default.fileExists(atPath: "/Volumes/\(diskName)", isDirectory: &objCBool))
-            Shell.Parcer.oneExecutable(exe: "touch", args: ["\"/Volumes/\(diskName)/\(fileName)\""]) as Void
-            Shell.Parcer.oneExecutable(args: ["echo \(SettingsMonitor.password) | sudo -S /bin/dd if=/dev/random of=\"/Volumes/\(diskName)/\(fileName)\" bs=2M count=\(fileSize)"]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "touch", args: ["\"/Volumes/\(diskName)/\(fileName)\""])
+            Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(SettingsMonitor.password) | sudo -S /bin/dd if=/dev/random of=\"/Volumes/\(diskName)/\(fileName)\" bs=2M count=\(fileSize)"])
             repeat {
                 try? await Task.sleep(seconds: 1)
             } while await Memory().memoryPressure().value != .warning
-            Shell.Parcer.oneExecutable(args: ["echo \(SettingsMonitor.password) | sudo -S killall dd"]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(SettingsMonitor.password) | sudo -S killall dd"])
             ejectAll(["\(diskName)"])
-            Shell.Parcer.sudo("/usr/sbin/purge", [""], password: SettingsMonitor.password) as Void
+            Shell.Parcer.SUDO.withoutOutput("/usr/sbin/purge", [""], password: SettingsMonitor.password)
             try? await Task.sleep(seconds: 3)
-            Shell.Parcer.sudo("/bin/bash", ["-c", "killall coreaudiod"], password: SettingsMonitor.password) as Void
+            Shell.Parcer.SUDO.withoutOutput("/bin/bash", ["-c", "killall coreaudiod"], password: SettingsMonitor.password)
             SettingsMonitor.memoryClensingInProgress = false
+            if !Task.isCancelled {
+                Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(SettingsMonitor.password) | sudo -S killall dd"])
+                ejectAll(["\(diskName)"])
+            }
             return false
         }
     }
@@ -118,7 +122,7 @@ final public class Memory: @unchecked Sendable {
     ///   - volume: Disk volume (in gigs)
     ///   - open: Open disk in Finder
     public func createDisk(_ diskLabel: String, _ volume: Int, _ open: Bool = false) {
-        Shell.Parcer.oneExecutable(args: ["$(diskutil eraseVolume JHFS+ \"\(diskLabel)\" $(hdiutil attach -nomount ram://\(volume * 1000 * 2000)))"]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(args: ["$(diskutil eraseVolume JHFS+ \"\(diskLabel)\" $(hdiutil attach -nomount ram://\(volume * 1000 * 2000)))"])
         if open {
             NSWorkspace.shared.open(URL(filePath: "/Volumes/\(diskLabel.replacingOccurrences(of: " ", with: "\\ "))"))
         }
@@ -128,7 +132,7 @@ final public class Memory: @unchecked Sendable {
         Task {
             var output: MemoryPressure = .undefined
             var num = 3
-            if let processResult: String = Shell.Parcer.oneExecutable(exe: "sysctl", args: ["-a", "kern.memorystatus_vm_pressure_level"]) {
+            if let processResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "sysctl", args: ["-a", "kern.memorystatus_vm_pressure_level"]) {
                 let resultArray = processResult.byWords.last ?? ""
                 num = Int(resultArray) ?? 3
                 switch num {
@@ -144,12 +148,12 @@ final public class Memory: @unchecked Sendable {
     
     private func TimeMachineClear() async {
         Task{
-            Shell.Parcer.oneExecutable(exe: "tmutil", args: ["deletelocalsnapshots", "/"]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "tmutil", args: ["deletelocalsnapshots", "/"])
         }
     }
     
     public func TimeMachineCount() -> Int {
-        if let out: String = Shell.Parcer.oneExecutable(exe: "tmutil", args: ["listlocalsnapshots", "/"]) {
+        if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "tmutil", args: ["listlocalsnapshots", "/"]) {
             let arr = out.byLines.count - 1
             return arr
         } else {

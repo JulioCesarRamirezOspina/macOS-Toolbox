@@ -14,7 +14,7 @@ public class SleepManager {
     /// Checks if Sleep is disabled
     /// - Returns: true if enabled, false otherwise
     public func getIsSleepEnabled() -> Bool {
-        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
+        let shellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "pmset", args: ["-g"]) ?? ""
         var hibernationValue = ""
         var resultingValue = 0
         let findingResult = shellResult.byLines
@@ -37,7 +37,7 @@ public class SleepManager {
     /// - Returns: true if sleep is disabled on system wide level, false otherwise
     public func SystemWideSleepStatus() -> Bool {
         var retval: Bool = false
-        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
+        let shellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "pmset", args: ["-g"]) ?? ""
         let findingResult = shellResult.byLines
         for line in findingResult {
             if line.contains("SleepDisabled") {
@@ -55,7 +55,7 @@ public class SleepManager {
     /// Gets hibernation mode
     /// - Returns: 0 — disabled, 3 — sleep, 25 — hibernation
     public func getIsSleepEnabled() -> Int {
-        let shellResult = Shell.Parcer.oneExecutable(exe: "pmset", args: ["-g"]) ?? ""
+        let shellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "pmset", args: ["-g"]) ?? ""
         var hibernationValue = ""
         var resultingValue = 0
         let findingResult = shellResult.byLines
@@ -79,7 +79,7 @@ public class SleepManager {
     public func setHibernationMode(parameter: Int, password: String) {
         let exe = "/usr/bin/pmset"
         let args = ["hibernatemode", parameter.description]
-        _ = Shell.Parcer.sudo(exe, args, password: password) as String
+        _ = Shell.Parcer.SUDO.withString(exe, args, password: password) as String
     }
     
     /// Localized sleep setting descripton
@@ -126,7 +126,7 @@ public class SleepManager {
     /// If exists process caffeinate returns it's PID, nil otherwise
     private var caffeinatePID: Int? {
         var retval: Int? = nil
-        let shellOut = Shell.Parcer.oneExecutable(args: ["top -l 1 | grep caffeinate"]) ?? ""
+        let shellOut = Shell.Parcer.OneExecutable.withOptionalString(args: ["top -l 1 | grep caffeinate"]) ?? ""
         let lines = shellOut.byLines
         for line in lines {
             switch line.contains("caffeinate") {
@@ -150,13 +150,13 @@ public class SleepManager {
         case .deny:
             args = " -disum"
         }
-        Shell.Parcer.oneExecutable(exe: "caffeinate", args: [args]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "caffeinate", args: [args])
     }
     
     /// Allow sleep
     public func allowSleep() {
         if sleepIsPermitted() {
-            Shell.Parcer.oneExecutable(exe: "kill", args: ["-9", "\(caffeinatePID!)"]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(exe: "kill", args: ["-9", "\(caffeinatePID!)"])
         }
     }
 }

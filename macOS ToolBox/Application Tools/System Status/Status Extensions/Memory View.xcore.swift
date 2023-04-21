@@ -41,7 +41,7 @@ public class MemoryDisplay {
                 Spacer()
                 HStack {
                     Button {
-                        _ = Shell.Parcer.sudo("/usr/sbin/purge", [], password: SettingsMonitor.password) as String
+                        Shell.Parcer.SUDO.withoutOutput("/usr/sbin/purge", [], password: SettingsMonitor.password)
                         sheetIsPresented = false
                     } label: {
                         Text("clearRAMPages.string")
@@ -59,7 +59,7 @@ public class MemoryDisplay {
                         clensingInProgress = true
                         Task {
                             clensingInProgress = await Memory().clearRAM().value
-                            _ = Shell.Parcer.sudo("/usr/sbin/purge", [], password: SettingsMonitor.password) as String
+                            Shell.Parcer.SUDO.withoutOutput("/usr/sbin/purge", [], password: SettingsMonitor.password)
                             SettingsMonitor.memoryClensingInProgress = false
                             clensingInProgress = false
                         }
@@ -155,9 +155,20 @@ public class MemoryDisplay {
                     if SettingsMonitor.passwordSaved && !clensingInProgress{
                         sheetIsPresented = true
                     } else if SettingsMonitor.passwordSaved && clensingInProgress {
-                        Memory().ejectAll([StringLocalizer("clear_RAM.string")])
-                        SettingsMonitor.memoryClensingInProgress = false
-                        clensingInProgress = false
+                        Task{
+                            let diskName = StringLocalizer("clear_RAM.string")
+                            var objCBool: ObjCBool = ObjCBool(true)
+                            repeat {
+                                try? await Task.sleep(seconds: 1)
+#if DEBUG
+                                print("waiting for volume to appear...")
+#endif
+                            } while (!FileManager.default.fileExists(atPath: "/Volumes/\(diskName)", isDirectory: &objCBool))
+                            Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(SettingsMonitor.password) | sudo -S killall dd"])
+                            Memory().ejectAll([diskName])
+                            SettingsMonitor.memoryClensingInProgress = false
+                            clensingInProgress = false
+                        }
                     }
                 }, enabledGlyph: "circle.circle.fill", disabledGlyph: "circle.circle.fill", enabledColor: .yellow, disabledColor: .yellow, hoveredColor: .yellow, selfHovered: $hovered, backwardHovered: $hovered, enabled: $clensingInProgress, showPopover: false)
                 .background {

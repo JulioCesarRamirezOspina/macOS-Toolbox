@@ -17,7 +17,7 @@ public class SettingsMonitor {
     
     public static func Maintenance() {
         if passwordSaved {
-            _ = Shell.Parcer.sudo("/bin/bash", ["-c", "sudo periodic daily weekly monthly"], password: password) as String
+            Shell.Parcer.SUDO.withoutOutput("/bin/bash", ["-c", "sudo periodic daily weekly monthly"], password: password)
         }
     }
     
@@ -75,7 +75,7 @@ public class SettingsMonitor {
         }
         set {
             AppSettings.set(key: "isInMenuBar", value: newValue)
-            Shell.Parcer.oneExecutable(args: ["sleep \(0.5); open \"\(Bundle.main.bundlePath)\""]) as Void
+            Shell.Parcer.OneExecutable.withNoOutput(args: ["sleep \(0.5); open \"\(Bundle.main.bundlePath)\""])
             NSApp.terminate(self)
             exit(EXIT_SUCCESS)
         }

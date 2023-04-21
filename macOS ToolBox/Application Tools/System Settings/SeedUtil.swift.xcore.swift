@@ -16,7 +16,7 @@ public class SeedUtil {
     /// - Parameter password: sudo password
     /// - Returns: String description of seed
     public class func getSeed(_ password: String) -> String {
-        let input = Shell.Parcer.sudo(executablePath, ["current"], password: password).firstLine?.byWords.last
+        let input = Shell.Parcer.SUDO.withString(executablePath, ["current"], password: password).firstLine?.byWords.last
         switch input {
         case "DeveloperSeed" : return NSLocalizedString("seed.dev", comment: "")
         case "PublicSeed" : return NSLocalizedString("seed.public", comment: "")
@@ -28,7 +28,7 @@ public class SeedUtil {
     /// - Parameter password: sudo password
     /// - Returns: Integer value
     public class func getSeedInt(_ password: String) -> Int {
-        let input = Shell.Parcer.sudo(executablePath, ["current"], password: password).firstLine?.byWords.last
+        let input = Shell.Parcer.SUDO.withString(executablePath, ["current"], password: password).firstLine?.byWords.last
         switch input {
         case "DeveloperSeed" : return 2
         case "PublicSeed" : return 1
@@ -70,7 +70,7 @@ public class SeedUtil {
     /// Unenrolls from any beta
     /// - Parameter password: sudo password
     public class func unenroll(_ password: String) {
-        _ = Shell.Parcer.sudo(executablePath, ["unenroll"], password: password) as Void
+        Shell.Parcer.SUDO.withoutOutput(executablePath, ["unenroll"], password: password)
         Task{
             await SendNotification("un.not")
         }
@@ -83,15 +83,15 @@ public class SeedUtil {
     ///   - openUpdates: If needed to open update setting for update check
     public class func setSeed(_ caseNum: Int, password: String, _ openUpdates: Bool) {
         switch caseNum {
-        case 1: _ = Shell.Parcer.sudo(executablePath, ["enroll", "PublicSeed"], password: password) as Void
+        case 1: Shell.Parcer.SUDO.withoutOutput(executablePath, ["enroll", "PublicSeed"], password: password)
             Task {
                 await SendNotification("pb.not")
             }
-        case 2: _ = Shell.Parcer.sudo(executablePath, ["enroll", "DeveloperSeed"], password: password) as Void
+        case 2: Shell.Parcer.SUDO.withoutOutput(executablePath, ["enroll", "DeveloperSeed"], password: password)
             Task {
                 await SendNotification("db.not")
             }
-        default: _ = Shell.Parcer.sudo(executablePath, ["unenroll"], password: password) as Void
+        default: Shell.Parcer.SUDO.withoutOutput(executablePath, ["unenroll"], password: password) as Void
             Task {
                 await SendNotification("un.not")
             }
@@ -115,7 +115,7 @@ public class SeedUtil {
         var output = String()
         var error = String()
         
-        let processOutput: (success: String?, error: String?) = Shell.Parcer.oneExecutable(exe: "softwareupdate", args: ["-l", "-a"])
+        let processOutput = Shell.Parcer.OneExecutable.withFullOutput(exe: "softwareupdate", args: ["-l", "-a"])
         
         if let line = processOutput.success {
             output = line

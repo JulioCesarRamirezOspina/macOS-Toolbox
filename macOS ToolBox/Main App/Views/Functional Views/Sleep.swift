@@ -31,7 +31,7 @@ struct SleepManagerView: View {
     }
     
     private func sleepNow() {
-        Shell.Parcer.oneExecutable(exe: "pmset", args: ["sleepnow"]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "pmset", args: ["sleepnow"])
     }
     
     private var MainButtons: some View {

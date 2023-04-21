@@ -34,7 +34,7 @@ public class SystemStatus {
                 post = "sleep"
                 ScriptProcessing.launcher(script: pre + post)
             case .displayOff:
-                Shell.Parcer.oneExecutable(exe: "/bin/bash", args: ["-c", "pmset displaysleepnow"]) as Void
+                Shell.Parcer.OneExecutable.withNoOutput(exe: "/bin/bash", args: ["-c", "pmset displaysleepnow"])
             }
         }
         

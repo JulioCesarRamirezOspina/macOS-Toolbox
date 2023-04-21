@@ -24,7 +24,7 @@ public class DockManager {
         case .hiddenAppsGrayedOutEnabled: arguments = ["read", "com.apple.dock", "showhidden", "-bool"]
         case .hiddenAppsGrayedOutDisabled: arguments = ["read", "com.apple.dock", "showhidden", "-bool"]
         }
-        let ShellResult: String = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let ShellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: arguments) ?? ""
         let result = Int(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: "")))
         switch result {
         case 1: return true
@@ -38,7 +38,7 @@ public class DockManager {
         case .animationSpeed: arguments = ["read", "com.apple.dock", "autohide-time-modifier", "-float"]
         case .popDelay: arguments = ["read", "com.apple.dock", "autohide-delay", "-float"]
         }
-        let ShellResult = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let ShellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: arguments) ?? ""
         let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) ?? 0
         return Int(result * 100)
     }
@@ -48,7 +48,7 @@ public class DockManager {
         case .typeOfAnimation:  arguments = ["read", "com.apple.dock", "mineffect", "-string"]
         case .orientation:      arguments = ["read", "com.apple.dock", "orientation", "-string"]
         }
-        let ShellResult = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let ShellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: arguments) ?? ""
         let result = String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))
         return result
     }
@@ -66,7 +66,7 @@ public class DockManager {
         case .hiddenAppsGrayedOutEnabled: arguments = ["write", "com.apple.dock", "showhidden", "-bool", "true"]
         case .hiddenAppsGrayedOutDisabled: arguments = ["write", "com.apple.dock", "showhidden", "-bool", "false"]
         }
-        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: arguments)
     }
     
     private func setKeyValue(key: DockFloatKeys, value: Int) {
@@ -75,7 +75,7 @@ public class DockManager {
         case .animationSpeed:   arguments = ["write", "com.apple.dock", "autohide-time-modifier", "-float", "\(Float(value) / 100)"]
         case .popDelay:         arguments = ["write", "com.apple.dock", "autohide-delay", "-float", "\(Float(value) / 100)"]
         }
-        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: arguments)
     }
     
     private func setKeyValue(key: orientation) {
@@ -85,7 +85,7 @@ public class DockManager {
         case .left:     arguments = ["write", "com.apple.dock", "orientation", "left"]
         case .bottom:   arguments = ["write", "com.apple.dock", "orientation", "bottom"]
         }
-        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: arguments)
     }
     
     private func setKeyValue(key: AnimationTypes) {
@@ -95,15 +95,16 @@ public class DockManager {
         case .genie:    arguments = ["write", "com.apple.dock", "mineffect", "-string", "genie"]
         case .scale:    arguments = ["write", "com.apple.dock", "mineffect", "-string", "scale"]
         }
-        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: arguments)
     }
     
     private func writeDiskArbitration(_ enable: Bool) {
         if SettingsMonitor.passwordSaved {
             switch enable {
-            case true: _ = Shell.Parcer.sudo("/bin/bash", ["-c", "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool true && sudo pkill diskarbitrationd"], password: SettingsMonitor.password) as String
+            case true:
+                Shell.Parcer.SUDO.withoutOutput("/bin/bash", ["-c", "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool true && sudo pkill diskarbitrationd"], password: SettingsMonitor.password)
             case false:
-                _ = Shell.Parcer.sudo("/bin/bash", ["-c", "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool false && sudo pkill diskarbitrationd"], password: SettingsMonitor.password) as String
+                Shell.Parcer.SUDO.withoutOutput("/bin/bash", ["-c", "sudo defaults write /Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist DADisableEjectNotification -bool false && sudo pkill diskarbitrationd"], password: SettingsMonitor.password)
             }
         }
     }
@@ -111,7 +112,7 @@ public class DockManager {
     private func readDiskArbitration() -> Bool {
         var retval = false
         let arguments = ["read", "/Library/Preferences/SystemConfiguration/com.apple.DiskArbitration.diskarbitrationd.plist"]
-            let shellResutl = Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) ?? ""
+        let shellResutl = Shell.Parcer.OneExecutable.withOptionalString(exe: "defaults", args: arguments) ?? ""
             for line in shellResutl.components(separatedBy: "\n") {
                 if line.contains("DADisableEjectNotification"){
                     if line.contains("1") {
@@ -132,16 +133,16 @@ public class DockManager {
         case .wide:     arguments = ["write", "com.apple.dock", "persistent-apps", "-array-add", "'{tile-data={}; tile-type=\"spacer-tile\";}'"]
         case .narrow:   arguments = ["write", "com.apple.dock", "persistent-apps", "-array-add", "'{\"tile-type\"=\"small-spacer-tile\";}'"]
         }
-        Shell.Parcer.oneExecutable(exe: "defaults", args: arguments) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: arguments)
     }
     
     public func restartDock() {
-        Shell.Parcer.oneExecutable(exe: "killall", args: ["Dock"]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "killall", args: ["Dock"])
     }
 
     public func dockDefaults() {
-        Shell.Parcer.oneExecutable(exe: "defaults", args: ["delete", "com.apple.dock"]) as Void
-        Shell.Parcer.oneExecutable(exe: "killall", args: ["Dock"]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "defaults", args: ["delete", "com.apple.dock"])
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "killall", args: ["Dock"])
     }
     
     public var AnimationType: AnimationTypes {

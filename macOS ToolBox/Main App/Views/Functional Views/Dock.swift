@@ -249,7 +249,7 @@ struct DockManagerView: View {
                             }.padding(.all).keyboardShortcut(.defaultAction)
                             Spacer()
                             Button {
-                                Shell.Parcer.sudo("/sbin/reboot", [""], password: SettingsMonitor.password)
+                                Shell.Parcer.SUDO.withoutOutput("/sbin/reboot", [""], password: SettingsMonitor.password)
                             } label: {
                                 Text("rebootNow.string")
                             }.disabled(!SettingsMonitor.passwordSaved)

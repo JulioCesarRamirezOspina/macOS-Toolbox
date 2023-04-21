@@ -126,7 +126,7 @@ public class BootCampStart {
             }
             let label = StringLocalizer("setDevice.button") + "\n" + diskLabel
             retval = AnyView(Button(action: {
-                Shell.Parcer.oneExecutable(exe: nil, args: ["echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"]) as Void
+                Shell.Parcer.OneExecutable.withNoOutput(exe: nil, args: ["echo \(SettingsMonitor.password) | sudo -S \(exe) \(args)"])
                 if isReboot {
                     DispatchQueue.main.async {
                         exit(0)
@@ -148,7 +148,7 @@ public class BootCampStart {
     ///   - password: sudo password
     /// - Returns: "true" on mount success
     public class func tryToMount(diskLabel: String, password: String) -> Bool {
-        let val: String = (Shell.Parcer.sudo("/usr/sbin/diskutil", ["mount", diskLabel], password: password))
+        let val = (Shell.Parcer.SUDO.withString("/usr/sbin/diskutil", ["mount", diskLabel], password: password))
         var retval = Bool()
         if val != "Failed to find disk \(diskLabel)\n" {
             retval = false

@@ -50,7 +50,7 @@ public class BatteryDisplay {
         private func toggleLowPowerMode() -> Task<(Bool), Never> {
             Task {
                 let lowPowerEnabled = ProcessInfo.processInfo.isLowPowerModeEnabled
-                Shell.Parcer.sudo("/bin/bash", ["-c", "pmset -a lowpowermode \(lowPowerEnabled ? Int(0) : Int(1))"], password: SettingsMonitor.password) as Void
+                Shell.Parcer.SUDO.withoutOutput("/bin/bash", ["-c", "pmset -a lowpowermode \(lowPowerEnabled ? Int(0) : Int(1))"], password: SettingsMonitor.password)
                 try? await Task.sleep(seconds: 2)
                 ChargingState = .unknown
                 return ProcessInfo.processInfo.isLowPowerModeEnabled

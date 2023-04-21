@@ -13,7 +13,7 @@ import LocalAuthentication
 public var devIDInstallerSignature: String? {
     get {
         var rv: String? = nil
-        if let out: String = Shell.Parcer.oneExecutable(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
+        if let out = Shell.Parcer.OneExecutable.withOptionalString(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
             let parcing = out.byLines
             for line in parcing {
                 switch line.contains("Installer") {
@@ -134,7 +134,7 @@ public func delay(after time: Double, execute codeBlock: @escaping () -> ()) {
 
 public func tryToGetDeveloperIDInstallerSignature() -> (DevID: String, DevIDExists: Bool) {
     var retval = (DevID: "nil", DevIDExists: false)
-    if let shellResult: String = Shell.Parcer.oneExecutable(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
+    if let shellResult = Shell.Parcer.OneExecutable.withOptionalString(exe: "security", args: ["find-identity", "-p", "basic", "-v"]) {
         let parcing = shellResult.byLines
         for line in parcing {
             switch line.contains("Installer") {
@@ -189,7 +189,7 @@ func showInFinder(url: URL?) {
 
 public func checkIfSecurityKeyPersists() -> Bool {
     let arg = "ioreg -p IOUSB -w0 | sed 's/[^o]*o //; s/@.*$//' | grep -v '^Root.*'"
-    if let out: String = Shell.Parcer.oneExecutable(args: [arg]) {
+    if let out = Shell.Parcer.OneExecutable.withOptionalString(args: [arg]) {
         if out.contains("OTP") || out.contains("FIDO") || out.contains("CCID") {
             return true
         } else {

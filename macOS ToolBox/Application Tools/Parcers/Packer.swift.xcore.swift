@@ -23,7 +23,7 @@ public class Packer {
     /// Open file location in Finder
     /// - Parameter filePath: Path to file
     public class func openFileLocation(_ filePath: String) {
-        Shell.Parcer.oneExecutable(exe: "open", args: [filePath]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(exe: "open", args: [filePath])
     }
     
     /// RUN FUNC
@@ -37,7 +37,7 @@ public class Packer {
         let processingString = saveLoc + "/" + pkgName
         let outputFile = cutNAdd(processingString)
         
-        Shell.Parcer.oneExecutable(args: ["echo \(SettingsMonitor.password) | sudo -S /usr/bin/pkgbuild --install-location \"\(iPath)\" -- component \(app), \(outputFile)"]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(SettingsMonitor.password) | sudo -S /usr/bin/pkgbuild --install-location \"\(iPath)\" -- component \(app), \(outputFile)"])
     }
     
     /// Signs PKG
@@ -50,6 +50,6 @@ public class Packer {
         let tempDir = "/Users/Shared"
         let ps1 = cutNAdd(tempDir + "/" + pkgName)
         let ps2 = cutNAdd(saveLoc + "/" + pkgName)
-        Shell.Parcer.oneExecutable(args: ["echo \(password) | sudo -S mv \"\(ps2)\" \"\(ps1)\" && productsign --sign \"Developer ID Installer: \(devID)\" \"\(ps1)\" \"\(ps2)\" && echo \(password) | sudo -S rm \"\(ps1)\""]) as Void
+        Shell.Parcer.OneExecutable.withNoOutput(args: ["echo \(password) | sudo -S mv \"\(ps2)\" \"\(ps1)\" && productsign --sign \"Developer ID Installer: \(devID)\" \"\(ps1)\" \"\(ps2)\" && echo \(password) | sudo -S rm \"\(ps1)\""])
     }
 }

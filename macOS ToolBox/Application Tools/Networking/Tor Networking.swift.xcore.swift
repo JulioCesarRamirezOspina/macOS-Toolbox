@@ -55,7 +55,7 @@ public class TorNetworking {
         //MARK: - INIT and DEINIT
         public init() {
             func killPreviousTOR() {
-                Shell.Parcer.oneExecutable(exe: "killall", args: ["tor"]) as Void
+                Shell.Parcer.OneExecutable.withNoOutput(exe: "killall", args: ["tor"])
             }
             
             killPreviousTOR()
