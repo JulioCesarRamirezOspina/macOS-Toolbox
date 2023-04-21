@@ -27,7 +27,7 @@ public class LaunchpadManager {
         case .y: args = ["read", "com.apple.dock", "springboard-rows", "-int"]
         case .x: args = ["read", "com.apple.dock", "springboard-columns", "-int"]
         }
-        let ShellResult: String = Shell.Parcer.oneExecutable(exe: "defaults", args: args)!
+        let ShellResult: String = Shell.Parcer.oneExecutable(exe: "defaults", args: args) ?? ""
         guard let result = Float(String(ShellResult.replacingOccurrences(of: "\n", with: "").replacingOccurrences(of: " ", with: ""))) else {
             switch coord {
             case .x: return 7
