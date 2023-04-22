@@ -247,7 +247,7 @@ struct TouchIDView: View {
     
     private func del() async {
         Task {
-            try? await Task.sleep(nanoseconds: 3000000000)
+            try? await Task.sleep(seconds: 0.5)
             loading = false
         }
     }

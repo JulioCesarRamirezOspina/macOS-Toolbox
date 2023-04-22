@@ -20,6 +20,7 @@ struct SleepManagerView: View {
     @State private var showPopoverUp = false
     @State private var showPopoverDown = false
     @State private var dummy = false
+    @State private var isRun = false
     
     private var setButton: some View {
         Button {
@@ -109,95 +110,112 @@ struct SleepManagerView: View {
         }.padding(.all)
     }
     
-    var body: some View {
-        if SettingsMonitor.passwordSaved {
-            GroupBox {
-                Group {
-                    MainButtons.padding(.all)
-                        .onHover { t in
-                            sysSleepState = SleepManager().SystemWideSleepStatus()
-                            if t {
-                                if sysSleepState {
-                                    showPopoverUp = true
-                                } else {
-                                    showPopoverUp = false
-                                }
-                            }
-                        }
-                }
-                Spacer().padding(.all)
-                Group {
-                    FuncButtons.padding(.all)
-                        .onHover { t in
-                            sysSleepState = SleepManager().SystemWideSleepStatus()
-                            if t {
-                                if sysSleepState {
-                                    showPopoverDown = true
-                                } else {
-                                    showPopoverDown = false
-                                }
-                            }
-                        }
-                }
-            } label: {
-                CustomViews.AnimatedTextView(Input: "sleepManager.string",TimeToStopAnimation: timeToStop)
+    private func reload() async {
+        Task {
+            sleepInt = SleepManager().getIsSleepEnabled()
+            timeToStop = SettingsMonitor.secAnimDur
+            password = SettingsMonitor.password
+            if sleepInt == 0 {
+                selection = 0
             }
-            .groupBoxStyle(Stylers.CustomGBStyle())
-            .background(content: {
-                SleepImage.popover(isPresented: $showPopoverUp,arrowEdge: .bottom) {
-                    VStack{
-                        Text("cantSLeep.string").padding(.all).fontWeight(.bold)
-                        CustomViews.AppLogo().padding(.all)
-                        
-                    }
-                }
-                SleepImage.popover(isPresented: $showPopoverDown,arrowEdge: .top) {
-                    VStack{
-                        Text("cantSLeep.string").padding(.all).fontWeight(.bold)
-                        CustomViews.AppLogo().padding(.all)
-                        
-                    }
-                }
-            })
-            .onAppear {
-                sleepInt = SleepManager().getIsSleepEnabled()
-                timeToStop = SettingsMonitor.secAnimDur
-                password = SettingsMonitor.password
-                if sleepInt == 0 {
-                    selection = 0
-                }
-                selection = SleepManager().getIsSleepEnabled()
-                sysSleepState = SleepManager().SystemWideSleepStatus()
-                if sysSleepState {
-                    showPopoverUp = true
-                }
+            selection = SleepManager().getIsSleepEnabled()
+            sysSleepState = SleepManager().SystemWideSleepStatus()
+            if sysSleepState {
+                showPopoverUp = true
             }
-            .onChange(of: showPopoverUp, perform: { newValue in
-                sysSleepState = SleepManager().SystemWideSleepStatus()
-                if sysSleepState {
-                    showPopoverDown = !newValue
-                }
-            })
-            .onChange(of: showPopoverDown, perform: { newValue in
-                sysSleepState = SleepManager().SystemWideSleepStatus()
-                if sysSleepState {
-                    showPopoverUp = !newValue
-                }
-            })
-            .onChange(of: selection, perform: { newValue in
-                SleepManager().setHibernationMode(parameter: newValue, password: password)
-                selection = newValue
-                if selection == 0 {
-                    SleepManager().allowSleep()
-                    caffButtonDisabled = false
-                }
-                sleepInt = newValue
-                preventSleep = SleepManager().sleepIsPermitted()
-            })
-            .animation(SettingsMonitor.secondaryAnimation, value: sleepInt)
-            .animation(SettingsMonitor.secondaryAnimation, value: selection)
-        } else {
-            CustomViews.NoPasswordView(false, toggle: $dummy)
+            try? await Task.sleep(seconds: 0.1)
+            isRun = true
         }
+    }
+    
+    var body: some View {
+        VStack {
+            if SettingsMonitor.passwordSaved {
+                if !isRun {
+                    loadingScreen
+                } else {
+                    GroupBox {
+                        Group {
+                            MainButtons.padding(.all)
+                                .onHover { t in
+                                    sysSleepState = SleepManager().SystemWideSleepStatus()
+                                    if t {
+                                        if sysSleepState {
+                                            showPopoverUp = true
+                                        } else {
+                                            showPopoverUp = false
+                                        }
+                                    }
+                                }
+                        }
+                        Spacer().padding(.all)
+                        Group {
+                            FuncButtons.padding(.all)
+                                .onHover { t in
+                                    sysSleepState = SleepManager().SystemWideSleepStatus()
+                                    if t {
+                                        if sysSleepState {
+                                            showPopoverDown = true
+                                        } else {
+                                            showPopoverDown = false
+                                        }
+                                    }
+                                }
+                        }
+                    } label: {
+                        CustomViews.AnimatedTextView(Input: "sleepManager.string",TimeToStopAnimation: timeToStop)
+                    }
+                    .groupBoxStyle(Stylers.CustomGBStyle())
+                    .background(content: {
+                        SleepImage.popover(isPresented: $showPopoverUp,arrowEdge: .bottom) {
+                            VStack{
+                                Text("cantSLeep.string").padding(.all).fontWeight(.bold)
+                                CustomViews.AppLogo().padding(.all)
+                                
+                            }
+                        }
+                        SleepImage.popover(isPresented: $showPopoverDown,arrowEdge: .top) {
+                            VStack{
+                                Text("cantSLeep.string").padding(.all).fontWeight(.bold)
+                                CustomViews.AppLogo().padding(.all)
+                                
+                            }
+                        }
+                    })
+                    .onChange(of: showPopoverUp, perform: { newValue in
+                        sysSleepState = SleepManager().SystemWideSleepStatus()
+                        if sysSleepState {
+                            showPopoverDown = !newValue
+                        }
+                    })
+                    .onChange(of: showPopoverDown, perform: { newValue in
+                        sysSleepState = SleepManager().SystemWideSleepStatus()
+                        if sysSleepState {
+                            showPopoverUp = !newValue
+                        }
+                    })
+                    .onChange(of: selection, perform: { newValue in
+                        SleepManager().setHibernationMode(parameter: newValue, password: password)
+                        selection = newValue
+                        if selection == 0 {
+                            SleepManager().allowSleep()
+                            caffButtonDisabled = false
+                        }
+                        sleepInt = newValue
+                        preventSleep = SleepManager().sleepIsPermitted()
+                    })
+                }
+            } else {
+                CustomViews.NoPasswordView(false, toggle: $dummy)
+            }
+        }
+        .onAppear {
+            Task{
+                await reload()
+            }
+        }
+        .animation(SettingsMonitor.secondaryAnimation, value: sleepInt)
+        .animation(SettingsMonitor.secondaryAnimation, value: selection)
+        .animation(SettingsMonitor.secondaryAnimation, value: isRun)
     }
 }

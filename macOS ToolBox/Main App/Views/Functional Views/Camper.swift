@@ -185,7 +185,7 @@ struct CamperView: View {
             diskLabelSet = SettingsMonitor.bootCampDiskLabel
             virtsExist = Virtuals.anyExist
             localOnly = SettingsMonitor.vmsLocalOnly
-            try? await Task.sleep(nanoseconds: 3000000000)
+            try? await Task.sleep(seconds: 0.1)
             isRun = true
         }
     }

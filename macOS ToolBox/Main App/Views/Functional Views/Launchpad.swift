@@ -20,6 +20,7 @@ struct LaunchpadManagerView: View {
     @State private var maxColumns = Float(LaunchpadManager().getCoord(.y))
     @State private var xEdit = false
     @State private var yEdit = false
+    @State private var isRun = false
     
     private func tableSubView(_ color: Color = .primary, x: Int, y: Int) -> some View {
         ZStack{
@@ -216,29 +217,46 @@ struct LaunchpadManagerView: View {
         }.padding(.all)
     }
     
+    private func reload() async {
+        Task{
+            defaultX = LaunchpadManager().getCoord(.x)
+            defaultY = LaunchpadManager().getCoord(.y)
+            maxRows = Float(LaunchpadManager().getCoord(.x))
+            maxColumns = Float(LaunchpadManager().getCoord(.y))
+            delay(after: SettingsMonitor.secAnimDur) {
+                showTable = true
+            }
+            try? await Task.sleep(seconds: 0.1)
+            isRun = true
+        }
+    }
+    
     var body: some View {
         GroupBox {
-            GeometryReader { geometry in
-                VStack{
-                    HStack{
-                        Spacer()
-                        Group {
-                            ColumnsView(width: geometry.size.height, height: geometry.size.width).rotationEffect(.degrees(-90), anchor: .center).frame(width: geometry.size.width / 20, height: geometry.size.height / 1.5, alignment: .center).padding(.all)
-                        }
-                        Divider()
-                        Group {
-                            VStack {
-                                RowsView(width: geometry.size.width, height: geometry.size.height).padding(.all)
-                                Divider()
-                                MainTabView
+            if !isRun {
+                loadingScreen
+            } else {
+                GeometryReader { geometry in
+                    VStack{
+                        HStack{
+                            Spacer()
+                            Group {
+                                ColumnsView(width: geometry.size.height, height: geometry.size.width).rotationEffect(.degrees(-90), anchor: .center).frame(width: geometry.size.width / 20, height: geometry.size.height / 1.5, alignment: .center).padding(.all)
                             }
+                            Divider()
+                            Group {
+                                VStack {
+                                    RowsView(width: geometry.size.width, height: geometry.size.height).padding(.all)
+                                    Divider()
+                                    MainTabView
+                                }
+                            }
+                            Divider()
+                            
                         }
-                        Divider()
-                        
+                        Spacer()
                     }
-                    Spacer()
                 }
-                
             }
         } label: {
             CustomViews.AnimatedTextView(Input: "Launchpad", TimeToStopAnimation: SettingsMonitor.secAnimDur)
@@ -252,13 +270,10 @@ struct LaunchpadManagerView: View {
         .animation(SettingsMonitor.secondaryAnimation, value: y)
         .animation(SettingsMonitor.secondaryAnimation, value: xEdit)
         .animation(SettingsMonitor.secondaryAnimation, value: yEdit)
+        .animation(SettingsMonitor.secondaryAnimation, value: isRun)
         .onAppear {
-            defaultX = LaunchpadManager().getCoord(.x)
-            defaultY = LaunchpadManager().getCoord(.y)
-            maxRows = Float(LaunchpadManager().getCoord(.x))
-            maxColumns = Float(LaunchpadManager().getCoord(.y))
-            delay(after: SettingsMonitor.secAnimDur) {
-                showTable = true
+            Task{
+                await reload()
             }
         }
     }

@@ -14,7 +14,7 @@ struct DockManagerView: View {
     @State private var animDelay: Int = DockManager().AnimationDelay
     @State private var autohide: Bool = DockManager().Autohide
     @State private var animType = DockManager().AnimationType
-    @State private var DockOrientation = DockManager().DockOrientation
+    @State private var DockOrientation: orientation = .bottom
     @State private var magnification = DockManager().Magnification
     @State private var DA = DockManager().DiskArbitration
     @State private var hiddenAppsMode = DockManager().HiddenAppsMode
@@ -23,6 +23,7 @@ struct DockManagerView: View {
     @State private var showPopover3 = false
     @State private var showPopover4 = false
     @State private var animSettings = false
+    @State private var isRun = false
     
     private var AnimationType: some View {
         GeometryReader { g in
@@ -304,44 +305,68 @@ struct DockManagerView: View {
         }
     }
     
+    private func reload() async {
+        Task {
+            animSpeed = DockManager().AnimationSpeed
+            animDelay = DockManager().AnimationDelay
+            autohide = DockManager().Autohide
+            animType = DockManager().AnimationType
+            DockOrientation = DockManager().DockOrientation
+            singleApp = DockManager().SingleAppMode
+            magnification = DockManager().Magnification
+            hiddenAppsMode = DockManager().HiddenAppsMode
+            DA = DockManager().DiskArbitration
+            try? await Task.sleep(seconds: 0.1)
+            isRun = true
+        }
+    }
+    
     var body: some View {
         GroupBox {
-            ScrollView(.vertical, showsIndicators: true) {
-                VStack{
-                    if !animSettings {
-                        Group {
-                            GroupBox {
-                                MainButtons
-                            } label: {
-                                Text("dockKey.string").padding(.all)
-                            }
-                            GroupBox{
-                                OrientationButtons
-                            } label: {
-                                Text("dockOrientation.string").padding(.all)
-                            }
-                            GroupBox {
-                                AdditionalButtons
-                            } label: {
-                                Text("addons.string").padding(.all)
-                            }
+            if !isRun {
+                loadingScreen
+            } else {
+                ScrollView(.vertical, showsIndicators: true) {
+                    VStack{
+                        if !animSettings {
+                            Group {
+                                GroupBox {
+                                    MainButtons
+                                } label: {
+                                    Text("dockKey.string").padding(.all)
+                                }
+                                GroupBox{
+                                    OrientationButtons
+                                } label: {
+                                    Text("dockOrientation.string").padding(.all)
+                                }
+                                GroupBox {
+                                    AdditionalButtons
+                                } label: {
+                                    Text("addons.string").padding(.all)
+                                }
+                            }.groupBoxStyle(Stylers.CustomGBStyle())
+                        } else {
+                            AnimSettings
+                        }
+                        GroupBox {
+                            AnimSettingsButton
+                        } label: {
+                            Text("anim.settings").padding(.all)
                         }.groupBoxStyle(Stylers.CustomGBStyle())
-                    } else {
-                        AnimSettings
+                        Spacer()
                     }
-                    GroupBox {
-                        AnimSettingsButton
-                    } label: {
-                        Text("anim.settings").padding(.all)
-                    }.groupBoxStyle(Stylers.CustomGBStyle())
-                    Spacer()
                 }
             }
         } label: {
             CustomViews.AnimatedTextView(Input: "Dock", TimeToStopAnimation: SettingsMonitor.secAnimDur)
         }
         .background(content: {
-            BackgroundView
+            if !isRun {
+                Spacer()
+            } else {
+                BackgroundView
+            }
         })
         .groupBoxStyle(Stylers.CustomGBStyle())
         .onChange(of: animDelay, perform: { newValue in
@@ -382,15 +407,9 @@ struct DockManagerView: View {
             DockManager().restartDock()
         })
         .onAppear {
-            animSpeed = DockManager().AnimationSpeed
-            animDelay = DockManager().AnimationDelay
-            autohide = DockManager().Autohide
-            animType = DockManager().AnimationType
-            DockOrientation = DockManager().DockOrientation
-            singleApp = DockManager().SingleAppMode
-            magnification = DockManager().Magnification
-            hiddenAppsMode = DockManager().HiddenAppsMode
-            DA = DockManager().DiskArbitration
+            Task{
+                await reload()
+            }
         }
         .animation(SettingsMonitor.secondaryAnimation, value: DockOrientation)
         .animation(SettingsMonitor.secondaryAnimation, value: animSettings)
