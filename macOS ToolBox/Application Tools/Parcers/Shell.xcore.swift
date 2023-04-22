@@ -40,15 +40,25 @@ public class Shell {
                 process.executableURL = exePath
                 process.arguments = ["-c", runLine]
                 process.standardOutput = pipe
+                let g = DispatchGroup()
+                g.enter()
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try process.run()
+                        process.waitUntilExit()
+                    } catch let error {
+                        process.interrupt()
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
+                }
                 do {
-                    try process.run()
                     if let prep = try pipe.fileHandleForReading.readToEnd() {
                         if let string = String(data: prep, encoding: .utf8) {
                             output = string
                         }
                     }
                 } catch let error {
-                    process.interrupt()
                     NSLog(error.localizedDescription)
                 }
                 return output
@@ -76,8 +86,19 @@ public class Shell {
                 process.arguments = ["-c", runLine]
                 process.standardOutput = pipe
                 process.standardError = errorPipe
+                let g = DispatchGroup()
+                g.enter()
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try process.run()
+                        process.waitUntilExit()
+                    } catch let error {
+                        process.interrupt()
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
+                }
                 do {
-                    try process.run()
                     if let prep = try pipe.fileHandleForReading.readToEnd() {
                         if let string = String(data: prep, encoding: .utf8) {
                             output = string
@@ -89,7 +110,6 @@ public class Shell {
                         }
                     }
                 } catch let error {
-                    process.interrupt()
                     NSLog(error.localizedDescription)
                 }
                 return (output, error)
@@ -117,11 +137,17 @@ public class Shell {
                 process.executableURL = exePath
                 process.arguments = ["-c", runLine]
                 process.standardOutput = pipe
-                do {
-                    try process.run()
-                } catch let error {
-                    process.interrupt()
-                    NSLog(error.localizedDescription)
+                let g = DispatchGroup()
+                g.enter()
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try process.run()
+                        process.waitUntilExit()
+                    } catch let error {
+                        process.interrupt()
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
                 }
             }
             
@@ -179,12 +205,16 @@ public class Shell {
                 let pipeToMe = Pipe()
                 taskTwo.standardOutput = pipeToMe
                 taskTwo.standardError = pipeToMe
-                
-                do {
-                    try taskOne.run()
-                    try taskTwo.run()
-                } catch let error {
-                    NSLog(error.localizedDescription)
+                let g = DispatchGroup()
+                g.enter()
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try taskOne.run()
+                        try taskTwo.run()
+                    } catch let error {
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
                 }
                 
                 let data = pipeToMe.fileHandleForReading.readDataToEndOfFile()
@@ -213,12 +243,16 @@ public class Shell {
                 let pipeToMe = Pipe()
                 taskTwo.standardOutput = pipeToMe
                 taskTwo.standardError = pipeToMe
-                
-                do {
-                    try taskOne.run()
-                    try taskTwo.run()
-                } catch let error {
-                    NSLog(error.localizedDescription)
+                let g = DispatchGroup()
+                g.enter()
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try taskOne.run()
+                        try taskTwo.run()
+                    } catch let error {
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
                 }
             }
         }
@@ -247,14 +281,20 @@ public class Shell {
                 let pipeToMe = Pipe()
                 taskTwo.standardOutput = pipeToMe
                 taskTwo.standardError = pipeToMe
-                
-                do {
-                    try taskOne.run()
-                    try taskTwo.run()
-                } catch let error {
-                    NSLog(error.localizedDescription)
+                let g = DispatchGroup()
+                g.enter()
+
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try taskOne.run()
+                        try taskTwo.run()
+                        taskOne.waitUntilExit()
+                        taskTwo.waitUntilExit()
+                    } catch let error {
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
                 }
-                
                 let data = pipeToMe.fileHandleForReading.readDataToEndOfFile()
                 let output : String = String(data: data, encoding: .utf8) ?? ""
                 return output
@@ -282,12 +322,19 @@ public class Shell {
                 let pipeToMe = Pipe()
                 taskTwo.standardOutput = pipeToMe
                 taskTwo.standardError = pipeToMe
-                
-                do {
-                    try taskOne.run()
-                    try taskTwo.run()
-                } catch let error {
-                    NSLog(error.localizedDescription)
+                let g = DispatchGroup()
+                g.enter()
+
+                DispatchQueue.global(qos: .userInteractive).async {
+                    do {
+                        try taskOne.run()
+                        try taskTwo.run()
+                        taskOne.waitUntilExit()
+                        taskTwo.waitUntilExit()
+                    } catch let error {
+                        NSLog(error.localizedDescription)
+                    }
+                    g.leave()
                 }
             }
         }
