@@ -39,7 +39,9 @@ struct PasswordSettings: View {
                             SecureField("password.text", text: $password, onCommit: {
                                 checkPassword(password: password)
                             })
+                            .autocorrectionDisabled(true)
                             .textFieldStyle(Stylers.GlassySecureField())
+                            .textContentType(.password)
                             .padding(.all)
                             .keyboardShortcut(.defaultAction)
                             Spacer()
