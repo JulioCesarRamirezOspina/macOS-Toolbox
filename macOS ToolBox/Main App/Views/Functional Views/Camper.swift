@@ -98,15 +98,20 @@ struct CamperView: View {
                     if isBC {
                         BootCampView(proxy: proxy.size)
                     }
-                    Virtuals.FileSearch().onlyForEachView(width: proxy.size.width, isLocal: localOnly)
-                        .animation(SettingsMonitor.secondaryAnimation, value: localOnly)
+                    if localOnly {
+                        Virtuals.FileSearch().onlyForEachView(width: proxy.size.width, isLocal: true)
+                            .animation(SettingsMonitor.secondaryAnimation, value: localOnly)
+                    } else {
+                        Virtuals.FileSearch().onlyForEachView(width: proxy.size.width, isLocal: false)
+                            .animation(SettingsMonitor.secondaryAnimation, value: localOnly)
+                    }
                 }
             }
         }
     }
     private func MainViewWithoutPassword() -> some View {
         return VStack{
-            if isBC || virtsExist {
+            if isBC || virtsExist() {
                 mainTabView().padding(.all)
             } else {
                 nothingFound().padding(.all)
@@ -169,6 +174,9 @@ struct CamperView: View {
         }
         .onChange(of: localOnly, perform: { newValue in
             SettingsMonitor.vmsLocalOnly = newValue
+            Task{
+                await reload()
+            }
         })
         .animation(SettingsMonitor.secondaryAnimation, value: isReboot)
         .animation(SettingsMonitor.secondaryAnimation, value: isRun)
@@ -185,7 +193,7 @@ struct CamperView: View {
             diskLabelSet = SettingsMonitor.bootCampDiskLabel
             virtsExist = Virtuals.anyExist
             localOnly = SettingsMonitor.vmsLocalOnly
-            try? await Task.sleep(seconds: 0.1)
+            try? await Task.sleep(seconds: 0.3)
             isRun = true
         }
     }

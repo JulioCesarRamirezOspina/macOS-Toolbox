@@ -18,56 +18,51 @@ public class Virtuals {
     //MARK: - Vars
     private static var alreadyCheck = false
     
-    private static var allFiles: [VMPropertiesList] {
-        get {
-            var retval: [VMPropertiesList] = Array()
-            for each in vmList {
-                retval += files(fileExtension: each, isLocal: false)
-            }
-            return retval
+    private class func allFiles() -> [VMPropertiesList] {
+        var retval: [VMPropertiesList] = Array()
+        for each in vmList {
+            retval += files(fileExtension: each, isLocal: false)
         }
+        return retval
     }
     
-    private static var localFiles: [VMPropertiesList] {
-        get {
-            var retval: [VMPropertiesList] = Array()
-            for each in vmList {
-                retval += files(fileExtension: each, isLocal: true)
-            }
-            return retval
+    private class func localFiles() -> [VMPropertiesList] {
+        var retval: [VMPropertiesList] = Array()
+        for each in vmList {
+            retval += files(fileExtension: each, isLocal: true)
         }
+        return retval
     }
     
-    public static var anyExist: Bool {
-        get {
-            if !alreadyCheck {
-                func check(ext: String) -> Bool {
-                    if files(fileExtension: ext, isLocal: false).isEmpty {
-                        return false
-                    } else {
-                        return true
-                    }
+    public class func anyExist() -> Bool {
+        if !alreadyCheck {
+            func check(ext: String) -> Bool {
+                if files(fileExtension: ext, isLocal: false).isEmpty {
+                    return false
+                } else {
+                    return true
                 }
-                var retval = false
-                for each in vmList {
-                    if check(ext: each) {
-                        alreadyCheck = true
-                        retval = true
-                        break
-                    } else {
-                        alreadyCheck = false
-                        retval = false
-                        break
-                    }
-                }
-                return retval
-            } else {
-                return alreadyCheck
             }
+            var retval = false
+            for each in vmList {
+                if check(ext: each) {
+                    alreadyCheck = true
+                    retval = true
+                    break
+                } else {
+                    alreadyCheck = false
+                    retval = false
+                    break
+                }
+            }
+            return retval
+        } else {
+            return alreadyCheck
         }
     }
+
     //MARK: - Funcs
-    private static func files(fileExtension: String, isLocal: Bool) -> [VMPropertiesList] {
+    private class func files(fileExtension: String, isLocal: Bool) -> [VMPropertiesList] {
         func getDates(url: URL) -> (creation: String, access: String) {
             do {
                 let access = try url.resourceValues(forKeys: [.contentModificationDateKey]).contentModificationDate ?? Date()
@@ -226,14 +221,14 @@ public class Virtuals {
             HStack {
                 GeometryReader { proxy in
                     ScrollView(.vertical, showsIndicators: true) {
-                        generateForEach(filesList: allFiles, width: proxy.size.width)
+                        generateForEach(filesList: allFiles(), width: proxy.size.width)
                     }
                 }
             }
         }
         
         public func onlyForEachView(width: CGFloat, isLocal: Bool) -> some View {
-            generateForEach(filesList: isLocal ? localFiles : allFiles, width: width)
+            generateForEach(filesList: isLocal ? localFiles() : allFiles(), width: width)
         }
     }
 }
