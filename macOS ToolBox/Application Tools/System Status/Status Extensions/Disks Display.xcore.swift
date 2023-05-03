@@ -23,11 +23,11 @@ public class DisksDisplay {
         @Binding var emergencyPopover: Bool
         @Binding var isRun: Bool
         @State private var disksData = [DiskData(DiskLabel: "",
-                                         FreeSpace: (0, .byte),
-                                         UsedSpace: (0, .byte),
-                                         TotalSpace: (0, .byte))]
+                                                 FreeSpace: (0, .byte),
+                                                 UsedSpace: (0, .byte),
+                                                 TotalSpace: (0, .byte))]
         @Environment(\.colorScheme) var cs
-
+        
         private func CancelButton(index: Int) -> some View {
             Button {
                 selfTapped[index] = false
@@ -36,7 +36,7 @@ public class DisksDisplay {
             }
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "x.circle",
                                                     disabled: clearResult,
-                                                    alwaysShowTitle: true,
+                                                    alwaysShowTitle: false,
                                                     color: .blue))
         }
         
@@ -62,7 +62,7 @@ public class DisksDisplay {
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "folder.badge.gearshape",
                                                     disabled: caches == "" || clearResult,
                                                     enabled: clearResult,
-                                                    alwaysShowTitle: true,
+                                                    alwaysShowTitle: false,
                                                     color: clearResult ? .green : .cyan,
                                                     hideBackground: false,
                                                     backgroundShadow: true))
@@ -75,9 +75,9 @@ public class DisksDisplay {
             } label: {
                 Text("finder.text")
             }
-            .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["faceid", "square"], alwaysShowTitle: true, color: .blue, render: .monochrome))
+            .buttonStyle(Stylers.ColoredButtonStyle(glyphs: ["faceid", "square"], alwaysShowTitle: false, color: .blue, render: .monochrome))
         }
-                
+        
         private func diskCheck() -> Task<[DiskData]?, Never> {
             Task{
                 let fm = FileManager.default
@@ -172,10 +172,8 @@ public class DisksDisplay {
         }
         
         
-        private func DiskForEach() -> some View {
-            @State var h: CGFloat = 10
-            @State var w: CGFloat = 10
-            return ForEach(disksData.indices, id: \.self, content: { index in
+        private var DiskForEach: some View {
+            ForEach(disksData.indices, id: \.self, content: { index in
                 VStack{
                     diskTile(title: disksData[index].DiskLabel,
                              snapshots: disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() ? snapshotsCount : nil,
@@ -189,21 +187,8 @@ public class DisksDisplay {
                     .onHover(perform: { t in
                         selfHovered[index] = t
                     })
-                    .background {
-                        ZStack{
-                            RoundedRectangle(cornerRadius: 15)
-                                .foregroundColor(selfHovered[index] ? disksData[index].backgroundColor : disksData[index].clearedColor)
-                            RoundedRectangle(cornerRadius: 15)
-                                .foregroundStyle(.ultraThinMaterial)
-                                .shadow(radius: 5)
-                        }
-                    }
                     .animation(SettingsMonitor.secondaryAnimation, value: caches)
-                    .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
                     .animation(SettingsMonitor.secondaryAnimation, value: snapshotsCount)
-                    .popover(isPresented: $selfTapped[index]) {
-                        DiskSheet(disksData: disksData, index: index)
-                    }
                     .onTapGesture {
                         for each in 0..<selfTapped.count {
                             if each == index {
@@ -215,7 +200,15 @@ public class DisksDisplay {
                         currentyActive = index
                     }
                 }
+                .background(
+                    RoundedRectangle(cornerRadius: 15)
+                        .foregroundStyle(.ultraThinMaterial)
+                        .shadow(radius: 5)
+                )
+                .transition(.scale)
                 .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
+                .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
+                .animation(SettingsMonitor.secondaryAnimation, value: selfTapped)
             })
         }
         
@@ -246,7 +239,7 @@ public class DisksDisplay {
                 .buttonStyle(Stylers.ColoredButtonStyle(glyph: "eject",
                                                         disabled: !SettingsMonitor.passwordSaved,
                                                         enabled: false,
-                                                        alwaysShowTitle: true,
+                                                        alwaysShowTitle: false,
                                                         color: .green,
                                                         hideBackground: false,
                                                         backgroundIsNotFill: true,
@@ -261,9 +254,7 @@ public class DisksDisplay {
             VStack{
                 if disksData[index].DiskLabel == macOS_Subsystem().macOSDriveName() {
                     VStack{
-                        Text("choose.string").padding(.all).font(.title).fontWeight(.bold)
-                        Divider()
-                        VStack{
+                        HStack{
                             CachesButton()
                             Memory.TimeMachineControls(toggle: $selfTapped[currentyActive])
                             OpenInFinderButton(disksData[index].DiskLabel)
@@ -272,9 +263,7 @@ public class DisksDisplay {
                     }.backgroundStyle(.ultraThinMaterial)
                 } else {
                     VStack{
-                        Text("choose.string").padding(.all).font(.title).fontWeight(.bold)
-                        Divider()
-                        VStack{
+                        HStack{
                             EjectDrive(label: disksData[index].DiskLabel, index)
                             OpenInFinderButton(disksData[index].DiskLabel)
                             CancelButton(index: index)
@@ -285,13 +274,13 @@ public class DisksDisplay {
         }
         
         @State var twoColumns = Array.init(repeating: GridItem.init(.adaptive(minimum: 300, maximum: .greatestFiniteMagnitude),
-                                                                 spacing: 0,
-                                                                 alignment: .center),
-                                        count: 2)
+                                                                    spacing: 0,
+                                                                    alignment: .center),
+                                           count: 2)
         @State var oneColumn = [GridItem.init(.adaptive(minimum: .greatestFiniteMagnitude, maximum: .greatestFiniteMagnitude),
                                               spacing: 0,
                                               alignment: .center)]
-
+        
         public var body: some View {
             VStack{
                 if disksData == DiskData.isEmpty {
@@ -301,10 +290,27 @@ public class DisksDisplay {
                         VStack{Divider()}
                     }
                 } else {
-                    LazyVGrid(columns: disksData.count == 1 ? oneColumn : twoColumns, spacing: 20) {
-                        DiskForEach().padding(.all)
+                    VStack{
+                        if selfTapped.contains(true) {
+                            VStack{
+                                Text(disksData[currentyActive].DiskLabel)
+                                    .font(.title)
+                                    .padding(.all)
+                                Divider()
+                                DiskSheet(disksData: disksData, index: currentyActive)
+                            }
+                            .background(
+                                RoundedRectangle(cornerRadius: 15)
+                                    .foregroundStyle(.ultraThinMaterial)
+                                    .shadow(radius: 5)
+                            )
+                        } else {
+                            LazyVGrid(columns: disksData.count == 1 ? oneColumn : twoColumns, spacing: 20) {
+                                DiskForEach.padding(.all)
+                            }
+                        }
                     }
-                    .animation(SettingsMonitor.secondaryAnimation, value: disksData)
+                    .animation(SettingsMonitor.secondaryAnimation, value: selfTapped.contains(true))
                 }
             }
             .onAppear(perform: {

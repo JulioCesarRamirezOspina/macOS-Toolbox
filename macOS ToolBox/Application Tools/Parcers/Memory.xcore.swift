@@ -176,7 +176,7 @@ final public class Memory: @unchecked Sendable {
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "clock.arrow.circlepath",
                                                     disabled: Memory().TimeMachineCount() < 1,
                                                     enabled: false,
-                                                    alwaysShowTitle: true,
+                                                    alwaysShowTitle: false,
                                                     color: .blue,
                                                     glow: true))
         }
