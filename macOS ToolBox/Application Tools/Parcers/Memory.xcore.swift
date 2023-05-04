@@ -272,13 +272,10 @@ final public class Memory: @unchecked Sendable {
     }
     
     private func TIDClear() async throws -> Task<(Bool), Never> {
-        do {
-            return try await Biometrics.execute(code: {
-                Memory().clensing(fm: FileManager())
-            }, reason: localizedReason())
-        } catch _ {
-            return Task<(Bool), Never> {return false}
-        }
+            Task {
+                clensing(fm: FileManager())
+                return true
+            }
     }
     
     private func localizedReason() ->String {

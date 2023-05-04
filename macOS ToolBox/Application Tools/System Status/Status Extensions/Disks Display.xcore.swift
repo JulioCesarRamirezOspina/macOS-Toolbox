@@ -35,7 +35,7 @@ public class DisksDisplay {
                 Text("cancel.button")
             }
             .buttonStyle(Stylers.ColoredButtonStyle(glyph: "x.circle",
-                                                    disabled: clearResult,
+                                                    disabled: false,
                                                     alwaysShowTitle: false,
                                                     color: .blue))
         }
@@ -48,10 +48,12 @@ public class DisksDisplay {
                         emergencyPopover = true
                     }
                 }
-                delay(after: 10) {
+                let trueIndex = selfTapped.firstIndex(of: true)
+                selfTapped[trueIndex ?? 0] = false
+//                delay(after: 10) {
                     clearResult = false
                     showClearCaches = false
-                }
+//                }
             } label: {
                 Text("clearCaches.string")
             }
@@ -206,7 +208,7 @@ public class DisksDisplay {
                         .shadow(radius: 5)
                 )
                 .transition(.scale)
-                .glow(color: selfHovered[index] || (Double().toPercent(fraction: disksData[index].FreeSpace.0, total: disksData[index].TotalSpace.0) * 100 >= 80) ? disksData[index].tintColor : .clear, anim: selfHovered[index])
+                .glow(color: selfHovered[index] ? disksData[index].tintColor : .clear)
                 .animation(SettingsMonitor.secondaryAnimation, value: selfHovered[index])
                 .animation(SettingsMonitor.secondaryAnimation, value: selfTapped)
             })

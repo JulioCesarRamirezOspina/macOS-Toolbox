@@ -488,12 +488,16 @@ public class SystemStatus {
     }
     // MARK: - Status View
     public struct StatusView: View {
-        public init(){}
+//        public init(){}
         @State var isRun = false
+        @State var viewsRun = false
         @State var isLoading = true
         @State var width: CGFloat = 1
         @State var height: CGFloat = 50
         @State var emergencyPopover = false
+        @State var memoryPopover = false
+        @State var macVerPopover = false
+        @Binding var hideBackButton: Bool
         @Environment(\.colorScheme) var cs
         var batteryIsPresent: Bool {
             get {
@@ -506,36 +510,59 @@ public class SystemStatus {
             }
         }
         
+        var memory: some View {
+            MemoryDisplay.view(sheetIsPresented: $memoryPopover, isRun: $viewsRun)
+                .padding(.all)
+        }
+        
+        var cpu: some View {
+            CPUDisplay.view(isRun: $viewsRun)
+                .padding(.all)
+        }
+        
+        var macVer: some View {
+            macOSUpdate.portableView(showOSSettings: $macVerPopover,
+                                     geometry: CGSize(width: width, height: 100),
+                                     halfScreen: false,
+                                     alignment: .leading,
+                                     showTitle: true)
+            .padding(.all)
+        }
+        
+        var battery: some View {
+            BatteryDisplay.view(isRun: $viewsRun)
+                .padding(.all)
+        }
+        
+        var disks: some View {
+            DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
+                .padding(.all)
+        }
+        
         private var preView: some View {
             VStack{
                 GeometryReader { g in
                     VStack{
                         ScrollView(.vertical, showsIndicators: true) {
-                            DisksDisplay.view(emergencyPopover: $emergencyPopover, isRun: $isRun)
-                                .padding(.all)
+                            disks
                             Divider()
-                            HStack{
-                                CPUDisplay.view(isRun: $isRun)
-                                    .padding(.all)
-                                MemoryDisplay.view(isRun: $isRun)
-                                    .padding(.all)
-                            }
-                            if batteryIsPresent {
-                                HStack{
-                                    macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
-                                                     HalfScreen: false,
-                                                     Alignment: .leading,
-                                                     ShowTitle: true)
-                                    .padding(.all)
-                                    BatteryDisplay.view(isRun: $isRun)
-                                        .padding(.all)
-                                }
+                            if memoryPopover {
+                                memory
+                            } else if macVerPopover {
+                                macVer
                             } else {
-                                macOSUpdate.view(Geometry: CGSize(width: width, height: 100),
-                                                 HalfScreen: false,
-                                                 Alignment: .leading,
-                                                 ShowTitle: true)
-                                .padding(.all)
+                                HStack{
+                                    cpu
+                                    memory
+                                }
+                                if batteryIsPresent {
+                                    HStack{
+                                        macVer
+                                        battery
+                                    }
+                                } else {
+                                    macVer
+                                }
                             }
 //                            Divider()
 //                            NetViews.Monitor().padding(.all)
@@ -545,6 +572,26 @@ public class SystemStatus {
                         })
                         .onChange(of: g.size.height, perform: { newValue in
                             height = newValue / 12
+                        })
+                        .onChange(of: memoryPopover, perform: { newVal in
+                            switch newVal {
+                            case true:
+                                viewsRun = false
+                                hideBackButton = newVal
+                            case false:
+                                viewsRun = true
+                                hideBackButton = newVal
+                            }
+                        })
+                        .onChange(of: macVerPopover, perform: { newVal in
+                            switch newVal {
+                            case true:
+                                viewsRun = false
+                                hideBackButton = newVal
+                            case false:
+                                viewsRun = true
+                                hideBackButton = newVal
+                            }
                         })
                         .frame(width: g.size.width, height: g.size.height, alignment: .center)
                     }
@@ -606,15 +653,20 @@ public class SystemStatus {
                 Task {
                     try? await Task.sleep(seconds: 1)
                     isRun = true
+                    viewsRun = true
                     isLoading = false
                 }
             })
             .onDisappear(perform: {
                 isLoading = true
                 isRun = false
+                viewsRun = false
             })
             .animation(SettingsMonitor.secondaryAnimation, value: isRun)
+            .animation(SettingsMonitor.secondaryAnimation, value: viewsRun)
             .animation(SettingsMonitor.secondaryAnimation, value: isLoading)
+            .animation(SettingsMonitor.secondaryAnimation, value: memoryPopover)
+            .animation(SettingsMonitor.secondaryAnimation, value: macVerPopover)
         }
     }
     // MARK: - Switcher View
@@ -623,6 +675,7 @@ public class SystemStatus {
             _toggle = toggleViews
             self.withButton = withButton
         }
+        @State var hideBB = false
         @Binding var toggle: Bool
         var withButton: Bool
         
@@ -636,17 +689,20 @@ public class SystemStatus {
         
         private var preStatus: some View {
             VStack{
-                StatusView()
-                Button {
-                    toggle.toggle()
-                } label: {
-                    Text("goBack.button")
+                StatusView(hideBackButton: $hideBB)
+                if !hideBB {
+                    Button {
+                        toggle.toggle()
+                    } label: {
+                        Text("goBack.button")
+                    }
+                    .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, color: .blue))
+                    .focusable(false)
+                    .keyboardShortcut(toggle ? .cancelAction : nil)
+                    .padding(.bottom)
                 }
-                .buttonStyle(Stylers.ColoredButtonStyle(alwaysShowTitle: true, color: .blue))
-                .focusable(false)
-                .keyboardShortcut(toggle ? .cancelAction : nil)
-                .padding(.bottom)
             }
+            .animation(SettingsMonitor.secondaryAnimation, value: hideBB)
             .padding(SettingsMonitor.isInMenuBar ? EdgeInsets(top: -20, leading: -20, bottom: -20, trailing: -20) :
                         EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }
