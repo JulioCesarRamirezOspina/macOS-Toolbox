@@ -218,16 +218,26 @@ final public class Memory: @unchecked Sendable {
         let iOSDS = xcodeDir.appending(path: "iOS DeviceSupport")
         let macOSDS = xcodeDir.appending(path: "macOS DeviceSupport")
         let derivedDir = xcodeDir.appending(path: "DerivedData")
+        let docDir = xcodeDir.appending(path: "DocumentationCache")
         let cachesDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Caches")
         let CoreSimulatorCaches = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "CoreSimulator").appending(path: "Caches")
-
+        let LogsDir = URL(string: "/Library/Logs") ?? URL(fileURLWithPath: "")
+        let LogsDir2 = URL(string: "/private/var/log") ?? URL(fileURLWithPath: "")
+        let LogsDir3 = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Logs")
+        let safariDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Containers").appending(path: "com.apple.safari").appending(path: "Data").appending(path: "Library").appending(path: "Caches")
+        
         let contentsOfCaches = try? fm.contentsOfDirectory(at: cachesDir, includingPropertiesForKeys: [.fileSizeKey])
         let contentsOfDerived = try? fm.contentsOfDirectory(at: derivedDir, includingPropertiesForKeys: [.fileSizeKey])
         let contentsOfiOSSupport = try? fm.contentsOfDirectory(at: iOSDS, includingPropertiesForKeys: [.fileSizeKey])
         let contentsOfmacOSSupport = try? fm.contentsOfDirectory(at: macOSDS, includingPropertiesForKeys: [.fileSizeKey])
         let contentsOfiOSLogs = try? fm.contentsOfDirectory(at: iOSDL, includingPropertiesForKeys: [.fileSizeKey])
         let contentsOfCSC = try? fm.contentsOfDirectory(at: CoreSimulatorCaches, includingPropertiesForKeys: [.fileSizeKey])
-        
+        let contentsOfLogs = try? fm.contentsOfDirectory(at: LogsDir, includingPropertiesForKeys: [.fileSizeKey])
+        let contentsOfLogs2 = try? fm.contentsOfDirectory(at: LogsDir2, includingPropertiesForKeys: [.fileSizeKey])
+        let contentsOfLogs3 = try? fm.contentsOfDirectory(at: LogsDir3, includingPropertiesForKeys: [.fileSizeKey])
+        let contentsOfDocs = try? fm.contentsOfDirectory(at: docDir, includingPropertiesForKeys: [.fileSizeKey])
+        let contentsOfSafariDir = try? fm.contentsOfDirectory(at: safariDir, includingPropertiesForKeys: [.fileSizeKey])
+
         for each in contentsOfCaches ?? [] {
             if !each.description.contains("AudioUnitCache") {
                 foldersToRemove.append(each)
@@ -254,6 +264,26 @@ final public class Memory: @unchecked Sendable {
             foldersToRemove.append(each)
         }
         
+        for each in contentsOfLogs ?? [] {
+            foldersToRemove.append(each)
+        }
+        
+        for each in contentsOfLogs2 ?? [] {
+            foldersToRemove.append(each)
+        }
+        
+        for each in contentsOfLogs3 ?? [] {
+            foldersToRemove.append(each)
+        }
+        
+        for each in contentsOfDocs ?? [] {
+            foldersToRemove.append(each)
+        }
+        
+        for each in contentsOfSafariDir ?? [] {
+            foldersToRemove.append(each)
+        }
+
         for each in foldersToRemove {
             do {
                 try fm.removeItem(at: each)
