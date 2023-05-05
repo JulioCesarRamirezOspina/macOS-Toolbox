@@ -170,6 +170,7 @@ struct CamperView: View {
             SettingsMonitor.bootCampIsNextOnly = newValue
         }
         .onDisappear {
+            Memory().ejectAll([SettingsMonitor.bootCampDiskLabel])
             isRun = false
         }
         .onChange(of: localOnly, perform: { newValue in

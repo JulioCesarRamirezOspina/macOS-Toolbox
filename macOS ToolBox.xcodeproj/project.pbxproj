@@ -273,8 +273,8 @@
 		9AD7B67529F1C9AF00451930 /* System Status */ = {
 			isa = PBXGroup;
 			children = (
-				9AD7B67629F1C9AF00451930 /* Status Extensions */,
 				9AD7B67C29F1C9AF00451930 /* System Status.xcore.swift */,
+				9AD7B67629F1C9AF00451930 /* Status Extensions */,
 			);
 			path = "System Status";
 			sourceTree = "<group>";
@@ -637,7 +637,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 183;
+				CURRENT_PROJECT_VERSION = 184;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;
@@ -683,7 +683,7 @@
 				CODE_SIGN_IDENTITY = "-";
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 183;
+				CURRENT_PROJECT_VERSION = 184;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"macOS ToolBox/Preview Content\"";
 				DEVELOPMENT_TEAM = 5XE9Q47HH3;

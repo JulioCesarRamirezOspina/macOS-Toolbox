@@ -62,8 +62,9 @@ public class MemoryDisplay {
                         Text("cancel.button")
                     }
                     .buttonStyle(Stylers.ColoredButtonStyle(glyph: "",
-                                                            enabled: true,
+                                                            enabled: false,
                                                             alwaysShowTitle: true,
+                                                            color: .blue,
                                                             hideBackground: false,
                                                             backgroundIsNotFill: false,
                                                             glow: true

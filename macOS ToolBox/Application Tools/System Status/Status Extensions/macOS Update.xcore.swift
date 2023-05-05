@@ -102,7 +102,12 @@ public class macOSUpdate {
                         BindingPopover = false
                     } label: {
                         Text(StringLocalizer("cancel.button"))
-                    }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "", alwaysShowTitle: true))
+                    }.buttonStyle(Stylers.ColoredButtonStyle(glyph: "",
+                                                             enabled: false,
+                                                             alwaysShowTitle: true,
+                                                             color: .blue,
+                                                             glow: true
+                                                            ))
                 }
             }
         }
