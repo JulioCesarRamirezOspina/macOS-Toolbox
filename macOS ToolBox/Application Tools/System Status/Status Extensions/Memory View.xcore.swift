@@ -24,9 +24,9 @@ public class MemoryDisplay {
             get {
                 if memory.free > memory.total / 2 {
                     return .clear
-                } else if memory.free <= memory.total / 2 {
-                    return .yellow
                 } else if memory.free <= memory.total / 4 {
+                    return .yellow
+                } else if memory.free <= memory.total / 8 {
                     return .red
                 } else {
                     return .clear
