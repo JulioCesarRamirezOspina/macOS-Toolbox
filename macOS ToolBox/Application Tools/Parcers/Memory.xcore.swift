@@ -211,6 +211,12 @@ final public class Memory: @unchecked Sendable {
         })
     }
     
+    private func flushDNS() {
+        Shell.Parcer.SUDO.withoutOutput("killall", ["-HUP", "mDNSResponder"], password: SettingsMonitor.password)
+        Shell.Parcer.SUDO.withoutOutput("killall", ["mDNSResponderHelper"], password: SettingsMonitor.password)
+        Shell.Parcer.SUDO.withoutOutput("dscacheutil", ["-flushcache"], password: SettingsMonitor.password)
+    }
+    
     private func clensing(fm: FileManager) {
         var foldersToRemove = [URL]()
         let xcodeDir = fm.homeDirectoryForCurrentUser.appending(path: "Library").appending(path: "Developer").appending(path: "Xcode")
